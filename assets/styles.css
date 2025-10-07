@@ -188,14 +188,28 @@ section{padding:64px 0}
   border-color:#E5484D;
   box-shadow:0 0 0 3px rgba(229,72,77,.15);
 }
-/* ссылка-поделиться — меньше и серее */
+/* ссылка поделиться */
 .share-link{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#6B7280; text-decoration:none;
   font-size:14px;
-  color:#6B7280;           /* gray-500 */
-  text-decoration:none;
 }
-.share-link:hover{ color:#374151; text-decoration:underline; }
-.share-link.copied{ color:#15803D; }   /* зелёный на миг после копирования */
+.share-link .txt{
+  border-bottom:1px dashed transparent;
+  transition:color .15s, border-color .15s;
+}
+.share-link:hover .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;  /* пунктир у текста */
+}
+.share-link:hover .icon{
+  filter:none;                 /* эмодзи без подчёркиваний */
+}
+.share-link.copied .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;
+}
+
 /* чекбокс евро — «второстепенный» */
 #eurWrap{ display:flex; align-items:center; gap:8px; margin-top:8px; }
 #eurWrap span{
@@ -203,3 +217,20 @@ section{padding:64px 0}
   color:#777;              /* серый текст */
 }
 #eurWrap input{ transform:translateY(1px); }
+
+/* Унифицированная стрелка в select */
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px 18px;
+  padding-right: 42px; /* место под стрелку */
+}
+select:focus{
+  outline: none;
+  border-color:#A7DCC2;
+  box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
