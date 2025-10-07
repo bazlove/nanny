@@ -95,19 +95,29 @@
 
 // Calculator
 
+// Calculator
+
 (function(){
-  const EUR_RATE=117, BASE=800, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, MIN=2;
+  const EUR_RATE=117, BASE=800, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, MIN=2, HOURS_MAX=10;
   const $=id=>document.getElementById(id);
   const money=v=>{ try{return v.toLocaleString('ru-RS')}catch(_){return String(v)} };
 
   function normalizeHours(commit){
     const h=$('hours'), err=$('hoursErr');
     let v=parseInt(h?.value,10);
-    const invalid=!Number.isFinite(v)||v<MIN||(h?.value==='');
-    if(commit && invalid && h){ v=MIN; h.value=String(MIN); }
-    if(h){ h.classList.toggle('error', invalid); }
-    if(err){ err.style.display=invalid?'block':'none'; }
-    return invalid?MIN:v;
+    const emptyOrNaN = !Number.isFinite(v) || (h?.value==='');
+    if (emptyOrNaN) v = MIN;
+
+    // диапазон 2..10
+    v = Math.max(MIN, Math.min(HOURS_MAX, v));
+
+    if (commit && h) { h.value = String(v); }
+
+    // подсветка ошибки и текст показываем только если < MIN
+    if (h)   { h.classList.toggle('error', v < MIN); }
+    if (err) { err.style.display = (v < MIN) ? 'block' : 'none'; }
+
+    return v;
   }
 
   function hourlyRate(){
@@ -163,7 +173,7 @@
   }
 
   function bind(){
-    // hours (автоподстановка минимума)
+    // hours (автоподстановка минимума + кламп до 10)
     ['input','change','blur'].forEach(ev=> $('hours')?.addEventListener(ev, ()=>{ normalizeHours(true); recalc(); }));
     // остальные поля
     ['kids','dayType','optA','optB','optC','eurToggle'].forEach(id=>{
@@ -287,4 +297,5 @@
 })();
 
 // Footer year
+
 document.getElementById('y').textContent=new Date().getFullYear();
