@@ -386,7 +386,6 @@ select:focus{
 .faq-item.is-open .faq-q {
   background: #eef8f1;
 }
-
 /* Мобильная подстройка: перенос текста разрешаем, но иконки остаются справа */
 @media (max-width: 600px) {
   .faq-q {
@@ -394,6 +393,7 @@ select:focus{
     padding: 14px 14px;
   }
   .faq-q__text {
-    white-space: normal;      /* на узких экранах допускаем перенос */
+    white-space: normal;
   }
 }
+
