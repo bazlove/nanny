@@ -378,8 +378,7 @@
 
 document.getElementById('y').textContent=new Date().getFullYear();
 
-<script>
-(function(){
+function(){
   const root = document.querySelector('.faq-list');
   if (!root) return;
 
@@ -429,4 +428,3 @@ document.getElementById('y').textContent=new Date().getFullYear();
   window.addEventListener('hashchange', openFromHash);
   openFromHash();
 })();
-</script>
