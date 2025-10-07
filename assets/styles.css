@@ -88,26 +88,19 @@ section{padding:64px 0}
 .tag:hover{background:#E7F7EF;border-color:rgba(34,197,94,.25)}
 .tag:active{transform:translateY(1px)}
 
-/* Presets: серый текст для конкретных кнопок */
-#pWeekday,
-#pWeekend,
-#pKids2 {
-  color: #6B7280;            /* gray-500 */
+.presets .tag {
+  color: #6B7280;           /* gray-500 */
+}
+.presets .tag:hover {
+  color: #374151;           /* gray-700 */
+}
+.presets .tag.active {
+  color: #4B5563;           /* gray-600 */
 }
 
-/* hover: немного темнее */
-#pWeekday:hover,
-#pWeekend:hover,
-#pKids2:hover {
-  color: #374151;            /* gray-700 */
-}
-
-/* активный (если есть .active) — средне-серый */
-#pWeekday.active,
-#pWeekend.active,
-#pKids2.active {
-  color: #4B5563;            /* gray-600 */
-}
+.presets .tag .txt { color: #6B7280; }
+.presets .tag:hover .txt { color: #374151; }
+.presets .tag.active .txt { color: #4B5563; }
 
 /* Result card */
 .result-card{margin-top:20px;padding:18px 18px 28px;background:#fff;border-radius:12px;box-shadow:var(--shadow);position:relative;overflow:visible}
@@ -274,7 +267,3 @@ select:focus{
   border-color:#A7DCC2;
   box-shadow: 0 0 0 4px rgba(34,197,94,.12);
 }
-
-#pWeekday .txt, #pWeekend .txt, #pKids2 .txt { color: #6B7280; }
-#pWeekday:hover .txt, #pWeekend:hover .txt, #pKids2:hover .txt { color: #374151; }
-#pWeekday.active .txt, #pWeekend.active .txt, #pKids2.active .txt { color: #4B5563; }
