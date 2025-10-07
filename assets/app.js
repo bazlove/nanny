@@ -376,4 +376,5 @@
 
 // Footer year
 
-document.getElementById('y').textContent=new Date().getFullYear();
+const yEl = document.getElementById('y');
+if (yEl) yEl.textContent = new Date().getFullYear();
