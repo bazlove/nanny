@@ -130,10 +130,15 @@
   }
 
   let last=0;
-  const render=(sum)=>{
-    const eur= $('eurToggle')?.checked;
-    const s = `Итог: ${money(sum)} дин` + (eur?` <span class="eur">(≈ €${(sum/EUR_RATE).toFixed(1)})</span>`:'');
-    const el=$('result'); if(el) el.innerHTML=s;
+  const render = (sum) => {
+  const eur = $('eurToggle')?.checked;
+  let s = `Итог: ${money(sum)} дин`;
+  if (eur) {
+    const eurVal = Math.round(sum / EUR_RATE);
+    s += ` <span class="eur">(≈ €${eurVal})</span>`;
+  }
+  const el = $('result');
+  if (el) el.innerHTML = s;
   };
   const animate=(to)=>{
     const from=last; if(from===to){ render(to); return; }
@@ -311,5 +316,6 @@
 // Footer year
 
 document.getElementById('y').textContent=new Date().getFullYear();
+
 
 
