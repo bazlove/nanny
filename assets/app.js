@@ -173,21 +173,30 @@
   }
 
   function bind(){
-    // hours (автоподстановка минимума + кламп до 10)
-    ['input','change','blur'].forEach(ev=> $('hours')?.addEventListener(ev, ()=>{ normalizeHours(true); recalc(); }));
-    // остальные поля
-    ['kids','dayType','optA','optB','optC','eurToggle'].forEach(id=>{
-      const el=$(id); if(!el) return;
-      ['input','change'].forEach(e=> el.addEventListener(e,recalc));
+  const hoursEl = $('hours');
+  if (hoursEl) {
+    hoursEl.addEventListener('input', () => {
+      normalizeHours(false); // ← НЕ коммитим
+      recalc();
     });
+    ['change','blur'].forEach(ev =>
+      hoursEl.addEventListener(ev, () => { normalizeHours(true); recalc(); })
+    );
+  }
 
-    // пресеты (ID)
-    const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(); }};
-    [['p2h',2],['p3h',3],['p4h',4]].forEach(([id,val])=>{
-      const b=$(id); if(b) b.addEventListener('click',()=>setH(val));
-    });
-    $('pWeekend')?.addEventListener('click',()=>{ const d=$('dayType'); if(d){ d.value='weekend'; recalc(); }});
-    $('pKids2')?.addEventListener('click',()=>{ const k=$('kids'); if(k){ k.value='2'; recalc(); }});
+  ['kids','dayType','optA','optB','optC','eurToggle'].forEach(id=>{
+    const el=$(id); if(!el) return;
+    ['input','change'].forEach(e=> el.addEventListener(e,recalc));
+  });
+
+  const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(); }};
+  [['p2h',2],['p3h',3],['p4h',4]].forEach(([id,val])=>{
+    const b=$(id); if(b) b.addEventListener('click',()=>setH(val));
+  });
+  $('p5h')?.addEventListener('click', ()=>{ const h=$('hours'); if(h){ h.value='5'; h.focus(); recalc(); }});
+  $('pWeekday')?.addEventListener('click', ()=>{ const d=$('dayType'); if(d){ d.value='weekday'; recalc(); }});
+  $('pWeekend')?.addEventListener('click',()=>{ const d=$('dayType'); if(d){ d.value='weekend'; recalc(); }});
+  $('pKids2')?.addEventListener('click',()=>{ const k=$('kids'); if(k){ k.value='2'; recalc(); }});
 
     // делегирование на случай будущих изменений
     document.addEventListener('click',(ev)=>{
@@ -299,3 +308,4 @@
 // Footer year
 
 document.getElementById('y').textContent=new Date().getFullYear();
+
