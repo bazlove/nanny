@@ -140,4 +140,66 @@ section{padding:64px 0}
   .calc-foot{grid-template-columns:1fr}
   .actions{justify-content:stretch}
   .cta-quote{width:100%}
+
 }
+
+/* tooltip: компактный, в одну строку, ровно над подписью */
+.label-row { position: relative; }
+.hint { position: relative; display:inline-block; width:18px; height:18px; margin-left:6px; }
+.hint .i{
+  display:grid; place-items:center; width:18px; height:18px;
+  border-radius:999px; background:#E9EDF7; color:#334; font-size:12px; font-weight:800;
+}
+.hint:hover .i, .hint:focus-within .i{
+  background:#E7F7EF; color:#146C43; box-shadow:0 0 0 3px rgba(34,197,94,.18);
+}
+
+/* 👇 главное: короткий, в одну строку, ровно между заголовком и полем */
+.hint .tip{
+  position:absolute;
+  left:0;               /* от левого края подписи поля */
+  bottom:calc(100% + 8px);
+  background:#111; color:#fff;
+  padding:6px 8px; border-radius:8px;
+  font-size:12px; line-height:1; white-space:nowrap;   /* одна строка */
+  opacity:0; pointer-events:none; transition:opacity .15s;
+  z-index:50;
+}
+.hint:hover .tip, .hint:focus-within .tip{ opacity:1; }
+/* компактные инпуты/селекты */
+.input, select, input[type=number]{
+  appearance:none;
+  width:100%;
+  min-height:52px;
+  padding:12px 14px;
+  border:1px solid #E1E8E1;
+  border-radius:12px;
+  background:#fff;
+  font-size:14.5px;
+  color:#222;
+  transition:border-color .15s, box-shadow .15s;
+}
+.input:focus, select:focus{
+  outline:none;
+  border-color:#A7DCC2;                 /* мягкий зелёный */
+  box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
+.input.error{
+  border-color:#E5484D;
+  box-shadow:0 0 0 3px rgba(229,72,77,.15);
+}
+/* ссылка-поделиться — меньше и серее */
+.share-link{
+  font-size:14px;
+  color:#6B7280;           /* gray-500 */
+  text-decoration:none;
+}
+.share-link:hover{ color:#374151; text-decoration:underline; }
+.share-link.copied{ color:#15803D; }   /* зелёный на миг после копирования */
+/* чекбокс евро — «второстепенный» */
+#eurWrap{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+#eurWrap span{
+  font-size:12.5px;
+  color:#777;              /* серый текст */
+}
+#eurWrap input{ transform:translateY(1px); }
