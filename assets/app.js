@@ -104,7 +104,8 @@
 
   function normalizeHours(commit){
     const h=$('hours'), err=$('hoursErr');
-    let v=parseInt(h?.value,10);
+    let v=parseInt(h?.value, 10);
+    
     const emptyOrNaN = !Number.isFinite(v) || (h?.value==='');
     if (emptyOrNaN) v = MIN;
 
@@ -141,8 +142,8 @@
     requestAnimationFrame(step);
   };
 
-  function recalc(){
-    const h=normalizeHours(true);
+  function recalc(commit = true){
+    const h = normalizeHours(commit);
     const rate=hourlyRate();
     const add=( $('optA')?.checked?OPT:0 )+( $('optB')?.checked?OPT:0 )+( $('optC')?.checked?OPT:0 );
     const total=rate*h+add; animate(total);
@@ -154,8 +155,8 @@
       const b=[];
       const kids=$('kids')?.value, day=$('dayType')?.value;
       if(kids==='2') b.push('+25% двое детей');
-      if(kids==='2_infant') b.push('+50% малыш <2');
-      if(day==='weekend') b.push('+25% выходной');
+      if(kids==='2_infant') b.push('+50% малыш <2 лет');
+      if(day==='weekend') b.push('+25% выходной день');
       if($('eurToggle')?.checked) b.push('€');
       badges.innerHTML=b.map(t=>`<span class="badge">${t}</span>`).join('');
     }
@@ -176,11 +177,14 @@
   const hoursEl = $('hours');
   if (hoursEl) {
     hoursEl.addEventListener('input', () => {
-      normalizeHours(false); // ← НЕ коммитим
-      recalc();
+      normalizeHours(false);  // ← НЕ коммитим во время набора
+      recalc(false);          // ← пересчёт без подстановки в инпут
     });
     ['change','blur'].forEach(ev =>
-      hoursEl.addEventListener(ev, () => { normalizeHours(true); recalc(); })
+      hoursEl.addEventListener(ev, () => {
+        normalizeHours(true); // ← коммитим на выходе из поля
+        recalc(true);
+      })
     );
   }
 
@@ -189,11 +193,10 @@
     ['input','change'].forEach(e=> el.addEventListener(e,recalc));
   });
 
-  const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(); }};
-  [['p2h',2],['p3h',3],['p4h',4]].forEach(([id,val])=>{
+  const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(true); }};
+  [['p2h',2],['p3h',3],['p4h',4],['p5h',5]].forEach(([id,val])=>{
     const b=$(id); if(b) b.addEventListener('click',()=>setH(val));
   });
-  $('p5h')?.addEventListener('click', ()=>{ const h=$('hours'); if(h){ h.value='5'; h.focus(); recalc(); }});
   $('pWeekday')?.addEventListener('click', ()=>{ const d=$('dayType'); if(d){ d.value='weekday'; recalc(); }});
   $('pWeekend')?.addEventListener('click',()=>{ const d=$('dayType'); if(d){ d.value='weekend'; recalc(); }});
   $('pKids2')?.addEventListener('click',()=>{ const k=$('kids'); if(k){ k.value='2'; recalc(); }});
@@ -308,4 +311,5 @@
 // Footer year
 
 document.getElementById('y').textContent=new Date().getFullYear();
+
 
