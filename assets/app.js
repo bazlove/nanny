@@ -243,30 +243,91 @@
 
 // FAQ accordion + copy link
 (function(){
-  document.querySelectorAll('.faq .item .q').forEach(q=>{
-    q.addEventListener('click', (e)=>{
-      if(e.target.closest('.link-btn')) return;
-      q.parentElement.classList.toggle('open');
+  const list = document.querySelector('.faq-list');
+  if(!list) return;
+
+  // плавное открытие по max-height
+  function setOpen(item, open){
+    const panel = item.querySelector('.faq-a');
+    const btn = item.querySelector('.faq-q');
+    if(!panel || !btn) return;
+    if(open){
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }else{
+      item.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      panel.style.maxHeight = '0px';
+    }
+  }
+
+  // закрыть все, кроме одного
+  function closeOthers(except){
+    list.querySelectorAll('.faq-item.open').forEach(it=>{
+      if(it!==except) setOpen(it,false);
     });
-  });
-  document.querySelectorAll('.faq .link-btn').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const sel = btn.getAttribute('data-copy');
-      const block = document.querySelector(sel);
-      if(!block) return;
-      const id = block.id || 'faq';
-      const url = `${location.origin}${location.pathname}#${id}`;
+  }
+
+  // init
+  list.querySelectorAll('.faq-item').forEach(item=>{
+    const btn  = item.querySelector('.faq-q');
+    const copy = item.querySelector('.faq-q__copy');
+    const panel= item.querySelector('.faq-a');
+
+    // кнопка вопроса
+    btn.addEventListener('click', ()=>{
+      const willOpen = !item.classList.contains('open');
+      closeOthers(item);
+      setOpen(item, willOpen);
+      if(willOpen){
+        // автоскролл так, чтобы вопрос был под шапкой
+        const y = item.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({top:y, behavior:'smooth'});
+        // обновить хэш (deep-link)
+        if(item.id) history.replaceState(null,'', '#'+item.id);
+      }
+    });
+
+    // клавиатура (Space/Enter)
+    btn.addEventListener('keydown', (e)=>{
+      if(e.code==='Space' || e.key===' ' || e.key==='Enter'){ e.preventDefault(); btn.click(); }
+    });
+
+    // копирование ссылки
+    copy.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const url = location.origin + location.pathname + '#' + item.id;
       navigator.clipboard.writeText(url).then(()=>{
-        const tip = document.createElement('div');
-        tip.textContent='Скопировано';
-        tip.style.position='fixed'; tip.style.bottom='18px'; tip.style.left='50%'; tip.style.transform='translateX(-50%)';
-        tip.style.background='#111'; tip.style.color='#fff'; tip.style.padding='8px 12px'; tip.style.borderRadius='10px'; tip.style.zIndex='200';
-        document.body.appendChild(tip); setTimeout(()=>tip.remove(), 1100);
+        copy.classList.add('copied');
+        setTimeout(()=>copy.classList.remove('copied'), 1200);
       });
     });
+
+    // при ресайзе пересчитать max-height для открытых
+    window.addEventListener('resize', ()=>{
+      if(item.classList.contains('open')){
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
   });
+
+  // открыть по хэшу
+  function openFromHash(){
+    const id = decodeURIComponent(location.hash.replace('#',''));
+    if(!id) return;
+    const item = document.getElementById(id);
+    if(item && item.classList.contains('faq-item')){
+      closeOthers(item);
+      setOpen(item,true);
+      const y = item.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({top:y, behavior:'smooth'});
+    }
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
 })();
+
 
 // Cookie banner + GA4 loader
 (function() {
@@ -316,6 +377,7 @@
 // Footer year
 
 document.getElementById('y').textContent=new Date().getFullYear();
+
 
 
 
