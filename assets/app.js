@@ -378,6 +378,55 @@
 
 document.getElementById('y').textContent=new Date().getFullYear();
 
+<script>
+(function(){
+  const root = document.querySelector('.faq-list');
+  if (!root) return;
 
+  function toggle(item, expand) {
+    const btn = item.querySelector('.faq-q');
+    const open = (typeof expand === 'boolean') ? expand : !item.classList.contains('is-open');
+    item.classList.toggle('is-open', open);
+    if (btn) btn.setAttribute('aria-expanded', String(open));
+  }
 
+  // Открытие по клику на заголовок
+  root.addEventListener('click', function(e){
+    const btn = e.target.closest('.faq-q');
+    if (!btn) return;
+    const item = btn.closest('.faq-item');
+    // Если клик по иконке копирования — не раскрываем
+    if (e.target.closest('.faq-q__copy')) return;
+    toggle(item);
+  });
 
+  // Копирование прямой ссылки
+  root.addEventListener('click', async function(e){
+    const copy = e.target.closest('.faq-q__copy');
+    if (!copy) return;
+    const item = copy.closest('.faq-item');
+    if (!item?.id) return;
+    const url = location.origin + location.pathname + '#' + item.id;
+    try {
+      await navigator.clipboard.writeText(url);
+      copy.classList.add('copied');
+      setTimeout(()=>copy.classList.remove('copied'), 800);
+    } catch (_) {
+      // fallback
+    }
+  });
+
+  // Открыть нужный пункт, если в URL есть #якорь
+  function openFromHash() {
+    const id = location.hash.replace('#','');
+    if (!id) return;
+    const item = document.getElementById(id);
+    if (item && item.classList && !item.classList.contains('is-open')) {
+      toggle(item, true);
+      item.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
