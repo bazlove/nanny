@@ -335,5 +335,162 @@ select:focus{
 .section-title{ font: 700 28px/1.25 'Poppins', system-ui, sans-serif; }
 .section-kicker{ color:#8a8a8a; font-size:14px; margin:0 0 6px; }
 
+/* =========================
+   FAQ — финальные стили
+   ========================= */
 
+/* 1) Убираем маркеры у контейнеров и пунктов FAQ (чтобы не было «точек» слева) */
+.faq-list,
+.faq-list > li,
+.faq-item {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.faq-item::marker { content: none; }   /* Safari */
+.faq-list { padding-left: 0; }
 
+/* 2) Базовая «шапка» вопроса + плавные ховеры */
+.faq-q{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  cursor: pointer;
+  transition: background .18s ease, box-shadow .18s ease, color .18s ease;
+  position: relative;
+  overflow: visible; /* чтобы правые иконки не обрезались */
+}
+
+/* hover по строке вопроса */
+.faq-q:hover{
+  background: #f7f3ec;              /* мягкая подсветка */
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+/* фокус клавиатурой */
+.faq-q:focus-visible{
+  outline: 2px solid #7cc4a8;       /* зелёный контур под клавиатуру */
+  outline-offset: 2px;
+}
+
+/* 3) Состояние открытого вопроса — «шапка» с заливкой */
+.faq-item.is-open .faq-q{
+  background: #eefaf4;              /* светло-зелёная подложка */
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+/* 4) Текст вопроса — чтобы занимал всю ширину между иконками */
+.faq-q__text{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* 5) Контейнер правых иконок: скрепка + стрелка */
+.faq-q__actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* 6) Сами иконки: не обрезаются и всегда видны */
+.faq-q__copy,
+.faq-q__chev{
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  display: inline-block;
+  opacity: .75;
+  transition: opacity .15s ease, transform .18s ease;
+}
+.faq-q__copy:hover,
+.faq-q__chev:hover{ opacity: 1; }
+
+/* 7) Встроенные SVG-иконки (чтобы не зависеть от ассетов и ничего не «резалось») */
+.faq-q__copy{
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238a8a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
+<path d='M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 1 0-7.07-7.07L10 5'/>\
+<path d='M14 11a5 5 0 0 0-7.07 0L4.81 13.12a5 5 0 1 0 7.07 7.07L14 19'/>\
+</svg>");
+}
+.faq-q__copy.copied{
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23008050' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
+<path d='M20 6L9 17l-5-5'/>\
+</svg>");
+  opacity: 1;
+}
+
+/* «стрелка» */
+.faq-q__chev{
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
+<polyline points='6 9 12 15 18 9'/>\
+</svg>");
+  transform: rotate(0deg);
+}
+.faq-item.is-open .faq-q__chev{
+  transform: rotate(180deg);
+}
+
+/* 8) Секция ответа — «воздух» и типографика */
+.faq-a{
+  padding: 16px 22px 22px;   /* сверху | по бокам | снизу */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Единые отступы между элементами внутри ответа */
+.faq-a > * + *{               /* любой следующий элемент ниже */
+  margin-top: 10px;
+}
+
+/* Списки внутри FAQ — базовые отступы слева и расстояние между пунктами */
+.faq-a ul,
+.faq-a ol{
+  margin: 8px 0 0;
+  padding-left: 1.25rem;      /* место под маркеры */
+}
+
+/* Пункты списка не «липнут» друг к другу */
+.faq-a li{
+  margin: 6px 0;
+}
+
+/* Нумерованный список: арабские цифры, тёмный маркер */
+.faq-a ol{ list-style: decimal; }
+.faq-a ol ::marker{
+  color: #222;
+  font-weight: 600;
+}
+
+/* Маркированный список: чёрная «заливающаяся» точка */
+.faq-a ul{ list-style: disc; }
+.faq-a ul ::marker{ color: #222; }
+
+/* Вложенные списки: визуально легче */
+.faq-a ul ul{ list-style: circle; }
+.faq-a ol ol{ list-style: lower-alpha; }
+
+/* Абзацы и ссылки в ответе */
+.faq-a p{ margin: 8px 0 0; }
+.faq-a a{
+  color: #2f7d68;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+.faq-a a:hover{
+  color: #1e6a57;
+  text-decoration-style: solid;
+}
