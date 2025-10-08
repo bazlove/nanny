@@ -286,7 +286,7 @@
         const y = item.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({top:y, behavior:'smooth'});
         // обновить хэш (deep-link)
-        if(item.id) history.replaceState(null,'', '#'+item.id);
+        if(btn.id) history.replaceState(null,'', '#'+btn.id);
       }
     });
 
@@ -298,7 +298,10 @@
     // копирование ссылки
     copy?.addEventListener('click', (e)=>{
       e.stopPropagation();
-      const url = location.origin + location.pathname + '#' + item.id;
+        const btnId = btn?.id || '';
+        const itemId = item?.id || '';
+        const hash = btnId || itemId || '';
+        const url = location.origin + location.pathname + (hash ? ('#' + hash) : '');
       navigator.clipboard.writeText(url).then(()=>{
         copy.classList.add('copied');
         setTimeout(()=>copy.classList.remove('copied'), 1200);
@@ -315,16 +318,17 @@
 
   // открыть по хэшу
   function openFromHash(){
-    const id = decodeURIComponent(location.hash.replace('#',''));
-    if(!id) return;
-    const item = document.getElementById(id);
-    if(item && item.classList.contains('faq-item')){
-      closeOthers(item);
-      setOpen(item,true);
-      const y = item.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({top:y, behavior:'smooth'});
-    }
-  }
+   const id = decodeURIComponent(location.hash.replace('#',''));
+   if(!id) return;
+   const el = document.getElementById(id);
+   const item = el ? el.closest('.faq-item') : null;
+   if(item){
+     closeOthers(item);
+     setOpen(item,true);
+     const y = item.getBoundingClientRect().top + window.scrollY - 80;
+     window.scrollTo({top:y, behavior:'smooth'});
+   }
+ }
   window.addEventListener('hashchange', openFromHash);
   openFromHash();
 })();
@@ -378,3 +382,4 @@
 
 const yEl = document.getElementById('y');
 if (yEl) yEl.textContent = new Date().getFullYear();
+
