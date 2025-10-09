@@ -241,90 +241,6 @@
   else { bind(); fromQuery(); recalc(); }
 })();
 
-// ===== FAQ
-(function initFAQ() {
-  const header = document.querySelector('.site-header');
-  const headerOffset = () => (header?.offsetHeight || 0) + 12; // небольшой люфт
-
-  const items = [...document.querySelectorAll('.faq-item')];
-  if (!items.length) return;
-
-  // Вспомогательная: задать max-height в зависимости от состояния
-  const setMax = (pane, open) => {
-    if (!pane) return;
-    if (open) {
-      const target = pane.scrollHeight;        // реальная высота контента
-    pane.style.maxHeight = target + 'px';    // <-- ключевой момент
-  } else {
-    // схлопываем
-    pane.style.maxHeight = '0px';
-  }
-};
-
-  items.forEach((li) => {
-    const q = li.querySelector('.faq-q');
-    const a = li.querySelector('.faq-a');
-    const copy = li.querySelector('.faq-q__copy');
-
-    // старт: всё закрыто
-    setMax(a, false);
-
-    // клик по вопросу
-    q?.addEventListener('click', () => {
-      const willOpen = !li.classList.contains('open');
-
-      // (опционально) закрываем остальные
-      items.forEach(other => {
-    if (other !== li && other.classList.contains('open')) {
-      other.classList.remove('open');
-      const oa = other.querySelector('.faq-a');
-      setMax(oa, false);
-      const oq = other.querySelector('.faq-q');
-      oq?.setAttribute('aria-expanded','false');
-    }
-  });
- 
-      li.classList.toggle('open', willOpen);
-        q?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-          setMax(a, willOpen);
-
-      // плавный скролл так, чтобы шапка вопроса оказалась под фикс-хедером
-      if (willOpen) {
-        const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    });
-
-    // «скрепка»: копирование прямой ссылки
-    copy?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = location.origin + location.pathname + '#' + q.id;
-      navigator.clipboard?.writeText(url);
-      copy.classList.add('copied');
-      setTimeout(() => copy.classList.remove('copied'), 1500);
-    });
-
-    // на ресайз пересчитываем высоту открытых панелей
-    window.addEventListener('resize', () => {
-      if (li.classList.contains('open')) setMax(a, true);
-    });
-  });
-
-  // если пришли по якорю — раскрываем нужный пункт и корректно прокручиваем
-  if (location.hash) {
-    const q = document.querySelector(location.hash);
-    const li = q?.closest('.faq-item');
-    const a = li?.querySelector('.faq-a');
-    if (li && q && a) {
-      li.classList.add('open');
-        q.setAttribute('aria-expanded','true');
-          setMax(a, true);
-          const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
-        window.scrollTo({ top: y, behavior: 'instant' in window ? 'instant' : 'auto' });
-}
-  }
-})();
-
 // Cookie banner + GA4 loader
 (function() {
   const LS_KEY='consent_analytics';
@@ -374,6 +290,105 @@
 
 const yEl = document.getElementById('y');
 if (yEl) yEl.textContent = new Date().getFullYear();
+
+/* ===== FAQ (финальная версия) ===== */
+(function () {
+  const list = document.querySelector('.faq-list');
+  if (!list) return;
+
+  const HEADER_OFFSET = 80; // ваш фикс-хедер (px). при необходимости поправьте
+
+  function openItem(item, withScroll) {
+    const btn   = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-a');
+    if (!btn || !panel) return;
+
+    // закрыть остальные
+    list.querySelectorAll('.faq-item.is-open').forEach(it => {
+      if (it !== item) closeItem(it);
+    });
+
+    item.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+
+    // ставим явную высоту = контент
+    const inner = panel.firstElementChild;
+    const target = inner ? inner.scrollHeight : panel.scrollHeight;
+    panel.style.height = target + 'px';
+
+    // скроллим так, чтобы шапка вопроса была под фикс-хедером
+    if (withScroll) {
+      const y = item.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET - 6;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }
+
+  function closeItem(item) {
+    const btn   = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-a');
+    if (!btn || !panel) return;
+
+    item.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.style.height = '0px';
+  }
+
+  // пересчитать высоту открытых при ресайзе
+  function recalcOpenHeights() {
+    list.querySelectorAll('.faq-item.is-open .faq-a').forEach(panel => {
+      const inner = panel.firstElementChild;
+      const target = inner ? inner.scrollHeight : panel.scrollHeight;
+      panel.style.height = target + 'px';
+    });
+  }
+  window.addEventListener('resize', recalcOpenHeights);
+
+  // обработчики по элементам
+  list.querySelectorAll('.faq-item').forEach(item => {
+    const btn   = item.querySelector('.faq-q');
+    const copy  = item.querySelector('.faq-q__copy');
+
+    // клик по вопросу
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      if (isOpen) closeItem(item);
+      else openItem(item, true);
+
+      // обновляем hash для deep-link
+      if (btn.id) history.replaceState(null, '', '#' + btn.id);
+    });
+
+    // клавиатура (Space / Enter)
+    btn.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+
+    // копирование ссылки
+    copy?.addEventListener('click', e => {
+      e.stopPropagation();
+      const hash = btn.id || item.id || '';
+      const url  = location.origin + location.pathname + (hash ? '#' + hash : '');
+      navigator.clipboard.writeText(url).then(() => {
+        copy.classList.add('copied');
+        setTimeout(() => copy.classList.remove('copied'), 1200);
+      });
+    });
+  });
+
+  // открыть по хэшу (если пришли по ссылке)
+  function openFromHash() {
+    const id = decodeURIComponent(location.hash.replace('#', ''));
+    if (!id) return;
+    const el = document.getElementById(id);
+    const item = el ? el.closest('.faq-item') : null;
+    if (item) openItem(item, true);
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
 
 
 
