@@ -241,96 +241,85 @@
   else { bind(); fromQuery(); recalc(); }
 })();
 
-// FAQ accordion + copy link
+// ===== FAQ
+(function initFAQ() {
+  const header = document.querySelector('.site-header');
+  const headerOffset = () => (header?.offsetHeight || 0) + 12; // небольшой люфт
 
-(function(){
-  const list = document.querySelector('.faq-list');
-  if(!list) return;
+  const items = [...document.querySelectorAll('.faq-item')];
+  if (!items.length) return;
 
-  // плавное открытие по max-height
-  function setOpen(item, open){
-    const panel = item.querySelector('.faq-a');
-    const btn = item.querySelector('.faq-q');
-    if(!panel || !btn) return;
-    if(open){
-      item.classList.add('is-open');
-      btn.setAttribute('aria-expanded','true');
-      panel.style.maxHeight = panel.scrollHeight + 'px';
-    }else{
-      item.classList.remove('is-open');
-      btn.setAttribute('aria-expanded','false');
-      panel.style.maxHeight = '0px';
+  // Вспомогательная: задать max-height в зависимости от состояния
+  const setMax = (pane, open) => {
+    if (!pane) return;
+    if (open) {
+      // сначала убираем max-height, чтобы корректно измерить новую высоту
+      pane.style.maxHeight = 'none';
+      const h = pane.scrollHeight;
+      pane.style.maxHeight = h + 'px';
+    } else {
+      pane.style.maxHeight = '0px';
     }
-  }
+  };
 
-  // закрыть все, кроме одного
-  function closeOthers(except){
-    list.querySelectorAll('.faq-item.is-open').forEach(it=>{
-      if(it!==except) setOpen(it,false);
-    });
-  }
+  items.forEach((li) => {
+    const q = li.querySelector('.faq-q');
+    const a = li.querySelector('.faq-a');
+    const copy = li.querySelector('.faq-q__copy');
 
-  // init
-  list.querySelectorAll('.faq-item').forEach(item=>{
-    const btn  = item.querySelector('.faq-q');
-    const copy = item.querySelector('.faq-q__copy');
-    const panel= item.querySelector('.faq-a');
+    // старт: всё закрыто
+    setMax(a, false);
 
-    // кнопка вопроса
-    btn.addEventListener('click', ()=>{
-      const willOpen = !item.classList.contains('is-open');
-      closeOthers(item);
-      setOpen(item, willOpen);
-      if(willOpen){
-        // автоскролл так, чтобы вопрос был под шапкой
-        const y = item.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({top:y, behavior:'smooth'});
-        // обновить хэш (deep-link)
-        if(btn.id) history.replaceState(null,'', '#'+btn.id);
-      }
-    });
+    // клик по вопросу
+    q?.addEventListener('click', () => {
+      const willOpen = !li.classList.contains('open');
 
-    // клавиатура (Space/Enter)
-    btn.addEventListener('keydown', (e)=>{
-      if(e.code==='Space' || e.key===' ' || e.key==='Enter'){ e.preventDefault(); btn.click(); }
-    });
-
-    // копирование ссылки
-    copy?.addEventListener('click', (e)=>{
-      e.stopPropagation();
-        const btnId = btn?.id || '';
-        const itemId = item?.id || '';
-        const hash = btnId || itemId || '';
-        const url = location.origin + location.pathname + (hash ? ('#' + hash) : '');
-      navigator.clipboard.writeText(url).then(()=>{
-        copy.classList.add('copied');
-        setTimeout(()=>copy.classList.remove('copied'), 1200);
+      // (опционально) закрываем остальные
+      items.forEach((other) => {
+        if (other !== li && other.classList.contains('open')) {
+          other.classList.remove('open');
+          const oa = other.querySelector('.faq-a');
+          setMax(oa, false);
+        }
       });
+
+      li.classList.toggle('open', willOpen);
+      setMax(a, willOpen);
+
+      // плавный скролл так, чтобы шапка вопроса оказалась под фикс-хедером
+      if (willOpen) {
+        const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     });
 
-    // при ресайзе пересчитать max-height для открытых
-    window.addEventListener('resize', ()=>{
-      if(item.classList.contains('is-open')){
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      }
+    // «скрепка»: копирование прямой ссылки
+    copy?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = location.origin + location.pathname + '#' + q.id;
+      navigator.clipboard?.writeText(url);
+      copy.classList.add('copied');
+      setTimeout(() => copy.classList.remove('copied'), 1500);
+    });
+
+    // на ресайз пересчитываем высоту открытых панелей
+    window.addEventListener('resize', () => {
+      if (li.classList.contains('open')) setMax(a, true);
     });
   });
 
-  // открыть по хэшу
-  function openFromHash(){
-   const id = decodeURIComponent(location.hash.replace('#',''));
-   if(!id) return;
-   const el = document.getElementById(id);
-   const item = el ? el.closest('.faq-item') : null;
-   if(item){
-     closeOthers(item);
-     setOpen(item,true);
-     const y = item.getBoundingClientRect().top + window.scrollY - 80;
-     window.scrollTo({top:y, behavior:'smooth'});
-   }
- }
-  window.addEventListener('hashchange', openFromHash);
-  openFromHash();
+  // если пришли по якорю — раскрываем нужный пункт и корректно прокручиваем
+  if (location.hash) {
+    const q = document.querySelector(location.hash);
+    const li = q?.closest('.faq-item');
+    const a = li?.querySelector('.faq-a');
+    if (li && q && a) {
+      li.classList.add('open');
+      setMax(a, true);
+      const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
+      window.scrollTo({ top: y, behavior: 'instant' in window ? 'instant' : 'auto' });
+    }
+  }
 })();
 
 // Cookie banner + GA4 loader
@@ -382,4 +371,5 @@
 
 const yEl = document.getElementById('y');
 if (yEl) yEl.textContent = new Date().getFullYear();
+
 
