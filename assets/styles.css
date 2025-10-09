@@ -271,93 +271,113 @@ select:focus{
 .section-title{ font: 700 28px/1.25 'Poppins', system-ui, sans-serif; }
 .section-kicker{ color:#8a8a8a; font-size:14px; margin:0 0 6px; }
 
-/* =========================
-   FAQ — финальные стили
-   ========================= */
+/* ===== FAQ (финальная версия) ===== */
 
-/* Базовая разметка */
-.faq-list, .faq-list > li, .faq-item { list-style: none; margin: 0; padding: 0; }
-.faq-item::marker { content: none; }     /* для Safari */
-.faq-list { padding-left: 0; }
+.faq { margin: 56px 0 48px; }
+.faq-updated { color:#7a7a7a; font-size:.9rem; margin:0 0 10px; }
+.faq-title { margin:0 0 18px; }
 
-/* Шапка вопроса */
+.faq-list,
+.faq-item { list-style:none; margin:0; padding:0; }
+.faq-list { padding-left:0; }
+
+/* карточка вопроса */
 .faq-q{
-  display: flex; align-items: center; gap: 12px;
-  width: 100%; min-height: 56px; padding: 16px 18px;
-  border: 0; border-radius: 14px; background: #fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04);
-  cursor: pointer; position: relative; overflow: visible;
-  transition: background .18s, box-shadow .18s, color .18s;
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px 18px;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 1px 0 rgba(0,0,0,.05);
+  cursor:pointer;
+  transition:background .18s ease, box-shadow .18s ease;
+  position:relative;
+  text-align:left;
 }
-.faq-q:hover{ background: #eefaf4; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
-.faq-q:focus-visible{ outline: 2px solid #7cc4a8; outline-offset: 2px; }
-
-.faq-q__text{ flex: 1 1 auto; min-width: 0; }
-.faq-q__actions{ display: flex; align-items: center; gap: 10px; margin-left: auto; }
-
-/* Иконки справа */
-.faq-q__copy, .faq-q__chev{
-  width: 24px; height: 24px; min-width: 24px;
-  background: transparent no-repeat center/18px 18px;
-  display: inline-block; opacity: .75; transition: opacity .15s, transform .18s;
+.faq-q:hover{ background:#f2faf6; }                /* нежно-зелёный hover */
+.faq-item.is-open .faq-q{
+  background:#eefaf4;                              /* шапка открытого */
+  box-shadow:0 8px 24px rgba(0,0,0,.07);
 }
-.faq-q__copy:hover, .faq-q__chev:hover{ opacity: 1; }
+.faq-q:focus-visible{
+  outline:2px solid #78c6a7;
+  outline-offset:2px;
+}
 
-/* SVG-иконка «скрепка» (копировать ссылку) */
+.faq-q__text{
+  flex:1 1 auto;
+  min-width:0;
+  font-weight:600;
+}
+
+.faq-q__actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* иконки (скрепка и стрелка) через встроенный SVG */
+.faq-q__copy,
+.faq-q__chev{
+  width:24px; height:24px; min-width:24px;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:18px 18px;
+  opacity:.8; transition:opacity .15s ease, transform .2s ease;
+}
+.faq-q__copy:hover,
+.faq-q__chev:hover{ opacity:1; }
+
+/* скрепка */
 .faq-q__copy{
-  background-image: url("data:image/svg+xml;utf8,\
+  background-image:url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238a8a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
 <path d='M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 1 0-7.07-7.07L10 5'/><path d='M14 11a5 5 0 0 0-7.07 0L4.81 13.12a5 5 0 1 0 7.07 7.07L14 19'/></svg>");
 }
 .faq-q__copy.copied{
-  background-image: url("data:image/svg+xml;utf8,\
+  background-image:url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23008050' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
 <path d='M20 6L9 17l-5-5'/></svg>");
-  opacity: 1;
+  opacity:1;
 }
 
-/* SVG-иконка «стрелка» */
+/* стрелка */
 .faq-q__chev{
-  background-image: url("data:image/svg+xml;utf8,\
+  background-image:url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
 <polyline points='6 9 12 15 18 9'/></svg>");
-  transform: rotate(0deg);
+  transform:rotate(0deg);
 }
-.faq-item.open .faq-q__chev{ transform: rotate(180deg); }
+.faq-item.is-open .faq-q__chev{ transform:rotate(180deg); }
 
-/* Панель ответа — закрыта: без «воздуха», чтобы ничего не торчало */
+/* панель ответа — анимируем высоту, содержимое внутри с «воздухом» */
 .faq-a{
-  max-height: 0; overflow: hidden;
-  padding: 0 22px;             /* только боковые, вертикальные = 0 */
-  line-height: 1.6; color: #333; background: #fff;
-  border-top: 1px solid #f0f2f3; border-radius: 0 0 14px 14px;
-  opacity: 0;
-  transition: max-height .28s ease, padding .28s ease, opacity .20s ease;
+  overflow:hidden;
+  height:0;                                     /* закрыта */
+  transition:height .26s ease;                  /* плавное открытие/закрытие */
+}
+.faq-a__inner{
+  padding:16px 22px 22px;
+  line-height:1.6;
 }
 
-/* Открыта — добавляем «воздух» и показываем */
-.faq-item.open .faq-a{
-  padding: 16px 22px 22px;
-  opacity: 1;
+/* аккуратные списки внутри */
+.faq-a ul, .faq-a ol { margin:8px 0 0; padding-left:1.25rem; }
+.faq-a li { margin:6px 0; }
+.faq-a ul { list-style:disc; }
+.faq-a ol { list-style:decimal; }
+.faq-a ::marker { color:#222; font-weight:600; }
+
+.faq-a p { margin:8px 0 0; }
+.faq-a a{
+  color:#2f7d68;
+  text-decoration:underline dotted;
+  text-underline-offset:2px;
 }
+.faq-a a:hover{ color:#1e6a57; text-decoration-style:solid; }
 
-/* Ритм внутри ответа и списки */
-.faq-a > *{ margin: 0; }
-.faq-a > * + *{ margin-top: 10px; }
-
-.faq-a ul, .faq-a ol{ padding-left: 1.25rem; margin-top: 8px; }
-.faq-a li{ margin: 6px 0; }
-.faq-a ul{ list-style: disc; }
-.faq-a ul ::marker{ color: #222; }
-.faq-a ol{ list-style: decimal; }
-.faq-a ol ::marker{ color: #222; font-weight: 600; }
-.faq-a ul ul{ list-style: circle; }
-.faq-a ol ol{ list-style: lower-alpha; }
-
-/* Открытая шапка — лёгкая зелёная подсветка */
-.faq-item.open .faq-q{
-  background: #eaf7f0;
-  box-shadow: 0 8px 24px rgba(0,0,0,.08);
-}
-
+/* интервал между пунктами */
+.faq-item + .faq-item{ margin-top:12px; }
 
