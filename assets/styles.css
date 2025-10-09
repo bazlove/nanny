@@ -501,3 +501,32 @@ select:focus{
 .faq-item{ margin-bottom: 12px; }
 
 
+
+/* Панель ответа: закрыта по умолчанию и анимируется по max-height */
+.faq-a{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 22px; /* горизонтальные оставляем, вертикальные добавим в open */
+  transition:
+    max-height .3s ease,
+    padding .2s ease,
+    opacity .2s ease;
+}
+
+/* Открытое состояние: показываем, добавляем «воздух» */
+.faq-item.is-open .faq-a{
+  opacity: 1;
+  padding: 16px 22px 22px;  /* сверху | по бокам | снизу */
+}
+
+/* Иконка-стрелка: поворот с плавным переходом */
+.faq-q__chev{
+  transform: rotate(0deg);
+  transition: transform .25s ease;
+}
+
+.faq-item.is-open .faq-q__chev{
+  transform: rotate(180deg);
+}
+
