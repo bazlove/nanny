@@ -274,8 +274,8 @@ select:focus{
 /* ===== FAQ (финальная версия) ===== */
 
 .faq { margin: 56px 0 48px; }
-.faq-updated { color:#7a7a7a; font-size:.9rem; margin:0 0 10px; }
-.faq-title { margin:0 0 18px; }
+.faq-updated { color:#7a7a7a; font-size:.9rem; margin-bottom: 20px !important; }
+.faq-title { margin-bottom: 6px !important; }
 
 .faq-list,
 .faq-item { list-style:none; margin:0; padding:0; }
@@ -288,16 +288,17 @@ select:focus{
   align-items:center;
   gap:12px;
   padding:16px 18px;
-  border-radius:14px;
+  border: 1px solid #d2d6db;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
   background:#fff;
-  box-shadow:0 1px 0 rgba(0,0,0,.05);
   cursor:pointer;
   transition:background .18s ease, box-shadow .18s ease;
   position:relative;
   text-align:left;
 }
-.faq-q:hover{ background:#f2faf6; }                /* нежно-зелёный hover */
+.faq-q:hover{ border-color: #c8cfd6; background:#f2faf6; }                /* нежно-зелёный hover */
 .faq-item.is-open .faq-q{
+  border-color: #b9e0d1;
   background:#eefaf4;                              /* шапка открытого */
   box-shadow:0 8px 24px rgba(0,0,0,.07);
 }
@@ -380,4 +381,5 @@ select:focus{
 
 /* интервал между пунктами */
 .faq-item + .faq-item{ margin-top:12px; }
+
 
