@@ -382,4 +382,31 @@ select:focus{
 /* интервал между пунктами */
 .faq-item + .faq-item{ margin-top:12px; }
 
+/* ===== FAQ: точечные правки отступов и рамки (совместимо с текущей разметкой) ===== */
+
+/* 1) Меньше расстояние между заголовком «Ответы…» и строкой «Обновлено» */
+.faq .section-title{
+  /* было больше — делаем компактнее */
+  margin-bottom: 6px !important;            /* можно 4–10px по вкусу */
+}
+
+/* 2) Больше «воздуха» от «Обновлено» до первого аккордеона */
+.faq .section-kicker{
+  margin-bottom: 20px !important;           /* можно 16–28px по вкусу */
+}
+
+/* 3) Мягкая серая рамка у вопроса + корректные состояния */
+.faq .faq-q{
+  border: 1px solid #d2d6db !important;     /* мягкий серый в тон скрепке */
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.faq .faq-q:hover{
+  border-color: #c8cfd6;
+  background: #f2faf6;                      /* ваш нежно-зелёный hover */
+}
+.faq .faq-item.is-open .faq-q{
+  border-color: #b9e0d1;                    /* нежно-зелёный контур */
+  background: #eefaf4;                      /* как и прежде */
+}
+
 
