@@ -289,6 +289,7 @@ select:focus{
   gap:12px;
   padding:16px 18px;
   border: 1px solid #d2d6db;
+  border-radius:12px;
   box-shadow: 0 1px 0 rgba(0,0,0,.04);
   background:#fff;
   cursor:pointer;
@@ -408,5 +409,6 @@ select:focus{
   border-color: #b9e0d1;                    /* нежно-зелёный контур */
   background: #eefaf4;                      /* как и прежде */
 }
+
 
 
