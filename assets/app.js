@@ -274,16 +274,19 @@
       const willOpen = !li.classList.contains('open');
 
       // (опционально) закрываем остальные
-      items.forEach((other) => {
-        if (other !== li && other.classList.contains('open')) {
-          other.classList.remove('open');
-          const oa = other.querySelector('.faq-a');
-          setMax(oa, false);
-        }
-      });
-
+      items.forEach(other => {
+    if (other !== li && other.classList.contains('open')) {
+      other.classList.remove('open');
+      const oa = other.querySelector('.faq-a');
+      setMax(oa, false);
+      const oq = other.querySelector('.faq-q');
+      oq?.setAttribute('aria-expanded','false');
+    }
+  });
+ 
       li.classList.toggle('open', willOpen);
-      setMax(a, willOpen);
+        q?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+          setMax(a, willOpen);
 
       // плавный скролл так, чтобы шапка вопроса оказалась под фикс-хедером
       if (willOpen) {
@@ -314,10 +317,11 @@
     const a = li?.querySelector('.faq-a');
     if (li && q && a) {
       li.classList.add('open');
-      setMax(a, true);
-      const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
-      window.scrollTo({ top: y, behavior: 'instant' in window ? 'instant' : 'auto' });
-    }
+        q.setAttribute('aria-expanded','true');
+          setMax(a, true);
+          const y = q.getBoundingClientRect().top + window.scrollY - headerOffset();
+        window.scrollTo({ top: y, behavior: 'instant' in window ? 'instant' : 'auto' });
+}
   }
 })();
 
@@ -370,6 +374,7 @@
 
 const yEl = document.getElementById('y');
 if (yEl) yEl.textContent = new Date().getFullYear();
+
 
 
 
