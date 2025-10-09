@@ -253,14 +253,13 @@
   const setMax = (pane, open) => {
     if (!pane) return;
     if (open) {
-      // сначала убираем max-height, чтобы корректно измерить новую высоту
-      pane.style.maxHeight = 'none';
-      const h = pane.scrollHeight;
-      pane.style.maxHeight = h + 'px';
-    } else {
-      pane.style.maxHeight = '0px';
-    }
-  };
+      const target = pane.scrollHeight;        // реальная высота контента
+    pane.style.maxHeight = target + 'px';    // <-- ключевой момент
+  } else {
+    // схлопываем
+    pane.style.maxHeight = '0px';
+  }
+};
 
   items.forEach((li) => {
     const q = li.querySelector('.faq-q');
@@ -371,5 +370,6 @@
 
 const yEl = document.getElementById('y');
 if (yEl) yEl.textContent = new Date().getFullYear();
+
 
 
