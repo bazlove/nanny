@@ -464,6 +464,42 @@ select:focus{
 }
 .slot-cta:hover{ background:#eef6ff; }
 
+/* Базовые цвета */
+.avail-badge { --ok:#22c55e; --tom:#3b82f6; --next:#f59e0b; --none:#e11d48; }
+.avail-badge .dot{ position:relative; width:8px; height:8px; border-radius:50%; background:var(--ok); }
+
+/* Включаем пульсацию, когда есть ближайший слот */
+.avail-badge.is-live .dot::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:inherit;
+  box-shadow:0 0 0 0 rgba(34,197,94,.55);
+  animation:pulse 1.8s ease-out infinite;
+}
+
+/* Цвет «точки» по состоянию */
+.avail-badge.is-today   .dot{ background:var(--ok);  }
+.avail-badge.is-tomorrow.dot,.avail-badge.is-tomorrow .dot{ background:var(--tom); }
+.avail-badge.is-next    .dot{ background:var(--next); }
+.avail-badge.is-none    .dot{ background:var(--none); }
+
+/* Подбираем цвет «ореола» под состояние */
+.avail-badge.is-today   .dot::after{ box-shadow:0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent); }
+.avail-badge.is-tomorrow.is-live .dot::after{ box-shadow:0 0 0 0 color-mix(in srgb, var(--tom) 55%, transparent); }
+.avail-badge.is-next.is-live .dot::after{ box-shadow:0 0 0 0 color-mix(in srgb, var(--next) 55%, transparent); }
+
+/* Анимация пульса */
+@keyframes pulse{
+  0%   { box-shadow:0 0 0 0   currentColor;     opacity:1; }
+  70%  { box-shadow:0 0 0 10px transparent;     opacity:1; }
+  100% { box-shadow:0 0 0 0   transparent;      opacity:1; }
+}
+
+/* Уважение настроек доступности */
+@media (prefers-reduced-motion: reduce){
+  .avail-badge, .avail-badge .dot{ animation:none !important; }
+  .avail-badge .dot::after{ content:none !important; }
+}
 
 
 
