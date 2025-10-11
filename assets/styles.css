@@ -505,31 +505,13 @@ section[id], #services, #calc, #faq, #contact, #main {
 .header-bar .brand{ gap: 18px; }
 @media (min-width:1024px){ .header-bar .brand{ gap: 20px; } }
 
-/* Десктоп и мобайл: гарантируем комфортный таргет */
-.header-nav a,
-.mobile-nav a,
-.lang-btn,
-.burger {
-  min-height: 44px;                 /* основной таргет */
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 12px;               /* можно подправить под визуал */
-}
-
-/* Чуть просторнее на тач-экранах */
-@media (hover: none) {
-  .header-nav a,
-  .mobile-nav a,
-  .lang-btn { padding: 12px 14px; }
-}
-
 .tz-tip{
   margin-left:8px; border:0; background:transparent; cursor:help;
   width:20px; height:20px; border-radius:50%;
   font-weight:700; color:#6b7280;
 }
 .tz-tip:hover{ color:#1f2937; }
+
 
 
 
