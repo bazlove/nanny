@@ -451,64 +451,69 @@ if (yEl) yEl.textContent = new Date().getFullYear();
     `;
   };
 
-  // === НОВАЯ ВЕРСИЯ updateBadge c присвоением классов для пульса ===
-  const updateBadge = (slots) => {
-    if (!badge) return;
+  // === НОВАЯ ВЕРСИЯ updateBadge c сохранением .dot для пульса ===
+const updateBadge = (slots) => {
+  if (!badge) return;
 
-    const now = Date.now();
-    const todayYMD    = new Date().toISOString().slice(0,10);
-    const tomorrowYMD = new Date(Date.now() + 86400000).toISOString().slice(0,10);
+  const now = Date.now();
+  const todayYMD    = new Date().toISOString().slice(0,10);
+  const tomorrowYMD = new Date(Date.now() + 86400000).toISOString().slice(0,10);
 
-    const getStartTs = (s) => s.startTs ?? Date.parse(s.startISO || 0);
-    const timeLabel  = (s) => `${safeStart(s)}–${safeEnd(s)}`;
+  const getStartTs = (s) => s.startTs ?? Date.parse(s.startISO || 0);
+  const timeLabel  = (s) => `${safeStart(s)}–${safeEnd(s)}`;
 
-    // утилита присвоения классов состояния
-    const setState = (state, live=true) => {
-      badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
-      badge.classList.add(state);
-      if (live) badge.classList.add('is-live'); // включает пульсацию
-      badge.style.display = 'inline-flex';
-    };
-
-    // 1) сегодня
-    const todaySlot = slots
-      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === todayYMD)
-      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-    if (todaySlot){
-      badge.textContent = `Свободно сегодня ${timeLabel(todaySlot)}`;
-      setState('is-today', true);
-      return;
-    }
-
-    // 2) завтра
-    const tomorrowSlot = slots
-      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === tomorrowYMD)
-      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-    if (tomorrowSlot){
-      badge.textContent = `Свободно завтра ${timeLabel(tomorrowSlot)}`;
-      setState('is-tomorrow', true);
-      return;
-    }
-
-    // 3) ближайший следующий
-    const next = slots
-      .filter(s => getStartTs(s) > now)
-      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-    if (next){
-      const d   = new Date(next.startISO || getStartTs(next));
-      const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' });
-      badge.textContent = `Ближайший слот: ${day} • ${timeLabel(next)}`;
-      setState('is-next', true);
-      return;
-    }
-
-    // 4) ничего — по запросу
-    badge.textContent = 'Свободно: по запросу';
-    setState('is-none', false); // без пульса, так как свободных слотов нет
+  // маленький хелпер: всегда вставляем точку перед текстом
+  const setBadgeText = (txt) => {
+    badge.innerHTML = `<span class="dot" aria-hidden="true"></span> ${txt}`;
+    badge.style.display = 'inline-flex';
   };
+
+  // утилита присвоения классов состояния
+  const setState = (state, live = true) => {
+    badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
+    badge.classList.add(state);
+    if (live) badge.classList.add('is-live');   // включает пульсацию
+  };
+
+  // 1) сегодня
+  const todaySlot = slots
+    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === todayYMD)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (todaySlot){
+    setBadgeText(`Свободно сегодня ${timeLabel(todaySlot)}`);
+    setState('is-today', true);
+    return;
+  }
+
+  // 2) завтра
+  const tomorrowSlot = slots
+    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === tomorrowYMD)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (tomorrowSlot){
+    setBadgeText(`Свободно завтра ${timeLabel(tomorrowSlot)}`);
+    setState('is-tomorrow', true);
+    return;
+  }
+
+  // 3) ближайший следующий
+  const next = slots
+    .filter(s => getStartTs(s) > now)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (next){
+    const d   = new Date(next.startISO || getStartTs(next));
+    const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' });
+    setBadgeText(`Ближайший слот: ${day} • ${timeLabel(next)}`);
+    setState('is-next', true);
+    return;
+  }
+
+  // 4) ничего — по запросу (без пульса)
+  setBadgeText('Свободно: по запросу');
+  setState('is-none', false);
+};
 
   // ---- load & render -------------------------------------------
   fetch(API_SLOTS_URL, { cache: 'no-store' })
@@ -536,6 +541,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
       }
     });
 })();
+
 
 
 
