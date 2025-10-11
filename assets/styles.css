@@ -535,14 +535,82 @@ section[id], #services, #calc, #faq, #contact, #main {
 .header-bar .brand{ gap: 18px; }
 @media (min-width:1024px){ .header-bar .brand{ gap: 20px; } }
 
-/* аккуратно пристыковать к бейджу, остальное — берём из стилей калькулятора (.info, .i, .tt) */
-.tz-tip.info{ margin-left:8px; vertical-align:middle; }
-@media (max-width:700px){
-  .tz-tip.info{ display:none; }  /* можно скрыть на очень узких экранах */
+/* === Tooltip в шапке рядом с бейджем === */
+.site-header .tz-tip.info{
+  display:inline-flex;
+  align-items:center;
+  margin-left:8px;           /* небольшой отступ от бейджа */
+  vertical-align:middle;
+  position:relative;
+  z-index:10;
 }
 
+/* круглая кнопка "i" — стилистика как в калькуляторе */
+.site-header .tz-tip.info .i{
+  width:18px; height:18px;
+  border-radius:999px;
+  border:1px solid #b9e0d1;
+  background:#f2faf6;
+  color:#2b6e59;
+  font-size:12px; line-height:16px;
+  display:inline-flex; align-items:center; justify-content:center;
+  cursor:help;
+  padding:0;
+  outline:0;
+  transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.site-header .tz-tip.info .i:hover,
+.site-header .tz-tip.info .i:focus-visible{
+  background:#eefaf4;
+  box-shadow:0 0 0 2px rgba(120,198,167,.25);
+}
 
+/* само «облачко» подсказки */
+.site-header .tz-tip.info .tt{
+  position:absolute;
+  left:0; top:100%;
+  transform: translateY(8px);
+  min-width:260px; max-width:320px;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#fff;
+  border:1px solid #e2e6ea;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  color:#333;
+  font-size:14px;
+  line-height:1.45;
 
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .15s ease, transform .15s ease;
+}
+
+/* маленькая «стрелка» у облачка */
+.site-header .tz-tip.info .tt::before{
+  content:"";
+  position:absolute;
+  top:-6px; left:12px;
+  width:10px; height:10px;
+  background:#fff;
+  border-left:1px solid #e2e6ea;
+  border-top:1px solid #e2e6ea;
+  transform:rotate(45deg);
+}
+
+/* показ по hover и по фокусу с клавиатуры */
+.site-header .tz-tip.info:hover .tt,
+.site-header .tz-tip.info:focus-within .tt{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform: translateY(4px);
+}
+
+/* на очень узких экранах можно скрыть подсказку, чтобы не перекрывала хедер */
+@media (max-width:700px){
+  .site-header .tz-tip.info{ display:none; }
+}
 
 
 
