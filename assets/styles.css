@@ -410,27 +410,30 @@ select:focus{
   gap:6px;
   padding:6px 10px;
   border-radius:999px;
-  background:#eaf7f0;        /* нежно-зелёная подложка */
+  background:#eaf7f0;              /* нежно-зелёная подложка */
   color:#2b6e59;
   border:1px solid #b9e0d1;
   font-size:.9rem;
   line-height:1;
+  position:relative;               /* чтобы ореол не обрезался */
+  overflow:visible;
 }
 
-.avail-badge .dott{
+/* сама точка-статус */
+.avail-badge .dot{
   width:8px;
   height:8px;
   border-radius:50%;
-  position:relative;          /* нужно для пульс-ореола */
+  position:relative;               /* нужно для пульс-ореола */
 }
 
 /* Базовые CSS-переменные для цветов состояний */
 .avail-badge{
-  --ok:   #22c55e;            /* зелёный: сегодня */
-  --tom:  #3b82f6;            /* синий: завтра */
-  --next: #f59e0b;            /* янтарь: ближайший */
-  --none: #e11d48;            /* розовый: нет слотов */
-  --pulse: rgba(34,197,94,.50); /* цвет пульса (по умолчанию под ok) */
+  --ok:   #22c55e;                 /* зелёный: сегодня */
+  --tom:  #3b82f6;                 /* синий: завтра */
+  --next: #f59e0b;                 /* янтарь: ближайший */
+  --none: #e11d48;                 /* розовый: нет слотов */
+  --pulse: rgba(34,197,94,.50);    /* цвет ореола по умолчанию (ok) */
 }
 
 /* Цвет точки по состоянию */
@@ -440,12 +443,12 @@ select:focus{
 .avail-badge.is-none     .dot{ background: var(--none); }
 
 /* Подбираем цвет «ореола» под состояние */
-.avail-badge.is-today    { --pulse: rgba(34,197,94,.50); }   /* ok   */
-.avail-badge.is-tomorrow { --pulse: rgba(59,130,246,.50); }  /* tom  */
-.avail-badge.is-next     { --pulse: rgba(245,158,11,.50); }  /* next */
-.avail-badge.is-none     { --pulse: rgba(225,29,72,.45); }   /* none */
+.avail-badge.is-today    { --pulse: rgba(34,197,94,.50); }
+.avail-badge.is-tomorrow { --pulse: rgba(59,130,246,.50); }
+.avail-badge.is-next     { --pulse: rgba(245,158,11,.50); }
+.avail-badge.is-none     { --pulse: rgba(225,29,72,.45); }
 
-/* Пульс у состояний, где есть ближайшее окно (добавляем класс is-live из JS) */
+/* Пульс только у точки при наличии ближайшего окна (is-live даёт JS) */
 .avail-badge.is-live .dot::after{
   content:"";
   position:absolute;
@@ -455,9 +458,12 @@ select:focus{
   animation:pulse 1.8s ease-out infinite;
 }
 
-/* «Уважение» к настройкам доступности: отключаем анимации */
+/* «Уважение» к настройкам доступности */
 @media (prefers-reduced-motion: reduce){
-  .avail-badge.is-live .dot::after{ content:none !important; animation:none !important; }
+  .avail-badge.is-live .dot::after{
+    content:none !important;
+    animation:none !important;
+  }
 }
 
 /* Анимация пульса (ореол расходится и растворяется) */
@@ -491,7 +497,6 @@ select:focus{
   text-decoration:none;
 }
 .slot-cta:hover{ background:#eef6ff; }
-
 
 
 
