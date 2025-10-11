@@ -505,12 +505,12 @@ section[id], #services, #calc, #faq, #contact, #main {
 .header-bar .brand{ gap: 18px; }
 @media (min-width:1024px){ .header-bar .brand{ gap: 20px; } }
 
-.tz-tip{
-  margin-left:8px; border:0; background:transparent; cursor:help;
-  width:20px; height:20px; border-radius:50%;
-  font-weight:700; color:#6b7280;
+/* аккуратно пристыковать к бейджу, остальное — берём из стилей калькулятора (.info, .i, .tt) */
+.tz-tip.info{ margin-left:8px; vertical-align:middle; }
+@media (max-width:700px){
+  .tz-tip.info{ display:none; }  /* можно скрыть на очень узких экранах */
 }
-.tz-tip:hover{ color:#1f2937; }
+
 
 
 
