@@ -390,72 +390,107 @@ if (yEl) yEl.textContent = new Date().getFullYear();
   openFromHash();
 })();
 
-/* ===== Slots: fetch + рендер карточек + бейдж в шапке ===== */
+/* ===== Slots: fetch + render per-day cards + header badge ===== */
 (function initSlots(){
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxCoAF6fuUgLRPM50DFZ0ItN-cV0QMZpec4JMMezZ7Bkx2ErEG032rYk2kwTq0sXZoA/exec'; // ← подставьте свой URL
+  const API_SLOTS_URL = 'https://script.google.com/macros/s/AKfycbxCoAF6fuUgLRPM50DFZ0ItN-cV0QMZpec4JMMezZ7Bkx2ErEG032rYk2kwTq0sXZoA/exec';
 
-  const wrap  = document.querySelector('#slotsList');        // контейнер карточек
+  const wrap  = document.querySelector('#slotsList');        // контейнер карточек (grid)
   const badge = document.querySelector('#headerFreeBadge');  // бейдж в шапке
+  if (!wrap) return;
 
-  if(!wrap) return;
+  // ---- helpers -------------------------------------------------
+  const pad2 = n => String(n).padStart(2,'0');
+  const timeFromISO = iso => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  };
+  const fmtDateRUshort = ymd => {
+    // ymd: 'YYYY-MM-DD'
+    if (!ymd) return '';
+    const [y,m,d] = ymd.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m-1, d));
+    // пример: "вт, 15.10"
+    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+  };
 
-  fetch(GAS_URL, { cache: 'no-store' })
+  const safeStart = s => s.startLabel || timeFromISO(s.startISO);
+  const safeEnd   = s => s.endLabel   || timeFromISO(s.endISO);
+
+  const groupByDate = (slots) => {
+    const map = new Map();
+    for (const s of slots) {
+      const key = s.date || (s.startISO ? s.startISO.slice(0,10) : 'unknown');
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(s);
+    }
+    // сортируем интервалы внутри дня по началу
+    for (const arr of map.values()) {
+      arr.sort((a,b) => (a.startTs ?? Date.parse(a.startISO||0)) - (b.startTs ?? Date.parse(b.startISO||0)));
+    }
+    // вернём как массив [{date, items:[]}] — удобно сортировать по дате
+    const out = Array.from(map.entries()).map(([date, items]) => ({ date, items }));
+    out.sort((a,b) => a.date.localeCompare(b.date));
+    return out;
+  };
+
+  const makeTimesLine = (items) => items
+    .map(s => `${safeStart(s)}–${safeEnd(s)}`)
+    .join(', ');
+
+  const cardHTML = (date, items) => {
+    const dayLabel = (items[0] && items[0].dayLabel) ? items[0].dayLabel : fmtDateRUshort(date);
+    const times    = makeTimesLine(items);
+    const href     = '#contact'; // при желании подставь сюда ссылку на форму
+    return `
+      <div class="slot-card">
+        <div class="slot-date">${dayLabel}</div>
+        <div class="slot-time">${times}</div>
+        <a class="slot-cta" href="${href}">Запросить</a>
+      </div>
+    `;
+  };
+
+  const updateBadge = (slots) => {
+    if (!badge) return;
+    const today = new Date().toISOString().slice(0,10);
+    // берём первый доступный интервал за сегодня (если он есть)
+    const todaySlot = slots
+      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === today)
+      .sort((a,b) => (a.startTs ?? Date.parse(a.startISO||0)) - (b.startTs ?? Date.parse(b.startISO||0)))[0];
+
+    if (todaySlot) {
+      badge.textContent = `Свободно сегодня ${safeStart(todaySlot)}–${safeEnd(todaySlot)}`;
+    } else {
+      badge.textContent = 'Свободно: по запросу';
+    }
+    badge.style.display = 'inline-flex';
+  };
+
+  // ---- load & render -------------------------------------------
+  fetch(API_SLOTS_URL, { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
-      const slots = Array.isArray(data?.slots) ? data.slots : [];
-      if (!slots.length) {
-        wrap.innerHTML = '<p>Нет свободных слотов на ближайшую неделю.</p>';
-        if (badge) { badge.textContent = 'Свободно: по запросу'; badge.style.display='inline-flex'; }
+      const raw = Array.isArray(data?.slots) ? data.slots : (Array.isArray(data) ? data : []);
+      updateBadge(raw);
+
+      if (!raw.length) {
+        wrap.innerHTML = '<p class="muted">Свободных слотов на неделю не найдено.</p>';
         return;
       }
 
-      // оставим только ближайшие 5 карточек
-      const top = slots.slice(0,5);
-      wrap.innerHTML = top.map(s => cardHTML(s)).join('');
+      const days = groupByDate(raw);     // [{date, items:[...]}, ...]
+      const topDays = days.slice(0, 5);  // показываем первые 5 дней (по возрастанию)
 
-      // бейдж в шапке: первый слот сегодняшнего дня
-      if (badge) {
-        const today = new Date().toISOString().slice(0,10);
-        const todaySlot = slots.find(s => s.date === today);
-        badge.textContent = todaySlot ? `Свободно сегодня ${todaySlot.start}–${todaySlot.end}` : 'Свободно: по запросу';
-        badge.style.display = 'inline-flex';
-      }
+      wrap.innerHTML = topDays.map(d => cardHTML(d.date, d.items)).join('');
     })
     .catch(err => {
       console.warn('Slots API error:', err);
-      wrap.innerHTML = '<p>Слоты временно недоступны. Напишите мне — подберём время.</p>';
-      if (badge) { badge.textContent = 'Свободно: по запросу'; badge.style.display='inline-flex'; }
+      wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне — подберём время.</p>';
+      if (badge) {
+        badge.textContent = 'Свободно: по запросу';
+        badge.style.display = 'inline-flex';
+      }
     });
-
-  function cardHTML(s){
-    const nice = formatDate(s.date);
-    const href = prefFillForm(s); // можно заменить на якорь контактов
-    return `
-      <div class="slot-card">
-        <div class="slot-date">${nice}</div>
-        <div class="slot-time">${s.start}–${s.end}</div>
-        <a class="slot-cta" href="${href}" target="_blank" rel="noopener">Запросить</a>
-      </div>
-    `;
-  }
-
-  function formatDate(ymd){
-    const [y,m,d] = ymd.split('-').map(Number);
-    const dt = new Date(Date.UTC(y, m-1, d));
-    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
-  }
-
-  // TODO: подставьте свою Google Form (или якорь контактов "#contact")
-  function prefFillForm(s){
-    // Пример с якорем на блок контактов:
-    // return '#contact';
-    // Пример с Google Form (замените на вашу ссылку и entry.*):
-    // const base = 'https://docs.google.com/forms/d/e/ВАШ_FORM_ID/viewform';
-    // const q = new URLSearchParams({ 'entry.1111111111': `${s.date} ${s.start}-${s.end}` });
-    // return `${base}?${q.toString()}`;
-    return '#contact';
-  }
 })();
-
-
 
