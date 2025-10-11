@@ -12,7 +12,7 @@
 (function(){
   const I18N = {
     ru: {
-      nav_services:'Услуги', nav_reviews:'Отзывы', nav_price:'Цена', nav_faq:'FAQ',
+      nav_services:'Услуги', nav_reviews:'Отзывы', nav_price:'Цена', nav_faq:'FAQ', nav_contact: "Контакты",
       city:'Нови-Сад',
       hero_title:'Надёжная няня в Нови-Саде — спокойно работайте из дома',
       hero_sub:'CPR/First Aid, фото-отчёт после визита, развивающие занятия, моторика по договорённости.',
@@ -21,7 +21,7 @@
       hero_micro:'Опыт: воспитатель детсада и детский фитнес-тренер • 4.9★ по отзывам'
     },
     sr: {
-      nav_services:'Usluge', nav_reviews:'Utisci', nav_price:'Cena', nav_faq:'FAQ',
+      nav_services:'Usluge', nav_reviews:'Utisci', nav_price:'Cena', nav_faq:'FAQ', nav_contact: "Kontakt",
       city:'Novi Sad',
       hero_title:'Pouzdana dadilja u Novom Sadu — radite od kuće bez stresa',
       hero_sub:'CPR/Prva pomoć, foto-izveštaj posle posete, razvojne aktivnosti, motorika po dogovoru.',
@@ -541,6 +541,7 @@ const updateBadge = (slots) => {
       }
     });
 })();
+
 
 
 
