@@ -505,7 +505,7 @@ const updateBadge = (slots) => {
   if (next){
     const d   = new Date(next.startISO || getStartTs(next));
     const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' });
-    setBadgeText(`Ближайший слот: ${day} • ${timeLabel(next)}`);
+    setBadgeText(`Ближайший слот: ${day} | ${timeLabel(next)}`);
     setState('is-next', true);
     return;
   }
@@ -541,6 +541,7 @@ const updateBadge = (slots) => {
       }
     });
 })();
+
 
 
 
