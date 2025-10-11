@@ -390,6 +390,71 @@ if (yEl) yEl.textContent = new Date().getFullYear();
   openFromHash();
 })();
 
+/* ===== Slots: fetch + рендер карточек + бейдж в шапке ===== */
+(function initSlots(){
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxCoAF6fuUgLRPM50DFZ0ItN-cV0QMZpec4JMMezZ7Bkx2ErEG032rYk2kwTq0sXZoA/exec'; // ← подставьте свой URL
 
+  const wrap  = document.querySelector('#slotsList');        // контейнер карточек
+  const badge = document.querySelector('#headerFreeBadge');  // бейдж в шапке
+
+  if(!wrap) return;
+
+  fetch(GAS_URL, { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => {
+      const slots = Array.isArray(data?.slots) ? data.slots : [];
+      if (!slots.length) {
+        wrap.innerHTML = '<p>Нет свободных слотов на ближайшую неделю.</p>';
+        if (badge) { badge.textContent = 'Свободно: по запросу'; badge.style.display='inline-flex'; }
+        return;
+      }
+
+      // оставим только ближайшие 5 карточек
+      const top = slots.slice(0,5);
+      wrap.innerHTML = top.map(s => cardHTML(s)).join('');
+
+      // бейдж в шапке: первый слот сегодняшнего дня
+      if (badge) {
+        const today = new Date().toISOString().slice(0,10);
+        const todaySlot = slots.find(s => s.date === today);
+        badge.textContent = todaySlot ? `Свободно сегодня ${todaySlot.start}–${todaySlot.end}` : 'Свободно: по запросу';
+        badge.style.display = 'inline-flex';
+      }
+    })
+    .catch(err => {
+      console.warn('Slots API error:', err);
+      wrap.innerHTML = '<p>Слоты временно недоступны. Напишите мне — подберём время.</p>';
+      if (badge) { badge.textContent = 'Свободно: по запросу'; badge.style.display='inline-flex'; }
+    });
+
+  function cardHTML(s){
+    const nice = formatDate(s.date);
+    const href = prefFillForm(s); // можно заменить на якорь контактов
+    return `
+      <div class="slot-card">
+        <div class="slot-date">${nice}</div>
+        <div class="slot-time">${s.start}–${s.end}</div>
+        <a class="slot-cta" href="${href}" target="_blank" rel="noopener">Запросить</a>
+      </div>
+    `;
+  }
+
+  function formatDate(ymd){
+    const [y,m,d] = ymd.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m-1, d));
+    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+  }
+
+  // TODO: подставьте свою Google Form (или якорь контактов "#contact")
+  function prefFillForm(s){
+    // Пример с якорем на блок контактов:
+    // return '#contact';
+    // Пример с Google Form (замените на вашу ссылку и entry.*):
+    // const base = 'https://docs.google.com/forms/d/e/ВАШ_FORM_ID/viewform';
+    // const q = new URLSearchParams({ 'entry.1111111111': `${s.date} ${s.start}-${s.end}` });
+    // return `${base}?${q.toString()}`;
+    return '#contact';
+  }
+})();
 
 
