@@ -39,7 +39,7 @@ section{padding:64px 0}
 .lang-switch .lang-btn:hover{color:#16324a}
 .lang-switch .lang-btn.active{color:#0f2a45}
 
-/* Availability badge */
+/* Availability badge
 .avail-badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:6px 10px;border-radius:999px;background:#eef8f1;color:#1d4d2e;box-shadow:inset 0 1px 0 rgba(0,0,0,.03)}
 .avail-badge .dot{width:8px;height:8px;border-radius:50%}
 .avail-badge.ok .dot{background:#22c55e}
@@ -500,6 +500,7 @@ select:focus{
   text-decoration:none;
 }
 .slot-cta:hover{ background:#eef6ff; }
+
 
 
 
