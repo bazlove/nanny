@@ -524,4 +524,12 @@ section[id], #services, #calc, #faq, #contact, #main {
   .lang-btn { padding: 12px 14px; }
 }
 
+.tz-tip{
+  margin-left:8px; border:0; background:transparent; cursor:help;
+  width:20px; height:20px; border-radius:50%;
+  font-weight:700; color:#6b7280;
+}
+.tz-tip:hover{ color:#1f2937; }
+
+
 
