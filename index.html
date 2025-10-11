@@ -26,47 +26,51 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-bar">
-      <div class="brand">
-        <span class="logo">👶</span>
-        <div class="brand-meta">
-          <strong>[Имя няни]</strong>
-          <small class="i18n" data-key="city">Нови-Сад</small>
-        </div>
-        <span id="headerFreeBadge" class="avail-badge" aria-live="polite"><span class="dot" aria-hidden="true"></span> Проверяю свободные слоты…</span>
+  <div class="container header-bar">
+    <div class="brand">
+      <span class="logo">👶</span>
+      <div class="brand-meta">
+        <strong>[Имя няни]</strong>
+        <small class="i18n" data-key="city">Нови-Сад</small>
       </div>
+      <span id="headerFreeBadge" class="avail-badge" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span> Проверяю свободные слоты…
+      </span>
+    </div>
 
-      <nav class="header-nav" aria-label="Основная навигация">
-        <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
-        <a href="#slots" class="i18n" data-key="nav_slots">Свободные слоты</a>
-        <a href="#calc" class="i18n" data-key="nav_price">Стоимость</a>
-        <a href="#faq" class="i18n" data-key="nav_faq">Ответы</a>
-        <a href="#contact" class="i18n" data-key="nav_contact">Контакты</a>
-      </nav>
+    <!-- навигация (desktop) -->
+    <nav class="header-nav" aria-label="Основная навигация">
+      <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
+      <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
+      <a href="#calc"     class="i18n" data-key="nav_price">Цена</a>
+      <a href="#faq"      class="i18n" data-key="nav_faq">FAQ</a>
+    </nav>
 
+    <div class="lang-switch" role="group" aria-label="Выбор языка">
+      <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
+      <span class="sep">/</span>
+      <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
+    </div>
+
+    <button class="burger" aria-expanded="false" aria-controls="mnav" aria-label="Открыть меню">☰</button>
+  </div>
+
+  <!-- навигация (mobile) -->
+  <div id="mnav" class="mobile-nav" hidden>
+    <div class="mobile-lang">
       <div class="lang-switch" role="group" aria-label="Выбор языка">
         <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
         <span class="sep">/</span>
         <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
       </div>
+    </div>
 
-      <button class="burger" aria-expanded="false" aria-controls="mnav" aria-label="Открыть меню">☰</button>
-    </div>
-    <div id="mnav" class="mobile-nav" hidden>
-      <div class="mobile-lang">
-        <div class="lang-switch" role="group" aria-label="Выбор языка">
-          <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-          <span class="sep">/</span>
-          <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
-        </div>
-      </div>
-      <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
-      <a href="#slots" class="i18n" data-key="nav_slots">Свободные слоты</a>
-      <a href="#calc" class="i18n" data-key="nav_price">Стоимость</a>
-      <a href="#faq" class="i18n" data-key="nav_faq">Ответы</a>
-      <a href="#contact" class="i18n" data-key="nav_contact">Контакты</a>
-    </div>
-  </header>
+    <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
+    <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
+    <a href="#calc"     class="i18n" data-key="nav_price">Цена</a>
+    <a href="#faq"      class="i18n" data-key="nav_faq">FAQ</a>
+  </div>
+</header>
 
   <main>
     <!-- HERO -->
@@ -409,6 +413,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
