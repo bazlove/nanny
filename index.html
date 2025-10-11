@@ -8,6 +8,10 @@
   <meta name="description" content="Надёжная няня: CPR/First Aid, фото-отчёт, развивающие занятия. Свободные слоты и удобный калькулятор."/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="alternate" hreflang="ru" href="https://bazlove.github.io/nanny/">
+  <link rel="alternate" hreflang="sr" href="https://bazlove.github.io/nanny/?lang=sr">
+  <link rel="alternate" hreflang="x-default" href="https://bazlove.github.io/nanny/">
+
   <!-- Consent Mode default (denied) BEFORE gtag load -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -25,7 +29,10 @@
   <link rel="stylesheet" href="assets/styles.css"/>
 </head>
 <body>
-  <header class="site-header">
+  
+	<a class="skip-link" href="#main">Пропустить меню и перейти к содержанию</a>
+	
+	<header class="site-header">
   <div class="container header-bar">
     <div class="brand">
       <span class="logo">👶</span>
@@ -33,7 +40,7 @@
         <strong>[Имя няни]</strong>
         <small class="i18n" data-key="city">Нови-Сад</small>
       </div>
-      <span id="headerFreeBadge" class="avail-badge" aria-live="polite">
+      <span id="headerFreeBadge" class="avail-badge" role="status" aria-live="polite">
         <span class="dot" aria-hidden="true"></span> Проверяю свободные слоты…
       </span>
     </div>
@@ -439,6 +446,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
