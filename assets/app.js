@@ -542,6 +542,31 @@ const updateBadge = (slots) => {
     });
 })();
 
+// Active menu on scroll
+(function(){
+  const links = [...document.querySelectorAll('.header-nav a[href^="#"]')];
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const sec = document.getElementById(id);
+    if (sec) map.set(sec, a);
+  });
+  if (!map.size) return;
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      const link = map.get(e.target);
+      if (!link) return;
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'))||64}px 0px -65% 0px`, threshold: 0.01 });
+
+  map.forEach((_, sec) => io.observe(sec));
+})();
+
 
 
 
