@@ -492,7 +492,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
     if (next){
       const d = new Date(next.startISO || getStartTs(next));
       const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' }); // пт, 18.10
-      badge.textContent = `Ближайший слот: ${day} ${timeLabel(next)}`;
+      badge.textContent = `Ближайший слот: ${day} • ${timeLabel(next)}`;
       badge.style.display = 'inline-flex';
       return;
     }
@@ -528,4 +528,5 @@ if (yEl) yEl.textContent = new Date().getFullYear();
       }
     });
 })();
+
 
