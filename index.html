@@ -46,10 +46,18 @@
       </span>
 
 		<!-- тултип про часовой пояс -->
-		<span class="tz-tip info" role="note" aria-label="Часовой пояс">
-  			<span class="i" aria-hidden="true">i</span>
-  			<span class="tt">Время слотов — Белград (UTC+1 зимой, UTC+2 летом)</span>
+		<span class="tz-tip info">
+  		<button type="button"
+          class="i"
+          aria-describedby="tz-tt"
+          aria-label="Время слотов — Белград (UTC+2 летом, UTC+1 зимой)">
+    			i
+  		</button>
+  			<span id="tz-tt" class="tt" role="tooltip">
+    			Время слотов — Белград (UTC+2 летом, UTC+1 зимой)
+  			</span>
 		</span>
+
     </div>
 
     <!-- навигация (desktop) -->
@@ -453,6 +461,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
