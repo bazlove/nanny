@@ -396,6 +396,17 @@ if (yEl) yEl.textContent = new Date().getFullYear();
 
   const wrap  = document.querySelector('#slotsList');        // контейнер карточек (grid)
   const badge = document.querySelector('#headerFreeBadge');  // бейдж в шапке
+
+  const badgeText = badge ? badge.querySelector('.avail-text') : null;
+
+function setBadge(text, classes = []) {
+  if (!badge || !badgeText) return;
+  badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
+  classes.forEach(c => badge.classList.add(c));
+  badgeText.textContent = text;
+  badge.style.display = 'inline-flex';
+}
+  
   if (!wrap) return;
 
   // ---- helpers -------------------------------------------------
@@ -452,28 +463,15 @@ if (yEl) yEl.textContent = new Date().getFullYear();
   };
 
   // === НОВАЯ ВЕРСИЯ updateBadge c сохранением .dot для пульса ===
-const updateBadge = (slots) => {
+function updateBadge(slots) {
   if (!badge) return;
 
-  const now = Date.now();
-  const todayYMD    = new Date().toISOString().slice(0,10);
-  const tomorrowYMD = new Date(Date.now() + 86400000).toISOString().slice(0,10);
+  const now          = Date.now();
+  const todayYMD     = new Date().toISOString().slice(0,10);
+  const tomorrowYMD  = new Date(Date.now() + 86400000).toISOString().slice(0,10);
 
   const getStartTs = (s) => s.startTs ?? Date.parse(s.startISO || 0);
   const timeLabel  = (s) => `${safeStart(s)}–${safeEnd(s)}`;
-
-  // маленький хелпер: всегда вставляем точку перед текстом
-  const setBadgeText = (txt) => {
-    badge.innerHTML = `<span class="dot" aria-hidden="true"></span> ${txt}`;
-    badge.style.display = 'inline-flex';
-  };
-
-  // утилита присвоения классов состояния
-  const setState = (state, live = true) => {
-    badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
-    badge.classList.add(state);
-    if (live) badge.classList.add('is-live');   // включает пульсацию
-  };
 
   // 1) сегодня
   const todaySlot = slots
@@ -481,8 +479,7 @@ const updateBadge = (slots) => {
     .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
 
   if (todaySlot){
-    setBadgeText(`Свободно сегодня ${timeLabel(todaySlot)}`);
-    setState('is-today', true);
+    setBadge(`Свободно сегодня ${timeLabel(todaySlot)}`, ['is-today','is-live']);
     return;
   }
 
@@ -492,28 +489,25 @@ const updateBadge = (slots) => {
     .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
 
   if (tomorrowSlot){
-    setBadgeText(`Свободно завтра ${timeLabel(tomorrowSlot)}`);
-    setState('is-tomorrow', true);
+    setBadge(`Свободно завтра ${timeLabel(tomorrowSlot)}`, ['is-tomorrow','is-live']);
     return;
   }
 
-  // 3) ближайший следующий
+  // 3) ближайшее окно дальше по времени
   const next = slots
     .filter(s => getStartTs(s) > now)
     .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
 
   if (next){
     const d   = new Date(next.startISO || getStartTs(next));
-    const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' });
-    setBadgeText(`Ближайший слот: ${day} | ${timeLabel(next)}`);
-    setState('is-next', true);
+    const day = d.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+    setBadge(`Ближайший слот: ${day} | ${timeLabel(next)}`, ['is-next','is-live']);
     return;
   }
 
-  // 4) ничего — по запросу (без пульса)
-  setBadgeText('Свободно: по запросу');
-  setState('is-none', false);
-};
+  // 4) ничего — по запросу (пульс отключаем)
+  setBadge('Свободно: по запросу', ['is-none']);
+}
 
   // ---- load & render -------------------------------------------
   fetch(API_SLOTS_URL, { cache: 'no-store' })
@@ -566,6 +560,7 @@ const updateBadge = (slots) => {
 
   map.forEach((_, sec) => io.observe(sec));
 })();
+
 
 
 
