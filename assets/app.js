@@ -441,7 +441,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
   const cardHTML = (date, items) => {
     const dayLabel = (items[0] && items[0].dayLabel) ? items[0].dayLabel : fmtDateRUshort(date);
     const times    = makeTimesLine(items);
-    const href     = '#contact'; // при желании подставь сюда ссылку на форму
+    const href     = '#contact'; // при желании подставьте сюда ссылку на форму
     return `
       <div class="slot-card">
         <div class="slot-date">${dayLabel}</div>
@@ -451,19 +451,54 @@ if (yEl) yEl.textContent = new Date().getFullYear();
     `;
   };
 
+  // === НОВАЯ ВЕРСИЯ updateBadge (сегодня / завтра / ближайший / по запросу) ===
   const updateBadge = (slots) => {
     if (!badge) return;
-    const today = new Date().toISOString().slice(0,10);
-    // берём первый доступный интервал за сегодня (если он есть)
-    const todaySlot = slots
-      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === today)
-      .sort((a,b) => (a.startTs ?? Date.parse(a.startISO||0)) - (b.startTs ?? Date.parse(b.startISO||0)))[0];
 
-    if (todaySlot) {
-      badge.textContent = `Свободно сегодня ${safeStart(todaySlot)}–${safeEnd(todaySlot)}`;
-    } else {
-      badge.textContent = 'Свободно: по запросу';
+    const now = Date.now();
+    const todayYMD    = new Date().toISOString().slice(0,10);
+    const tomorrowYMD = new Date(Date.now() + 86400000).toISOString().slice(0,10);
+
+    const getStartTs = (s) => s.startTs ?? Date.parse(s.startISO || 0);
+    const timeLabel  = (s) => `${safeStart(s)}–${safeEnd(s)}`;
+
+    // 1) сегодня
+    const todaySlot = slots
+      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === todayYMD)
+      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+    if (todaySlot){
+      badge.textContent = `Свободно сегодня ${timeLabel(todaySlot)}`;
+      badge.style.display = 'inline-flex';
+      return;
     }
+
+    // 2) завтра
+    const tomorrowSlot = slots
+      .filter(s => (s.date || (s.startISO||'').slice(0,10)) === tomorrowYMD)
+      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+    if (tomorrowSlot){
+      badge.textContent = `Свободно завтра ${timeLabel(tomorrowSlot)}`;
+      badge.style.display = 'inline-flex';
+      return;
+    }
+
+    // 3) ближайший следующий
+    const next = slots
+      .filter(s => getStartTs(s) > now)
+      .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+    if (next){
+      const d = new Date(next.startISO || getStartTs(next));
+      const day = d.toLocaleDateString('ru-RU',{ weekday:'short', day:'2-digit', month:'2-digit' }); // пт, 18.10
+      badge.textContent = `Ближайший слот: ${day} ${timeLabel(next)}`;
+      badge.style.display = 'inline-flex';
+      return;
+    }
+
+    // 4) ничего — по запросу
+    badge.textContent = 'Свободно: по запросу';
     badge.style.display = 'inline-flex';
   };
 
@@ -475,7 +510,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
       updateBadge(raw);
 
       if (!raw.length) {
-        wrap.innerHTML = '<p class="muted">Свободных слотов на неделю не найдено.</p>';
+        wrap.innerHTML = '<p class="muted">Свободных слотов не найдено.</p>';
         return;
       }
 
@@ -486,7 +521,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
     })
     .catch(err => {
       console.warn('Slots API error:', err);
-      wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне — подберём время.</p>';
+      wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
       if (badge) {
         badge.textContent = 'Свободно: по запросу';
         badge.style.display = 'inline-flex';
