@@ -498,6 +498,16 @@ select:focus{
 }
 .slot-cta:hover{ background:#eef6ff; }
 
+/* если .brand уже display:flex; просто увеличиваем gap между элементами */
+.header-bar .brand{
+  display: flex;              /* на случай, если не задано */
+  align-items: center;
+  gap: 16px;                  /* было, например, 8–10px */
+}
+
+@media (min-width: 1024px){
+  .header-bar .brand{ gap: 20px; }
+}
 
 
 
