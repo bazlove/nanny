@@ -18,6 +18,36 @@ section{padding:64px 0}
 .btn-outline{border-color:var(--primary);color:var(--text)}
 .btn:hover{transform:translateY(-1px);transition:.2s ease}
 
+/* Лого в шапке: ссылка без подчёркивания и белая «плашка» */
+.site-header .brand .logo {
+  display: inline-flex;              /* центрирование эмодзи */
+  align-items: center;
+  justify-content: center;
+  width: 40px;                       /* подгони под свой размер */
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;                  /* белый фон */
+  border: 1px solid #e5e7eb;         /* тонкая серая рамка (по желанию) */
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  text-decoration: none;             /* убираем подчёркивание */
+  color: inherit;                    /* эмодзи не перекрашиваем */
+}
+
+/* на всякий случай — убрать подчёркивание во всех состояниях */
+.site-header .brand .logo:link,
+.site-header .brand .logo:visited,
+.site-header .brand .logo:hover,
+.site-header .brand .logo:active {
+  text-decoration: none;
+  background: #fff;
+}
+
+/* доступный фокус (если лого — ссылка) */
+.site-header .brand .logo:focus-visible {
+  outline: 2px solid #78c6a7;
+  outline-offset: 2px;
+}
+
 /* Header */
 .site-header{position:sticky;top:0;z-index:60;background:rgba(246,232,213,.75);
   backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid rgba(0,0,0,.06)}
@@ -510,6 +540,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 @media (max-width:700px){
   .tz-tip.info{ display:none; }  /* можно скрыть на очень узких экранах */
 }
+
 
 
 
