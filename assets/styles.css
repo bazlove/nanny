@@ -357,7 +357,7 @@ select:focus{
 .faq-title { margin-bottom: 10px !important; }
 
 .faq-list,
-.faq-item { list-style:none; margin:0; margin-top: 0 !important; padding:0; }
+.faq-item { list-style:none; margin:0; padding:0; }
 .faq-list { padding-left:0; }
 
 /* карточка вопроса */
@@ -685,6 +685,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 @media (max-width:700px){
   .site-header .tz-tip.info{ display:none; }
 }
+
 
 
 
