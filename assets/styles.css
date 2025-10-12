@@ -535,41 +535,45 @@ section[id], #services, #calc, #faq, #contact, #main {
 .header-bar .brand{ gap: 18px; }
 @media (min-width:1024px){ .header-bar .brand{ gap: 20px; } }
 
-/* === Tooltip в шапке рядом с бейджем === 
+/* === Tooltip в шапке рядом с бейджем ===================================== */
 .site-header .tz-tip.info{
   display:inline-flex;
   align-items:center;
-  margin-left:8px;           /* небольшой отступ от бейджа 
+  margin-left:8px;                 /* небольшой отступ от бейджа */
   vertical-align:middle;
   position:relative;
   z-index:10;
 }
 
-/* круглая кнопка "i" — стилистика как в калькуляторе 
+/* Круглая кнопка "i" */
 .site-header .tz-tip.info .i{
+  display:inline-grid;
+  place-items:center;
   width:18px; height:18px;
   border-radius:999px;
-  border:1px solid #b9e0d1;
-  background:#f2faf6;
-  color:#2b6e59;
-  font-size:12px; line-height:16px;
-  display:inline-flex; align-items:center; justify-content:center;
+  background:#E9EDF7;              /* серый фон как в калькуляторе */
+  color:#334;
+  font-size:12px;
+  font-weight:800;
+  border:none;                     /* без рамки */
   cursor:help;
   padding:0;
+  line-height:1;
   outline:0;
-  transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  transition:background .15s, color .15s, box-shadow .15s;
 }
-.site-header .tz-tip.info .i:hover,
-.site-header .tz-tip.info .i:focus-visible{
-  background:#eefaf4;
-  box-shadow:0 0 0 2px rgba(120,198,167,.25);
+.site-header .tz-tip.info:hover .i,
+.site-header .tz-tip.info:focus-within .i{
+  background:#E7F7EF;             /* мягкий зелёный hover как в калькуляторе */
+  color:#146C43;
+  box-shadow:0 0 0 3px rgba(34,197,94,.18);
 }
 
-/* само «облачко» подсказки 
+/* Само «облачко» подсказки */
 .site-header .tz-tip.info .tt{
   position:absolute;
   left:0; top:100%;
-  transform: translateY(8px);
+  transform:translateY(8px);
   min-width:260px; max-width:320px;
   padding:10px 12px;
   border-radius:10px;
@@ -586,7 +590,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   transition:opacity .15s ease, transform .15s ease;
 }
 
-/* маленькая «стрелка» у облачка 
+/* маленькая «стрелка» у облачка */
 .site-header .tz-tip.info .tt::before{
   content:"";
   position:absolute;
@@ -598,16 +602,16 @@ section[id], #services, #calc, #faq, #contact, #main {
   transform:rotate(45deg);
 }
 
-/* показ по hover и по фокусу с клавиатуры 
+/* показываем по hover и по фокусу с клавиатуры */
 .site-header .tz-tip.info:hover .tt,
 .site-header .tz-tip.info:focus-within .tt{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
-  transform: translateY(4px);
+  transform:translateY(4px);
 }
 
-/* на очень узких экранах можно скрыть подсказку, чтобы не перекрывала хедер */
+/* На очень узких экранах прячем тултип, чтобы не перекрывал хедер */
 @media (max-width:700px){
   .site-header .tz-tip.info{ display:none; }
 }
