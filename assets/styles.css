@@ -33,7 +33,7 @@ section{padding:64px 0}
   color: inherit;                    /* эмодзи не перекрашиваем */
 }
 
-/* на всякий случай — убрать подчёркивание во всех состояниях */
+/* убрать подчёркивание во всех состояниях */
 .site-header .brand .logo:link,
 .site-header .brand .logo:visited,
 .site-header .brand .logo:hover,
@@ -62,7 +62,63 @@ section{padding:64px 0}
 .mobile-nav{display:none;flex-direction:column;gap:8px;padding:12px 20px;border-top:1px solid rgba(0,0,0,.06);background:#fff}
 .mobile-nav a{padding:10px 12px;border-radius:10px;text-decoration:none;color:#1d2b38;background:#f7f7f5}
 
-/* Lang switch */
+/* === Унифицируем высоту «пилюль» в хедере */
+:root{
+  --hdr-pill-h: 28px;            /* такая же высота у avail-badge */
+}
+
+/* === Переключатель языка === */
+.lang-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;                       /* расстояние между RU, /, SR */
+  height:var(--hdr-pill-h);
+  padding:0 8px;                 /* компактные внутренние отступы */
+  border:1px solid #e2e6ea;
+  border-radius:999px;
+  background:#fff;               /* как у бейджа (светлая плашка) */
+  line-height:1;                 /* убираем «надбавку» по высоте */
+}
+
+.lang-switch .lang-btn{
+  appearance:none;
+  border:0;
+  background:transparent;
+  padding:0 6px;                 /* компактный inline-padding */
+  height:calc(var(--hdr-pill-h) - 8px);
+  border-radius:8px;             /* мини-пилюлька подсветки */
+  font-weight:700;
+  font-size:.9rem;
+  color:#0f172a;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+.lang-switch .lang-btn:hover{
+  background:#f2f4f7;            /* лёгкий hover */
+}
+
+.lang-switch .lang-btn:focus-visible{
+  outline:0;
+  box-shadow:0 0 0 3px rgba(34,197,94,.18); /* как у подсказок/калькулятора */
+}
+
+/* активная метка — мягкий фон, хороший контраст */
+.lang-switch .lang-btn.active{
+  background:#eaf7f0;            /* нежно-зелёный (в тон сайту) */
+  color:#14532d;
+}
+
+/* разделитель «/» — компактный и не расширяет блок */
+.lang-switch .sep{
+  display:inline-block;
+  line-height:1;
+  padding:0 2px;
+  opacity:.6;
+  font-weight:700;
+}
+
+/* Lang switch
 .lang-switch{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e5e3df;border-radius:999px;padding:6px 10px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
 .lang-switch .sep{color:#94a3b8}
 .lang-switch .lang-btn{background:transparent;border:0;padding:0 2px;font-weight:800;letter-spacing:.3px;color:#1d2b38;cursor:pointer}
@@ -615,6 +671,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 @media (max-width:700px){
   .site-header .tz-tip.info{ display:none; }
 }
+
 
 
 
