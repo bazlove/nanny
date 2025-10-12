@@ -688,12 +688,13 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 /* === Calculator: выравниваем ширину под хедер ===================== */
 #calc > .container{
-  max-width: clamp(760px, calc(var(--container) - 120px), 980px);
+  max-width: clamp(760px, calc(var(--container) - 80px), 980px);
 }
 /* На планшетах и ниже — ширина как у остальных секций */
 @media (max-width: 1024px){
   #calc > .container{ max-width: var(--container); }
 }
+
 
 
 
