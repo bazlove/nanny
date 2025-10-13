@@ -561,23 +561,60 @@ function updateBadge(slots) {
   map.forEach((_, sec) => io.observe(sec));
 })();
 
-/* ===== Reviews: клонируем дорожку для бесшовного лупа ================== */
+/* ===== Reviews: лёгкая бесшовная «маркиза» (CSS-анимация) =============== */
 (function initReviewsMarquee(){
-  document.querySelectorAll('.rv-marquee').forEach(mq => {
+  const marquees = document.querySelectorAll('.rv-marquee');
+  if (!marquees.length) return;
+
+  const mrm = matchMedia('(prefers-reduced-motion: reduce)');
+
+  marquees.forEach(mq => {
     const track = mq.querySelector('.rv-track');
-    if (!track) return;
-    // если дубликат уже есть — не плодим
-    if (mq.querySelector('.rv-track--dup')) return;
+    if (!track || track.dataset.marqueeReady) return;
 
-    const dup = track.cloneNode(true);
-    dup.classList.add('rv-track--dup');
-    dup.setAttribute('aria-hidden', 'true');
-    mq.appendChild(dup);
+    /* не даём карточкам переноситься во 2-ю строку даже при конфликтных стилях */
+    track.style.display   = 'flex';
+    track.style.flexWrap  = 'nowrap';
+    track.style.alignItems= 'stretch';
 
-    // Важный момент: общий контейнер теперь содержит 2 одинаковые дорожки.
-    // В CSS анимация у .rv-track сдвигает на -50% — этого достаточно для бесконечного лупа.
+    /* --- дублируем ТОЛЬКО содержимое дорожки (а не вторую .rv-track) --- */
+    const cloneChildrenOnce = () => {
+      const frag = document.createDocumentFragment();
+      Array.from(track.children).forEach(node => frag.appendChild(node.cloneNode(true)));
+      track.appendChild(frag);
+    };
+
+    if (!track.dataset.cloned) {
+      cloneChildrenOnce();            // получаем «оригинал + клон»
+      track.dataset.cloned = '1';
+    }
+
+    /* гарантируем, что ширины хватит минимум на 2× viewport (без бесконечного while) */
+    const needMinWidth = () => track.scrollWidth < mq.clientWidth * 2;
+    let safety = 0;
+    while (needMinWidth() && safety < 3) { // максимум три до-дублирования
+      cloneChildrenOnce();
+      safety++;
+    }
+
+    /* — Доступность — */
+    const pause = () => track.style.animationPlayState = 'paused';
+    const play  = () => track.style.animationPlayState = '';
+
+    mq.addEventListener('mouseenter', pause);
+    mq.addEventListener('mouseleave', play);
+    mq.addEventListener('focusin',   pause);
+    mq.addEventListener('focusout',  play);
+
+    /* Уважение к prefers-reduced-motion */
+    const applyReduced = () => { track.style.animation = mrm.matches ? 'none' : ''; };
+    applyReduced();
+    mrm.addEventListener?.('change', applyReduced);
+
+    track.dataset.marqueeReady = '1';
   });
 })();
+
 
 
 
