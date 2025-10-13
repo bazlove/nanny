@@ -149,16 +149,45 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section id=reviews>
-      <div class="container">
-        <h2>Отзывы родителей</h2>
-        <div class="tiles">
-          <div class="tile"><p>«Помогла наладить режим сна и игры — ребёнок стал спокойнее.»</p></div>
-          <div class="tile"><p>«Всегда вовремя, внимательная, даёт отчёты и фото — доверяем.»</p></div>
-          <div class="tile"><p>«Нашла подход к двум детям разного возраста — рекомендуем!»</p></div>
-        </div>
+    <section id="reviews" class="rv-reviews">
+  <div class="container">
+    <div class="rv-reviews__head">
+      <h2 class="rv-title">Отзывы родителей</h2>
+
+      <!-- Чипы статичные -->
+      <ul class="rv-chips" aria-label="Категории отзывов">
+        <li><button type="button" class="rv-chip" aria-pressed="false">Двое детей</button></li>
+        <li><button type="button" class="rv-chip" aria-pressed="false">2 года</button></li>
+        <li><button type="button" class="rv-chip" aria-pressed="false">3–7 лет</button></li>
+      </ul>
+    </div>
+
+    <!-- Карусель-маркиза (плавный бесконечный скролл) -->
+    <div class="rv-marquee" role="region" aria-label="Карусель отзывов" aria-live="polite">
+      <div class="rv-track">
+        <!-- Помести сюда реальные скрины (jpg/png/webp). Примеры ниже. -->
+        <figure class="rv-item">
+          <img src="img/reviews/rev1.jpg" loading="lazy" alt="Отзыв родителя №1" />
+        </figure>
+        <figure class="rv-item">
+          <img src="img/reviews/rev2.jpg" loading="lazy" alt="Отзыв родителя №2" />
+        </figure>
+        <figure class="rv-item">
+          <img src="img/reviews/rev3.jpg" loading="lazy" alt="Отзыв родителя №3" />
+        </figure>
+        <figure class="rv-item">
+          <img src="img/reviews/rev4.jpg" loading="lazy" alt="Отзыв родителя №4" />
+        </figure>
+        <figure class="rv-item">
+          <img src="img/reviews/rev5.jpg" loading="lazy" alt="Отзыв родителя №5" />
+        </figure>
+        <!-- добавляй столько, сколько нужно -->
       </div>
-    </section>
+      <!-- Дубликат дорожки добавим скриптом (чтобы не дублировать вручную) -->
+    </div>
+  </div>
+</section>
+
     
 	<!-- CALCULATOR -->
 <section id="calc">
@@ -454,6 +483,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
