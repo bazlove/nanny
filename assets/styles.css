@@ -1071,48 +1071,54 @@ section[id], #services, #calc, #faq, #contact, #main {
   .foot-nav{ order: 3; justify-content:flex-start; margin-top:6px; }
 }
 
-/* ——— держим правый блок в одну строку на десктопе ——— */
-.site-footer .f-right .f-links{
+/* --- держим футер в одну строку на десктопе --- */
+.site-footer .footer-bar{
+  flex-wrap: nowrap;                 /* было wrap → ломало строку */
+}
+
+/* правый блок со ссылками: не переносим, ужимаем зазоры */
+.site-footer .foot-nav{
   display:flex;
-  gap:16px;                 /* можно 12–18 */
   justify-content:flex-end;
-  flex-wrap:nowrap;         /* запрет переносов */
-  white-space:nowrap;       /* запрет переносов внутри ссылок */
+  gap:12px;                          /* можно 10–12, чтобы влезло */
+  flex-wrap: nowrap;                 /* запрет переносов внутри правой колонки */
+  white-space: nowrap;               /* запрет переносов внутри самих ссылок */
 }
 
-.site-footer .f-right .f-links a{
-  font-size:14px;           /* базовый кегль */
+.site-footer .foot-nav a{
+  font-size:14px;
   line-height:1;
+  white-space: nowrap;               /* подстраховка */
 }
 
-/* немного «сжимаем» на грани влезания */
+/* немного ужимаем, если не влезает */
 @media (max-width: 1280px){
-  .site-footer .f-right .f-links{ gap:12px; }
-  .site-footer .f-right .f-links a{ font-size:13.5px; }
+  .site-footer .foot-nav{ gap:10px; }
+  .site-footer .foot-nav a{ font-size:13.5px; }
 }
 @media (max-width: 1140px){
-  .site-footer .f-right .f-links{ gap:10px; }
-  .site-footer .f-right .f-links a{ font-size:13px; }
+  .site-footer .foot-nav{ gap:8px; }
+  .site-footer .foot-nav a{ font-size:13px; }
 }
 
-/* ——— на планшете/мобилке разрешаем перенос и центрируем ——— */
+/* --- на планшете/мобиле разрешаем перенос и центрируем --- */
 @media (max-width: 980px){
-  .site-footer .f-row{
-    grid-template-columns:1fr;     /* одна колонка */
-    row-gap:10px;
-    text-align:center;
-  }
-  .site-footer .f-left,
-  .site-footer .f-center,
-  .site-footer .f-right{ justify-content:center; }
+  .site-footer .footer-bar{ flex-wrap: wrap; }   /* теперь можно переносить */
 
-  .site-footer .f-right .f-links{
-    flex-wrap:wrap;                 /* можно переносить */
-    white-space:normal;             /* нормальные переносы */
+  .site-footer .foot-left,
+  .site-footer .foot-center,
+  .site-footer .foot-nav{ flex:1 1 100%; }
+
+  .site-footer .foot-center{ order:2; text-align:center; margin-top:4px; }
+  .site-footer .foot-nav{
+    order:3;
     justify-content:center;
+    flex-wrap: wrap;                 /* разрешаем перенос */
+    white-space: normal;
     gap:12px 18px;
   }
 }
+
 
 
 
