@@ -537,21 +537,35 @@
 <script>document.getElementById('yCopy').textContent = new Date().getFullYear();</script>
 
   <!-- Cookie banner -->
-  <div id="cookie-banner" class="cookie-banner" hidden>
-    <div class="cookie-card">
-      <h3>Cookie</h3>
-      <p>Мы используем только аналитику Google (GA4) — включается по вашему согласию. Строго необходимые cookie работают всегда.</p>
-      <div class="cookie-actions">
-        <button id="cookie-decline" class="btn btn-outline">Отклонить</button>
-        <button id="cookie-accept" class="btn btn-primary">Принять аналитику</button>
-      </div>
-      <small>Можно изменить решение позже в «Настройки cookie».</small>
+<div id="cookie-banner"
+     class="cookie-banner"
+     role="dialog"
+     aria-labelledby="cookie-title"
+     aria-describedby="cookie-desc"
+     aria-modal="true"
+     hidden>
+  <div class="cookie-card" role="document">
+    <h3 id="cookie-title">Файлы cookie</h3>
+    <p id="cookie-desc">
+      Мы используем <strong>строго необходимые cookie</strong> для работы сайта и
+      по вашему согласию — <strong>аналитические cookie (Google Analytics 4)</strong> для оценки посещаемости.
+      Рекламных cookie нет. Согласие можно отозвать в любой момент в «Настройки cookie».
+      Подробнее — в <a href="/privacy.html">Политике конфиденциальности</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-decline" type="button" class="btn btn-outline">Отклонить</button>
+      <button id="cookie-accept"  type="button" class="btn btn-primary">Принять аналитику</button>
     </div>
+    <small>
+      Можно изменить решение позже: <button id="cookie-manage" type="button" class="link-ghost">Настройки cookie</button>
+    </small>
   </div>
+</div>
 
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
