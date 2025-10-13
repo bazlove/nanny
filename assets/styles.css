@@ -687,46 +687,57 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* === Выровнять ширину калькулятора с общим контейнером === */
-
+/* Глобальные значения по умолчанию (если в проекте их нет) */
 :root{
-  --container: 1200px;   /* общая ширина страницы */
-  --gutter: 20px;        /* внутренние поля у .container */
+  --container: 1200px;   /* целевая ширина (если нет глобальной .container) */
+  --gutter: 24px;        /* горизонтальные поля у секций/контейнеров */
 }
 
-/* Сам контейнер калькулятора: ровно как у остальных блоков */
-#calc > .calc-elevate{
-  box-sizing: border-box;
+/* 1) Прямой потомок #calc — это .container (в твоей разметке),
+      гарантируем центрирование и внутренние отступы */
+#calc > .container{
+  /* если глобальная .container уже управляет шириной — это правило просто не мешает */
   max-width: var(--container);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
+  box-sizing: border-box;
 }
 
-/* На всякий случай: гасим возможные «растягивающие» трюки карточки
-   только внутри калькулятора (не трогаем другие .card на странице) */
-#calc > .calc-elevate.card{
+/* 2) Карточка калькулятора (.card.calc-elevate) должна центрироваться
+      и не иметь «растяжек» — учитываем оба возможных селектора */
+#calc > .container.card,
+#calc > .container.calc-elevate,
+#calc > .container.card.calc-elevate,
+#calc > .calc-elevate{
+  width: auto;                           /* вместо возможного 100vw / calc(...) */
   margin-left: auto !important;
   margin-right: auto !important;
-  width: auto;               /* чтобы не было calc(100% + …) */
-  max-width: var(--container);
+  box-sizing: border-box;
 }
 
-/* Если где-то глобально у .card заданы отрицательные внешние отступы —
-   переопределим их только здесь */
+/* 3) На всякий случай — убираем отрицательные margin только здесь */
+#calc > .container.card.calc-elevate,
 #calc > .calc-elevate.card{
-  margin-inline: 0 !important;
+  margin-inline: auto !important;
 }
 
-/* На узких экранах всё и так по ширине — просто сохраняем «резину» */
-@media (max-width: 1024px){
-  #calc > .calc-elevate{
-    max-width: 100%;
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
-  }
+/* 4) Белая «карточка» занимает 100% ширины контейнера (визуально как другие блоки) */
+#calc .calc-elevate.card{
+  max-width: 100%;                       /* от контейнера, а не от окна */
+  box-shadow: 0 20px 60px rgba(0,0,0,.06);
+  border-radius: 16px;
+  /* padding/card внутренности — оставляем как есть */
 }
+
+/* 5) На узких экранах — всё резиновое */
+@media (max-width: 1024px){
+  #calc > .container{ max-width: 100%; }
+}
+
+
 
 
 
