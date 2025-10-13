@@ -1093,6 +1093,51 @@ section[id], #services, #calc, #faq, #contact, #main {
   .faq-q{ --faq-q-size: 1.0625rem; }       /* ≈17px; можно поставить 1rem (=16px) */
 }
 
+/* ——— «воздух» карточке контактов ——— */
+.contact.card{
+  padding: 26px 24px;                     /* было чуть меньше — добавим воздуха */
+  border-radius: 18px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.06);
+}
+
+/* ——— сетка на 3 колонки ——— */
+.contact-form.contact-3col{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;     /* 3 равные колонки */
+  gap: 18px 22px;
+  align-items: start;
+}
+
+/* стили колонок */
+.contact-form .col{ display:flex; flex-direction:column; gap:14px; }
+.col-actions .contact-actions{ display:flex; flex-direction:column; gap:12px; }
+
+/* кнопки-ссылки целиком кликабельные (у тебя уже есть .cbtn) */
+.cbtn{ min-height:56px; }
+
+/* поля/лейблы/ошибки — чуть легче и крупнее */
+.contact-form .lbl{ font-weight:600; margin-bottom:6px; }
+.contact-form .req{ color:#E11D48; margin-left:4px; }
+.contact-form .input{ height:auto; padding:12px 14px; border-radius:12px; }
+.contact-form .fld + .fld{ margin-top:4px; }
+.contact-form .err{ color:#E11D48; font-size:.85rem; }
+
+/* кнопка «Отправить» во всю ширину колонки справа */
+.w-100{ width:100%; }
+
+/* ——— адаптив ——— */
+@media (max-width: 1024px){
+  .contact-form.contact-3col{
+    grid-template-columns: 1fr 1fr;       /* 2 колонки */
+  }
+  .contact-form .col-message{ grid-column: span 2; } /* сообщение на всю ширину снизу */
+}
+
+@media (max-width: 640px){
+  .contact-form.contact-3col{ grid-template-columns: 1fr; } /* 1 колонка */
+  .contact-form .col-message{ grid-column: auto; }
+}
+
 
 
 
