@@ -616,26 +616,45 @@ function updateBadge(slots) {
 })();
 
 (function contactInit(){
-  const wa = document.getElementById('ctaWa');
-  const tg = document.getElementById('ctaTg');
-  const badge = document.querySelector('#headerFreeBadge');
-  const calc  = window.calcState || null; // если есть глобальное состояние калькулятора
+  const tg   = document.getElementById('ctaTg');
+  const vb   = document.getElementById('ctaViber');
+  const tel  = document.getElementById('ctaTel');
 
-  const slot = badge?.textContent?.trim(); // «Свободно завтра…»/«Ближайший слот…»
+  // Бейдж слотов (если есть) — добавим к префиллу
+  const badge = document.querySelector('#headerFreeBadge');
+  const slot  = badge?.textContent?.trim(); // «Свободно завтра…»/«Ближайший слот…»
+
+  // Если когда-нибудь захочешь подхватывать что-то из калькулятора:
+  const calc  = window.calcState || null;
   const calcLine = calc ? `${calc.children||''} · ${calc.hours||''} ч` : '';
 
   const pre = [
     'Здравствуйте! Хочу записаться на няню.',
-    'Город: Нови-Сад',
     slot ? `Предпочтительное время: ${slot}` : '',
     calcLine ? `Параметры: ${calcLine}` : ''
   ].filter(Boolean).join('\n');
 
-  const waPhone = '381XXXXXXXXX';
-  wa.href = `https://wa.me/${waPhone}?text=${encodeURIComponent(pre)}`;
-  tg.href = `https://t.me/yourusername`;
+  // ← ВПИШИ свой фактический телефон без плюса:
+  const phoneDigits = '381XXXXXXXXX';           // пример: 381641234567
 
-  // форма → Apps Script
+  // TG
+  if (tg) {
+    tg.href = `https://t.me/yourusername`;      // ← замени на @твой_юзернейм/ссылку
+    tg.setAttribute('target','_blank');
+    tg.setAttribute('rel','noopener');
+  }
+
+  // Viber (text может не везде поддерживаться — но номер откроет чат)
+  if (vb) {
+    vb.href = `viber://chat?number=%2B${phoneDigits}`;
+  }
+
+  // Телефон
+  if (tel) {
+    tel.href = `tel:+${phoneDigits}`;
+  }
+
+  // ====== форма → Google Apps Script (как было) ======
   const form = document.getElementById('contactForm');
   const note = document.getElementById('contactNotice');
   let t0 = Date.now();
@@ -643,20 +662,23 @@ function updateBadge(slots) {
   form?.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const fd = new FormData(form);
+
     // анти-спам
-    if (fd.get('website')) return; // honeypot
-    if (Date.now()-t0 < 2000) return; // time-trap
+    if (fd.get('website')) return;          // honeypot
+    if (Date.now()-t0 < 2000) return;       // time-trap
 
     fd.append('slotBadge', slot||'');
+
     try{
-      const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec', { method:'POST', body:fd });
+      const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec', {
+        method:'POST', body:fd
+      });
       if (!res.ok) throw new Error('Network');
       note.textContent = 'Спасибо! Я отвечу в ближайшее время.';
       form.reset(); t0 = Date.now();
-      // GA4: contact_form_submit
       window.gtag?.('event','contact_form_submit',{success:true});
     }catch(err){
-      note.textContent = 'Упс, не получилось отправить. Напишите мне в WhatsApp.';
+      note.textContent = 'Упс, не получилось отправить. Напишите мне в Telegram.';
       window.gtag?.('event','contact_form_submit',{success:false});
     }
   });
@@ -694,6 +716,7 @@ function updateBadge(slots) {
   // Любая кнопка/ссылка "Настройки cookie"
   manage?.addEventListener('click', () => show());
 })();
+
 
 
 
