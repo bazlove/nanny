@@ -686,32 +686,49 @@ section[id], #services, #calc, #faq, #contact, #main {
   .site-header .tz-tip.info{ display:none; }
 }
 
-/* Базовая ширина общего контейнера страницы */
+/* === Выровнять ширину калькулятора с общим контейнером === */
+
 :root{
-  --container: 1200px;      /* уже есть у тебя – просто фиксируем значение */
-  --calc-narrow: 120px;     /* насколько сузить калькулятор относительно контейнера */
-  --calc-min: 760px;        /* не сужать ниже этой ширины на десктопе */
+  --container: 1200px;   /* общая ширина страницы */
+  --gutter: 20px;        /* внутренние поля у .container */
 }
 
-/* общий контейнер */
-.container{
+/* Сам контейнер калькулятора: ровно как у остальных блоков */
+#calc > .calc-elevate{
+  box-sizing: border-box;
   max-width: var(--container);
-  margin-inline: auto;
-  padding-inline: 16px;     /* чтобы совпадали внутренние отступы по краям */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 
-/* === Calculator: выравниваем ширину под хедер ===================== */
-#calc > .container{
-  /* 1200px - 120px = 1080px, но не меньше 760 */
-  max-width: max(var(--calc-min), calc(var(--container) - var(--calc-narrow)));
+/* На всякий случай: гасим возможные «растягивающие» трюки карточки
+   только внутри калькулятора (не трогаем другие .card на странице) */
+#calc > .calc-elevate.card{
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: auto;               /* чтобы не было calc(100% + …) */
+  max-width: var(--container);
 }
 
-/* На планшетах и ниже — ширина как у остальных секций */
+/* Если где-то глобально у .card заданы отрицательные внешние отступы —
+   переопределим их только здесь */
+#calc > .calc-elevate.card{
+  margin-inline: 0 !important;
+}
+
+/* На узких экранах всё и так по ширине — просто сохраняем «резину» */
 @media (max-width: 1024px){
-  #calc > .container{
-    max-width: var(--container);
+  #calc > .calc-elevate{
+    max-width: 100%;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
   }
 }
+
+
 
 
 
