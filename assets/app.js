@@ -615,44 +615,67 @@ function updateBadge(slots) {
   });
 })();
 
+// ====== CONTACT ======
 (function contactInit(){
   const tg   = document.getElementById('ctaTg');
   const vb   = document.getElementById('ctaViber');
   const tel  = document.getElementById('ctaTel');
 
-  // Бейдж слотов (если есть) — добавим к префиллу
-  const badge = document.querySelector('#headerFreeBadge');
-  const slot  = badge?.textContent?.trim(); // «Свободно завтра…»/«Ближайший слот…»
+  // ——— ВПИШИ свой номер (без плюса), а также TG-юзернейм/линк ———
+  const phoneDigits = '381XXXXXXXXX';         // пример: 381641234567
+  if (tg)  tg.href  = 'https://t.me/yourusername';
+  if (vb)  vb.href  = `viber://chat?number=%2B${phoneDigits}`;
+  if (tel) tel.href = `tel:+${phoneDigits}`;
 
-  // Если когда-нибудь захочешь подхватывать что-то из калькулятора:
-  const calc  = window.calcState || null;
-  const calcLine = calc ? `${calc.children||''} · ${calc.hours||''} ч` : '';
+  // ——— форма ———
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('contactNotice');
+  const name = document.getElementById('cname');
+  const cont = document.getElementById('ccontact');
+  const time = document.getElementById('ctime');
+  const msg  = document.getElementById('cmsg');
+  const eName= document.getElementById('err-name');
+  const eCont= document.getElementById('err-contact');
+  let t0 = Date.now();
 
-  const pre = [
-    'Здравствуйте! Хочу записаться на няню.',
-    slot ? `Предпочтительное время: ${slot}` : '',
-    calcLine ? `Параметры: ${calcLine}` : ''
-  ].filter(Boolean).join('\n');
+  // утилиты
+  const setErr = (el, small, on) => {
+    el.classList.toggle('invalid', on);
+    el.setAttribute('aria-invalid', on ? 'true' : 'false');
+    if (small) small.hidden = !on;
+  };
+  [name,cont].forEach(i => i.addEventListener('input', ()=> setErr(i, i===name?eName:eCont, !i.value.trim())));
 
-  // ← ВПИШИ свой фактический телефон без плюса:
-  const phoneDigits = '381XXXXXXXXX';           // пример: 381641234567
+  form?.addEventListener('submit', async (e)=>{
+    e.preventDefault();
 
-  // TG
-  if (tg) {
-    tg.href = `https://t.me/yourusername`;      // ← замени на @твой_юзернейм/ссылку
-    tg.setAttribute('target','_blank');
-    tg.setAttribute('rel','noopener');
-  }
+    // honeypot/time-trap
+    if (form.website?.value) return;
+    if (Date.now() - t0 < 1200) return;
 
-  // Viber (text может не везде поддерживаться — но номер откроет чат)
-  if (vb) {
-    vb.href = `viber://chat?number=%2B${phoneDigits}`;
-  }
+    const badName = !name.value.trim();
+    const badCont = !cont.value.trim();
+    setErr(name, eName, badName);
+    setErr(cont, eCont, badCont);
+    if (badName || badCont) {
+      (badName ? name : cont).focus();
+      return;
+    }
 
-  // Телефон
-  if (tel) {
-    tel.href = `tel:+${phoneDigits}`;
-  }
+    // можно доб./изменить endpoint Google Apps Script
+    const fd = new FormData(form);
+    try{
+      const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec', { method:'POST', body:fd });
+      if (!res.ok) throw 0;
+      note.textContent = 'Спасибо! Я отвечу в ближайшее время.';
+      form.reset(); t0 = Date.now();
+      window.gtag?.('event','contact_form_submit',{success:true});
+    }catch{
+      note.textContent = 'Не получилось отправить. Напишите мне в Telegram.';
+      window.gtag?.('event','contact_form_submit',{success:false});
+    }
+  });
+})();
 
   // ====== форма → Google Apps Script (как было) ======
   const form = document.getElementById('contactForm');
@@ -716,6 +739,7 @@ function updateBadge(slots) {
   // Любая кнопка/ссылка "Настройки cookie"
   manage?.addEventListener('click', () => show());
 })();
+
 
 
 
