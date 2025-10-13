@@ -444,24 +444,97 @@
 </section>
 	  
 	  <!-- CONTACT -->
-    <section id="contact" class="contact">
-      <div class="container card">
-        <h2>Свяжитесь со мной</h2>
-        <p>Оставьте заявку — свяжусь с вами.</p>
-        <div class="cta" style="display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn btn-outline" href="https://forms.gle/ВАША_GOOGLE_ФОРМА" target="_blank">Перезвоните мне</a>
-          <a class="btn btn-primary" href="viber://chat?number=%2B3816xxxxxxx">Написать в Viber</a>
-          <a class="btn btn-outline" href="tel:+3816xxxxxxx">Позвонить</a>
-        </div>
-      </div>
-    </section>
-  </main>
+   <section id="contact" class="contact">
+  <div class="container">
+    <h2>Свяжитесь со мной</h2>
 
-  <footer class="footer">
-    <div class="container">
-      <small>© <span id="y"></span> [Имя няни]. <a href="#" id="cookie-settings">Настройки cookie</a></small>
+    <div class="contact-grid">
+      <!-- Левая колонка: кнопки -->
+      <div class="contact-actions">
+        <a id="ctaWa" class="btn btn-wa" href="#" rel="noopener" target="_blank" aria-label="Написать в WhatsApp">
+          <span class="ico">🟢</span> Написать в WhatsApp
+        </a>
+        <div class="alt-channels">
+          <a id="ctaTg" class="link-ghost" href="#" target="_blank" rel="noopener" aria-label="Написать в Telegram">Telegram</a>
+          <span class="sep">·</span>
+          <a class="link-ghost" href="tel:+381XXXXXXXXX" aria-label="Позвонить по телефону">+381 XX XXX XX XX</a>
+          <span class="sep">·</span>
+          <a class="link-ghost" href="mailto:hello@example.com" aria-label="Написать на e-mail">hello@example.com</a>
+        </div>
+
+        <p class="meta">
+          Время связи: 09:00–21:00 · Нови-Сад · RU/SRB/EN
+          <span class="tz-tip info">
+            <button type="button" class="i" aria-label="Часовой пояс">i</button>
+            <span class="tt">Время указано для Белграда (UTC+1, летом UTC+2).</span>
+          </span>
+        </p>
+      </div>
+
+      <!-- Правая колонка: мини-форма -->
+      <form id="contactForm" class="contact-form" novalidate>
+        <div class="row">
+          <label>Ваше имя
+            <input name="name" required autocomplete="name">
+          </label>
+          <label>Контакт (телефон/мессенджер)
+            <input name="contact" required autocomplete="tel">
+          </label>
+        </div>
+        <label>Желаемая дата/время
+          <input name="when" placeholder="например: вт, 14.10 · 09:00–13:00">
+        </label>
+        <label>Сообщение
+          <textarea name="msg" rows="3" placeholder="Коротко опишите запрос"></textarea>
+        </label>
+
+        <label class="agree">
+          <input type="checkbox" required>
+          Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.
+        </label>
+
+        <!-- honeypot -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+
+        <button class="btn">Отправить запрос</button>
+        <div id="contactNotice" class="note" aria-live="polite"></div>
+      </form>
     </div>
-  </footer>
+
+    <!-- Карта: статичная картинка -->
+    <figure class="map-teaser">
+      <img src="img/map-novisad.jpg" alt="Нови-Сад" loading="lazy">
+      <figcaption><a href="https://maps.google.com/?q=Novi+Sad" target="_blank" rel="noopener">Открыть в Google Maps</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+	  <footer class="site-footer">
+  <div class="container fgrid">
+    <div class="f-brand">
+      <div class="logo">👶</div>
+      <p>Нови-Сад · 09:00–21:00</p>
+      <p><a href="tel:+381XXXXXXXXX">+381 XX XXX XX XX</a><br>
+         <a href="mailto:hello@example.com">hello@example.com</a></p>
+    </div>
+
+    <nav class="f-nav" aria-label="Навигация в футере">
+      <a href="#services">Услуги</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#calc">Цена</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+
+    <div class="f-legal">
+      <a id="privacy" href="/privacy.html">Политика конфиденциальности</a>
+      <span class="sep">·</span>
+      <a href="/cookies.html">Cookies</a>
+      <p class="copy">© <span id="yCopy"></span> Имя няни</p>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('yCopy').textContent = new Date().getFullYear();</script>
 
   <!-- Cookie banner -->
   <div id="cookie-banner" class="cookie-banner" hidden>
@@ -479,6 +552,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
