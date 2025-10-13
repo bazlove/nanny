@@ -423,7 +423,7 @@ select:focus{
 .faq-q__text{
   flex:1 1 auto;
   min-width:0;
-  font-weight:600;
+  font-weight:300;
 }
 
 .faq-q__actions{
@@ -1133,6 +1133,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 @media (max-width: 640px){
   .faq-q{ --faq-q-size: 1.0625rem; }       /* ≈17px; можно поставить 1rem (=16px) */
 }
+
 
 
 
