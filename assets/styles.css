@@ -760,60 +760,74 @@ section[id], #services, #calc, #faq, #contact, #main {
   display:inline-flex; align-items:center; gap:6px;
   height:32px; padding:0 12px; border-radius:999px;
   border:1px solid #e2e6ea; background:#fff; color:#111;
-  font-size:14px; cursor:default; /* сейчас чипы статичны */
+  font-size:14px; cursor:default; /* чипы статичны */
 }
 
-/* ===== Reviews: бесконечная маркиза =================================== */
+/* ===== Reviews: бесконечная маркиза (одна строка, бесшовная) ========== */
 .rv-marquee{
-  --rv-speed: 45s;                    /* скорость цикла (чем больше — тем медленнее) */
+  --rv-speed: 45s;                    /* больше — медленнее */
   --rv-gap: 16px;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
   padding: 8px 0;
+
   /* плавные градиентные края */
-  mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+  mask-image: linear-gradient(to right,
+    transparent 0, #000 40px,
+    #000 calc(100% - 40px), transparent 100%);
 }
 
+/* Трек: строго одна строка, без переносов */
 .rv-track{
-  display: flex; gap: var(--rv-gap);
-  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;                  /* <— запретить второй ряд */
+  gap: var(--rv-gap);
+  align-items: stretch;
   width: max-content;                 /* ширина по контенту */
+  will-change: transform;             /* плавнее анимация */
   animation: rv-scroll var(--rv-speed) linear infinite;
 }
 
+/* Карточка-скрин: фиксированная ширина, не сжимается */
 .rv-item{
-  flex: 0 0 auto;
-  width: 260px;                       /* карточка-скрин */
+  flex: 0 0 260px;                    /* <— фикс ширина и запрет shrink */
+  width: 260px;
   height: 340px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,.08);
   background:#fff;
 }
+
 .rv-item img{
-  width:100%; height:100%; object-fit: cover; display:block;
+  display:block;
+  width:100%; height:100%;
+  object-fit: cover;
 }
 
-/* пауза при наведении */
+/* Пауза при наведении */
 .rv-marquee:hover .rv-track{ animation-play-state: paused; }
 
-/* если пользователь просит меньше анимаций */
+/* Снижаем анимации по настройкам пользователя */
 @media (prefers-reduced-motion: reduce){
   .rv-track{ animation: none !important; }
 }
 
-/* адаптивные размеры карточек */
+/* Адаптив: размеры карточек */
 @media (max-width: 1024px){
-  .rv-item{ width: 220px; height: 300px; }
+  .rv-item{ flex-basis:220px; width:220px; height:300px; }
 }
 @media (max-width: 640px){
-  .rv-item{ width: 75vw; height: 56vw; max-height: 320px; }
+  .rv-item{ flex-basis:75vw; width:75vw; height:56vw; max-height:320px; }
 }
 
-/* бесконечный скролл: сдвиг всей дорожки на её полную ширину (за счёт дубликата) */
+/* Бесконечный скролл: сдвигаем на 50% ширины (второй половиной служит дубликат) */
 @keyframes rv-scroll{
   from{ transform: translateX(0); }
   to  { transform: translateX(-50%); }
 }
+
+
 
 
 
