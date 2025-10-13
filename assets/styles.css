@@ -205,12 +205,45 @@ section{padding:64px 0}
 .notice{margin-top:8px;color:#9b4d00;background:#FFF4E5;border:1px solid #FFE1BF;padding:10px 12px;border-radius:10px;display:none}
 .eur{color:#888;font-weight:600;margin-left:8px;opacity:.85;font-size:12px}
 
-/* Cookie banner */
-.cookie-banner{position:fixed;inset:auto 0 0 0;background:rgba(0,0,0,.35);display:grid;place-items:end center;padding:16px;z-index:100}
-.cookie-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:16px;max-width:860px;width:min(92vw,860px)}
-.cookie-card h3{margin:0 0 6px}
-.cookie-card p{margin:0 0 10px}
-.cookie-actions{display:flex;gap:10px;justify-content:flex-end;margin:10px 0}
+/* === Cookie banner ====================================================== */
+.cookie-banner[hidden] { display: none !important; }
+
+.cookie-banner{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  display: grid; place-items: end center;   /* прилипает к низу */
+  padding: 16px;
+  z-index: 99999;                           /* поверх всего */
+}
+
+.cookie-card{
+  max-width: 680px; width: min(680px, 100%);
+  background:#fff; color:#111;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  padding: 16px 18px;
+  pointer-events: auto;
+}
+
+.cookie-card h3{ margin: 0 0 8px; }
+.cookie-card p { margin: 0 0 12px; }
+.cookie-card small { display:block; margin-top: 10px; color:#666; }
+
+.cookie-actions{
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin-top: 6px;
+}
+
+/* Кнопка-ссылка "Настройки cookie" */
+.link-ghost{
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #2b6e59;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-ghost:hover{ color:#1e6a57; }
 
 /* Responsive */
 @media (max-width:960px){
@@ -869,6 +902,7 @@ section[id], #services, #calc, #faq, #contact, #main {
     padding-inline: var(--gutter);
   }
 }
+
 
 
 
