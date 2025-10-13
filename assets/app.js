@@ -740,6 +740,117 @@ function updateBadge(slots) {
   manage?.addEventListener('click', () => show());
 })();
 
+/* === PHONE MASK (+381 XX XXX XX XX) & AUTOFILL NEAREST SLOT ============= */
+(function contactEnhance(){
+  const phoneInput = document.getElementById('ccontact');
+  const timeInput  = document.getElementById('ctime');
+
+  /* ---------- 1) Маска телефона (Сербия) ---------- */
+  function formatSerbiaPhone(raw){
+    // оставляем только цифры
+    let d = String(raw).replace(/\D+/g, '');
+    // если ввели 00... → считаем как международный
+    if (d.startsWith('00')) d = d.slice(2);
+    // если ввели 8... (часто так копируют), не трогаем — пользователь мог писать не номер
+    // маску включаем только когда явно идём в сторону +381
+    if (!d.startsWith('381')) {
+      // если просто печатают цифры (начинает с 3/38), дадим возможность дойти до 381
+      if (d.length < 3) return '+' + d;
+      // иначе не навязываем маску
+      return raw;
+    }
+    // убираем сам код страны
+    d = d.slice(3);
+    const p1 = d.slice(0,2);
+    const p2 = d.slice(2,5);
+    const p3 = d.slice(5,7);
+    const p4 = d.slice(7,9);
+
+    let out = '+381';
+    if (p1) out += ' ' + p1;
+    if (p2) out += ' ' + p2;
+    if (p3) out += ' ' + p3;
+    if (p4) out += ' ' + p4;
+    return out;
+  }
+
+  function maybeMaskPhone(e){
+    if (!phoneInput) return;
+    const v = phoneInput.value.trim();
+    // Маску применяем, когда пользователь печатает цифры/плюс (а не, например, @username)
+    if (/^[+\d][\d\s()-]*$/.test(v)) {
+      const caretEnd = phoneInput.selectionEnd;
+      phoneInput.value = formatSerbiaPhone(v);
+      // упрощённо: ставим курсор в конец (хватает для большинства кейсов)
+      phoneInput.setSelectionRange(phoneInput.value.length, phoneInput.value.length);
+    }
+  }
+
+  phoneInput?.addEventListener('input', maybeMaskPhone);
+  phoneInput?.addEventListener('blur',  maybeMaskPhone);
+
+  /* ---------- 2) Автозаполнение «Желаемой даты/времени» ближайшим слотом ---------- */
+  function formatDayRU(date){
+    // пн, 14.10
+    return date.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+  }
+  function getNearestSlotFromGlobal(){
+    // если на странице уже есть модуль слотов и он положил слоты глобально
+    const arr = Array.isArray(window.__freeSlots) ? window.__freeSlots : null;
+    if (!arr || !arr.length) return null;
+    const now = Date.now();
+    const getTs = s => s.startTs ?? Date.parse(s.startISO || 0);
+    const sorted = arr
+      .filter(s => getTs(s) > now)
+      .sort((a,b)=> getTs(a) - getTs(b));
+    const s = sorted[0];
+    if (!s) return null;
+
+    const labelDay  = s.dayLabel || formatDayRU(new Date(getTs(s)));
+    const startText = s.startLabel || (s.startISO ? new Date(s.startISO).toTimeString().slice(0,5) : '');
+    const endText   = s.endLabel   || (s.endISO   ? new Date(s.endISO).toTimeString().slice(0,5)   : '');
+    return `${labelDay} · ${startText}–${endText}`;
+  }
+
+  function getNearestSlotFromBadge(){
+    const b = document.querySelector('#headerFreeBadge');
+    if (!b) return null;
+    const t = b.textContent.toLowerCase().trim();
+    // варианты:
+    // «Свободно сегодня 09:00–16:00»
+    // «Свободно завтра 09:00–16:00»
+    // «Ближайший слот: вт, 14.10 • 09:00–16:00»
+    const timeRange = (t.match(/\b(\d{2}:\d{2}–\d{2}:\d{2})\b/)||[])[1];
+
+    if (t.includes('сегодня') && timeRange){
+      const d = new Date();
+      return `${formatDayRU(d)} · ${timeRange}`;
+    }
+    if (t.includes('завтра') && timeRange){
+      const d = new Date(Date.now() + 86400000);
+      return `${formatDayRU(d)} · ${timeRange}`;
+    }
+    // «вт, 14.10 • 09:00–16:00»
+    const day = (t.match(/([а-я]{2},?\s*\d{1,2}\.\d{1,2})/)||[])[1];
+    if (day && timeRange){
+      // приводим «вт, 14.10» → «вт, 14.10»
+      return `${day.replace(/\s+/g,' ')} · ${timeRange}`;
+    }
+    return null;
+  }
+
+  function autofillPreferredTime(){
+    if (!timeInput || timeInput.value.trim()) return; // уже заполнено вручную
+    let label = getNearestSlotFromGlobal();
+    if (!label) label = getNearestSlotFromBadge();
+    if (label) timeInput.value = label;
+  }
+
+  // пробуем сразу и после макро-тика (на случай, если модуль слотов подложит данные асинхронно)
+  autofillPreferredTime();
+  setTimeout(autofillPreferredTime, 600);
+})();
+
 
 
 
