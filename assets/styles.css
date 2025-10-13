@@ -827,6 +827,50 @@ section[id], #services, #calc, #faq, #contact, #main {
   to  { transform: translateX(-50%); }
 }
 
+/* === Calc: фиксируем ширину карточки в границах контейнера страницы === */
+
+/* базовые отступы контейнера; если global .container уже задаёт ширину —
+   мы просто гарантируем одинаковые паддинги */
+#calc { --gutter: 24px; }
+
+#calc > .container{
+  /* берём ширину из глобального контейнера, но на всякий случай оставим дефолт */
+  max-width: var(--container, 1200px);
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+/* перебиваем любые глобальные хаки у .card (100vw / отрицательные margin и т.п.)
+   — только внутри #calc */
+#calc > .container.card,
+#calc > .container.calc-elevate,
+#calc > .container.card.calc-elevate{
+  width: auto !important;
+  max-width: var(--container, 1200px) !important;
+  margin-inline: auto !important;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+/* сама «белая» карточка не должна становиться шире своего контейнера */
+#calc .calc-elevate.card{
+  max-width: 100% !important;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.06);
+}
+
+/* на узких экранах просто резина по ширине окна */
+@media (max-width: 1024px){
+  #calc > .container,
+  #calc > .container.card.calc-elevate{
+    max-width: 100% !important;
+    padding-inline: var(--gutter);
+  }
+}
+
+
 
 
 
