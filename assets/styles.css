@@ -687,54 +687,58 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* === Выровнять ширину калькулятора с общим контейнером === */
-/* Глобальные значения по умолчанию (если в проекте их нет) */
+/* === Calc: ширина как у контента, без растяжек === */
 :root{
-  --container: 1200px;   /* целевая ширина (если нет глобальной .container) */
-  --gutter: 24px;        /* горизонтальные поля у секций/контейнеров */
+  /* подставь те же значения, что и у общей .container страницы */
+  --container: 1200px;  /* общая «сетка» */
+  --gutter: 20px;       /* боковые поля контейнера */
 }
 
-/* 1) Прямой потомок #calc — это .container (в твоей разметке),
-      гарантируем центрирование и внутренние отступы */
+/* сам контейнер секции калькулятора */
 #calc > .container{
-  /* если глобальная .container уже управляет шириной — это правило просто не мешает */
-  max-width: var(--container) !important;
+  max-width: var(--container);
   width: 100%;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin: 0 auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
   box-sizing: border-box;
 }
 
-/* 2) Карточка калькулятора (.card.calc-elevate) должна центрироваться
-      и не иметь «растяжек» — учитываем оба возможных селектора */
+/* белая карточка: центрируем и запрещаем «растяжки» */
 #calc > .container.card,
 #calc > .container.calc-elevate,
-#calc > .container.card.calc-elevate,
-#calc > .calc-elevate{
-  width: auto !important;                           /* вместо возможного 100vw / calc(...) */
-  margin-inline: auto !important;
-  max-width: var(--container) !important;
-}
-
-/* 3) На всякий случай — убираем отрицательные margin только здесь */
-#calc > .container.card.calc-elevate,
-#calc > .calc-elevate.card{
+#calc > .container.card.calc-elevate{
+  width: auto !important;                   /* вместо calc(100% + …) */
+  max-width: var(--container) !important;   /* как у остального контента */
   margin-left: auto !important;
   margin-right: auto !important;
-}
+  margin-inline: auto !important;           /* гасим возможные отрицательные margin */
+  padding: 24px var(--gutter);
+  box-sizing: border-box;
 
-/* 4) Белая «карточка» занимает 100% ширины контейнера (визуально как другие блоки) */
-#calc .calc-elevate.card{
-  max-width: 100%;                       /* от контейнера, а не от окна */
-  box-shadow: 0 20px 60px rgba(0,0,0,.06);
+  /* визуал карточки (если задаётся именно на этом элементе) */
+  background: #fff;
   border-radius: 16px;
-  /* padding/card внутренности — оставляем как есть */
+  box-shadow: 0 20px 60px rgba(0,0,0,.06);
 }
 
-/* 5) На узких экранах — всё резиновое */
+/* на всякий случай: если внутри есть ещё .card, убираем растяжки и там */
+#calc .card{
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+
+/* мобильные — всё резиновое, просто мягче паддинги/радиусы */
 @media (max-width: 1024px){
   #calc > .container{ max-width: 100%; }
+  #calc > .container.card,
+  #calc > .container.calc-elevate,
+  #calc > .container.card.calc-elevate{
+    padding: 16px var(--gutter);
+    border-radius: 12px;
+  }
 }
 
 /* ===== Reviews: заголовок + чипы ======================================= */
@@ -810,6 +814,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   from{ transform: translateX(0); }
   to  { transform: translateX(-50%); }
 }
+
 
 
 
