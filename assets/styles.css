@@ -697,10 +697,10 @@ section[id], #services, #calc, #faq, #contact, #main {
       гарантируем центрирование и внутренние отступы */
 #calc > .container{
   /* если глобальная .container уже управляет шириной — это правило просто не мешает */
-  max-width: var(--container);
+  max-width: var(--container) !important;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
   box-sizing: border-box;
@@ -712,16 +712,16 @@ section[id], #services, #calc, #faq, #contact, #main {
 #calc > .container.calc-elevate,
 #calc > .container.card.calc-elevate,
 #calc > .calc-elevate{
-  width: auto;                           /* вместо возможного 100vw / calc(...) */
-  margin-left: auto !important;
-  margin-right: auto !important;
-  box-sizing: border-box;
+  width: auto !important;                           /* вместо возможного 100vw / calc(...) */
+  margin-inline: auto !important;
+  max-width: var(--container) !important;
 }
 
 /* 3) На всякий случай — убираем отрицательные margin только здесь */
 #calc > .container.card.calc-elevate,
 #calc > .calc-elevate.card{
-  margin-inline: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* 4) Белая «карточка» занимает 100% ширины контейнера (визуально как другие блоки) */
