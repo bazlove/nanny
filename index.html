@@ -444,59 +444,70 @@
 </section>
 	  
 	  <!-- CONTACT -->
-  <section id="contact" class="contact">
-  <div class="container">
-    <div class="contact-card">
-      <h2 class="contact-title">Свяжитесь со мной</h2>
-      <p class="contact-note">
-        Время связи: 09:00–21:00 • Нови-Сад • RU/SRB/EN
-        <span class="hint" aria-label="Часовой пояс">
-          <span class="i">i</span>
-          <span class="tip">Время указано по Белграду (UTC+1 зимой, UTC+2 летом).</span>
-        </span>
-      </p>
+  <section id="contact" class="contact card">
+  <div class="contact-head">
+    <h2>Свяжитесь со мной</h2>
+    <p class="contact-meta">
+      Режим работы: 09:00–21:00 · RU / SRB
+      <span class="tz-tip info" aria-label="Часовой пояс">
+        <button class="i" type="button" aria-haspopup="dialog" aria-expanded="false">i</button>
+        <span class="tt">Время для Белграда (UTC+1 зимой, UTC+2 летом).</span>
+      </span>
+    </p>
+  </div>
 
-      <div class="contact-grid">
-        <!-- Левая колонка: быстрые каналы -->
-        <ul class="contact-ways">
-          <li class="contact-way"><span class="dot" aria-hidden="true"></span><a href="https://wa.me/XXXXXXXXXXX">WhatsApp</a></li>
-          <li class="contact-way"><span class="dot" aria-hidden="true"></span><a href="https://t.me/XXXXX">Telegram</a></li>
-          <li class="contact-way"><span class="dot" aria-hidden="true"></span><a href="tel:+381XXXXXXXXX">+381 XX XXX XX XX</a></li>
-          <li class="contact-way"><span class="dot" aria-hidden="true"></span><a href="mailto:hello@example.com">hello@example.com</a></li>
-          <li class="contact-place">📍 Нови-Сад · <a href="https://maps.google.com/?q=Нови-Сад" target="_blank" rel="noopener">Открыть в Google Maps</a></li>
-        </ul>
+  <div class="contact-grid">
+    <!-- ЛЕВАЯ КОЛОНКА: крупные кликабельные кнопки -->
+    <ul class="contact-actions" aria-label="Способы связи">
+      <li>
+        <a class="cbtn" href="https://t.me/ВАШ_Ник" target="_blank" rel="noopener" aria-label="Написать в Telegram">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="txt">Telegram</span>
+        </a>
+      </li>
+      <li>
+        <a class="cbtn" href="viber://chat?number=%2B381XXXXXXXXX" aria-label="Связаться в Viber">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="txt">Viber</span>
+        </a>
+      </li>
+      <li>
+        <a class="cbtn" href="tel:+381XXXXXXXXX" aria-label="Позвонить по телефону +381">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="txt">+381 XX XXX XX XX</span>
+        </a>
+      </li>
+    </ul>
 
-        <!-- Правая колонка: форма -->
-        <form class="contact-form" action="#" method="post">
-          <div class="contact-row">
-            <label>Ваше имя
-              <input type="text" name="name" autocomplete="name">
-            </label>
-            <label>Контакт (телефон/мессенджер)
-              <input type="text" name="contact" autocomplete="tel">
-            </label>
-          </div>
+    <!-- ПРАВАЯ КОЛОНКА: поля формы одной колонкой -->
+    <form class="contact-form" action="#" method="post" novalidate>
+      <label class="fld">
+        <span class="lbl">Ваше имя</span>
+        <input type="text" name="name" autocomplete="name" placeholder="" />
+      </label>
 
-          <div class="contact-row">
-            <label>Желаемая дата/время
-              <input type="text" name="when" placeholder="напр.: вт, 14.10 · 09:00">
-            </label>
-            <label>Сообщение
-              <textarea name="msg" placeholder="Коротко опишите запрос"></textarea>
-            </label>
-          </div>
+      <label class="fld">
+        <span class="lbl">Телефон/мессенджер)</span>
+        <input type="text" name="contact" autocomplete="tel" placeholder="" />
+      </label>
 
-          <label class="contact-policy">
-            <input type="checkbox" required>
-            Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.
-          </label>
+      <label class="fld">
+        <span class="lbl">Желаемая дата/время</span>
+        <input type="text" name="when" placeholder="напр.: вт, 14.10 · 09:00" />
+      </label>
 
-          <div>
-            <button class="btn btn-primary" type="submit">Отправить запрос</button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <label class="fld fld--textarea">
+        <span class="lbl">Сообщение</span>
+        <textarea name="message" rows="6" placeholder="Коротко опишите запрос"></textarea>
+      </label>
+
+      <label class="agree">
+        <input type="checkbox" required />
+        <span>Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.</span>
+      </label>
+
+      <button type="submit" class="btn btn-primary">Отправить запрос</button>
+    </form>
   </div>
 </section>
 
@@ -556,6 +567,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
