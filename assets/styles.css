@@ -1071,6 +1071,48 @@ section[id], #services, #calc, #faq, #contact, #main {
   .foot-nav{ order: 3; justify-content:flex-start; margin-top:6px; }
 }
 
+/* ——— держим правый блок в одну строку на десктопе ——— */
+.site-footer .f-right .f-links{
+  display:flex;
+  gap:16px;                 /* можно 12–18 */
+  justify-content:flex-end;
+  flex-wrap:nowrap;         /* запрет переносов */
+  white-space:nowrap;       /* запрет переносов внутри ссылок */
+}
+
+.site-footer .f-right .f-links a{
+  font-size:14px;           /* базовый кегль */
+  line-height:1;
+}
+
+/* немного «сжимаем» на грани влезания */
+@media (max-width: 1280px){
+  .site-footer .f-right .f-links{ gap:12px; }
+  .site-footer .f-right .f-links a{ font-size:13.5px; }
+}
+@media (max-width: 1140px){
+  .site-footer .f-right .f-links{ gap:10px; }
+  .site-footer .f-right .f-links a{ font-size:13px; }
+}
+
+/* ——— на планшете/мобилке разрешаем перенос и центрируем ——— */
+@media (max-width: 980px){
+  .site-footer .f-row{
+    grid-template-columns:1fr;     /* одна колонка */
+    row-gap:10px;
+    text-align:center;
+  }
+  .site-footer .f-left,
+  .site-footer .f-center,
+  .site-footer .f-right{ justify-content:center; }
+
+  .site-footer .f-right .f-links{
+    flex-wrap:wrap;                 /* можно переносить */
+    white-space:normal;             /* нормальные переносы */
+    justify-content:center;
+    gap:12px 18px;
+  }
+}
 
 
 
