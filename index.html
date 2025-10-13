@@ -444,70 +444,80 @@
 </section>
 	  
 	  <!-- CONTACT -->
-  <section id="contact" class="contact card">
-  <div class="contact-head">
-    <h2>Свяжитесь со мной</h2>
-    <p class="contact-meta">
-      Режим работы: 09:00–21:00 · RU / SRB
-      <span class="tz-tip info" aria-label="Часовой пояс">
-        <button class="i" type="button" aria-haspopup="dialog" aria-expanded="false">i</button>
-        <span class="tt">Время для Белграда (UTC+1 зимой, UTC+2 летом).</span>
-      </span>
-    </p>
-  </div>
+  <section id="contact" class="section">
+  <div class="container">
+    <div class="contact card">
+      <div class="contact-head">
+        <h2 class="section-title">Свяжитесь со мной</h2>
+        <p class="contact-meta">
+          Режим работы: 09:00–21:00 · RU / SRB
+          <span class="hint" aria-label="Время указано по Белграду">
+            <span class="i">i</span>
+            <span class="tip">Время по Белграду (UTC+1 зимой, UTC+2 летом).</span>
+          </span>
+        </p>
+      </div>
 
-  <div class="contact-grid">
-    <!-- ЛЕВАЯ КОЛОНКА: крупные кликабельные кнопки -->
-    <ul class="contact-actions" aria-label="Способы связи">
-      <li>
-        <a class="cbtn" href="https://t.me/ВАШ_Ник" target="_blank" rel="noopener" aria-label="Написать в Telegram">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="txt">Telegram</span>
-        </a>
-      </li>
-      <li>
-        <a class="cbtn" href="viber://chat?number=%2B381XXXXXXXXX" aria-label="Связаться в Viber">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="txt">Viber</span>
-        </a>
-      </li>
-      <li>
-        <a class="cbtn" href="tel:+381XXXXXXXXX" aria-label="Позвонить по телефону +381">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="txt">+381 XX XXX XX XX</span>
-        </a>
-      </li>
-    </ul>
+      <div class="contact-grid">
+        <!-- ЛЕВАЯ КОЛОНКА: большие кликабельные кнопки -->
+        <ul class="contact-actions">
+          <li>
+            <a id="ctaTg" class="cbtn" href="https://t.me/yourusername" target="_blank" rel="noopener">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Telegram</span>
+            </a>
+          </li>
+          <li>
+            <a id="ctaViber" class="cbtn" href="viber://chat?number=%2B381XXXXXXXXX">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Viber</span>
+            </a>
+          </li>
+          <li>
+            <a id="ctaTel" class="cbtn" href="tel:+381XXXXXXXXX">
+              <span class="dot" aria-hidden="true"></span>
+              <span>+381 XX XXX XX XX</span>
+            </a>
+          </li>
+        </ul>
 
-    <!-- ПРАВАЯ КОЛОНКА: поля формы одной колонкой -->
-    <form class="contact-form" action="#" method="post" novalidate>
-      <label class="fld">
-        <span class="lbl">Ваше имя</span>
-        <input type="text" name="name" autocomplete="name" placeholder="" />
-      </label>
+        <!-- ПРАВАЯ КОЛОНКА: поля одной колонкой + высокая textarea -->
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="fld">
+            <label class="lbl" for="cname">Ваше имя</label>
+            <input class="input" id="cname" name="name" type="text" autocomplete="name" />
+          </div>
 
-      <label class="fld">
-        <span class="lbl">Телефон/мессенджер)</span>
-        <input type="text" name="contact" autocomplete="tel" placeholder="" />
-      </label>
+          <div class="fld">
+            <label class="lbl" for="ccontact">Телефон/мессенджер</label>
+            <input class="input" id="ccontact" name="contact" type="text" />
+          </div>
 
-      <label class="fld">
-        <span class="lbl">Желаемая дата/время</span>
-        <input type="text" name="when" placeholder="напр.: вт, 14.10 · 09:00" />
-      </label>
+          <div class="fld">
+            <label class="lbl" for="ctime">Желаемая дата/время</label>
+            <input class="input" id="ctime" name="preferred_time"
+                   placeholder="напр.: пн, 01.12 · 10:00" />
+          </div>
 
-      <label class="fld fld--textarea">
-        <span class="lbl">Сообщение</span>
-        <textarea name="message" rows="6" placeholder="Коротко опишите запрос"></textarea>
-      </label>
+          <div class="fld">
+            <label class="lbl" for="cmsg">Сообщение</label>
+            <textarea id="cmsg" name="message" class="input" rows="7"
+                      placeholder="Коротко опишите запрос"></textarea>
+          </div>
 
-      <label class="agree">
-        <input type="checkbox" required />
-        <span>Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.</span>
-      </label>
+          <!-- honeypot (скрытое поле против спама) -->
+          <input type="text" name="website" style="position:absolute;left:-9999px" tabindex="-1" aria-hidden="true" />
 
-      <button type="submit" class="btn btn-primary">Отправить запрос</button>
-    </form>
+          <label class="agree">
+            <input type="checkbox" name="agree" required />
+            <span>Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary">Отправить запрос</button>
+          <div id="contactNotice" class="subnote"></div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -567,6 +577,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
