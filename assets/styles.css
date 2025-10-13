@@ -1119,6 +1119,21 @@ section[id], #services, #calc, #faq, #contact, #main {
   }
 }
 
+/* FAQ: увеличить размер шрифта у вопросов */
+.faq-q{ --faq-q-size: 1.125rem; }          /* ≈18px на десктопе */
+.faq-q__text{
+  font-size: var(--faq-q-size);
+  letter-spacing: .1px;
+  line-height: 1.35;
+  font-family: inherit;                     /* на всякий случай — тот же шрифт, что и у body */
+  /* вес 600 уже задан у вас; оставляем */
+}
+
+/* На узких экранах делаем помягче, чтобы не «раздувать» кнопку */
+@media (max-width: 640px){
+  .faq-q{ --faq-q-size: 1.0625rem; }       /* ≈17px; можно поставить 1rem (=16px) */
+}
+
 
 
 
