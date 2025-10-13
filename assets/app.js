@@ -561,6 +561,24 @@ function updateBadge(slots) {
   map.forEach((_, sec) => io.observe(sec));
 })();
 
+/* ===== Reviews: клонируем дорожку для бесшовного лупа ================== */
+(function initReviewsMarquee(){
+  document.querySelectorAll('.rv-marquee').forEach(mq => {
+    const track = mq.querySelector('.rv-track');
+    if (!track) return;
+    // если дубликат уже есть — не плодим
+    if (mq.querySelector('.rv-track--dup')) return;
+
+    const dup = track.cloneNode(true);
+    dup.classList.add('rv-track--dup');
+    dup.setAttribute('aria-hidden', 'true');
+    mq.appendChild(dup);
+
+    // Важный момент: общий контейнер теперь содержит 2 одинаковые дорожки.
+    // В CSS анимация у .rv-track сдвигает на -50% — этого достаточно для бесконечного лупа.
+  });
+})();
+
 
 
 
