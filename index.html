@@ -502,23 +502,25 @@
 
 	  <footer class="site-footer">
   <div class="container footer-bar">
-    <!-- Левая часть: город + ссылка на карту, ниже — копирайт -->
+    
     <div class="foot-left">
-      <div class="foot-place">
-        📍 Нови-Сад ·
-        <a href="https://maps.google.com/?q=%D0%9D%D0%BE%D0%B2%D0%B8-%D0%A1%D0%B0%D0%B4"
-           target="_blank" rel="noopener">Открыть в Google Maps</a>
-      </div>
-      <div class="foot-copy">© 2025 Имя няни</div>
+      <span class="emoji">📍</span>
+      <span>Нови-Сад ·</span>
+      <a
+        class="foot-link link-dashed"
+        href="https://maps.google.com/?q=%D0%9D%D0%BE%D0%B2%D0%B8-%D0%A1%D0%B0%D0%B4"
+        target="_blank" rel="noopener"
+      ><span class="txt">Открыть в Google Maps</span></a>
     </div>
+    
+    <div class="foot-center">© 2025 Имя няни</div>
 
-    <!-- Правая часть: текстовые ссылки -->
     <nav class="foot-nav" aria-label="Нижняя навигация">
-      <a href="#services">Услуги</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#calc">Цена</a>
-      <a href="#faq">FAQ</a>
-      <a href="#privacy">Политика конфиденциальности</a>
+      <a href="#services" class="link-dashed"><span class="txt">Услуги</span></a>
+      <a href="#reviews"  class="link-dashed"><span class="txt">Отзывы</span></a>
+      <a href="#calc"     class="link-dashed"><span class="txt">Цена</span></a>
+      <a href="#faq"      class="link-dashed"><span class="txt">FAQ</span></a>
+      <a href="#privacy"  class="link-dashed"><span class="txt">Политика конфиденциальности</span></a>
     </nav>
   </div>
 </footer>
@@ -554,6 +556,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
