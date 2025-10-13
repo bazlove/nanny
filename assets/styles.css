@@ -1204,6 +1204,52 @@ section[id], #services, #calc, #faq, #contact, #main {
   #contact .c-agree{ font-size:12.5px; }
 }
 
+/* === Contact: правки по вашим текущим классам =================== */
+
+/* 4) Чуть больше воздуха после строки "Режим работы" */
+.contact-meta{ margin-bottom: 16px; }
+
+/* 1) Заголовок над кнопками контактов */
+.actions-title{
+  font-weight: 700;
+  color:#374151;
+  margin: 0;                 /* сам заголовок без отступа снизу */
+}
+/* выравниваем верх первой кнопки с верхом полей ввода справа */
+.contact-grid .contact-actions{ margin-top: 28px; } /* подберите 24–32px под свой кегль */
+
+/* 2) Кнопки контактов: светло-серый фон + полужирный на hover */
+.cbtn{
+  background:#f5f7fa;        /* был #fff — теперь «кнопочно» */
+  border:1px solid #e5e7eb;
+  transition: background .15s, border-color .15s, box-shadow .15s, transform .02s, font-weight .05s;
+}
+.cbtn:hover{
+  background:#eef6f3;        /* мягкий зелёный оттенок */
+  font-weight:700;           /* делаем внутренний текст плотнее */
+}
+
+/* если внутри есть точка-индикатор .dot — не даём ей «толстеть» от font-weight */
+.cbtn .dot{ font-weight:400; }
+
+/* 3) Текст чекбокса делаем компактнее, чтобы влезал в строку */
+.agree{
+  font-size: 13px;
+  line-height: 1.35;
+}
+.agree a{
+  color:#15803D;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+.agree a:hover{ text-decoration-style: solid; }
+
+/* небольшая адаптация: на узких экранах возвращаем прежний верхний отступ,
+   чтобы заголовок и кнопки не "склеивались" */
+@media (max-width: 640px){
+  .contact-grid .contact-actions{ margin-top: 16px; }
+}
+
 
 
 
