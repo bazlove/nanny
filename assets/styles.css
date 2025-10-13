@@ -1138,6 +1138,72 @@ section[id], #services, #calc, #faq, #contact, #main {
   .contact-form .col-message{ grid-column: auto; }
 }
 
+/* Заголовок колонки с кнопками */
+#contact .c-col-title{
+  font-weight:700;
+  color:#374151;
+  margin:0;
+}
+
+/* Чуть больше воздуха от строки «Режим работы…» */
+#contact .c-meta{           /* это ваш контейнер со строкой режима */
+  margin-bottom: 14px;      /* было меньше — сделаем заметнее */
+}
+
+/* Контейнер кнопок + выравнивание верха под поля ввода */
+#contact .c-col--links .c-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  /* ключ: поднимаем список до уровня «полей ввода», 
+     чтобы верх Telegram совпал с верхом инпутов, а заголовок остался выше */
+  margin-top: 28px;         /* подберите 24–32px по факту вашего кегля лейблов */
+}
+
+/* Вид кнопок контактов: светло-серый фон, чтобы было понятно, что это кликабельно */
+#contact .c-btn{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  background:#f5f7fa;                  /* статичный светло-серый фон */
+  color:#111; text-decoration:none;
+  transition:background .15s ease, box-shadow .15s ease, transform .02s ease;
+}
+#contact .c-btn .txt{
+  font-weight:600;                     /* обычное */
+}
+#contact .c-btn:hover{
+  background:#eef6f3;                  /* зелёный оттенок под hover */
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
+}
+#contact .c-btn:hover .txt{
+  font-weight:700;                     /* делаем текст чуть жирнее при hover */
+  color:#146c43;
+}
+#contact .c-btn:active{ transform: translateY(1px); }
+
+/* маленький зелёный индикатор «онлайн» слева (если используете) */
+#contact .c-btn .dot{
+  width:8px; height:8px; border-radius:50%;
+  background:#22c55e; display:inline-block;
+}
+
+/* Чек-бокс и текст согласия — делаем компактнее, чтобы влезало в одну строку */
+#contact .c-agree{                      /* контейнер строки согласия */
+  font-size: 13px;                      /* было крупнее */
+  line-height: 1.3;
+}
+#contact .c-agree a{
+  color:#15803D;
+  text-decoration: underline dotted;
+}
+
+/* на очень узких — можно капельку уменьшить ещё */
+@media (max-width: 560px){
+  #contact .c-agree{ font-size:12.5px; }
+}
+
 
 
 
