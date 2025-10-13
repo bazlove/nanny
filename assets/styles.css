@@ -1009,7 +1009,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* ===== Footer ===== */
 .site-footer{
   margin-top:48px;
-  padding:22px 0 28px;
+  padding:22px 0 24px;
   background:#f7f3ec;
   border-top:1px solid rgba(0,0,0,.06);
 }
@@ -1017,55 +1017,60 @@ section[id], #services, #calc, #faq, #contact, #main {
 .footer-bar{
   display:flex;
   align-items:center;
-  justify-content:space-between;
   gap:16px;
-  flex-wrap:wrap;                 /* чтобы на узких устройствах не ломалось */
+  flex-wrap:wrap;                 /* чтобы не ломалось на узких экранах */
 }
 
-/* левая колонка */
-.foot-left{ display:flex; flex-direction:column; gap:6px; }
-.foot-place{ color:#374151; }     /* спокойный серый текст */
-.foot-place a{
-  color:#2f7d68;                  /* зелёный как на сайте */
-  text-decoration:underline dotted;
-  text-underline-offset:2px;
-}
-.foot-place a:hover{
-  color:#1e6a57;                  /* темнее-зелёный при ховере */
-  text-decoration-style:solid;    /* можно оставить dotted, если хочешь */
-}
-
-.foot-copy{ color:#6b7280; font-size:.9rem; }
-
-/* правая колонка: простые текстовые ссылки */
+/* колонки */
+.foot-left,
+.foot-center,
 .foot-nav{
-  display:flex;
-  align-items:center;
-  gap:14px 18px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
+  flex:1 1 0%;
 }
 
-/* базовый (статичный) серый, как просил; без кнопок и бэджей */
-.foot-nav a{
+.foot-left{
+  display:flex; align-items:center; gap:8px;
+  color:#374151;
+}
+
+.foot-center{
+  text-align:center;
   color:#6b7280;
-  text-decoration:none;
-  padding:0; border:0; background:transparent;
-  line-height:1.2;
 }
 
-/* ховер «как у Поделиться»: зелёный + пунктирное подчеркивание */
-.foot-nav a:hover{
-  color:#1e6a57;
-  text-decoration:underline dotted;
-  text-underline-offset:2px;
+.foot-nav{
+  display:flex; justify-content:flex-end; flex-wrap:wrap; gap:14px 18px;
 }
 
-/* мобильная адаптация: ссылки подвинем влево, сохраняем порядок */
+/* ===== Ховер как у «Поделиться»: серый → зелёный + пунктир ===== */
+/* Базовый класс для ссылок футера (и карты) */
+.link-dashed{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#6B7280; text-decoration:none;               /* без стандартного underline */
+  font-size:14px;
+}
+.link-dashed .txt{
+  border-bottom:1px dashed transparent;
+  transition:color .15s, border-color .15s;
+}
+.link-dashed:hover .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;                       /* пунктир у текста */
+}
+
+/* подгонка эмодзи, чтобы не подчеркивалась */
+.foot-left .emoji{ line-height:1; }
+
+/* Мобильная адаптация */
 @media (max-width: 720px){
   .footer-bar{ align-items:flex-start; }
-  .foot-nav{ justify-content:flex-start; }
+  .foot-left, .foot-center, .foot-nav{
+    flex: 1 1 100%;
+  }
+  .foot-center{ order: 2; text-align:left; margin-top:4px; }
+  .foot-nav{ order: 3; justify-content:flex-start; margin-top:6px; }
 }
+
 
 
 
