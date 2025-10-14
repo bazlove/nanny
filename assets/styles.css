@@ -907,7 +907,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* === Contact: сетка блока === */
 .contact.card{ padding:20px; border-radius:16px; background:#fff; box-shadow:0 12px 36px rgba(0,0,0,.06); }
 .contact-head h2{ margin:0 0 6px; }
-.contact-meta{ margin:0 0 14px; color:#6b7280; }
+.contact-meta{ margin:0 0 32px !important; color:#6b7280; }
 
 /* две колонки: слева кнопки, справа поля */
 .contact-grid{
@@ -1216,7 +1216,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   margin: 0;                 /* сам заголовок без отступа снизу */
 }
 /* выравниваем верх первой кнопки с верхом полей ввода справа */
-.contact-grid .contact-actions{ margin-top: 28px; } /* подберите 24–32px под свой кегль */
+.contact-grid .contact-actions{ margin-top: 32px !important; } /* подберите 24–32px под свой кегль */
 
 /* 2) Кнопки контактов: светло-серый фон + полужирный на hover */
 .cbtn{
@@ -1249,6 +1249,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 @media (max-width: 640px){
   .contact-grid .contact-actions{ margin-top: 16px; }
 }
+
 
 
 
