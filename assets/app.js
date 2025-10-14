@@ -514,6 +514,9 @@ function updateBadge(slots) {
     .then(r => r.json())
     .then(data => {
       const raw = Array.isArray(data?.slots) ? data.slots : (Array.isArray(data) ? data : []);
+
+      window.__freeSlots = raw;
+
       updateBadge(raw);
 
       if (!raw.length) {
@@ -820,6 +823,7 @@ function updateBadge(slots) {
   autofillPreferredTime();
   setTimeout(autofillPreferredTime, 600);
 })();
+
 
 
 
