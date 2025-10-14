@@ -1250,6 +1250,38 @@ section[id], #services, #calc, #faq, #contact, #main {
   .contact-grid .contact-actions{ margin-top: 16px; }
 }
 
+/* Заголовок колонки слева */
+#contact .actions-title,
+#contact .c-col-title{
+  font-weight: 700;
+  color:#374151;
+  margin: 0 0 8px;
+}
+
+/* Кнопки контактов — всегда светло-серые, целиком кликабельные */
+#contact .cbtn{
+  display:flex; align-items:center; gap:10px;
+  min-height:56px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  background:#f5f7fa;                      /* статичный серый фон */
+  color:#111; text-decoration:none;
+  transition:background .15s, box-shadow .15s, transform .02s, font-weight .05s;
+}
+#contact .cbtn:hover{
+  background:#eef6f3;                      /* мягкий зелёный оттенок */
+  font-weight:700;                         /* жирнее текст при hover */
+}
+#contact .cbtn .dot{ width:8px; height:8px; border-radius:50%; background:#22c55e; }
+
+/* Текст согласия — чтобы помещался в одну строку */
+#contact .c-agree,
+.agree{
+  font-size:13px;
+  line-height:1.35;
+}
+
 
 
 
