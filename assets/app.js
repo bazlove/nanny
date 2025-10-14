@@ -677,36 +677,6 @@ function updateBadge(slots) {
   });
 })();
 
-  // ====== форма → Google Apps Script (как было) ======
-  const form = document.getElementById('contactForm');
-  const note = document.getElementById('contactNotice');
-  let t0 = Date.now();
-
-  form?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const fd = new FormData(form);
-
-    // анти-спам
-    if (fd.get('website')) return;          // honeypot
-    if (Date.now()-t0 < 2000) return;       // time-trap
-
-    fd.append('slotBadge', slot||'');
-
-    try{
-      const res = await fetch('https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec', {
-        method:'POST', body:fd
-      });
-      if (!res.ok) throw new Error('Network');
-      note.textContent = 'Спасибо! Я отвечу в ближайшее время.';
-      form.reset(); t0 = Date.now();
-      window.gtag?.('event','contact_form_submit',{success:true});
-    }catch(err){
-      note.textContent = 'Упс, не получилось отправить. Напишите мне в Telegram.';
-      window.gtag?.('event','contact_form_submit',{success:false});
-    }
-  });
-})();
-
 (function(){
   // Ключ в localStorage: версия меняется, если поменяешь политику
   const KEY = 'cookieConsent.v1';
@@ -850,6 +820,7 @@ function updateBadge(slots) {
   autofillPreferredTime();
   setTimeout(autofillPreferredTime, 600);
 })();
+
 
 
 
