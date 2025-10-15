@@ -903,9 +903,9 @@ if (badName || badCont) {
 
   // какие поля валидируем таким способом
   const fields = [
-    { sel:'#cname',    err:'#err-name',    msg:'Укажите ваше имя' },
-    { sel:'#ccontact', err:'#err-contact', msg:'Укажите ваш телефон или @username' }
-  ];
+  { sel:'#cname',    err:'#err-name',    msg:'Укажите имя: минимум 3 символа', minLen: 3 },
+  { sel:'#ccontact', err:'#err-contact', msg:'Укажите ваш телефон или @username' }
+];
 
   const setInFieldError = (fld, msg) => {
     const wrap = fld.closest('.fld');
@@ -928,20 +928,24 @@ if (badName || badCont) {
 
   // при отправке: если поле пустое — показываем «ошибку в поле»
   form.addEventListener('submit', (e) => {
-    let bad = false;
-    fields.forEach(({sel,err,msg}) => {
-      const input = form.querySelector(sel);
-      const hint  = form.querySelector(err);
-      if (!input) return;
-      if (!input.value.trim()) {
-        e.preventDefault();
-        setInFieldError(input, msg);
-        if (hint) hint.hidden = true;  // прячем обычную подпись
-        if (!bad) input.focus();
-        bad = true;
-      }
-    });
+  let bad = false;
+  fields.forEach((f) => {
+    const input = form.querySelector(f.sel);
+    const hint  = form.querySelector(f.err);
+    if (!input) return;
+
+    const v = input.value.trim();
+    const tooShort = f.minLen ? v.length < f.minLen : false;
+
+    if (!v || tooShort) {
+      e.preventDefault();
+      setInFieldError(input, f.msg);
+      if (hint) hint.hidden = true;
+      if (!bad) input.focus();
+      bad = true;
+    }
   });
+});
 
   // при вводе — убираем состояние ошибки и возвращаем placeholder
   fields.forEach(({sel,err}) => {
@@ -952,16 +956,21 @@ if (badName || badCont) {
       clearInFieldError(input);
       if (hint) hint.hidden = true;
     });
+    
     // при блюре, если опять пусто — показываем ошибку
-    input.addEventListener('blur', () => {
-      if (!input.value.trim()) {
-        const f = fields.find(f => f.sel === sel);
-        if (f) setInFieldError(input, f.msg);
-        if (hint) hint.hidden = true;
-      }
-    });
-  });
-})();
+   
+input.addEventListener('blur', () => {
+  const f = fields.find(x => x.sel === sel);
+  const v = input.value.trim();
+  const tooShort = f?.minLen ? v.length < f.minLen : false;
+
+  if (!v || tooShort) {
+    if (f) setInFieldError(input, f.msg);
+    if (hint) hint.hidden = true;
+  }
+});
+
+
 
 
 
