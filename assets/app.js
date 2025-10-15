@@ -824,6 +824,49 @@ function updateBadge(slots) {
   setTimeout(autofillPreferredTime, 600);
 })();
 
+// === Клик по "Запросить" в карточке слота → заполнить форму и проскроллить к ней
+(function attachSlotPrefill(){
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.slot-cta');
+    if (!btn) return;
+
+    const card = btn.closest('.slot-card');
+    if (!card) return;
+
+    // Забираем текст из карточки
+    const dateTxt = (card.querySelector('.slot-date')?.textContent || '').trim();
+    const timeTxt = (card.querySelector('.slot-time')?.textContent || '').trim();
+    if (!dateTxt && !timeTxt) return;
+
+    // Формируем строку для поля формы
+    const wishValue = [dateTxt, timeTxt].filter(Boolean).join(' • ');
+
+    // Находим поле "Желаемая дата/время" (быть гибкими к id/name)
+    const wishInput =
+      document.querySelector('#contact input[name="wish"]') ||
+      document.querySelector('#contact input#wish') ||
+      document.querySelector('#contact input#contact-wish') ||
+      document.querySelector('#contact input#wishTime') ||
+      // запасной вариант — первое текстовое поле с placeholder, начинающимся на "напр."
+      Array.from(document.querySelectorAll('#contact input[type="text"]'))
+        .find(i => (i.placeholder || '').toLowerCase().startsWith('напр'));
+
+    if (wishInput) {
+      ev.preventDefault();                 // чтобы не прыгал якорь раньше времени
+      wishInput.value = wishValue;
+      // если нужно, триггерим input (для масок/валидаций)
+      wishInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // Плавный скролл к форме
+    const formBlock = document.getElementById('contact');
+    if (formBlock) {
+      formBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => wishInput?.focus(), 350);
+    }
+  }, { passive: true });
+})();
+
 
 
 
