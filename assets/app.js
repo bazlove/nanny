@@ -833,39 +833,40 @@ function updateBadge(slots) {
     const card = btn.closest('.slot-card');
     if (!card) return;
 
-    // Забираем текст из карточки
+    // Текст из карточки
     const dateTxt = (card.querySelector('.slot-date')?.textContent || '').trim();
     const timeTxt = (card.querySelector('.slot-time')?.textContent || '').trim();
     if (!dateTxt && !timeTxt) return;
 
-    // Формируем строку для поля формы
+    // Строка для поля
     const wishValue = [dateTxt, timeTxt].filter(Boolean).join(' • ');
 
-    // Находим поле "Желаемая дата/время" (быть гибкими к id/name)
+    // Находим поле «Желаемая дата/время»
     const wishInput =
+      document.querySelector('#ctime') ||                                             // ← ваш id
+      document.querySelector('#contact input[name="preferred_time"]') ||              // ← ваше name
       document.querySelector('#contact input[name="wish"]') ||
       document.querySelector('#contact input#wish') ||
       document.querySelector('#contact input#contact-wish') ||
       document.querySelector('#contact input#wishTime') ||
-      // запасной вариант — первое текстовое поле с placeholder, начинающимся на "напр."
       Array.from(document.querySelectorAll('#contact input[type="text"]'))
         .find(i => (i.placeholder || '').toLowerCase().startsWith('напр'));
 
     if (wishInput) {
-      ev.preventDefault();                 // чтобы не прыгал якорь раньше времени
+      ev.preventDefault();                      // теперь можно — слушатель не passive
       wishInput.value = wishValue;
-      // если нужно, триггерим input (для масок/валидаций)
       wishInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    // Плавный скролл к форме
+    // Плавный скролл к форме + фокус
     const formBlock = document.getElementById('contact');
     if (formBlock) {
       formBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setTimeout(() => wishInput?.focus(), 350);
     }
-  }, { passive: true });
+  }); // ← без { passive:true }
 })();
+
 
 
 
