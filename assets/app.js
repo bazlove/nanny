@@ -641,27 +641,31 @@ function updateBadge(slots) {
   const eCont= document.getElementById('err-contact');
   let t0 = Date.now();
 
+  // Подсветка чекбокса
 (function attachAgreeValidation(){
-  const form = document.getElementById('contactForm');
+  const form      = document.getElementById('contactForm');
   if (!form) return;
 
-  const agreeWrap = form.querySelector('#agreeWrap');
-  const agree     = form.querySelector('#cagree');
+  const agree     = form.querySelector('#cagree');     // чекбокс
 
-  // снимаем подсветку при изменении
+  // снимаем ошибку при изменении состояния чекбокса
   agree?.addEventListener('change', () => {
-    agreeWrap?.classList.remove('is-error');
+    agree.classList.remove('is-error');
+    // agreeWrap?.classList.remove('is-error');
   });
 
   form.addEventListener('submit', (e) => {
-    // доп. проверка к атрибуту required — для кастомной подсветки
-    if (agree && !agree.checked) {
+    // если чекбокс обязателен:
+    if (!agree?.checked) {
       e.preventDefault();
-      agreeWrap?.classList.add('is-error');
+      // подсвечиваем ИМЕННО чекбокс
+      agree.classList.add('is-error');
       agree.focus();
+      return;
     }
   });
 })();
+
   
   // утилиты
   const setErr = (el, small, on) => {
@@ -955,6 +959,7 @@ function updateBadge(slots) {
     });
   });
 })();
+
 
 
 
