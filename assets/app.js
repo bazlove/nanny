@@ -867,6 +867,73 @@ function updateBadge(slots) {
   }); // ← без { passive:true }
 })();
 
+// === In-field error helper (показывать ошибку красным плейсхолдером) ===
+(function inFieldErrors(){
+  const form = document.querySelector('#contactForm');
+  if (!form) return;
+
+  // какие поля валидируем таким способом
+  const fields = [
+    { sel:'#cname',    err:'#err-name',    msg:'Пожалуйста, укажите имя.' },
+    { sel:'#ccontact', err:'#err-contact', msg:'Пожалуйста, укажите телефон или username.' }
+  ];
+
+  const setInFieldError = (fld, msg) => {
+    const wrap = fld.closest('.fld');
+    if (!wrap) return;
+    // сохранить старый placeholder и скрыть подпись под полем
+    if (!fld.dataset.oldPh) fld.dataset.oldPh = fld.placeholder || '';
+    wrap.classList.add('infield-err');
+    fld.value = '';
+    fld.placeholder = msg;
+    fld.setAttribute('aria-invalid','true');
+  };
+
+  const clearInFieldError = (fld) => {
+    const wrap = fld.closest('.fld');
+    if (!wrap) return;
+    wrap.classList.remove('infield-err');
+    fld.placeholder = fld.dataset.oldPh || '';
+    fld.removeAttribute('aria-invalid');
+  };
+
+  // при отправке: если поле пустое — показываем «ошибку в поле»
+  form.addEventListener('submit', (e) => {
+    let bad = false;
+    fields.forEach(({sel,err,msg}) => {
+      const input = form.querySelector(sel);
+      const hint  = form.querySelector(err);
+      if (!input) return;
+      if (!input.value.trim()) {
+        e.preventDefault();
+        setInFieldError(input, msg);
+        if (hint) hint.hidden = true;  // прячем обычную подпись
+        if (!bad) input.focus();
+        bad = true;
+      }
+    });
+  });
+
+  // при вводе — убираем состояние ошибки и возвращаем placeholder
+  fields.forEach(({sel,err}) => {
+    const input = form.querySelector(sel);
+    const hint  = form.querySelector(err);
+    if (!input) return;
+    input.addEventListener('input', () => {
+      clearInFieldError(input);
+      if (hint) hint.hidden = true;
+    });
+    // при блюре, если опять пусто — показываем ошибку
+    input.addEventListener('blur', () => {
+      if (!input.value.trim()) {
+        const f = fields.find(f => f.sel === sel);
+        if (f) setInFieldError(input, f.msg);
+        if (hint) hint.hidden = true;
+      }
+    });
+  });
+})();
+
 
 
 
