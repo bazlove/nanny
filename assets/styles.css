@@ -1400,6 +1400,10 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* прячем стандартную подпись-ошибку, когда используем in-field режим */
 #contact .fld.infield-err .err{ display:none !important; }
 
+:root{ --fld-h:56px; --fld-gap:12px; }
+#contact #cmsg{ min-height:calc(var(--fld-h)*2 + var(--fld-gap));
+                height:    calc(var(--fld-h)*2 + var(--fld-gap)); }
+
 
 
 
