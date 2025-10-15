@@ -1298,7 +1298,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   resize: vertical;         /* можно растянуть вручную при желании */
 }
 
-/* (необязательно) аккуратнее визуальные размеры самой карточки-сообщения */
+/* аккуратнее визуальные размеры самой карточки-сообщения */
 .contact .col-message .fld { margin-bottom: 16px; }
 
 /* === Contact (левый столбец): "карточка" + крупные кнопки === */
@@ -1380,6 +1380,10 @@ section[id], #services, #calc, #faq, #contact, #main {
   margin-top:6px;
   color:#b91c1c;
 }
+
+/* чтобы не прыгала верстка при появлении ошибки */
+#contact .fld{ margin-bottom:14px; }
+#contact .fld.has-error{ margin-bottom:10px; }
 
 
 
