@@ -1482,6 +1482,13 @@ section[id], #services, #calc, #faq, #contact, #main {
   }
 }
 
+/* Подсветка ошибки чекбокса без текста */
+#contact .agree.is-error{
+  outline: 2px solid rgba(239,68,68,.25); /* красный soft */
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
 
 
 
