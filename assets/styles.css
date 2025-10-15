@@ -1435,6 +1435,19 @@ section[id], #services, #calc, #faq, #contact, #main {
   color: var(--err-color);
 }
 
+:root{
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+}
+
+#contact .fld .input,
+#contact .fld textarea,
+#contact .fld .input::placeholder,
+#contact .fld textarea::placeholder{
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
 
 
 
