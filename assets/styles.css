@@ -1289,6 +1289,18 @@ section[id], #services, #calc, #faq, #contact, #main {
   line-height:1.35;
 }
 
+/* Контактная форма: высота текстового поля = 2 инпута + зазор */
+.contact .col-message .fld textarea#cmsg{
+  /* базовая высота обычного инпута на сайте (под ваши текущие стили) */
+  --input-h: 44px;
+  --gap: 16px;
+  min-height: calc(var(--input-h) * 2 + var(--gap));
+  resize: vertical;         /* можно растянуть вручную при желании */
+}
+
+/* (необязательно) аккуратнее визуальные размеры самой карточки-сообщения */
+.contact .col-message .fld { margin-bottom: 16px; }
+
 
 
 
