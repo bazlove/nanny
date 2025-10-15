@@ -641,6 +641,28 @@ function updateBadge(slots) {
   const eCont= document.getElementById('err-contact');
   let t0 = Date.now();
 
+(function attachAgreeValidation(){
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  const agreeWrap = form.querySelector('#agreeWrap');
+  const agree     = form.querySelector('#cagree');
+
+  // снимаем подсветку при изменении
+  agree?.addEventListener('change', () => {
+    agreeWrap?.classList.remove('is-error');
+  });
+
+  form.addEventListener('submit', (e) => {
+    // доп. проверка к атрибуту required — для кастомной подсветки
+    if (agree && !agree.checked) {
+      e.preventDefault();
+      agreeWrap?.classList.add('is-error');
+      agree.focus();
+    }
+  });
+})();
+  
   // утилиты
   const setErr = (el, small, on) => {
     el.classList.toggle('invalid', on);
@@ -933,6 +955,7 @@ function updateBadge(slots) {
     });
   });
 })();
+
 
 
 
