@@ -1298,6 +1298,9 @@ section[id], #services, #calc, #faq, #contact, #main {
   resize: vertical;         /* можно растянуть вручную при желании */
 }
 
+#contact #cmsg{ min-height: 124px;
+                height: 124px; }
+
 /* аккуратнее визуальные размеры самой карточки-сообщения */
 .contact .col-message .fld { margin-bottom: 16px; }
 
@@ -1400,9 +1403,6 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* прячем стандартную подпись-ошибку, когда используем in-field режим */
 #contact .fld.infield-err .err{ display:none !important; }
 
-#contact #cmsg{ min-height: 124px;
-                height: 124px; }
-
 /* === Contact: единая типографика инпутов/textarea === */
 :root{
   --inp-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -1481,6 +1481,7 @@ section[id], #services, #calc, #faq, #contact, #main {
     --err-size: 11px;
   }
 }
+
 
 
 
