@@ -1448,6 +1448,40 @@ section[id], #services, #calc, #faq, #contact, #main {
   font-variant-numeric: tabular-nums;
 }
 
+/* === Contact: компактнее кегль в полях и у ошибок ====================== */
+#contact{
+  --inp-size: 13px;    /* единый размер шрифта во всех input/textarea */
+  --inp-line: 1.35;    /* чуть плотнее */
+  --err-size: 12px;    /* размер текста ошибок (внутри и под полями) */
+}
+
+/* подписи-ошибки под полем (если где-то ещё показываются) */
+#contact .fld .err{
+  font-size: var(--err-size, calc(var(--inp-size) - 1px));
+  line-height: var(--inp-line);
+}
+
+/* «ошибка в placeholder» — такой же уменьшенный кегль */
+#contact .fld .input.is-error::placeholder,
+#contact .fld textarea.is-error::placeholder,
+#contact .fld.infield-err .input::placeholder,     /* твой текущий режим in-field */
+#contact .fld.infield-err textarea::placeholder{
+  font-size: var(--err-size, calc(var(--inp-size) - 1px));
+}
+
+/* чтобы сами поля тоже стали компактнее по кеглю */
+#contact .fld .input,
+#contact .fld textarea{
+  font-size: var(--inp-size);
+  line-height: var(--inp-line);
+}
+@media (max-width: 640px){
+  #contact{
+    --inp-size: 12px;
+    --err-size: 11px;
+  }
+}
+
 
 
 
