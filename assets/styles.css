@@ -1294,7 +1294,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   /* базовая высота обычного инпута на сайте (под ваши текущие стили) */
   --input-h: 44px;
   --gap: 16px;
-  min-height: calc(var(--input-h) * 2 + var(--gap));
+  min-height: 124px;
   resize: vertical;         /* можно растянуть вручную при желании */
 }
 
@@ -1481,6 +1481,7 @@ section[id], #services, #calc, #faq, #contact, #main {
     --err-size: 11px;
   }
 }
+
 
 
 
