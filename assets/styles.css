@@ -1308,7 +1308,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   background:#fff;
   border:1px solid #e5e7eb;
   border-radius:14px;
-  padding:14px;
+  padding: 14px 14px 56px;
   box-shadow:0 1px 0 rgba(0,0,0,.03);
 }
 
@@ -1384,6 +1384,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* чтобы не прыгала верстка при появлении ошибки */
 #contact .fld{ margin-bottom:14px; }
 #contact .fld.has-error{ margin-bottom:10px; }
+
 
 
 
