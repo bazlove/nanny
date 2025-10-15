@@ -874,8 +874,8 @@ function updateBadge(slots) {
 
   // какие поля валидируем таким способом
   const fields = [
-    { sel:'#cname',    err:'#err-name',    msg:'Пожалуйста, укажите имя.' },
-    { sel:'#ccontact', err:'#err-contact', msg:'Пожалуйста, укажите телефон или username.' }
+    { sel:'#cname',    err:'#err-name',    msg:'Укажите ваше имя.' },
+    { sel:'#ccontact', err:'#err-contact', msg:'Укажите ваш телефон или @username.' }
   ];
 
   const setInFieldError = (fld, msg) => {
@@ -933,6 +933,7 @@ function updateBadge(slots) {
     });
   });
 })();
+
 
 
 
