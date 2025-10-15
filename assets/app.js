@@ -896,26 +896,26 @@ if (badName || badCont) {
   }); // ← без { passive:true }
 })();
 
-// === In-field error helper (показывать ошибку красным плейсхолдером) ===
-(function inFieldErrors(){
+// === In-field error helper ===
+
+(function inFieldErrors() {
   const form = document.querySelector('#contactForm');
   if (!form) return;
 
   // какие поля валидируем таким способом
   const fields = [
-  { sel:'#cname',    err:'#err-name',    msg:'Укажите имя: минимум 3 символа', minLen: 3 },
-  { sel:'#ccontact', err:'#err-contact', msg:'Укажите ваш телефон или @username' }
-];
+    { sel: '#cname',    err: '#err-name',    msg: 'Укажите имя: минимум 3 символа', minLen: 3 },
+    { sel: '#ccontact', err: '#err-contact', msg: 'Укажите ваш телефон или @username' }
+  ];
 
   const setInFieldError = (fld, msg) => {
     const wrap = fld.closest('.fld');
     if (!wrap) return;
-    // сохранить старый placeholder и скрыть подпись под полем
     if (!fld.dataset.oldPh) fld.dataset.oldPh = fld.placeholder || '';
     wrap.classList.add('infield-err');
     fld.value = '';
     fld.placeholder = msg;
-    fld.setAttribute('aria-invalid','true');
+    fld.setAttribute('aria-invalid', 'true');
   };
 
   const clearInFieldError = (fld) => {
@@ -926,57 +926,48 @@ if (badName || badCont) {
     fld.removeAttribute('aria-invalid');
   };
 
-  // при отправке: если поле пустое — показываем «ошибку в поле»
+  // при отправке — если поле пустое/слишком короткое, показываем «ошибку в поле»
   form.addEventListener('submit', (e) => {
-  let bad = false;
+    let bad = false;
+    fields.forEach((f) => {
+      const input = form.querySelector(f.sel);
+      const hint  = form.querySelector(f.err);
+      if (!input) return;
+
+      const v = input.value.trim();
+      const tooShort = f.minLen ? v.length < f.minLen : false;
+
+      if (!v || tooShort) {
+        e.preventDefault();
+        setInFieldError(input, f.msg);
+        if (hint) hint.hidden = true;
+        if (!bad) input.focus();
+        bad = true;
+      }
+    });
+  });
+
+  // при вводе/блюре — сброс/повтор ошибки
   fields.forEach((f) => {
     const input = form.querySelector(f.sel);
     const hint  = form.querySelector(f.err);
     if (!input) return;
 
-    const v = input.value.trim();
-    const tooShort = f.minLen ? v.length < f.minLen : false;
-
-    if (!v || tooShort) {
-      e.preventDefault();
-      setInFieldError(input, f.msg);
-      if (hint) hint.hidden = true;
-      if (!bad) input.focus();
-      bad = true;
-    }
-  });
-});
-
-  // при вводе — убираем состояние ошибки и возвращаем placeholder
-  fields.forEach(({sel,err}) => {
-    const input = form.querySelector(sel);
-    const hint  = form.querySelector(err);
-    if (!input) return;
     input.addEventListener('input', () => {
       clearInFieldError(input);
       if (hint) hint.hidden = true;
     });
-    
-    // при блюре, если опять пусто — показываем ошибку
-   
-input.addEventListener('blur', () => {
-  const f = fields.find(x => x.sel === sel);
-  const v = input.value.trim();
-  const tooShort = f?.minLen ? v.length < f.minLen : false;
 
-  if (!v || tooShort) {
-    if (f) setInFieldError(input, f.msg);
-    if (hint) hint.hidden = true;
-  }
-});
-
-
-
-
-
-
-
-
+    input.addEventListener('blur', () => {
+      const v = input.value.trim();
+      const tooShort = f.minLen ? v.length < f.minLen : false;
+      if (!v || tooShort) {
+        setInFieldError(input, f.msg);
+        if (hint) hint.hidden = true;
+      }
+    });
+  });
+})();
 
 
 
