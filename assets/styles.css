@@ -1483,11 +1483,22 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* Подсветка ошибки чекбокса без текста */
-#contact .agree.is-error{
-  outline: 2px solid rgba(239,68,68,.25); /* красный soft */
-  outline-offset: 4px;
-  border-radius: 8px;
+
+/* обычный цвет галочки */
+#contact input[type="checkbox"] {
+  accent-color: #15803D;          /* зелёная галочка (поддерживается в современных браузерах) */
 }
+
+/* ошибка — подсвечаем именно сам чекбокс */
+#contact input[type="checkbox"].is-error{
+  /* красный «ореол» вокруг чекбокса — видно даже когда он не отмечен */
+  box-shadow: 0 0 0 3px rgba(239,68,68,.28);
+  border-radius: 4px;              /* чтобы ореол был скруглённый */
+  outline: none;                   /* на всякий случай */
+  accent-color: #EF4444;           /* если чекбокс всё же отмечен — галочка будет красной */
+}
+
+
 
 
 
