@@ -682,14 +682,17 @@ function updateBadge(slots) {
     if (form.website?.value) return;
     if (Date.now() - t0 < 1200) return;
 
-    const badName = !name.value.trim();
-    const badCont = !cont.value.trim();
-    setErr(name, eName, badName);
-    setErr(cont, eCont, badCont);
-    if (badName || badCont) {
-      (badName ? name : cont).focus();
-      return;
-    }
+    const badName = name.value.trim().length < 3;   // ← минимум 3 символа
+    const badCont = !cont.value.trim();             // как было
+
+// setErr оставляем: он ставит aria-invalid и .invalid (подсказки под полем u тебя скрываются модулем inFieldErrors)
+setErr(name, eName, badName);
+setErr(cont, eCont, badCont);
+
+if (badName || badCont) {
+  (badName ? name : cont).focus();
+  return;
+}
 
     // можно доб./изменить endpoint Google Apps Script
     const fd = new FormData(form);
@@ -959,6 +962,7 @@ function updateBadge(slots) {
     });
   });
 })();
+
 
 
 
