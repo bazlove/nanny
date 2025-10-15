@@ -904,7 +904,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* ===== Contact ===== */
-/* === Contact: сетка блока === */
+
 .contact.card{ padding:20px; border-radius:16px; background:#fff; box-shadow:0 12px 36px rgba(0,0,0,.06); }
 .contact-head h2{ margin:0 0 6px; }
 .contact-meta{ margin:0 0 32px !important; color:#6b7280; }
@@ -970,6 +970,45 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* адаптив */
 @media (max-width: 900px){
   .contact-grid{ grid-template-columns: 1fr; }
+}
+
+/* Блок согласия: увеличим зону клика аккуратно */
+#contact .agree{
+  display: flex;
+  align-items: center;
+  gap: 10px;                 /* чуть больше воздуха между боксом и текстом */
+  padding: 6px 8px;          /* увеличивает hit-area всей строки */
+  border-radius: 8px;
+}
+
+/* Чекбокс — делаем немного крупнее и ровнее по вертикали */
+#contact .agree input[type="checkbox"]{
+  transform: scale(1.25);    /* визуально крупнее */
+  margin: 2px 6px 0 2px;     /* точная подгонка по вертикали/горизонтали */
+  accent-color: #15803D;     /* ваш зелёный цвет */
+  cursor: pointer;
+}
+
+/* На тач-устройствах ещё крупнее — легче попасть пальцем */
+@media (pointer: coarse){
+  #contact .agree input[type="checkbox"]{
+    transform: scale(1.5);
+  }
+  #contact .agree{
+    padding: 8px 10px;       /* чуть больше зона клика всей строки */
+  }
+}
+
+/* Доступность: подсветка всей строки, когда чекбокс в фокусе с клавиатуры */
+#contact .agree:focus-within{
+  box-shadow: 0 0 0 3px rgba(120,198,167,.18);
+}
+
+/* Ваша кастомная ошибка — красный ореол ТОЛЬКО на чекбоксе */
+#contact input[type="checkbox"].is-error{
+  box-shadow: 0 0 0 3px rgba(239,68,68,.28);
+  border-radius: 4px;
+  accent-color: #EF4444;     /* если вдруг отмечен — будет красным */
 }
 
 /* ===== Footer ===== */
@@ -1497,6 +1536,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   outline: none;                   /* на всякий случай */
   accent-color: #EF4444;           /* если чекбокс всё же отмечен — галочка будет красной */
 }
+
 
 
 
