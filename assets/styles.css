@@ -1301,6 +1301,86 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* (необязательно) аккуратнее визуальные размеры самой карточки-сообщения */
 .contact .col-message .fld { margin-bottom: 16px; }
 
+/* === Contact (левый столбец): "карточка" + крупные кнопки === */
+
+/* контейнер левой колонки — единая карточка, «встроенная» в форму */
+#contact .col-actions{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+}
+
+/* заголовок группы */
+#contact .actions-title{
+  font-weight:700;
+  margin:2px 0 10px;
+  color:#1f2937;
+}
+
+/* список кнопок-каналов */
+#contact .c-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* плитка-канал: большая кликабельная область */
+#contact .c-btn{
+  display:flex; align-items:center; gap:10px;
+  min-height:52px;
+  padding:12px 14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#f9fafb;                 /* лёгкий серый фон — явно «кнопка» */
+  color:#111; text-decoration:none;
+  box-shadow:0 1px 0 rgba(0,0,0,.02);
+  transition:background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .04s ease;
+}
+
+/* hover/focus — как на всём лендинге (нежно-зелёный) + жирнее текст */
+#contact .c-btn:hover,
+#contact .c-btn:focus-visible{
+  background:#eefaf4;
+  border-color:#b9e0d1;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+#contact .c-btn:hover .txt,
+#contact .c-btn:focus-visible .txt{
+  font-weight:600;
+}
+
+/* маленькая «онлайн-точка» */
+#contact .c-btn .dot{
+  width:10px; height:10px; border-radius:999px;
+  background:#10b981;
+  box-shadow:0 0 0 3px rgba(16,185,129,.15);
+}
+
+/* мобильная плотность */
+@media (max-width: 640px){
+  #contact .c-btn{
+    min-height:48px; padding:10px 12px;
+  }
+}
+
+/* — необязательно, но полезно: чуть увеличим отступ «режим работы» → «контакты» */
+#contact .contact-meta{ margin-bottom: 40px !important; }
+
+/* компактные тексты ошибок (если ещё не применены) */
+#contact .fld .err,
+#contact .fld .error,
+#contact .error-text{
+  font-size:12px;
+  line-height:1.3;
+  margin-top:6px;
+  color:#b91c1c;
+}
+
 
 
 
