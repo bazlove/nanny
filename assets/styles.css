@@ -1385,6 +1385,22 @@ section[id], #services, #calc, #faq, #contact, #main {
 #contact .fld{ margin-bottom:14px; }
 #contact .fld.has-error{ margin-bottom:10px; }
 
+/* состояние «ошибка прямо в поле» */
+#contact .fld.infield-err .input{
+  border-color:#f59ea8;                /* мягкая красная рамка */
+  box-shadow:0 0 0 3px rgba(244,63,94,.12);
+}
+
+/* сам «текст ошибки» как placeholder */
+#contact .fld.infield-err .input::placeholder{
+  color:#b91c1c;                        /* красный */
+  opacity:1;                            /* чтобы не был бледным */
+}
+
+/* прячем стандартную подпись-ошибку, когда используем in-field режим */
+#contact .fld.infield-err .err{ display:none !important; }
+
+
 
 
 
