@@ -1404,6 +1404,38 @@ section[id], #services, #calc, #faq, #contact, #main {
 #contact #cmsg{ min-height:calc(var(--fld-h)*2 + var(--fld-gap));
                 height:    calc(var(--fld-h)*2 + var(--fld-gap)); }
 
+/* === Contact: единая типографика инпутов/textarea === */
+:root{
+  --inp-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --inp-size: 15px;
+  --inp-line: 1.45;
+  --ph-color: #6B7280;   /* как плейсхолдер у "Сообщение" */
+  --err-color: #B91C1C;
+}
+
+#contact .fld .input,
+#contact .fld textarea{
+  font-family: var(--inp-font);
+  font-size:   var(--inp-size);
+  line-height: var(--inp-line);
+  color:#111;
+}
+
+/* одинаковые плейсхолдеры */
+#contact .fld .input::placeholder,
+#contact .fld textarea::placeholder{
+  color: var(--ph-color);
+  opacity: 1;
+}
+
+/* подписи-ошибки под полями — тем же кеглем */
+#contact .fld .err{
+  font-family: var(--inp-font);
+  font-size:   var(--inp-size);
+  line-height: var(--inp-line);
+  color: var(--err-color);
+}
+
 
 
 
