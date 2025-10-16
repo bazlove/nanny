@@ -1537,6 +1537,40 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color: #EF4444;           /* если чекбокс всё же отмечен — галочка будет красной */
 }
 
+/* ===== Contact: выровнять строку согласия ===== */
+
+/* контейнер строки */
+#contact .agree,
+#contact .c-agree{
+  display: flex;
+  align-items: center;        /* центрируем по вертикали чекбокс и текст */
+  gap: 10px;                  /* расстояние между чекбоксом и текстом */
+  padding-block: 8px;         /* ОДИНАКОВЫЕ отступы сверху и снизу */
+  padding-inline: 0;          /* по бокам можем не добавлять, форма сама даст воздух */
+  line-height: 1.35;          /* комфортная высота строки */
+}
+
+/* сам чекбокс — ровно по центру, без «уплывающих» отступов */
+#contact .agree input[type="checkbox"],
+#contact .c-agree input[type="checkbox"]{
+  margin: 0;                  /* убираем браузерные отступы */
+  align-self: center;         /* центр относительно строки */
+  transform: scale(1.2);      /* optional: чуть крупнее, как у вас было */
+}
+
+/* текст как блок — чтобы многострочие имело те же верх/низ */
+#contact .agree span,
+#contact .c-agree span{
+  display: block;
+  line-height: 1.35;          /* тот же ритм, что у контейнера */
+}
+
+/* если нужно максимально «ровно» даже при переносе текста — задаём min-height */
+@supports (min-height: 1px){
+  #contact .agree,
+  #contact .c-agree{ min-height: 44px; } /* высота ~ инпута в форме */
+}
+
 
 
 
