@@ -1537,39 +1537,48 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color: #EF4444;           /* если чекбокс всё же отмечен — галочка будет красной */
 }
 
-/* ===== Contact: выровнять строку согласия ===== */
+/* === Contact: ровная по высоте строка согласия, как у полей === */
+#contact{
+  --control-h: 48px;         /* целевая высота контролов формы (инпуты/кнопки) */
+}
 
-/* контейнер строки */
-#contact .agree,
-#contact .c-agree{
+/* сама строка согласия */
+#contact .agree{
   display: flex;
-  align-items: center;        /* центрируем по вертикали чекбокс и текст */
-  gap: 10px;                  /* расстояние между чекбоксом и текстом */
-  padding-block: 8px;         /* ОДИНАКОВЫЕ отступы сверху и снизу */
-  padding-inline: 0;          /* по бокам можем не добавлять, форма сама даст воздух */
-  line-height: 1.35;          /* комфортная высота строки */
+  align-items: center;       /* чекбокс и текст строго по центру по вертикали */
+  gap: 10px;
+  min-height: var(--control-h);
+  padding-block: 0;          /* убираем «несимметрию» */
+  padding-inline: 0;
+  line-height: 1.35;
 }
 
-/* сам чекбокс — ровно по центру, без «уплывающих» отступов */
-#contact .agree input[type="checkbox"],
-#contact .c-agree input[type="checkbox"]{
-  margin: 0;                  /* убираем браузерные отступы */
-  align-self: center;         /* центр относительно строки */
-  transform: scale(1.2);      /* optional: чуть крупнее, как у вас было */
+/* чекбокс — без браузерных отступов и по центру */
+#contact .agree input[type="checkbox"]{
+  margin: 0;
+  align-self: center;
 }
 
-/* текст как блок — чтобы многострочие имело те же верх/низ */
-#contact .agree span,
-#contact .c-agree span{
+/* текст как блок, чтобы многострочие не «тянуло» низ */
+#contact .agree > span{
   display: block;
-  line-height: 1.35;          /* тот же ритм, что у контейнера */
+  line-height: 1.35;
 }
 
-/* если нужно максимально «ровно» даже при переносе текста — задаём min-height */
-@supports (min-height: 1px){
-  #contact .agree,
-  #contact .c-agree{ min-height: 44px; } /* высота ~ инпута в форме */
+/* если есть кастомная подсветка .agree через :has(...) — не меняем внутренние отступы */
+#contact .agree:has(input:invalid),
+#contact .agree:has(input:checked){
+  padding-block: 0;          /* важный сброс, чтобы outline не добавлял высоту */
 }
+
+/* при ошибке подсвечиваем только чекбокс (без «надувания» строки) */
+#contact .agree input[type="checkbox"]:invalid{
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
 
 
 
