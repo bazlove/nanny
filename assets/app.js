@@ -52,6 +52,28 @@
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
+// ===== Hero: ротатор коротких цитат рядом с рейтингом =====
+(function initQuoteRotator(){
+  const el = document.getElementById('quoteRotator');
+  if (!el) return;
+
+  const quotes = [
+    '«всегда вовремя, ребёнок спокоен»',
+    '«без экранов, спокойная дисциплина»',
+    '«всегда на связи, фото после визита»',
+    '«мягко и бережно, но порядок есть»'
+  ];
+  let i = 0;
+  setInterval(() => {
+    el.classList.add('is-fade');             // лёгкое исчезание
+    setTimeout(() => {
+      i = (i + 1) % quotes.length;
+      el.textContent = quotes[i];
+      el.classList.remove('is-fade');        // появление
+    }, 250);
+  }, 7000); // смена каждые ~7 секунд
+})();
+
 // Availability badge + mock slot
 (function(){
   const badge=document.getElementById('availability-badge'); if(!badge) return;
@@ -968,6 +990,7 @@ if (badName || badCont) {
     });
   });
 })();
+
 
 
 
