@@ -1583,6 +1583,20 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color: #EF4444;
 }
 
+/* равные отступы вокруг строки согласия: убираем локальный margin у textarea-блока */
+.contact .col-message .fld{ margin-bottom: 0 !important; }
+
+/* сама строка согласия — высота как у инпутов, без внутренних паддингов */
+#contact{ --control-h: 52px; }
+#contact .agree{
+  display:flex; align-items:center; gap:10px;
+  min-height: var(--control-h);
+  padding:0 !important;
+  margin:0;                 /* отступы даёт только flex-gap колонки */
+  line-height:1.35;
+}
+#contact .agree > span{ display:block; line-height:1.35; }
+
 
 
 
