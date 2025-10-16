@@ -1004,13 +1004,6 @@ section[id], #services, #calc, #faq, #contact, #main {
   box-shadow: 0 0 0 3px rgba(120,198,167,.18);
 }
 
-/* Ваша кастомная ошибка — красный ореол ТОЛЬКО на чекбоксе */
-#contact input[type="checkbox"].is-error{
-  box-shadow: 0 0 0 3px rgba(239,68,68,.28);
-  border-radius: 4px;
-  accent-color: #EF4444;     /* если вдруг отмечен — будет красным */
-}
-
 /* ===== Footer ===== */
 .site-footer{
   margin-top:48px;
@@ -1596,6 +1589,31 @@ section[id], #services, #calc, #faq, #contact, #main {
   line-height:1.35;
 }
 #contact .agree > span{ display:block; line-height:1.35; }
+
+/* обычная галочка — зелёная (как и было) */
+#contact .agree input[type="checkbox"]{
+  margin:0; transform:none;
+  accent-color:#15803D;
+}
+
+/* браузерный :invalid не подсвечиваем постоянно */
+#contact .agree input[type="checkbox"]:invalid{
+  outline:none !important;
+  box-shadow:none !important;
+}
+
+/* ВКЛЮЧАЕМ подсветку только при ошибке после проверки формы */
+#contactForm.was-validated .agree input[type="checkbox"]:invalid,
+#contact .agree input[type="checkbox"].is-error{
+  /* тонкий красный контур + небольшая мягкая тень,
+     по стилю как у полей ввода с ошибкой */
+  outline:1px solid #E5484D;
+  outline-offset:1px;
+  box-shadow:0 0 0 2px rgba(229,72,77,.15) !important;
+  border-radius:4px;
+  accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
+}
+
 
 
 
