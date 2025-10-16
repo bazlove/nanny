@@ -1537,46 +1537,53 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color: #EF4444;           /* если чекбокс всё же отмечен — галочка будет красной */
 }
 
-/* === Contact: ровная по высоте строка согласия, как у полей === */
-#contact{
-  --control-h: 48px;         /* целевая высота контролов формы (инпуты/кнопки) */
-}
+/* === Contact: ровная высота строки согласия + без красной рамки по умолчанию === */
 
-/* сама строка согласия */
+/* высота контролов формы = высоте инпутов .input (у тебя min-height: 52px) */
+#contact{ --control-h: 52px; }
+
+/* сама строка согласия: по центру по вертикали, без лишних внутренних отступов */
 #contact .agree{
   display: flex;
-  align-items: center;       /* чекбокс и текст строго по центру по вертикали */
+  align-items: center;
   gap: 10px;
   min-height: var(--control-h);
-  padding-block: 0;          /* убираем «несимметрию» */
-  padding-inline: 0;
+  padding: 0 !important;      /* перебиваем старое padding: 6px 8px; */
+  margin: 0;                   /* чтобы зазор сверху/снизу давал только grid-gap */
   line-height: 1.35;
 }
 
-/* чекбокс — без браузерных отступов и по центру */
+/* текст как блок (многострочие не «тянет» низ), чекбокс без маргинов */
+#contact .agree > span{ display:block; line-height:1.35; }
 #contact .agree input[type="checkbox"]{
   margin: 0;
-  align-self: center;
+  transform: none;             /* если раньше увеличивали scale — убираем для ровной базовой линии */
+  accent-color: #15803D;       /* зелёная галочка в обычном состоянии */
 }
 
-/* текст как блок, чтобы многострочие не «тянуло» низ */
-#contact .agree > span{
-  display: block;
-  line-height: 1.35;
-}
-
-/* если есть кастомная подсветка .agree через :has(...) — не меняем внутренние отступы */
-#contact .agree:has(input:invalid),
-#contact .agree:has(input:checked){
-  padding-block: 0;          /* важный сброс, чтобы outline не добавлял высоту */
-}
-
-/* при ошибке подсвечиваем только чекбокс (без «надувания» строки) */
+/* убираем всегда-включённую красную рамку от :invalid */
 #contact .agree input[type="checkbox"]:invalid{
-  outline: 2px solid #ef4444;
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: none !important;
 }
+
+/* показываем ошибку ТОЛЬКО после попытки отправки формы */
+#contactForm.was-validated .agree input[type="checkbox"]:invalid{
+  outline: 1px solid #ef4444;                 /* тонкая линия по контуру */
+  outline-offset: 1px;                        /* чуть отнесём от чекбокса */
+  box-shadow: 0 0 0 3px rgba(239,68,68,.18);  /* мягкий ореол */
+  border-radius: 4px;                         /* скругление углов, чтобы ореол был аккуратный */
+  accent-color: #EF4444;                      /* (опц.) красный цвет галочки на системных чекбоксах */
+}
+
+#contact .agree input[type="checkbox"].is-error{
+  outline: 1px solid #ef4444;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.18);
+  border-radius: 4px;
+  accent-color: #EF4444;
+}
+
+
 
 
 
