@@ -138,6 +138,40 @@ section{padding:64px 0}
 .hero-illu{font-size:64px;display:grid;place-items:center;height:100%}
 .micro{display:block;color:#666;margin-top:8px}
 
+/* —— Hero: теги-бейджи в 2 строки —— */
+.hero-tags{
+  display:flex; flex-wrap:wrap; gap:8px 10px;
+  margin:10px 0 0; padding:0; list-style:none;
+}
+.hero-tags li{
+  display:inline-flex; align-items:center;
+  height:30px; padding:0 12px;
+  border:1px solid #d9dee6;
+  border-radius:999px;
+  background:#fff;
+  font-weight:700; font-size:14px; color:#0f172a;
+}
+
+/* — CTA блок: две кнопки рядом, на мобилке перенос — */
+.cta{ display:flex; gap:10px; margin:14px 0 8px; flex-wrap:wrap; }
+.cta-quote{ font-weight:700; }
+
+/* — Рейтинг + цитата — */
+.hero-social{
+  display:flex; align-items:center; gap:14px;
+  margin-top:6px; flex-wrap:wrap;
+}
+.hero-social .rating{
+  color:#0b4870; text-decoration:underline dotted; text-underline-offset:2px;
+  font-weight:700;
+}
+.hero-social .rating:hover{ text-decoration-style:solid; }
+.hero-social .quote{
+  color:#374151; font-style:italic; opacity:.9;
+  transition:opacity .25s ease;
+}
+.hero-social .quote.is-fade{ opacity:0; } /* для плавной смены текста */
+
 /* Services & Why */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .tile{background:#fff;border:1px solid #e5e3df;border-radius:16px;padding:16px;transition:.2s ease}
@@ -1613,6 +1647,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
