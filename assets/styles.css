@@ -1729,6 +1729,53 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* карточка справа — на пару пикселей «дышит» */
 .hero-card{ padding: 20px; min-height: 260px; }
 
+/* HERO layout */
+.hero-grid{
+  display:grid;
+  grid-template-columns: minmax(560px,1fr) 420px; /* слева «резина», справа фикс ширина */
+  column-gap: 28px;
+  align-items: start;
+}
+
+.hero-left{ min-width:0; }           /* чтобы длинные строки не «выпирали» */
+.hero-right{ align-self:start; }     /* карточка/картинка прижимается кверху */
+
+/* на планшете/мобилке — одна колонка */
+@media (max-width: 980px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero-right{ order: 2; margin-top: 16px; }
+}
+
+/* базовый стиль (как в футере) */
+.link-dashed{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#6B7280; text-decoration:none;
+  font-size:14px;
+}
+.link-dashed .txt{
+  border-bottom:1px dashed transparent;
+  transition:color .15s, border-color .15s;
+}
+.link-dashed:hover .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;
+}
+
+/* инверсия для hero: «как ховер в футере» по умолчанию */
+.link-dashed--inverse .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;
+}
+.link-dashed--inverse:hover .txt{
+  color:#6B7280;
+  border-bottom-color:#6B7280;
+}
+
+/* звёздочка и цифра рейтинга */
+.rating-badge{ display:inline-flex; align-items:center; gap:6px; }
+.rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
+.rating-badge .rating-score{ font-weight:700; color:#0b4870; }
+
 
 
 
