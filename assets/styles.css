@@ -1648,27 +1648,24 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
 
+/* уже есть, просто дополняем поведение с «иконкой» */
+.hero-tags { /* как у вас */ }
+.hero-tags li{
+  position: relative;
+  padding-left: 30px;              /* место под эмоджи */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* рисуем эмоджи из data-emoji */
+.hero-tags li::before{
+  content: attr(data-emoji);
+  position: absolute;
+  left: 10px;                      /* отступ от края */
+  top: 50%;
+  transform: translateY(-50%);     /* вертикальное выравнивание по центру */
+  font-size: 16px;                 /* можно 17–18px при плотном кегле */
+  line-height: 1;
+  pointer-events: none;            /* чисто декоративно */
+}
 
 
 
