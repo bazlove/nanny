@@ -1667,6 +1667,11 @@ section[id], #services, #calc, #faq, #contact, #main {
   pointer-events: none;            /* чисто декоративно */
 }
 
+@media (max-width: 480px){
+  .hero-tags li{ padding-left: 28px; }
+  .hero-tags li::before{ left: 9px; font-size: 15px; }
+}
+
 
 
 
