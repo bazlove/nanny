@@ -1762,19 +1762,41 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* инверсия для hero: «как ховер в футере» по умолчанию */
+
 .link-dashed--inverse .txt{
   color:#15803D;
-  border-bottom-color:#15803D;
+  border-bottom:1px dashed #15803D;
 }
 .link-dashed--inverse:hover .txt{
   color:#6B7280;
-  border-bottom-color:#6B7280;
+  border-bottom-color: transparent; /* подчёркивание убрали */
 }
 
 /* звёздочка и цифра рейтинга */
 .rating-badge{ display:inline-flex; align-items:center; gap:6px; }
 .rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
 .rating-badge .rating-score{ font-weight:700; color:#0b4870; }
+
+/* === HERO: жёстко фиксируем 2 колонки на десктопе === */
+.hero-grid{
+  display:grid;
+  grid-template-columns: minmax(540px,1fr) 420px; /* слева резина, справа фикс */
+  column-gap:28px;
+  align-items:start;
+}
+
+.hero-copy{ min-width:0; }      /* длинные строки не растягивают колонку */
+.hero-visual{ justify-self:end; }  /* карточка прижата вправо */
+
+/* сама карточка: фикс-ширина на десктопе, резина на мобилке */
+.hero-card{ width:420px; max-width:100%; }
+
+@media (max-width:980px){
+  .hero-grid{ grid-template-columns:1fr; }
+  .hero-visual{ justify-self:stretch; }
+  .hero-card{ width:100%; }
+}
+
 
 
 
