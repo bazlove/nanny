@@ -1672,6 +1672,64 @@ section[id], #services, #calc, #faq, #contact, #main {
   .hero-tags li::before{ left: 9px; font-size: 15px; }
 }
 
+/* hero pills: эмоджи и текст с равными «воздухами» */
+.hero-tags li{
+  display: inline-flex;            /* эмоджи становится частью потока */
+  align-items: center;
+  padding: 0 12px;                 /* одинаковые внутренние отступы слева/справа */
+  gap: 10px;                       /* расстояние между эмоджи и текстом */
+}
+
+/* отменяем абсолют, делаем эмоджи «обычным» элементом */
+.hero-tags li::before{
+  position: static;                /* было absolute */
+  left: auto;
+  top: auto;
+  transform: none;
+  margin: 0;                       /* управляем через gap */
+  content: attr(data-emoji);
+  line-height: 1;
+}
+
+/* бейдж рейтинга со звездой */
+.hero-social{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.hero-social .rating-badge{
+  display:inline-flex; align-items:center; gap:6px;
+}
+.hero-social .rating-badge .star{
+  width:18px; height:18px; fill:#F5B400;       /* золотистая */
+}
+.hero-social .rating-score{ font-weight:700; color:#0b4870; }
+
+/* ссылка «Читать отзывы…»: зелёная и подчёркнутая, hover — серая */
+.hero-social .reviews-link{
+  color:#2b6e59;                                 /* зелёный как в футере */
+  text-decoration: underline; text-underline-offset:2px;
+  font-weight:700;
+}
+.hero-social .reviews-link:hover{
+  color:#6B7280;                                 /* серая при наведении */
+  text-decoration-color:#6B7280;
+}
+
+/* старая .hero-social .rating больше не нужна — можно удалить/не использовать */
+
+/* общие отступы секции */
+.hero{ padding: 96px 0 56px; }             /* было 84/40 */
+
+/* расстояния внутри грида */
+.hero-grid{ gap: 32px 28px; }              /* было 24px */
+
+/* подзаголовок и интервалы */
+.hero-copy .sub{ margin: 10px 0 16px; }    /* +чуть воздуха */
+.hero-tags{ gap: 10px 12px; margin-top: 12px; }   /* компактные, но свободнее */
+.cta{ gap: 12px; margin: 16px 0 12px; flex-wrap:wrap; }
+.hero-social{ gap: 16px; margin-top: 12px; }
+
+/* карточка справа — на пару пикселей «дышит» */
+.hero-card{ padding: 20px; min-height: 260px; }
+
+
 
 
 
