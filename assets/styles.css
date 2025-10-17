@@ -1797,6 +1797,13 @@ section[id], #services, #calc, #faq, #contact, #main {
   .hero-card{ width:100%; }
 }
 
+.hero{ padding: 100px 0 60px; }
+.hero-copy .sub{ margin: 12px 0 18px; }
+.hero-tags{ gap: 10px 12px; margin-top: 12px; }
+.cta{ gap: 12px; margin: 16px 0 12px; }
+.hero-social{ gap: 16px; margin-top: 12px; }
+
+
 
 
 
