@@ -410,6 +410,17 @@ section{padding:64px 0}
   font-size:12px; font-weight:600;
 }
 
+/* Услуги: подсказка под заголовком */
+#services .section-head { margin-bottom: 10px; }
+#services .section-hint{
+  display:flex; align-items:center; gap:8px;
+  margin:6px 0 12px;
+  color:#6B7280; font-size:14px;
+}
+#services .section-hint .dot{
+  width:6px; height:6px; border-radius:999px; background:#D1D5DB;
+}
+
 /* Примечание */
 .svc-note{ margin-top:8px; color:#6b7280; font-size:14px; }
 
@@ -1880,6 +1891,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
