@@ -493,6 +493,33 @@ section{padding:64px 0}
   #services .svc-card .svc-text{ font-size:13.5px; }
 }
 
+/* Шапка секции и положение чипов (как в предыдущем патче) */
+#services .container{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "head filters"
+    "head filters"
+    "cards cards";
+  align-items:end;
+  gap: var(--space-3) var(--space-4);
+}
+
+/* больше воздуха под заголовком и подсказкой */
+#services .section-head{ grid-area: head; margin:0 0 var(--space-6); }
+#services .section-head .section-title{ margin:0 0 var(--space-2); }
+
+#services .svc-filters{ grid-area: filters; justify-self:end; align-self:end; }
+#services .svc-grid{ grid-area: cards; gap: var(--space-4); }
+
+/* внутри карточек — ровные отступы и ритм */
+#services .svc-card{
+  padding: var(--space-4);
+}
+#services .svc-card .svc-head{ margin:0 0 var(--space-2); }
+#services .svc-card .svc-desc,
+#services .svc-card .svc-text{ margin-top: var(--space-2); }
+
 /* Slots */
 .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
 .slot--free{padding:12px;border:1px solid #dbe1ea;border-radius:12px;background:#fff}
@@ -1960,6 +1987,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
