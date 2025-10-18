@@ -361,74 +361,72 @@ section{padding:64px 0}
 
 /* === SERVICES === */
 
-/* --- Шапка СЕКЦИИ: заголовок + чипы справа, подсказка ниже --- */
-#services .section-head{
+/* делаем грид у контейнера секции: слева head (h2+подсказка), справа фильтры */
+#services .container{
   display:grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "title filters"
-    "hint  hint";
-  align-items:center;
-  gap:8px 16px;
-  margin-bottom:12px;
-}
-#services .section-head .section-title{ grid-area:title; margin:0; }
-
-#services .section-head .svc-filters{
-  grid-area:filters;
-  justify-self:end;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+    "head filters"
+    "head filters"
+    "cards cards";
+  align-items:end;                 /* чипы по базовой линии с h2 */
+  gap:12px 16px;
 }
 
+/* размещаем блоки по областям грида */
+#services .section-head{ grid-area: head; margin:0; }
+#services .svc-filters{ grid-area: filters; justify-self:end; align-self:end; }
+#services .svc-grid{ grid-area: cards; }
+
+/* шапка секции внутри остаётся простой колонкой */
+#services .section-head .section-title{ margin:0 0 2px; }
 #services .section-head .section-hint{
-  grid-area:hint;
-  margin:0;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#6B7280;
-  font-size:14px;
+  display:flex; align-items:center; gap:8px;
+  color:#6B7280; font-size:14px; margin:0;
 }
 #services .section-head .section-hint .dot{
-  width:6px; height:6px; border-radius:999px;
-  background:#D1D5DB;
+  width:6px; height:6px; border-radius:999px; background:#D1D5DB;
 }
 
-/* --- Чипы-фильтры --- */
+/* чипы */
 #services .svc-chip{
-  padding:6px 12px;
-  border:1px solid #E5E7EB;
-  border-radius:999px;
-  background:#fff;
-  color:#111;
-  font-size:14px;
-  cursor:pointer;
+  padding:6px 12px; border:1px solid #E5E7EB; border-radius:999px;
+  background:#fff; color:#111; font-size:14px; cursor:pointer;
   transition:background .15s, border-color .15s, color .15s;
 }
 #services .svc-chip.is-active{
-  border-color:#B9E0D1;
-  background:#F2FAF6;
-  color:#146C43;
+  border-color:#B9E0D1; background:#F2FAF6; color:#146C43;
 }
 
-/* --- Сетка карточек --- */
+/* адаптив: на планшете/мобилке чипы переезжают под заголовок */
+@media (max-width: 800px){
+  #services .container{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "filters"
+      "cards";
+  }
+  #services .svc-filters{ justify-self:start; }
+}
+
+/* ===== SERVICES: карточки ===== */
+
+/* сетка карточек */
 #services .svc-grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap:18px;
 }
 
-/* --- Карточка услуги --- */
+/* карточка: равные внутренние отступы */
 #services .svc-card{
   position:relative;
   background:#fff;
   border:1px solid #E5E7EB;
   border-radius:14px;
   box-shadow:0 8px 24px rgba(0,0,0,.04);
-  /* единый верхний «потолок» под бейдж, чтобы заголовки стартовали на одной линии */
-  padding:38px 16px 14px;
+  padding:16px;                               /* одинаковые отступы */
   transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
 }
 #services .svc-card:hover{
@@ -437,57 +435,38 @@ section{padding:64px 0}
   border-color:#DFE4EA;
 }
 
-/* шапка КАРТОЧКИ: эмодзи + заголовок в одну строку */
+/* эмоджи + заголовок в одну строку */
 #services .svc-card .svc-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:0 0 6px;
+  display:flex; align-items:center; gap:10px;
+  margin:0 0 8px;
 }
 #services .svc-card .svc-emoji{
-  font-size:22px;
-  line-height:1;
-  /* обнуляем возможные старые абсолюты */
-  position:static;
-  left:auto;
-  top:auto;
+  position:static; left:auto; top:auto;
+  font-size:20px; line-height:1;
 }
 #services .svc-card .svc-title{
-  margin:0;
-  font-size:18px;
-  font-weight:700;
-  color:#0f172a;
-  /* убираем старый «псевдо-отступ» под эмодзи */
-  padding-left:0;
+  margin:0; font-size:18px; line-height:1.25;
+  font-weight:700; color:#0f172a; padding-left:0;
 }
 
-/* текст (поддержка и старого .svc-desc, и нового .svc-text) */
+/* текст */
 #services .svc-card .svc-desc,
 #services .svc-card .svc-text{
-  margin:0;
-  color:#374151;
-  font-size:14px;
+  margin:0; color:#374151; font-size:14px; line-height:1.5;
 }
 
-/* бейдж «по договорённости» (для дополнительных) */
+/* бейдж «по договорённости»: тонкий серый текст, без рамок/фона */
 #services .svc-card .svc-badge{
-  position:absolute;
-  top:8px;
-  right:12px;
-  padding:3px 8px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:600;
-  background:#FFF7ED;
-  color:#B45309;
-  border:1px solid #F5D5B8;
+  position:absolute; top:10px; right:12px;
+  font-size:12.5px; font-weight:600; color:#6B7280;
+  background:none; border:none; padding:0;
 }
 #services [data-tier="base"] .svc-badge{ display:none; }
 
-/* скрытие карточек при фильтрации (добавляется атрибут hidden) */
+/* скрытие карточек при фильтрации */
 #services .svc-card[hidden]{ display:none !important; }
 
-/* адаптивные шрифты внутри карточки */
+/* мелкий адаптив шрифтов в карточке */
 @media (max-width:640px){
   #services .svc-card .svc-title{ font-size:17px; }
   #services .svc-card .svc-desc,
@@ -1961,6 +1940,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
