@@ -153,17 +153,39 @@
         </div> -->
         
 		  <div class="hero-visual">
-          <div class="hero-card">
-            <div class="hero-badges">
-              <span class="hbadge">3–7 лет</span>
-              <span class="hbadge">Два ребёнка — ок</span>
-              <span class="hbadge">RU / SRB / EN</span>
-            </div>
-            <div class="hero-illu">🙂</div>
-          </div>
-        </div>
+  <div class="hero-slider" role="region" aria-roledescription="carousel" aria-label="Фотографии няни и рабочих моментов">
+    <button class="hs-nav prev" type="button" aria-label="Предыдущее фото">‹</button>
+
+    <div class="hs-viewport">
+      <div class="hs-track">
+        <!-- 1 -->
+        <figure class="hs-slide is-active">
+          <img src="img/hero/01.jpg" width="720" height="480" loading="eager"
+               alt="Няня играет с ребёнком в развивающую игру" />
+        </figure>
+        <!-- 2 -->
+        <figure class="hs-slide">
+          <img src="img/hero/02.jpg" width="720" height="480" loading="lazy"
+               alt="Прогулка во дворе без гаджетов" />
+        </figure>
+        <!-- 3 -->
+        <figure class="hs-slide">
+          <img src="img/hero/03.jpg" width="720" height="480" loading="lazy"
+               alt="Творческое занятие: рисование и аппликация" />
+        </figure>
       </div>
-    </section>
+    </div>
+
+    <button class="hs-nav next" type="button" aria-label="Следующее фото">›</button>
+
+    <div class="hs-dots" role="tablist" aria-label="Навигация по фото">
+      <button class="hs-dot is-active" role="tab" aria-selected="true" aria-label="Слайд 1"></button>
+      <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 2"></button>
+      <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 3"></button>
+    </div>
+  </div>
+</div>
+		  </section>
 
     <!-- SERVICES -->
     <section id="services">
@@ -626,6 +648,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
