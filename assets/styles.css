@@ -126,51 +126,197 @@ section{padding:64px 0}
 .lang-switch .lang-btn.active{color:#0f2a45}
 
 /* Hero */
-.hero{padding:84px 0 40px}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
-.hero-copy .sub{font-size:18px;color:#333;margin:.25rem 0 .75rem}
-.trust{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 12px;padding:0;list-style:none}
-.trust li{background:#fff;padding:6px 10px;border:1px solid #e5e3df;border-radius:999px;font-size:14px}
-.hero-visual{display:grid;place-items:center}
-.hero-card{position:relative;width:100%;max-width:420px;min-height:240px;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:16px}
-.hero-badges{position:absolute;top:8px;left:8px;display:flex;gap:6px;flex-wrap:wrap}
-.hbadge{font-size:11px;padding:4px 8px;border-radius:999px;background:#F1F5FB;border:1px solid #E0E8F7}
-.hero-illu{font-size:64px;display:grid;place-items:center;height:100%}
-.micro{display:block;color:#666;margin-top:8px}
 
-/* —— Hero: теги-бейджи в 2 строки —— */
-.hero-tags{
-  display:flex; flex-wrap:wrap; gap:8px 10px;
-  margin:10px 0 0; padding:0; list-style:none;
-}
-.hero-tags li{
-  display:inline-flex; align-items:center;
-  height:30px; padding:0 12px;
-  border:1px solid #d9dee6;
-  border-radius:999px;
-  background:#fff;
-  font-weight:700; font-size:14px; color:#0f172a;
+/* Общие отступы секции */
+#top.hero{
+  padding: 96px 0 56px;
 }
 
-/* — CTA блок: две кнопки рядом, на мобилке перенос — */
-.cta{ display:flex; gap:10px; margin:14px 0 8px; flex-wrap:wrap; }
-.cta-quote{ font-weight:700; }
+/* Двухколоночный layout: текст слева, слайдер справа */
+#top .container.hero-grid{
+  display: grid;
+  grid-template-columns: minmax(480px, 1fr) minmax(420px, 560px);
+  align-items: start;
+  gap: clamp(24px, 4vw, 56px);
+}
 
-/* — Рейтинг + цитата — */
-.hero-social{
-  display:flex; align-items:center; gap:14px;
-  margin-top:6px; flex-wrap:wrap;
+/* Подстраховка от старого грида на контейнере (чтобы ничего не ломало) */
+#top.hero > .container{ display: block; }
+
+/* Левый столбец */
+#top .container.hero-grid .hero-copy{ min-width: 0; } /* текст не распирает колонку */
+
+#top .hero-copy .sub{
+  font-size: 18px;
+  color: #333;
+  margin: 10px 0 16px;
 }
-.hero-social .rating{
-  color:#0b4870; text-decoration:underline dotted; text-underline-offset:2px;
-  font-weight:700;
+
+/* Бейджи в 2 строки */
+#top .hero-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
 }
-.hero-social .rating:hover{ text-decoration-style:solid; }
-.hero-social .quote{
+#top .hero-tags li{
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  gap: 10px;               /* расстояние между эмоджи и текстом */
+  padding: 0 12px;         /* симметричные внутренние отступы */
+  border: 1px solid #d9dee6;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+}
+#top .hero-tags li::before{
+  content: attr(data-emoji); /* эмоджи берём из data-emoji */
+  line-height: 1;
+}
+
+/* CTA-кнопки */
+#top .cta{
+  display: flex;
+  gap: 12px;
+  margin: 16px 0 12px;
+  flex-wrap: wrap;
+}
+#top .cta-quote{ font-weight: 700; }
+
+/* Рейтинг + ссылка + цитата */
+#top .hero-social{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* бейдж рейтинга со звездой */
+#top .hero-social .rating-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+#top .hero-social .rating-badge .star{
+  width: 18px; height: 18px; fill: #F5B400; /* золотистая звезда */
+}
+#top .hero-social .rating-score{
+  font-weight: 700;
+  color: #0b4870;
+}
+
+/* «Читать отзывы родителей»: зелёная по умолчанию, при ховере — серая */
+.link-dashed{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#6B7280; text-decoration:none; font-size:14px;
+}
+.link-dashed .txt{
+  border-bottom:1px dashed transparent;
+  transition: color .15s, border-color .15s;
+}
+.link-dashed:hover .txt{
+  color:#15803D;
+  border-bottom-color:#15803D;
+}
+.link-dashed--inverse .txt{
+  color:#15803D;                         /* зелёный как «ховер» в футере */
+  border-bottom:1px dashed #15803D;      /* пунктир в статике */
+}
+.link-dashed--inverse:hover .txt{
+  color:#6B7280;                         /* при ховере становится серой */
+  border-bottom-color: transparent;      /* подчёркивание исчезает */
+}
+
+/* Бегущая цитата */
+#top .hero-social .quote{
   color:#374151; font-style:italic; opacity:.9;
-  transition:opacity .25s ease;
+  transition: opacity .25s ease;
 }
-.hero-social .quote.is-fade{ opacity:0; } /* для плавной смены текста */
+#top .hero-social .quote.is-fade{ opacity:0; }
+
+/* Правый столбец — слайдер */
+#top .container.hero-grid .hero-visual{ justify-self: end; }
+#top .hero-visual .hero-slider{ width: 100%; max-width: 560px; }
+
+.hero-slider{
+  position: relative;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+.hero-slider .hs-viewport{
+  position: relative;
+  aspect-ratio: 4 / 3;    /* держим форму карточки */
+  min-height: 300px;
+  max-height: 520px;
+  overflow: hidden;
+}
+.hero-slider .hs-track{
+  display: flex;
+  height: 100%;
+  transform: translateX(0%);
+  transition: transform .4s ease;
+  will-change: transform;
+}
+.hero-slider .hs-slide{
+  flex: 0 0 100%;
+  height: 100%;
+  position: relative;
+}
+.hero-slider .hs-slide img{
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  background: #f6f6f6;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Стрелки */
+.hero-slider .hs-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px;
+  border:none; border-radius:999px;
+  background: rgba(255,255,255,.9);
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  cursor:pointer; font-size:22px; line-height:40px;
+  display:grid; place-items:center;
+  transition: background .15s, transform .05s;
+  z-index: 5; pointer-events: auto;
+}
+.hero-slider .hs-nav:hover{ background:#fff; }
+.hero-slider .hs-nav:active{ transform:translateY(-50%) scale(.97); }
+.hero-slider .hs-nav:focus-visible{ outline:2px solid #15803D; outline-offset:2px; }
+.hero-slider .hs-nav.prev{ left:10px; }
+.hero-slider .hs-nav.next{ right:10px; }
+
+/* Точки */
+.hero-slider .hs-dots{
+  position:absolute; left:0; right:0; bottom:10px;
+  display:flex; justify-content:center; gap:8px;
+}
+.hero-slider .hs-dot{
+  width:8px; height:8px; border-radius:999px;
+  background:rgba(255,255,255,.65);
+  border:1px solid rgba(0,0,0,.08);
+  cursor:pointer;
+}
+.hero-slider .hs-dot.is-active{
+  background:#15803D; border-color:#15803D;
+}
+
+/* Адаптив: одна колонка на планшете/мобилке */
+@media (max-width: 1024px){
+  #top .container.hero-grid{ display:block; }
+  #top .container.hero-grid .hero-visual{ margin-top:16px; }
+}
 
 /* Services & Why */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -1648,297 +1794,6 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
 
-/* уже есть, просто дополняем поведение с «иконкой» */
-.hero-tags { /* как у вас */ }
-.hero-tags li{
-  position: relative;
-  padding-left: 30px;              /* место под эмоджи */
-}
-
-/* рисуем эмоджи из data-emoji */
-.hero-tags li::before{
-  content: attr(data-emoji);
-  position: absolute;
-  left: 10px;                      /* отступ от края */
-  top: 50%;
-  transform: translateY(-50%);     /* вертикальное выравнивание по центру */
-  font-size: 16px;                 /* можно 17–18px при плотном кегле */
-  line-height: 1;
-  pointer-events: none;            /* чисто декоративно */
-}
-
-@media (max-width: 480px){
-  .hero-tags li{ padding-left: 28px; }
-  .hero-tags li::before{ left: 9px; font-size: 15px; }
-}
-
-/* hero pills: эмоджи и текст с равными «воздухами» */
-.hero-tags li{
-  display: inline-flex;            /* эмоджи становится частью потока */
-  align-items: center;
-  padding: 0 12px;                 /* одинаковые внутренние отступы слева/справа */
-  gap: 10px;                       /* расстояние между эмоджи и текстом */
-}
-
-/* отменяем абсолют, делаем эмоджи «обычным» элементом */
-.hero-tags li::before{
-  position: static;                /* было absolute */
-  left: auto;
-  top: auto;
-  transform: none;
-  margin: 0;                       /* управляем через gap */
-  content: attr(data-emoji);
-  line-height: 1;
-}
-
-/* бейдж рейтинга со звездой */
-.hero-social{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.hero-social .rating-badge{
-  display:inline-flex; align-items:center; gap:6px;
-}
-.hero-social .rating-badge .star{
-  width:18px; height:18px; fill:#F5B400;       /* золотистая */
-}
-.hero-social .rating-score{ font-weight:700; color:#0b4870; }
-
-/* ссылка «Читать отзывы…»: зелёная и подчёркнутая, hover — серая */
-.hero-social .reviews-link{
-  color:#2b6e59;                                 /* зелёный как в футере */
-  text-decoration: underline; text-underline-offset:2px;
-  font-weight:700;
-}
-.hero-social .reviews-link:hover{
-  color:#6B7280;                                 /* серая при наведении */
-  text-decoration-color:#6B7280;
-}
-
-/* старая .hero-social .rating больше не нужна — можно удалить/не использовать */
-
-/* общие отступы секции */
-.hero{ padding: 96px 0 56px; }             /* было 84/40 */
-
-/* расстояния внутри грида */
-.hero-grid{ gap: 32px 28px; }              /* было 24px */
-
-/* подзаголовок и интервалы */
-.hero-copy .sub{ margin: 10px 0 16px; }    /* +чуть воздуха */
-.hero-tags{ gap: 10px 12px; margin-top: 12px; }   /* компактные, но свободнее */
-.cta{ gap: 12px; margin: 16px 0 12px; flex-wrap:wrap; }
-.hero-social{ gap: 16px; margin-top: 12px; }
-
-/* карточка справа — на пару пикселей «дышит» */
-.hero-card{ padding: 20px; min-height: 260px; }
-
-/* HERO layout */
-.hero-grid{
-  display:grid;
-  grid-template-columns: minmax(560px,1fr) 420px; /* слева «резина», справа фикс ширина */
-  column-gap: 28px;
-  align-items: start;
-}
-
-.hero-left{ min-width:0; }           /* чтобы длинные строки не «выпирали» */
-.hero-right{ align-self:start; }     /* карточка/картинка прижимается кверху */
-
-/* на планшете/мобилке — одна колонка */
-@media (max-width: 980px){
-  .hero-grid{ grid-template-columns: 1fr; }
-  .hero-right{ order: 2; margin-top: 16px; }
-}
-
-/* базовый стиль (как в футере) */
-.link-dashed{
-  display:inline-flex; align-items:center; gap:6px;
-  color:#6B7280; text-decoration:none;
-  font-size:14px;
-}
-.link-dashed .txt{
-  border-bottom:1px dashed transparent;
-  transition:color .15s, border-color .15s;
-}
-.link-dashed:hover .txt{
-  color:#15803D;
-  border-bottom-color:#15803D;
-}
-
-/* инверсия для hero: «как ховер в футере» по умолчанию */
-
-.link-dashed--inverse .txt{
-  color:#15803D;
-  border-bottom:1px dashed #15803D;
-}
-.link-dashed--inverse:hover .txt{
-  color:#6B7280;
-  border-bottom-color: transparent; /* подчёркивание убрали */
-}
-
-/* звёздочка и цифра рейтинга */
-.rating-badge{ display:inline-flex; align-items:center; gap:6px; }
-.rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
-.rating-badge .rating-score{ font-weight:700; color:#0b4870; }
-
-/* === HERO: жёстко фиксируем 2 колонки на десктопе === */
-.hero-grid{
-  display:grid;
-  grid-template-columns: minmax(540px,1fr) 420px; /* слева резина, справа фикс */
-  column-gap:28px;
-  align-items:start;
-}
-
-.hero-copy{ min-width:0; }      /* длинные строки не растягивают колонку */
-.hero-visual{ justify-self:end; }  /* карточка прижата вправо */
-
-/* сама карточка: фикс-ширина на десктопе, резина на мобилке */
-.hero-card{ width:420px; max-width:100%; }
-
-@media (max-width:980px){
-  .hero-grid{ grid-template-columns:1fr; }
-  .hero-visual{ justify-self:stretch; }
-  .hero-card{ width:100%; }
-}
-
-.hero{ padding: 100px 0 60px; }
-.hero-copy .sub{ margin: 12px 0 18px; }
-.hero-tags{ gap: 10px 12px; margin-top: 12px; }
-.cta{ gap: 12px; margin: 16px 0 12px; }
-.hero-social{ gap: 16px; margin-top: 12px; }
-
-/* ——— HERO grid: фиксируем две колонки на десктопе ——— */
-.hero-grid{
-  display:grid;
-  grid-template-columns: minmax(320px, 640px) minmax(420px, 1fr);
-  align-items:center;
-  gap: clamp(24px, 4vw, 40px);
-}
-
-/* ——— Слайдер ——— */
-.hero-slider{
-  position:relative;
-  border-radius:16px;
-  background:#fff;
-  box-shadow:0 18px 40px rgba(0,0,0,.08);
-  overflow:hidden;
-}
-
-/* высота карточки: адаптивно, но не меньше */
-.hero-slider .hs-viewport{
-  position:relative;
-  aspect-ratio: 4 / 3;            /* держим форму */
-  min-height: 300px;
-  max-height: 520px;
-  overflow:hidden;
-}
-
-.hero-slider .hs-track{
-  display:flex;
-  height:100%;
-  transform: translateX(0%);
-  transition: transform .4s ease;
-  will-change: transform;
-}
-
-.hero-slider .hs-slide{
-  flex:0 0 100%;
-  height:100%;
-  position:relative;
-}
-.hero-slider .hs-slide img{
-  width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-  background:#f6f6f6;
-  user-select:none;
-  -webkit-user-drag:none;
-  pointer-events:none;
-}
-
-/* стрелки */
-.hero-slider .hs-nav{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:40px; height:40px;
-  border:none; border-radius:999px;
-  background: rgba(255,255,255,.9);
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-  cursor:pointer; font-size:22px; line-height:40px;
-  display:grid; place-items:center;
-  transition:background .15s, transform .05s;
-  z-index: 5;          /* поверх изображения и трека */
-  pointer-events: auto;
-}
-.hero-slider .hs-nav:hover{ background:#fff; }
-.hero-slider .hs-nav:active{ transform:translateY(-50%) scale(.97); }
-.hero-slider .hs-nav:focus-visible{ outline: 2px solid #15803D; outline-offset: 2px; }
-.hero-slider .hs-nav.prev{ left:10px; }
-.hero-slider .hs-nav.next{ right:10px; }
-
-/* точки */
-.hero-slider .hs-dots{
-  position:absolute; left:0; right:0; bottom:10px;
-  display:flex; justify-content:center; gap:8px;
-}
-.hero-slider .hs-dot{
-  width:8px; height:8px; border-radius:999px;
-  background:rgba(255,255,255,.65);
-  border:1px solid rgba(0,0,0,.08);
-  cursor:pointer;
-}
-.hero-slider .hs-dot.is-active{ background:#15803D; border-color:#15803D; }
-
-/* мобильная укладка */
-@media (max-width: 960px){
-  .hero-grid{ grid-template-columns: 1fr; }
-  .hero-visual{ order:2; }
-  .hero-copy{ order:1; }
-}
-
-/* === HERO: фиксируем 2 колонки на десктопе ========================= */
-#top.hero > .container{
-  display: grid;
-  grid-template-columns: minmax(480px, 1fr) minmax(460px, 560px); /* левый текст + правый слайдер */
-  align-items: start;
-  gap: clamp(24px, 4vw, 56px);
-}
-
-/* названия колонок из вашего проекта */
-#top .hero-copy{ min-width: 480px; }         /* поджимает левую колонку, чтобы справа поместился слайдер */
-#top .hero-visual{ width: 100%; max-width: 560px; justify-self: end; }
-
-/* на планшете/мобилке снова одна колонка */
-@media (max-width: 1024px){
-  #top.hero > .container{ display: block; }
-  #top .hero-visual{ margin-top: 16px; }
-}
-
-/* сам слайдер растягиваем на ширину правой колонки */
-.hero-visual .hero-slider{ width: 100%; }
-
-/* чуть больше воздуха между блоками hero */
-.hero h1{ margin-bottom: 14px; }
-.hero .sub{ margin: 0 0 18px; }
-.hero .hero-tags{ margin: 10px 0; }
-.hero .cta{ margin: 18px 0 12px; display: flex; gap: 12px; flex-wrap: wrap; }
-.hero .hero-social{ margin-top: 8px; }
-
-/* === HERO: две колонки для .hero-grid (текст слева, слайдер справа) === */
-#top .hero-grid{
-  display: grid;
-  grid-template-columns: minmax(480px, 1fr) minmax(440px, 560px);
-  align-items: start;
-  gap: clamp(24px, 4vw, 56px);
-}
-
-#top .hero-visual{ justify-self: end; }
-#top .hero-visual .hero-slider{ width: 100%; max-width: 560px; } /* слайдер под ширину правой колонки */
-
-/* планшет/мобилка — одна колонка */
-@media (max-width: 1024px){
-  #top .hero-grid{ display:block; }
-  #top .hero-visual{ margin-top: 16px; }
-}
-
-#top .hero-grid{
-  grid-template-columns: minmax(460px, 1fr) minmax(440px, 560px);
-}
 
 
 
