@@ -1880,19 +1880,41 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 .hero-slider .hs-dot.is-active{ background:#15803D; border-color:#15803D; }
 
-/* больше «воздуха» в hero */
-.hero h1{ margin-bottom:14px; }
-.hero .sub{ margin: 0 0 18px; }
-.hero .hero-tags{ margin:10px 0; }
-.hero .cta{ margin:18px 0 12px; display:flex; gap:12px; flex-wrap:wrap; }
-.hero .hero-social{ margin-top:6px; }
-
 /* мобильная укладка */
 @media (max-width: 960px){
   .hero-grid{ grid-template-columns: 1fr; }
   .hero-visual{ order:2; }
   .hero-copy{ order:1; }
 }
+
+/* === HERO: фиксируем 2 колонки на десктопе ========================= */
+#top.hero > .container{
+  display: grid;
+  grid-template-columns: minmax(480px, 1fr) minmax(460px, 560px); /* левый текст + правый слайдер */
+  align-items: start;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+/* названия колонок из вашего проекта */
+#top .hero-copy{ min-width: 480px; }         /* поджимает левую колонку, чтобы справа поместился слайдер */
+#top .hero-visual{ width: 100%; max-width: 560px; justify-self: end; }
+
+/* на планшете/мобилке снова одна колонка */
+@media (max-width: 1024px){
+  #top.hero > .container{ display: block; }
+  #top .hero-visual{ margin-top: 16px; }
+}
+
+/* сам слайдер растягиваем на ширину правой колонки */
+.hero-visual .hero-slider{ width: 100%; }
+
+/* чуть больше воздуха между блоками hero */
+.hero h1{ margin-bottom: 14px; }
+.hero .sub{ margin: 0 0 18px; }
+.hero .hero-tags{ margin: 10px 0; }
+.hero .cta{ margin: 18px 0 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hero .hero-social{ margin-top: 8px; }
+
 
 
 
