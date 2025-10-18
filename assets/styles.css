@@ -1919,6 +1919,22 @@ section[id], #services, #calc, #faq, #contact, #main {
 .hero .cta{ margin: 18px 0 12px; display: flex; gap: 12px; flex-wrap: wrap; }
 .hero .hero-social{ margin-top: 8px; }
 
+/* === HERO: две колонки для .hero-grid (текст слева, слайдер справа) === */
+#top .hero-grid{
+  display: grid;
+  grid-template-columns: minmax(480px, 1fr) minmax(440px, 560px);
+  align-items: start;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+#top .hero-visual{ justify-self: end; }
+#top .hero-visual .hero-slider{ width: 100%; max-width: 560px; } /* слайдер под ширину правой колонки */
+
+/* планшет/мобилка — одна колонка */
+@media (max-width: 1024px){
+  #top .hero-grid{ display:block; }
+  #top .hero-visual{ margin-top: 16px; }
+}
 
 
 
