@@ -318,13 +318,30 @@ section{padding:64px 0}
   #top .container.hero-grid .hero-visual{ margin-top:16px; }
 }
 
-#top .hero-visual{
-  display: block;        /* отменяем grid/center из глобального правила */
-  align-self: start;     /* сам столбец тоже кверху строки */
-}
-#top .container.hero-grid{ align-items: start; }  /* уже есть — можно оставить */
-#top .hero-visual .hero-slider{ margin-top: 0; }  /* на случай наследованных отступов */
+#top .hero-visual,
+#top .hero-visual .hero-slider{ margin-top: 0 !important; }
 
+/* 1) Две колонки и выравнивание по верхнему краю для обоих столбцов */
+#top .hero-grid{
+  display:grid !important;
+  grid-template-columns: minmax(480px,1fr) minmax(420px,560px);
+  align-items: start !important;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+/* 2) Правую колонку перестаём центрировать, прижимаем кверху */
+#top .hero-visual{
+  display: block !important;      /* убираем display:grid */
+  place-items: initial !important; /* гасим старое place-items:center */
+  align-self: start !important;
+  justify-self: end;               /* прижимаем к правому краю сетки */
+}
+
+/* 3) На всякий случай — левая колонка тоже от верха */
+#top .hero-copy{ align-self: start !important; }
+
+/* 4) Сам слайдер тянется на ширину правой колонки */
+#top .hero-visual .hero-slider{ width:100%; max-width:560px; }
 
 /* Services & Why */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -1800,6 +1817,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
