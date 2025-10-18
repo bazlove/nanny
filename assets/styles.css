@@ -361,47 +361,74 @@ section{padding:64px 0}
 
 /* === SERVICES === */
 
-/* Заголовок секции + подсказка */
-#services .svc-head{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+/* --- Шапка СЕКЦИИ: заголовок + чипы справа, подсказка ниже --- */
+#services .section-head{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title filters"
+    "hint  hint";
+  align-items:center;
+  gap:8px 16px;
   margin-bottom:12px;
 }
-#services .section-hint{
-  display:flex; align-items:center; gap:8px;
-  color:#6B7280; font-size:14px;
-}
-#services .section-hint .dot{
-  width:6px; height:6px; border-radius:999px; background:#D1D5DB;
+#services .section-head .section-title{ grid-area:title; margin:0; }
+
+#services .section-head .svc-filters{
+  grid-area:filters;
+  justify-self:end;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-/* Чип-фильтры */
-#services .svc-filters{ display:flex; gap:8px; flex-wrap:wrap; }
+#services .section-head .section-hint{
+  grid-area:hint;
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#6B7280;
+  font-size:14px;
+}
+#services .section-head .section-hint .dot{
+  width:6px; height:6px; border-radius:999px;
+  background:#D1D5DB;
+}
+
+/* --- Чипы-фильтры --- */
 #services .svc-chip{
-  padding:6px 12px; border:1px solid #E5E7EB; border-radius:999px;
-  background:#fff; color:#111; font-size:14px; cursor:pointer;
+  padding:6px 12px;
+  border:1px solid #E5E7EB;
+  border-radius:999px;
+  background:#fff;
+  color:#111;
+  font-size:14px;
+  cursor:pointer;
   transition:background .15s, border-color .15s, color .15s;
 }
 #services .svc-chip.is-active{
-  border-color:#B9E0D1; background:#F2FAF6; color:#146C43;
+  border-color:#B9E0D1;
+  background:#F2FAF6;
+  color:#146C43;
 }
 
-/* Сетка карточек */
+/* --- Сетка карточек --- */
 #services .svc-grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap:18px;
 }
 
-/* Карточка услуги: общий «потолок» под бейдж/иконки */
+/* --- Карточка услуги --- */
 #services .svc-card{
   position:relative;
   background:#fff;
   border:1px solid #E5E7EB;
   border-radius:14px;
   box-shadow:0 8px 24px rgba(0,0,0,.04);
-  padding:38px 16px 14px; /* единый верхний отступ */
+  /* единый верхний «потолок» под бейдж, чтобы заголовки стартовали на одной линии */
+  padding:38px 16px 14px;
   transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
 }
 #services .svc-card:hover{
@@ -410,35 +437,61 @@ section{padding:64px 0}
   border-color:#DFE4EA;
 }
 
-/* Шапка карточки: эмодзи + заголовок в одну строку */
-#services .svc-emoji{
-  position:absolute; top:10px; left:12px;
-  font-size:22px; line-height:1;
-}
-#services .svc-title{
+/* шапка КАРТОЧКИ: эмодзи + заголовок в одну строку */
+#services .svc-card .svc-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
   margin:0 0 6px;
-  padding-left:34px;                /* место под эмодзи слева */
-  font-size:18px; font-weight:700; color:#0f172a;
 }
-#services .svc-text{ margin:0; color:#374151; font-size:14px; }
+#services .svc-card .svc-emoji{
+  font-size:22px;
+  line-height:1;
+  /* обнуляем возможные старые абсолюты */
+  position:static;
+  left:auto;
+  top:auto;
+}
+#services .svc-card .svc-title{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+  color:#0f172a;
+  /* убираем старый «псевдо-отступ» под эмодзи */
+  padding-left:0;
+}
 
-/* Бейдж «по договорённости» (для дополнительных) */
-#services .svc-badge{
-  position:absolute; top:8px; right:12px;
-  padding:3px 8px; border-radius:999px;
-  font-size:12px; font-weight:600;
-  background:#FFF7ED; color:#B45309; border:1px solid #F5D5B8;
+/* текст (поддержка и старого .svc-desc, и нового .svc-text) */
+#services .svc-card .svc-desc,
+#services .svc-card .svc-text{
+  margin:0;
+  color:#374151;
+  font-size:14px;
 }
-/* На базовых карточках бейдж отсутствует */
+
+/* бейдж «по договорённости» (для дополнительных) */
+#services .svc-card .svc-badge{
+  position:absolute;
+  top:8px;
+  right:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  background:#FFF7ED;
+  color:#B45309;
+  border:1px solid #F5D5B8;
+}
 #services [data-tier="base"] .svc-badge{ display:none; }
 
-/* Спрятанные карточки при фильтрации (JS добавляет hidden) */
+/* скрытие карточек при фильтрации (добавляется атрибут hidden) */
 #services .svc-card[hidden]{ display:none !important; }
 
-/* Адаптив: немного мягче на узких экранах */
+/* адаптивные шрифты внутри карточки */
 @media (max-width:640px){
-  #services .svc-title{ font-size:17px; }
-  #services .svc-text { font-size:13.5px; }
+  #services .svc-card .svc-title{ font-size:17px; }
+  #services .svc-card .svc-desc,
+  #services .svc-card .svc-text{ font-size:13.5px; }
 }
 
 /* Slots */
@@ -1908,6 +1961,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
