@@ -90,19 +90,21 @@
 </header>
 
   <main>
+	  
     <!-- HERO -->
+	  
     <section id="top" class="hero">
-      <div class="container hero-grid">
+      <div class="container hero-grid hero-copy">
         
-		  <div class="hero-copy">
   <h1>Няня в Нови-Саде — забота, безопасность и бережное развитие</h1>
 
   <p class="sub">
     Освободите время для личных дел, спокойно работайте из дома
     или проведите вечер в тишине — без тревоги, отвлечения и стресса.
-  </p>
+  </p></div>
 
   <!-- 2 строки бейджей с контрастом -->
+			  
 <ul class="hero-tags">
   <li data-emoji="📅">31 год</li>
   <li data-emoji="👩‍👦">Мама</li>
@@ -136,21 +138,7 @@
 </a> ·
   <span id="quoteRotator" class="quote">«всегда вовремя, ребёнок спокоен»</span>
 </div>
-
-		 <!-- <div class="hero-copy">
-          <h1 class="i18n" data-key="hero_title">Надёжная няня в Нови-Саде — спокойно работайте из дома</h1>
-          <p class="sub i18n" data-key="hero_sub">CPR/First Aid, фото-отчёт после визита, развивающие занятия, моторика по договорённости.</p>
-          <ul class="trust">
-            <li class="i18n" data-key="trust_safe">🛡️ Безопасность</li>
-            <li class="i18n" data-key="trust_report">📷 Фото-отчёт</li>
-            <li class="i18n" data-key="trust_no_screens">🎲 Развитие без экранов</li>
-            <li class="i18n" data-key="trust_short_slots">🕒 Слоты 2–4 часа</li>
-          </ul>
-          <div class="cta">
-            <a class="btn btn-primary i18n" data-key="btn_slots" href="#slots">Проверить свободные слоты</a>
-          </div>
-          <small class="micro i18n" data-key="hero_micro">Опыт: воспитатель детсада и детский фитнес-тренер • 4.9★ по отзывам</small>
-        </div> -->
+		  
         
 		  <div class="hero-visual">
   <div class="hero-slider" role="region" aria-roledescription="carousel" aria-label="Фотографии няни и рабочих моментов">
@@ -185,22 +173,79 @@
     </div>
   </div>
 </div>
-		  </section>
+	</section>
 
     <!-- SERVICES -->
-    <section id="services">
-      <div class="container">
-        <h2>Услуги</h2>
-        <div class="tiles">
-          <div class="tile"><h3>🧸 Присмотр и уход</h3><p>Безопасность, режим, прогулки, сон.</p></div>
-          <div class="tile"><h3>🎨 Развивающие занятия</h3><p>Игры на моторику, речь, логика.</p></div>
-          <div class="tile"><h3>🌳 Активные игры</h3><p>Двор/парк без экранов, подвижные игры.</p></div>
-          <div class="tile"><h3>🏫 Сопровождение</h3><p>Садик/кружки, домашние задания.</p></div>
-          <div class="tile"><h3>🍲 Питание</h3><p>Лёгкие приёмы пищи по договорённости.</p></div>
-          <div class="tile"><h3>🌙 Ночной присмотр</h3><p>По отдельной договорённости.</p></div>
-        </div>
+	  
+<section id="services" class="services section">
+  <div class="container">
+
+    <div class="svc-head">
+      <h2 class="section-title">Услуги</h2>
+
+      <!-- Чипы-фильтры (не обязательно кликать — просто метка уровня) -->
+      <div class="svc-filters" role="tablist" aria-label="Фильтр услуг">
+        <button class="svc-chip is-active" data-filter="all"   role="tab" aria-selected="true">Все</button>
+        <button class="svc-chip"         data-filter="base"  role="tab" aria-selected="false">Базовые</button>
+        <button class="svc-chip"         data-filter="extra" role="tab" aria-selected="false">Дополнительные</button>
       </div>
-    </section>
+    </div>
+
+    <!-- Сетка карточек -->
+    <div class="svc-grid">
+      <!-- БАЗОВЫЕ -->
+      <article class="svc-card" data-tier="base">
+        <div class="svc-emoji" aria-hidden="true">📋</div>
+        <h3 class="svc-title">Распорядок дня</h3>
+        <p class="svc-text">Спокойное бодрствование, присмотр, быт, гигиена, сон.</p>
+      </article>
+
+      <article class="svc-card" data-tier="base">
+        <div class="svc-emoji" aria-hidden="true">🎨</div>
+        <h3 class="svc-title">Занятия и игры</h3>
+        <p class="svc-text">Рисование, лепка, творчество, активности, моторика, логика.</p>
+      </article>
+
+      <article class="svc-card" data-tier="base">
+        <div class="svc-emoji" aria-hidden="true">🌳</div>
+        <h3 class="svc-title">Прогулки</h3>
+        <p class="svc-text">Подвижные игры на свежем воздухе в парке/дворе.</p>
+      </article>
+
+      <article class="svc-card" data-tier="base">
+        <div class="svc-emoji" aria-hidden="true">🏫</div>
+        <h3 class="svc-title">Сопровождение</h3>
+        <p class="svc-text">Отвезти/забрать с кружка, секции, детсада, школы.</p>
+      </article>
+
+      <!-- ДОПОЛНИТЕЛЬНЫЕ -->
+      <article class="svc-card svc-card--extra" data-tier="extra">
+        <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
+        <div class="svc-emoji" aria-hidden="true">🍲</div>
+        <h3 class="svc-title">Питание</h3>
+        <p class="svc-text">Простой перекус для ребёнка по вашему меню.</p>
+      </article>
+
+      <article class="svc-card svc-card--extra" data-tier="extra">
+        <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
+        <div class="svc-emoji" aria-hidden="true">🗑</div>
+        <h3 class="svc-title">Уборка</h3>
+        <p class="svc-text">Небольшая уборка в детской комнате.</p>
+      </article>
+
+      <article class="svc-card svc-card--extra" data-tier="extra">
+        <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
+        <div class="svc-emoji" aria-hidden="true">🏃</div>
+        <h3 class="svc-title">Тренировка</h3>
+        <p class="svc-text">Персональное фитнес-занятие/гимнастика на 30 минут.</p>
+      </article>
+    </div>
+
+    <p class="svc-note">
+      Дополнительные услуги учитываются в калькуляторе (чекбокс «доп занятие»).
+    </p>
+  </div>
+</section>
 
     <!-- WHY -->
     <section>
@@ -648,6 +693,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
