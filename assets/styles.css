@@ -318,30 +318,39 @@ section{padding:64px 0}
   #top .container.hero-grid .hero-visual{ margin-top:16px; }
 }
 
-#top .hero-visual,
-#top .hero-visual .hero-slider{ margin-top: 0 !important; }
-
-/* 1) Две колонки и выравнивание по верхнему краю для обоих столбцов */
-#top .hero-grid{
+/* === HERO: двухколоночный grid и явная раскладка ================== */
+#top .container.hero-grid{
   display:grid !important;
-  grid-template-columns: minmax(480px,1fr) minmax(420px,560px);
-  align-items: start !important;
+  /* левый столбец «резиновый», правый – контролируемой ширины */
+  grid-template-columns: minmax(420px, 1fr) clamp(420px, 38vw, 560px) !important;
+  align-items: start !important;            /* выравнивание по верху */
   gap: clamp(24px, 4vw, 56px);
 }
 
-/* 2) Правую колонку перестаём центрировать, прижимаем кверху */
-#top .hero-visual{
-  display: block !important;      /* убираем display:grid */
-  place-items: initial !important; /* гасим старое place-items:center */
-  align-self: start !important;
-  justify-self: end;               /* прижимаем к правому краю сетки */
+/* ЯВНО кладём блоки в 1-ю строку грида */
+#top .hero-copy{
+  grid-column: 1; grid-row: 1;
+  min-width: 0;                             /* текст не распирает колонку */
 }
-
-/* 3) На всякий случай — левая колонка тоже от верха */
-#top .hero-copy{ align-self: start !important; }
-
-/* 4) Сам слайдер тянется на ширину правой колонки */
+#top .hero-visual{
+  grid-column: 2; grid-row: 1;
+  justify-self: end; align-self: start;
+  /* на случай «странных» наследований где-то наверху */
+  display: block !important;
+  float: none !important;
+  clear: none !important;
+  margin: 0 !important;
+}
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
+/* Планшет/мобилка — одна колонка */
+@media (max-width:1024px){
+  #top .container.hero-grid{
+    grid-template-columns: 1fr !important;
+  }
+  #top .hero-copy{ grid-column:auto; grid-row:auto; }
+  #top .hero-visual{ grid-column:auto; grid-row:auto; justify-self:stretch; }
+}
 
 /* Services & Why */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -1818,8 +1827,6 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
 
-#top .hero-visual,
-#top .hero-visual .hero-slider{ margin-top: 0 !important; }
 
 
 
