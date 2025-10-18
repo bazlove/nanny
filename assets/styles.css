@@ -1803,6 +1803,97 @@ section[id], #services, #calc, #faq, #contact, #main {
 .cta{ gap: 12px; margin: 16px 0 12px; }
 .hero-social{ gap: 16px; margin-top: 12px; }
 
+/* ——— HERO grid: фиксируем две колонки на десктопе ——— */
+.hero-grid{
+  display:grid;
+  grid-template-columns: minmax(320px, 640px) minmax(420px, 1fr);
+  align-items:center;
+  gap: clamp(24px, 4vw, 40px);
+}
+
+/* ——— Слайдер ——— */
+.hero-slider{
+  position:relative;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 18px 40px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+
+/* высота карточки: адаптивно, но не меньше */
+.hero-slider .hs-viewport{
+  position:relative;
+  aspect-ratio: 4 / 3;            /* держим форму */
+  min-height: 300px;
+  max-height: 520px;
+  overflow:hidden;
+}
+
+.hero-slider .hs-track{
+  display:flex;
+  height:100%;
+  transform: translateX(0%);
+  transition: transform .4s ease;
+}
+
+.hero-slider .hs-slide{
+  flex:0 0 100%;
+  height:100%;
+  position:relative;
+}
+.hero-slider .hs-slide img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  background:#f6f6f6;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
+}
+
+/* стрелки */
+.hero-slider .hs-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px;
+  border:none; border-radius:999px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+  cursor:pointer; font-size:22px; line-height:40px;
+  display:grid; place-items:center;
+  transition:background .15s, transform .05s;
+}
+.hero-slider .hs-nav:hover{ background:#fff; }
+.hero-slider .hs-nav:active{ transform:translateY(-50%) scale(.97); }
+.hero-slider .hs-nav.prev{ left:10px; }
+.hero-slider .hs-nav.next{ right:10px; }
+
+/* точки */
+.hero-slider .hs-dots{
+  position:absolute; left:0; right:0; bottom:10px;
+  display:flex; justify-content:center; gap:8px;
+}
+.hero-slider .hs-dot{
+  width:8px; height:8px; border-radius:999px;
+  background:rgba(255,255,255,.65);
+  border:1px solid rgba(0,0,0,.08);
+  cursor:pointer;
+}
+.hero-slider .hs-dot.is-active{ background:#15803D; border-color:#15803D; }
+
+/* больше «воздуха» в hero */
+.hero h1{ margin-bottom:14px; }
+.hero .sub{ margin: 0 0 18px; }
+.hero .hero-tags{ margin:10px 0; }
+.hero .cta{ margin:18px 0 12px; display:flex; gap:12px; flex-wrap:wrap; }
+.hero .hero-social{ margin-top:6px; }
+
+/* мобильная укладка */
+@media (max-width: 960px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero-visual{ order:2; }
+  .hero-copy{ order:1; }
+}
+
 
 
 
