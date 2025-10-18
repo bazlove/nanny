@@ -520,6 +520,15 @@ section{padding:64px 0}
 #services .svc-card .svc-desc,
 #services .svc-card .svc-text{ margin-top: var(--space-2); }
 
+/* по желанию: ограничить описание тремя строками */
+#services .svc-desc,
+#services .svc-text{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;       /* 2–3 строки */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Slots */
 .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
 .slot--free{padding:12px;border:1px solid #dbe1ea;border-radius:12px;background:#fff}
@@ -1987,6 +1996,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
