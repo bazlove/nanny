@@ -1834,6 +1834,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   height:100%;
   transform: translateX(0%);
   transition: transform .4s ease;
+  will-change: transform;
 }
 
 .hero-slider .hs-slide{
@@ -1856,14 +1857,17 @@ section[id], #services, #calc, #faq, #contact, #main {
   position:absolute; top:50%; transform:translateY(-50%);
   width:40px; height:40px;
   border:none; border-radius:999px;
-  background:rgba(255,255,255,.9);
-  box-shadow:0 4px 14px rgba(0,0,0,.12);
+  background: rgba(255,255,255,.9);
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
   cursor:pointer; font-size:22px; line-height:40px;
   display:grid; place-items:center;
   transition:background .15s, transform .05s;
+  z-index: 5;          /* поверх изображения и трека */
+  pointer-events: auto;
 }
 .hero-slider .hs-nav:hover{ background:#fff; }
 .hero-slider .hs-nav:active{ transform:translateY(-50%) scale(.97); }
+.hero-slider .hs-nav:focus-visible{ outline: 2px solid #15803D; outline-offset: 2px; }
 .hero-slider .hs-nav.prev{ left:10px; }
 .hero-slider .hs-nav.next{ right:10px; }
 
@@ -1914,6 +1918,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 .hero .hero-tags{ margin: 10px 0; }
 .hero .cta{ margin: 18px 0 12px; display: flex; gap: 12px; flex-wrap: wrap; }
 .hero .hero-social{ margin-top: 8px; }
+
 
 
 
