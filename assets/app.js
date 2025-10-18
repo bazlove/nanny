@@ -1045,6 +1045,28 @@ if (badName || badCont) {
   }
 })();
 
+// Фильтр "Все / Базовые / Дополнительные"
+(() => {
+  const root = document.querySelector('#services');
+  if (!root) return;
+
+  const chips = root.querySelectorAll('.svc-chip');
+  const cards = root.querySelectorAll('.svc-card');
+
+  chips.forEach(ch => ch.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('is-active'));
+    ch.classList.add('is-active');
+
+    const f = ch.dataset.filter;
+    cards.forEach(card => {
+      const tier = card.dataset.tier; // "base" | "extra"
+      card.style.display =
+        f === 'all' ? '' :
+        (f === tier ? '' : 'none');
+    });
+  }));
+})();
+
 
 
 
