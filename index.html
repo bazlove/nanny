@@ -175,77 +175,92 @@
 </div>
 	</section>
 
-    <!-- SERVICES -->
-	  
+   <!-- SERVICES -->
 <section id="services" class="services section">
   <div class="container">
 
-    <div class="svc-head">
+    <!-- Заголовок + подсказка (как «Обновлено» в FAQ) -->
+    <div class="section-head">
       <h2 class="section-title">Услуги</h2>
       <p class="section-hint">
         <span class="dot" aria-hidden="true"></span>
         Дополнительные услуги учитываются в калькуляторе через чекбокс.
       </p>
     </div>
-    	
-      <!-- Чипы-фильтры (не обязательно кликать — просто метка уровня) -->
-      <div class="svc-filters" role="tablist" aria-label="Фильтр услуг">
-        <button class="svc-chip is-active" data-filter="all"   role="tab" aria-selected="true">Все</button>
-        <button class="svc-chip"         data-filter="base"  role="tab" aria-selected="false">Базовые</button>
-        <button class="svc-chip"         data-filter="extra" role="tab" aria-selected="false">Дополнительные</button>
-      </div>
+
+    <!-- Чипы-фильтры -->
+    <div class="svc-filters" role="tablist" aria-label="Фильтр услуг">
+      <button class="svc-chip is-active" data-filter="all"   role="tab" aria-selected="true">Все</button>
+      <button class="svc-chip"         data-filter="base"  role="tab" aria-selected="false">Базовые</button>
+      <button class="svc-chip"         data-filter="extra" role="tab" aria-selected="false">Дополнительные</button>
     </div>
 
     <!-- Сетка карточек -->
     <div class="svc-grid">
+
       <!-- БАЗОВЫЕ -->
       <article class="svc-card" data-tier="base">
-        <div class="svc-emoji" aria-hidden="true">📋</div>
-        <h3 class="svc-title">Распорядок дня</h3>
-        <p class="svc-text">Спокойное бодрствование, присмотр, быт, гигиена, сон.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">📋</span>
+          <h3 class="svc-title">Распорядок дня</h3>
+        </div>
+        <p class="svc-desc">Спокойное бодрствование, присмотр, быт, гигиена, сон.</p>
       </article>
 
       <article class="svc-card" data-tier="base">
-        <div class="svc-emoji" aria-hidden="true">🎨</div>
-        <h3 class="svc-title">Занятия и игры</h3>
-        <p class="svc-text">Рисование, лепка, творчество, активности, моторика, логика.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🎨</span>
+          <h3 class="svc-title">Занятия и игры</h3>
+        </div>
+        <p class="svc-desc">Рисование, лепка, творчество, активности, моторика, логика.</p>
       </article>
 
       <article class="svc-card" data-tier="base">
-        <div class="svc-emoji" aria-hidden="true">🌳</div>
-        <h3 class="svc-title">Прогулки</h3>
-        <p class="svc-text">Подвижные игры на свежем воздухе в парке/дворе.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🌳</span>
+          <h3 class="svc-title">Прогулки</h3>
+        </div>
+        <p class="svc-desc">Подвижные игры на свежем воздухе в парке/дворе.</p>
       </article>
 
       <article class="svc-card" data-tier="base">
-        <div class="svc-emoji" aria-hidden="true">🏫</div>
-        <h3 class="svc-title">Сопровождение</h3>
-        <p class="svc-text">Отвезти/забрать с кружка, секции, детсада, школы.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🏫</span>
+          <h3 class="svc-title">Сопровождение</h3>
+        </div>
+        <p class="svc-desc">Отвезти/забрать с кружка, секции, детсада, школы.</p>
       </article>
 
       <!-- ДОПОЛНИТЕЛЬНЫЕ -->
       <article class="svc-card svc-card--extra" data-tier="extra">
         <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
-        <div class="svc-emoji" aria-hidden="true">🍲</div>
-        <h3 class="svc-title">Питание</h3>
-        <p class="svc-text">Простой перекус для ребёнка по вашему меню.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🍲</span>
+          <h3 class="svc-title">Питание</h3>
+        </div>
+        <p class="svc-desc">Простой перекус для ребёнка по вашему меню.</p>
       </article>
 
       <article class="svc-card svc-card--extra" data-tier="extra">
         <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
-        <div class="svc-emoji" aria-hidden="true">🗑</div>
-        <h3 class="svc-title">Уборка</h3>
-        <p class="svc-text">Небольшая уборка в детской комнате.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🗑</span>
+          <h3 class="svc-title">Уборка</h3>
+        </div>
+        <p class="svc-desc">Небольшая уборка в детской комнате.</p>
       </article>
 
       <article class="svc-card svc-card--extra" data-tier="extra">
         <span class="svc-badge" aria-label="по договорённости">по договорённости</span>
-        <div class="svc-emoji" aria-hidden="true">🏃</div>
-        <h3 class="svc-title">Тренировка</h3>
-        <p class="svc-text">Персональное фитнес-занятие/гимнастика на 30 минут.</p>
+        <div class="svc-head">
+          <span class="svc-emoji" aria-hidden="true">🏃</span>
+          <h3 class="svc-title">Тренировка</h3>
+        </div>
+        <p class="svc-desc">Персональное фитнес-занятие/гимнастика на 30 минут.</p>
       </article>
-    </div>
-  </div>
+
+    </div><!-- /.svc-grid -->
+  </div><!-- /.container -->
 </section>
 
     <!-- WHY -->
@@ -694,6 +709,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
