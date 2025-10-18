@@ -318,6 +318,14 @@ section{padding:64px 0}
   #top .container.hero-grid .hero-visual{ margin-top:16px; }
 }
 
+#top .hero-visual{
+  display: block;        /* отменяем grid/center из глобального правила */
+  align-self: start;     /* сам столбец тоже кверху строки */
+}
+#top .container.hero-grid{ align-items: start; }  /* уже есть — можно оставить */
+#top .hero-visual .hero-slider{ margin-top: 0; }  /* на случай наследованных отступов */
+
+
 /* Services & Why */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .tile{background:#fff;border:1px solid #e5e3df;border-radius:16px;padding:16px;transition:.2s ease}
@@ -430,7 +438,6 @@ section{padding:64px 0}
   .header-nav{display:none}
   .burger{display:inline-block}
   .site-header.open #mnav{display:flex}
-  .hero-grid{grid-template-columns:1fr}
   .calc-grid{grid-template-columns:1fr}
   .extras{grid-template-columns:1fr}
   .calc-foot{grid-template-columns:1fr}
@@ -1793,6 +1800,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
