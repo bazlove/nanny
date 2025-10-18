@@ -3,6 +3,26 @@
   --card:#fff; --muted:#EFEAE3; --shadow:0 10px 24px rgba(0,0,0,.06);
   --radius:16px; --container:1100px; --accent:#1d4ed8; --success:#22c55e; --line:#e6e2dc;
   --blue:#0EA5E9; --green:#22c55e; --chip:#f4f6fb;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --section-y: 72px;         /* desktop */
+}
+
+@media (max-width:1024px){ :root{ --section-y: 56px; } }
+@media (max-width:640px) { :root{ --section-y: 40px; } }
+
+/* Общая рекомендация по секциям */
+.section{ padding-block: var(--section-y); }
+.section-title{ margin:0 0 var(--space-3); }
+
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:'Nunito',sans-serif;color:var(--text);background:var(--bg)}
@@ -1940,6 +1960,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
