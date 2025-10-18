@@ -1936,6 +1936,10 @@ section[id], #services, #calc, #faq, #contact, #main {
   #top .hero-visual{ margin-top: 16px; }
 }
 
+#top .hero-grid{
+  grid-template-columns: minmax(460px, 1fr) minmax(440px, 560px);
+}
+
 
 
 
