@@ -547,56 +547,19 @@ section{padding:64px 0}
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
 
-Внедри новый патч в текущие стили.
+Соедини без повторяющихся правил старую версию и новый патч:
 
-патч:
-
-/* 1) Введите переменные (или просто подставьте числа) */
-:root{
-  --xp-rail-top: 26px;   /* где начинается рельса */
-  --xp-rail-h:   2px;    /* высота рельсы */
-}
-
-/* 2) Рельса использует те же значения */
-#experience .xp-grid::before{
-  top: var(--xp-rail-top);
-  height: var(--xp-rail-h);
-}
-
-/* 3) Центрируем точку по центру рельсы */
-#experience .xp-pin{
-  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр линии */
-  left: 50%;
-  transform: translate(-50%, -50%);   /* сдвиг на половину точки вверх/влево */
-  width: 10px;
-  height: 10px;
-}
-
-/* (опционально) — чип года тоже привяжем к центру рельсы */
-#experience .xp-chip{
-  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
-  left: 50%;
-  transform: translate(-50%, calc(-100% - 8px)); /* над линией на 8px */
-}
-
-
-css:
+старый css:
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
-
 :root{
-  /* базовые токены */
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
   --c-accent: #15803D;   /* зелёный акцент */
-  --c-rail:   #E5E7EB;   /* цвет рельсы */
-
-  /* патч для точного выравнивания по рельсе */
-  --xp-rail-top: 26px;   /* где начинается рельса от верха грида */
-  --xp-rail-h:   2px;    /* высота рельсы */
+  --c-rail: #E5E7EB;     /* цвет рельсы */
 }
 
 /* сетка + горизонтальная рельса по верхней базовой линии карточек */
@@ -611,13 +574,13 @@ css:
   counter-reset: step;
 }
 
-/* сама рельса (используем переменные патча) */
+/* сама рельса */
 #experience .xp-grid::before{
   content:"";
   position:absolute;
-  top: var(--xp-rail-top);
+  top: 26px;                     /* базовая высота рельсы */
   left: 0; right: 0;
-  height: var(--xp-rail-h);
+  height: 2px;
   background: var(--c-rail);
   border-radius: 999px;
 }
@@ -632,8 +595,8 @@ css:
 #experience .xp-chip{
   position: absolute;
   left: 50%;
-  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
-  transform: translate(-50%, calc(-100% - 8px));   /* над линией на 8px */
+  top: 26px;                                           /* синхронно с .xp-pin/.xp-grid::before */
+  transform: translate(-50%, calc(-100% - 8px));       /* поднять над рельсой на 8px */
   z-index: 3;
 
   background: transparent;
@@ -643,15 +606,15 @@ css:
   font-weight: 600;
   letter-spacing: .2px;
   padding: 0;
-  text-shadow: 0 1px 0 #fff;     /* читаемость на рельсе */
+  text-shadow: 0 1px 0 #fff;                           /* читаемость на рельсе */
 }
 
-/* зелёная точка на рельсе — строго в центр рельсы */
+/* зелёная точка на рельсе */
 #experience .xp-pin{
   position:absolute;
-  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр линии */
+  top: 26px;                                           /* та же базовая высота */
   left: 50%;
-  transform: translate(-50%, -50%);                    /* центрирование самой точки */
+  transform: translateX(-50%);
   width: 10px; height: 10px;
   background: var(--c-accent);
   border-radius: 999px;
@@ -668,9 +631,11 @@ css:
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   text-align: left;
 }
+
 @media (max-width: 640px){
   #experience .xp-card { text-align: center; }
 }
+
 #experience .xp-card:hover{
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0,0,0,.08);
@@ -681,6 +646,7 @@ css:
   outline: 2px solid rgba(21,128,61,.35);
   outline-offset: 2px;
 }
+
 #experience .xp-card h3{
   margin: 0 0 var(--space-2);
   font-weight: 700;
@@ -723,7 +689,8 @@ css:
     width: 10px; height: 10px;
   }
   #experience .xp-chip{
-    left: 14px; top: 22px;
+    left: 14px;
+    top: 22px;
     transform: translate(-50%, calc(-100% - 6px));  /* чип над точкой */
   }
   #experience .xp-card{
@@ -734,6 +701,215 @@ css:
 /* уважение prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce){
   #experience .xp-card{ transition: none; }
+}
+
+and8res, [19.10.2025 23:10]
+Можешь в данном наборе стилей доработать позиционирование зеленой точки относительно рельсы? Чтобы рельса проходила через середину зеленой точки
+
+css который дорабатываем:
+
+/* ============ EXPERIENCE (Рельса + карточки) ============ */
+:root{
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --c-accent: #15803D;   /* зелёный акцент */
+  --c-rail: #E5E7EB;     /* цвет рельсы */
+}
+
+/* сетка + горизонтальная рельса по верхней базовой линии карточек */
+#experience .xp-grid{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));  /* 3 колонки на десктопе */
+  gap: var(--space-5) var(--space-6);
+  margin-top: var(--space-4);
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
+}
+
+/* сама рельса */
+#experience .xp-grid::before{
+  content:"";
+  position:absolute;
+  top: 26px;                     /* базовая высота рельсы */
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--c-rail);
+  border-radius: 999px;
+}
+
+/* элемент рельсы */
+#experience .xp-item{
+  position: relative;            /* якорь для чипа и точки */
+  padding-top: 40px;             /* место под чип и точку */
+}
+
+/* чип-диапазон (год/годы) — над рельсой по центру точки */
+#experience .xp-chip{
+  position: absolute;
+  left: 50%;
+  top: 26px;                                           /* синхронно с .xp-pin/.xp-grid::before */
+  transform: translate(-50%, calc(-100% - 8px));       /* поднять над рельсой на 8px */
+  z-index: 3;
+
+  background: transparent;
+  border: 0;
+  color: #4B5563;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  padding: 0;
+  text-shadow: 0 1px 0 #fff;                           /* читаемость на рельсе */
+}
+
+/* зелёная точка на рельсе */
+#experience .xp-pin{
+  position:absolute;
+  top: 26px;                                           /* та же базовая высота */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px; height: 10px;
+  background: var(--c-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(21,128,61,.18);
+}
+
+/* карточка этапа */
+#experience .xp-card{
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  padding: var(--space-4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  text-align: left;
+}
+
+@media (max-width: 640px){
+  #experience .xp-card { text-align: center; }
+}
+
+#experience .xp-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+  border-color: #E1E7EF;
+}
+/* клавиатурный фокус — на содержимом карточки */
+#experience .xp-card:focus-within{
+  outline: 2px solid rgba(21,128,61,.35);
+  outline-offset: 2px;
+}
+
+#experience .xp-card h3{
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+  font-size: 16px;
+  color: #0f172a;
+}
+#experience .xp-card p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #374151;
+}
+
+/* ===== адаптив ===== */
+
+/* 2 колонки на планшете */
+@media (max-width: 1100px){
+  #experience .xp-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+/* вертикальный таймлайн на мобилке */
+@media (max-width: 640px){
+  #experience .xp-grid{
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  #experience .xp-grid::before{
+    /* превращаем рельсу в вертикальную линию слева */
+    top: 0; bottom: 0; left: 14px; right: auto;
+    width: 2px; height: 100%;
+  }
+  #experience .xp-item{
+    padding: 0 0 0 34px;          /* место под вертикальную линию и точку */
+  }
+  /* чип и точка выровнены по вертикальной рельсе */
+  #experience .xp-pin{
+    left: 14px; top: 22px; transform: translateX(-50%);
+    width: 10px; height: 10px;
+  }
+  #experience .xp-chip{
+    left: 14px;
+    top: 22px;
+    transform: translate(-50%, calc(-100% - 6px));  /* чип над точкой */
+  }
+  #experience .xp-card{
+    margin-top: var(--space-3);
+  }
+}
+
+/* уважение prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  #experience .xp-card{ transition: none; }
+}
+
+новый патч:
+/* === Центровка точки относительно рельсы === */
+:root{
+  --xp-rail-top: 26px;  /* вертикальная позиция рельсы */
+  --xp-rail-h:   2px;   /* толщина рельсы */
+  --xp-pin-sz:  10px;   /* диаметр зелёной точки */
+}
+
+/* рельса по токенам */
+#experience .xp-grid::before{
+  top: var(--xp-rail-top);
+  height: var(--xp-rail-h);
+  z-index: 1;                 /* чтобы линия была над контентом грида */
+}
+
+/* точка по центру рельсы */
+#experience .xp-pin{
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр рельсы */
+  left: 50%;
+  transform: translate(-50%, -50%);                     /* центрируем саму точку */
+  width: var(--xp-pin-sz);
+  height: var(--xp-pin-sz);
+  z-index: 2;
+  background-color: var(--c-accent);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(21,128,61,.18);
+}
+
+/* чип года — над рельсой, отталкиваемся от её центра */
+#experience .xp-chip{
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 8px)); /* на 8px выше линии */
+  z-index: 3;
+}
+
+/* Мобилка: вертикальный таймлайн — оставляем ваши значения */
+@media (max-width: 640px){
+  #experience .xp-grid::before{
+    top: 0; bottom: 0; left: 14px; right: auto;
+    width: var(--xp-rail-h); height: 100%;
+  }
+  #experience .xp-pin{
+    left: 14px; top: 22px; transform: translateX(-50%);
+    width: var(--xp-pin-sz); height: var(--xp-pin-sz);
+  }
+  #experience .xp-chip{
+    left: 14px; top: 22px; transform: translate(-50%, calc(-100% - 6px));
+  }
 }
 
 /* Slots */
@@ -2203,6 +2379,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
