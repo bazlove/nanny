@@ -545,29 +545,112 @@ section{padding:64px 0}
 }
 #why .why-text{ margin:0; color:#374151; font-size:14px; line-height:1.5; }
 
-/* Опыт — лаконичная «вертикальная линия времени» */
-#why .xp{ margin-top: var(--space-6,24px); }
-#why .xp-title{ margin:0 0 var(--space-3,12px); font-weight:700; }
+/* === WHY: горизонтальный таймлайн ===================================== */
+#why .xp--h{ margin-top: var(--space-6, 24px); }
+#why .xp-title{ margin:0 0 var(--space-3, 12px); font-weight:700; }
 
-#why .xp-timeline{
-  list-style:none; margin:0; padding:0 0 0 16px;
-  border-left:2px solid #EEE8E1;
-  display:grid; gap:12px;
+/* сетка карточек (десктоп — 3 колонки, планшет — 2, мобилка — 1) */
+#why .xp-grid{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 20px;
+  padding-top: 38px;                 /* место под горизонтальную линию и годы */
+  z-index: 0;
 }
-#why .xp-item{ position:relative; }
-#why .xp-item::before{
-  content:""; position:absolute; left:-10px; top:.55em;
+
+/* горизонтальная шкала */
+#why .xp-grid::before{
+  content:"";
+  position:absolute;
+  top: 18px;                         /* высота линии от верха таймлайна */
+  left: 0; right: 0;
+  height: 2px;
+  background: #EEE8E1;
+  z-index: 1;                        /* линия поверх фона */
+}
+
+/* карточка события */
+#why .xp-card{
+  position: relative;
+  background:#fff;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.04);
+  padding:14px 14px 16px;
+  transition:transform .12s, box-shadow .12s, border-color .12s;
+  z-index: 2;                        /* над линией */
+}
+#why .xp-card:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
+  border-color:#DFE4EA;
+}
+
+/* зелёная точка на линии (центр карточки) */
+#why .xp-dot{
+  position:absolute;
+  top: 18px;                         /* совпадает с линией */
+  left: 50%;
+  transform: translate(-50%, -50%);
   width:10px; height:10px; border-radius:50%;
-  background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.18);
+  background:#22c55e;
+  box-shadow:0 0 0 3px rgba(34,197,94,.18);
+  z-index: 3;
 }
-#why .xp-when{ font-weight:700; margin:0 0 4px; color:#0f172a; }
-#why .xp-body{ color:#374151; line-height:1.5; }
+
+/* год — небольшой бейдж над точкой */
+#why .xp-year{
+  position:absolute;
+  top: -2px;                         /* над линией */
+  left: 50%;
+  transform: translate(-50%, -100%);
+  padding:2px 8px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #E5E7EB;
+  font-size:13px;
+  font-weight:700;
+  color:#0f172a;
+  white-space:nowrap;
+  z-index: 4;
+}
+
+/* заголовок и текст события */
+#why .xp-where{
+  margin:6px 0 4px;
+  font-size:16px; line-height:1.35; font-weight:700; color:#0f172a;
+}
+#why .xp-body{
+  margin:0; color:#374151; line-height:1.55; font-size:14px;
+}
 #why .xp-body strong{ font-weight:700; color:#0f172a; }
 
-/* чуть мягче на узких экранах */
-@media (max-width:640px){
-  #why .why-title{ font-size:17px; }
-  #why .why-text, #why .xp-body{ font-size:13.5px; }
+/* планшет: 2 колонки */
+@media (max-width: 980px){
+  #why .xp-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* мобильная версия: вертикальный таймлайн слева */
+@media (max-width: 700px){
+  #why .xp-grid{
+    grid-template-columns: 1fr;
+    padding-top: 0;
+    padding-left: 28px;              /* место под вертикальную линию */
+  }
+  #why .xp-grid::before{
+    top: 0; bottom: 0; left: 12px; right: auto;
+    width: 2px; height: 100%;
+  }
+  #why .xp-card{
+    padding-left: 14px;
+  }
+  #why .xp-dot{
+    top: 18px; left: 12px; transform: translate(-50%, -50%);
+  }
+  #why .xp-year{
+    top: 4px; left: 36px; transform: none;
+  }
 }
 
 /* Slots */
@@ -2037,6 +2120,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
