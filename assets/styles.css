@@ -546,15 +546,15 @@ section{padding:64px 0}
 #why .why-text{ margin:0; color:#374151; font-size:14px; line-height:1.5; }
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
+
 :root{
-  /* если у тебя уже есть токены — оставь свои; иначе: */
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
-  --c-accent: #15803D;            /* зелёный акцент */
-  --c-rail: #E5E7EB;              /* цвет рельсы */
+  --c-accent: #15803D;   /* зелёный акцент */
+  --c-rail: #E5E7EB;     /* цвет рельсы */
 }
 
 /* сетка + горизонтальная рельса по верхней базовой линии карточек */
@@ -573,7 +573,7 @@ section{padding:64px 0}
 #experience .xp-grid::before{
   content:"";
   position:absolute;
-  top: 26px;                       /* высота линии относительно карточек */
+  top: 26px;                     /* базовая высота рельсы */
   left: 0; right: 0;
   height: 2px;
   background: var(--c-rail);
@@ -582,30 +582,35 @@ section{padding:64px 0}
 
 /* элемент рельсы */
 #experience .xp-item{
-  position: relative;
-  padding-top: 40px;               /* место под чип и точку */
+  position: relative;            /* якорь для чипа и точки */
+  padding-top: 40px;             /* место под чип и точку */
 }
 
-/* чип-диапазон (год/годы) */
+/* чип-диапазон (год/годы) — над рельсой по центру точки */
 #experience .xp-chip{
+  position: absolute;
+  left: 50%;
+  top: 26px;                                           /* синхронно с .xp-pin/.xp-grid::before */
+  transform: translate(-50%, calc(-100% - 8px));       /* поднять над рельсой на 8px */
+  z-index: 3;
+
   background: transparent;
   border: 0;
-  color: #4B5563;           /* нейтральный серый */
-  font-size: 13px;          /* 12–13px — ок, не больше заголовка */
+  color: #4B5563;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: .2px;
-  padding: 0;               /* без «пилюли» */
-  top: -6px;
-  text-shadow: 0 1px 0 #fff;
+  padding: 0;
+  text-shadow: 0 1px 0 #fff;                           /* читаемость на рельсе */
 }
 
 /* зелёная точка на рельсе */
 #experience .xp-pin{
   position:absolute;
-  top: 24px;
+  top: 26px;                                           /* та же базовая высота */
   left: 50%;
   transform: translateX(-50%);
-  width: 8px; height: 8px;
+  width: 10px; height: 10px;
   background: var(--c-accent);
   border-radius: 999px;
   box-shadow: 0 0 0 3px rgba(21,128,61,.18);
@@ -673,13 +678,15 @@ section{padding:64px 0}
   #experience .xp-item{
     padding: 0 0 0 34px;          /* место под вертикальную линию и точку */
   }
-  #experience .xp-chip{
-    left: 0; transform: none;
-    top: -2px;
-  }
+  /* чип и точка выровнены по вертикальной рельсе */
   #experience .xp-pin{
-    left: 14px; transform: translateX(-50%);
+    left: 14px; top: 22px; transform: translateX(-50%);
+    width: 10px; height: 10px;
+  }
+  #experience .xp-chip{
+    left: 14px;
     top: 22px;
+    transform: translate(-50%, calc(-100% - 6px));  /* чип над точкой */
   }
   #experience .xp-card{
     margin-top: var(--space-3);
@@ -2158,6 +2165,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
