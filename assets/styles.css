@@ -547,7 +547,161 @@ section{padding:64px 0}
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
 
+/* ============ EXPERIENCE (Рельса + карточки) ============ */
+:root{
+  /* spacing tokens */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
 
+  /* colors */
+  --c-accent: #15803D;        /* зелёный акцент */
+  --c-rail:   #E5E7EB;        /* цвет рельсы */
+
+  /* timeline geometry */
+  --xp-rail-top: 26px;        /* вертикальная позиция рельсы */
+  --xp-rail-h:   2px;         /* толщина рельсы */
+  --xp-pin-sz:  10px;         /* диаметр зелёной точки */
+}
+
+/* сетка + горизонтальная рельса по верхней базовой линии карточек */
+#experience .xp-grid{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));  /* 3 колонки на десктопе */
+  gap: var(--space-5) var(--space-6);
+  margin-top: var(--space-4);
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
+}
+
+/* рельса */
+#experience .xp-grid::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: var(--xp-rail-top);
+  height: var(--xp-rail-h);
+  background: var(--c-rail);
+  border-radius: 999px;
+  z-index: 1;
+}
+
+/* элемент рельсы */
+#experience .xp-item{
+  position: relative;                 /* якорь для чипа и точки */
+  padding-top: 40px;                  /* место под чип и точку */
+}
+
+/* чип-диапазон (год/годы) — над рельсой по центру точки */
+#experience .xp-chip{
+  position: absolute;
+  left: 50%;
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
+  transform: translate(-50%, calc(-100% - 8px));      /* поднять над рельсой на 8px */
+  z-index: 3;
+
+  background: transparent;
+  border: 0;
+  color: #4B5563;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  padding: 0;
+  text-shadow: 0 1px 0 #fff;                           /* читаемость на рельсе */
+}
+
+/* зелёная точка по центру рельсы */
+#experience .xp-pin{
+  position: absolute;
+  left: 50%;
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр линии */
+  transform: translate(-50%, -50%);
+  width: var(--xp-pin-sz);
+  height: var(--xp-pin-sz);
+  background-color: var(--c-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(21,128,61,.18);
+  z-index: 2;
+}
+
+/* карточка этапа */
+#experience .xp-card{
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  padding: var(--space-4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  text-align: left;
+}
+#experience .xp-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+  border-color: #E1E7EF;
+}
+/* клавиатурный фокус — на содержимом карточки */
+#experience .xp-card:focus-within{
+  outline: 2px solid rgba(21,128,61,.35);
+  outline-offset: 2px;
+}
+#experience .xp-card h3{
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+  font-size: 16px;
+  color: #0f172a;
+}
+#experience .xp-card p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #374151;
+}
+
+/* ===== адаптив ===== */
+
+/* 2 колонки на планшете */
+@media (max-width: 1100px){
+  #experience .xp-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+/* вертикальный таймлайн на мобилке */
+@media (max-width: 640px){
+  #experience .xp-grid{
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  #experience .xp-grid::before{
+    /* превращаем рельсу в вертикальную линию слева */
+    top: 0; bottom: 0; left: 14px; right: auto;
+    width: var(--xp-rail-h); height: 100%;
+  }
+  #experience .xp-item{
+    padding: 0 0 0 34px;          /* место под вертикальную линию и точку */
+  }
+  /* чип и точка выровнены по вертикальной рельсе */
+  #experience .xp-pin{
+    left: 14px; top: 22px; transform: translateX(-50%);
+    width: var(--xp-pin-sz); height: var(--xp-pin-sz);
+  }
+  #experience .xp-chip{
+    left: 14px; top: 22px;
+    transform: translate(-50%, calc(-100% - 6px));  /* чип над точкой */
+  }
+  #experience .xp-card{
+    margin-top: var(--space-3);
+  }
+}
+
+/* уважение prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  #experience .xp-card{ transition: none; }
+}
 
 /* Slots */
 .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
@@ -2016,6 +2170,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
