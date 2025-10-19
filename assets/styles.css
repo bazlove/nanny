@@ -547,14 +547,56 @@ section{padding:64px 0}
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
 
+Внедри новый патч в текущие стили.
+
+патч:
+
+/* 1) Введите переменные (или просто подставьте числа) */
 :root{
+  --xp-rail-top: 26px;   /* где начинается рельса */
+  --xp-rail-h:   2px;    /* высота рельсы */
+}
+
+/* 2) Рельса использует те же значения */
+#experience .xp-grid::before{
+  top: var(--xp-rail-top);
+  height: var(--xp-rail-h);
+}
+
+/* 3) Центрируем точку по центру рельсы */
+#experience .xp-pin{
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр линии */
+  left: 50%;
+  transform: translate(-50%, -50%);   /* сдвиг на половину точки вверх/влево */
+  width: 10px;
+  height: 10px;
+}
+
+/* (опционально) — чип года тоже привяжем к центру рельсы */
+#experience .xp-chip{
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 8px)); /* над линией на 8px */
+}
+
+
+css:
+
+/* ============ EXPERIENCE (Рельса + карточки) ============ */
+
+:root{
+  /* базовые токены */
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
   --c-accent: #15803D;   /* зелёный акцент */
-  --c-rail: #E5E7EB;     /* цвет рельсы */
+  --c-rail:   #E5E7EB;   /* цвет рельсы */
+
+  /* патч для точного выравнивания по рельсе */
+  --xp-rail-top: 26px;   /* где начинается рельса от верха грида */
+  --xp-rail-h:   2px;    /* высота рельсы */
 }
 
 /* сетка + горизонтальная рельса по верхней базовой линии карточек */
@@ -569,13 +611,13 @@ section{padding:64px 0}
   counter-reset: step;
 }
 
-/* сама рельса */
+/* сама рельса (используем переменные патча) */
 #experience .xp-grid::before{
   content:"";
   position:absolute;
-  top: 26px;                     /* базовая высота рельсы */
+  top: var(--xp-rail-top);
   left: 0; right: 0;
-  height: 2px;
+  height: var(--xp-rail-h);
   background: var(--c-rail);
   border-radius: 999px;
 }
@@ -590,8 +632,8 @@ section{padding:64px 0}
 #experience .xp-chip{
   position: absolute;
   left: 50%;
-  top: 26px;                                           /* синхронно с .xp-pin/.xp-grid::before */
-  transform: translate(-50%, calc(-100% - 8px));       /* поднять над рельсой на 8px */
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2);
+  transform: translate(-50%, calc(-100% - 8px));   /* над линией на 8px */
   z-index: 3;
 
   background: transparent;
@@ -601,15 +643,15 @@ section{padding:64px 0}
   font-weight: 600;
   letter-spacing: .2px;
   padding: 0;
-  text-shadow: 0 1px 0 #fff;                           /* читаемость на рельсе */
+  text-shadow: 0 1px 0 #fff;     /* читаемость на рельсе */
 }
 
-/* зелёная точка на рельсе */
+/* зелёная точка на рельсе — строго в центр рельсы */
 #experience .xp-pin{
   position:absolute;
-  top: 26px;                                           /* та же базовая высота */
+  top: calc(var(--xp-rail-top) + var(--xp-rail-h) / 2); /* центр линии */
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);                    /* центрирование самой точки */
   width: 10px; height: 10px;
   background: var(--c-accent);
   border-radius: 999px;
@@ -626,11 +668,9 @@ section{padding:64px 0}
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   text-align: left;
 }
-
 @media (max-width: 640px){
   #experience .xp-card { text-align: center; }
 }
-
 #experience .xp-card:hover{
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0,0,0,.08);
@@ -641,7 +681,6 @@ section{padding:64px 0}
   outline: 2px solid rgba(21,128,61,.35);
   outline-offset: 2px;
 }
-
 #experience .xp-card h3{
   margin: 0 0 var(--space-2);
   font-weight: 700;
@@ -684,8 +723,7 @@ section{padding:64px 0}
     width: 10px; height: 10px;
   }
   #experience .xp-chip{
-    left: 14px;
-    top: 22px;
+    left: 14px; top: 22px;
     transform: translate(-50%, calc(-100% - 6px));  /* чип над точкой */
   }
   #experience .xp-card{
@@ -2165,6 +2203,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
