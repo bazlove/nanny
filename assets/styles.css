@@ -545,112 +545,147 @@ section{padding:64px 0}
 }
 #why .why-text{ margin:0; color:#374151; font-size:14px; line-height:1.5; }
 
-/* === WHY: горизонтальный таймлайн ===================================== */
-#why .xp--h{ margin-top: var(--space-6, 24px); }
-#why .xp-title{ margin:0 0 var(--space-3, 12px); font-weight:700; }
+/* ============ EXPERIENCE (Рельса + карточки) ============ */
+:root{
+  /* если у тебя уже есть токены — оставь свои; иначе: */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --c-accent: #15803D;            /* зелёный акцент */
+  --c-rail: #E5E7EB;              /* цвет рельсы */
+}
 
-/* сетка карточек (десктоп — 3 колонки, планшет — 2, мобилка — 1) */
-#why .xp-grid{
+/* сетка + горизонтальная рельса по верхней базовой линии карточек */
+#experience .xp-grid{
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px 20px;
-  padding-top: 38px;                 /* место под горизонтальную линию и годы */
-  z-index: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));  /* 3 колонки на десктопе */
+  gap: var(--space-5) var(--space-6);
+  margin-top: var(--space-4);
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
 }
 
-/* горизонтальная шкала */
-#why .xp-grid::before{
+/* сама рельса */
+#experience .xp-grid::before{
   content:"";
   position:absolute;
-  top: 18px;                         /* высота линии от верха таймлайна */
+  top: 28px;                       /* высота линии относительно карточек */
   left: 0; right: 0;
   height: 2px;
-  background: #EEE8E1;
-  z-index: 1;                        /* линия поверх фона */
+  background: var(--c-rail);
+  border-radius: 999px;
 }
 
-/* карточка события */
-#why .xp-card{
+/* элемент рельсы */
+#experience .xp-item{
   position: relative;
-  background:#fff;
-  border:1px solid #E5E7EB;
-  border-radius:12px;
-  box-shadow:0 8px 24px rgba(0,0,0,.04);
-  padding:14px 14px 16px;
-  transition:transform .12s, box-shadow .12s, border-color .12s;
-  z-index: 2;                        /* над линией */
-}
-#why .xp-card:hover{
-  transform:translateY(-1px);
-  box-shadow:0 10px 22px rgba(0,0,0,.06);
-  border-color:#DFE4EA;
+  padding-top: 36px;               /* место под чип и точку */
 }
 
-/* зелёная точка на линии (центр карточки) */
-#why .xp-dot{
+/* чип-диапазон (год/годы) */
+#experience .xp-chip{
   position:absolute;
-  top: 18px;                         /* совпадает с линией */
+  top: -2px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width:10px; height:10px; border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 0 3px rgba(34,197,94,.18);
-  z-index: 3;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #0f172a;
+  background: #F7FAF8;
+  border: 1px solid #E6EBE7;
+  white-space: nowrap;
 }
 
-/* год — небольшой бейдж над точкой */
-#why .xp-year{
+/* зелёная точка на рельсе */
+#experience .xp-pin{
   position:absolute;
-  top: -2px;                         /* над линией */
+  top: 24px;
   left: 50%;
-  transform: translate(-50%, -100%);
-  padding:2px 8px;
-  border-radius:999px;
-  background:#fff;
-  border:1px solid #E5E7EB;
-  font-size:13px;
-  font-weight:700;
-  color:#0f172a;
-  white-space:nowrap;
-  z-index: 4;
+  transform: translateX(-50%);
+  width: 8px; height: 8px;
+  background: var(--c-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(21,128,61,.18);
 }
 
-/* заголовок и текст события */
-#why .xp-where{
-  margin:6px 0 4px;
-  font-size:16px; line-height:1.35; font-weight:700; color:#0f172a;
+/* карточка этапа */
+#experience .xp-card{
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  padding: var(--space-4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
-#why .xp-body{
-  margin:0; color:#374151; line-height:1.55; font-size:14px;
+#experience .xp-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+  border-color: #E1E7EF;
 }
-#why .xp-body strong{ font-weight:700; color:#0f172a; }
+/* клавиатурный фокус — на содержимом карточки */
+#experience .xp-card:focus-within{
+  outline: 2px solid rgba(21,128,61,.35);
+  outline-offset: 2px;
+}
 
-/* планшет: 2 колонки */
-@media (max-width: 980px){
-  #why .xp-grid{ grid-template-columns: repeat(2, 1fr); }
+#experience .xp-card h3{
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+  font-size: 16px;
+  color: #0f172a;
+}
+#experience .xp-card p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #374151;
 }
 
-/* мобильная версия: вертикальный таймлайн слева */
-@media (max-width: 700px){
-  #why .xp-grid{
-    grid-template-columns: 1fr;
-    padding-top: 0;
-    padding-left: 28px;              /* место под вертикальную линию */
+/* ===== адаптив ===== */
+
+/* 2 колонки на планшете */
+@media (max-width: 1100px){
+  #experience .xp-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
   }
-  #why .xp-grid::before{
-    top: 0; bottom: 0; left: 12px; right: auto;
+}
+
+/* вертикальный таймлайн на мобилке */
+@media (max-width: 640px){
+  #experience .xp-grid{
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  #experience .xp-grid::before{
+    /* превращаем рельсу в вертикальную линию слева */
+    top: 0; bottom: 0; left: 14px; right: auto;
     width: 2px; height: 100%;
   }
-  #why .xp-card{
-    padding-left: 14px;
+  #experience .xp-item{
+    padding: 0 0 0 34px;          /* место под вертикальную линию и точку */
   }
-  #why .xp-dot{
-    top: 18px; left: 12px; transform: translate(-50%, -50%);
+  #experience .xp-chip{
+    left: 0; transform: none;
+    top: -2px;
   }
-  #why .xp-year{
-    top: 4px; left: 36px; transform: none;
+  #experience .xp-pin{
+    left: 14px; transform: translateX(-50%);
+    top: 22px;
   }
+  #experience .xp-card{
+    margin-top: var(--space-3);
+  }
+}
+
+/* уважение prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  #experience .xp-card{ transition: none; }
 }
 
 /* Slots */
@@ -2120,6 +2155,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
