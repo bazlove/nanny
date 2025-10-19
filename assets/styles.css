@@ -573,7 +573,7 @@ section{padding:64px 0}
 #experience .xp-grid::before{
   content:"";
   position:absolute;
-  top: 28px;                       /* высота линии относительно карточек */
+  top: 26px;                       /* высота линии относительно карточек */
   left: 0; right: 0;
   height: 2px;
   background: var(--c-rail);
@@ -583,23 +583,20 @@ section{padding:64px 0}
 /* элемент рельсы */
 #experience .xp-item{
   position: relative;
-  padding-top: 36px;               /* место под чип и точку */
+  padding-top: 40px;               /* место под чип и точку */
 }
 
 /* чип-диапазон (год/годы) */
 #experience .xp-chip{
-  position:absolute;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 1.3;
-  color: #0f172a;
-  background: #F7FAF8;
-  border: 1px solid #E6EBE7;
-  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  color: #4B5563;           /* нейтральный серый */
+  font-size: 13px;          /* 12–13px — ок, не больше заголовка */
+  font-weight: 600;
+  letter-spacing: .2px;
+  padding: 0;               /* без «пилюли» */
+  top: -6px;
+  text-shadow: 0 1px 0 #fff;
 }
 
 /* зелёная точка на рельсе */
@@ -622,7 +619,13 @@ section{padding:64px 0}
   padding: var(--space-4);
   box-shadow: 0 8px 24px rgba(0,0,0,.04);
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  text-align: left;
 }
+
+@media (max-width: 640px){
+  #experience .xp-card { text-align: center; }
+}
+
 #experience .xp-card:hover{
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0,0,0,.08);
@@ -2155,6 +2158,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
