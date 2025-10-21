@@ -76,7 +76,9 @@
 
 // Availability badge + mock slot
 (function(){
-  const badge=document.getElementById('availability-badge'); if(!badge) return;
+  const badge = document.getElementById('availability-badge')
+            || document.getElementById('headerFreeBadge');
+  if (!badge) return;
   const CAL_SELECTOR='#slots-calendar'; const SLOT_SELECTOR='.slot--free';
   const pad=n=> (n<10?'0':'')+n;
   const fmt=(h,m)=> pad(h)+':'+pad(m);
@@ -1066,6 +1068,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
