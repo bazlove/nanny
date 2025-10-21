@@ -235,7 +235,7 @@ section{padding:64px 0}
 }
 
 #top .hero-tags + .hero-tags{
-  margin-top: 6px;   /* межстрочный зазор между 1-й и 2-й строками */
+  margin-top: 24px;   /* межстрочный зазор между 1-й и 2-й строками */
 }
 
 /* CTA-кнопки */
@@ -2277,6 +2277,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
