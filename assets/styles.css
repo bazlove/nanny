@@ -296,6 +296,7 @@ section{padding:64px 0}
   background: #fff;
   box-shadow: 0 12px 28px rgba(0,0,0,.10);
   overflow: hidden;
+  position: relative;
 }
 
 /* Вьюпорт */
@@ -2207,6 +2208,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
