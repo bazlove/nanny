@@ -391,6 +391,44 @@ section{padding:64px 0}
   background:#15803D; border-color:#15803D;
 }
 
+/* === HERO: slider size & spacing (2025-10-21) ======================= */
+
+/* Чуть меньше карточка слайдера */
+#top .hero-visual .hero-slider{
+  width: 100%;
+  max-width: 520px;              /* было 560px */
+  box-shadow: 0 12px 28px rgba(0,0,0,.10);  /* мягче тень */
+}
+
+/* Компактнее «полотно» внутри карточки */
+.hero-slider .hs-viewport{
+  aspect-ratio: 4 / 3;
+  min-height: 280px;             /* было 300px */
+  max-height: 480px;             /* было 520px */
+}
+
+/* Видимый отступ между слайдером и строкой с рейтингом */
+#top .hero-visual .hero-social{
+  margin-top: 14px !important;   /* раньше было auto → прилипало к низу колонки */
+  margin-bottom: 0;
+}
+
+/* Исправление прозрачностей (в исходнике были rgba(…,08)/(…,18)/(…,9)) */
+.hero-slider{ box-shadow: 0 18px 40px rgba(0,0,0,.08); }          /* если встречается выше — это корректная форма */
+.hero-slider .hs-nav{
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+}
+.hero-slider .hs-dot{
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* На планшете/мобиле — обычный поток (добавим воздуха чуть больше) */
+@media (max-width: 1024px){
+  #top .hero-visual .hero-social{ margin-top: 16px !important; }
+}
+
+
 /* ---------- Адаптив ---------- */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns: 1fr !important; }
@@ -2276,6 +2314,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
