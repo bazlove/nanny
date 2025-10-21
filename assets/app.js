@@ -453,7 +453,7 @@ if (yEl) yEl.textContent = new Date().getFullYear();
 
 /* ===== Slots: fetch + render per-day cards + header badge ===== */
 (function initSlots(){
-  const API_SLOTS_URL = 'https://script.google.com/macros/s/AKfycbxCoAF6fuUgLRPM50DFZ0ItN-cV0QMZpec4JMMezZ7Bkx2ErEG032rYk2kwTq0sXZoA/exec';
+  const API_SLOTS_URL = 'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
 
   const wrap  = document.querySelector('#slotsList');        // контейнер карточек (grid)
   const badge = document.querySelector('#headerFreeBadge');  // бейдж в шапке
@@ -1105,6 +1105,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
