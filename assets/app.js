@@ -63,15 +63,35 @@
     '«всегда на связи, фото после визита»',
     '«мягко и бережно, но порядок есть»'
   ];
-  let i = 0;
+
+  // 1) Оборачиваем в контейнер фиксированной высоты и создаём второй слой
+  const wrap = document.createElement('span');
+  wrap.className = 'quote-wrap';
+  el.parentNode.replaceChild(wrap, el);
+
+  const a = el;                             // первый слой
+  a.classList.add('quote','is-active');     // сразу активный
+  wrap.appendChild(a);
+
+  const b = a.cloneNode(true);              // второй слой
+  b.removeAttribute('id');
+  b.setAttribute('aria-hidden','true');
+  b.classList.remove('is-active');
+  wrap.appendChild(b);
+
+  // 2) Кросс-фейд без изменения геометрии
+  let i = 0, visible = a, hidden = b;
   setInterval(() => {
-    el.classList.add('is-fade');             // лёгкое исчезание
-    setTimeout(() => {
-      i = (i + 1) % quotes.length;
-      el.textContent = quotes[i];
-      el.classList.remove('is-fade');        // появление
-    }, 250);
-  }, 7000); // смена каждые ~7 секунд
+    i = (i + 1) % quotes.length;
+    hidden.textContent = quotes[i];
+
+    // плавная смена слоёв
+    visible.classList.remove('is-active');
+    hidden.classList.add('is-active');
+
+    // меняем роли
+    const tmp = visible; visible = hidden; hidden = tmp;
+  }, 7000);
 })();
 
 // Availability badge + mock slot
@@ -1068,6 +1088,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
