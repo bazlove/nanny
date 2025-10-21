@@ -210,8 +210,8 @@ section{padding:64px 0}
 #top .hero-tags{
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 10px;
-  margin: 8px 0 0;
+  gap: 6px 8px;
+  margin: 6px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2216,6 +2216,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
