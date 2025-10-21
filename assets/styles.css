@@ -223,7 +223,7 @@ section{padding:64px 0}
   align-items: center;
   height: 30px;
   gap: 10px;               /* расстояние между эмоджи и текстом */
-  padding: 0 12px;         /* симметричные внутренние отступы */
+  padding: 0 10px;         /* симметричные внутренние отступы */
   border: 1px solid #d9dee6;
   border-radius: 999px;
   background: #fff;
@@ -2216,6 +2216,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
