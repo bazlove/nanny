@@ -110,8 +110,12 @@ window.addEventListener('DOMContentLoaded', () => {
 // Availability badge + mock slot
 (function(){
   const badge = document.getElementById('availability-badge')
-            || document.getElementById('headerFreeBadge');
-  if (!badge) return;
+             || document.getElementById('headerFreeBadge');
+  if (!badge) return;                   // <-- ключевое: не падаем, если элемента нет
+
+  // если внутри есть .txt — пишем туда, иначе в сам элемент
+  const target = badge.querySelector?.('.txt') || badge;
+  target.textContent = 'Календарь недоступен';   // или актуальный текст
   const CAL_SELECTOR='#slots-calendar'; const SLOT_SELECTOR='.slot--free';
   const pad=n=> (n<10?'0':'')+n;
   const fmt=(h,m)=> pad(h)+':'+pad(m);
@@ -1101,6 +1105,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
