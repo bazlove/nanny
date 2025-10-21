@@ -249,31 +249,23 @@ section{padding:64px 0}
 #top .hero-social{
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-top: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;   /* КЛЮЧ: не переносим на вторую строку */
+  min-width: 0;        /* даём детям сжиматься внутри контейнера */
 }
 
 /* Бейдж рейтинга со звездой */
-#top .hero-social .rating-badge{
+#top .rating-badge{
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
-#top .hero-social .rating-badge .star{
+#top .rating-badge .star{
   width: 18px; height: 18px; fill: #F5B400; /* золотистая звезда */
 }
-#top .hero-social .rating-score{
+#top .rating-score{
   font-weight: 700;
   color: #0b4870;
-}
-
-#top .hero-social .quote{
-  margin-left: auto;           /* уезжаем к правому краю строки */
-  white-space: nowrap;         /* чтобы короткая цитата не ломалась */
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-inline-size: 50%;        /* не отъедать всю строку на малых ширинах */
 }
 
 /* Ссылка «Читать отзывы родителей» */
@@ -300,10 +292,30 @@ section{padding:64px 0}
 
 /* Бегущая цитата */
 #top .hero-social .quote{
+  margin-left: auto;     /* прижать к правому краю */
+  flex: 1 1 auto;        /* занимать остаток строки */
+  min-width: 0;          /* разрешаем сжатие текста */
+  white-space: nowrap;   /* не переносим слова */
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  text-align: right;     /* визуально вправо, если строка длинная */
+  /* если раньше ставили max-inline-size, убери: */
+  max-inline-size: none;
   color:#374151; font-style:italic; opacity:.9;
   transition: opacity .25s ease;
 }
+
 #top .hero-social .quote.is-fade{ opacity:0; }
+
+@media (max-width: 520px){
+  #top .hero-social{ flex-wrap: wrap; }
+  #top .hero-social .quote{
+    flex-basis: 100%;
+    margin-left: 0;
+    text-align: left;
+    white-space: normal;       /* можно переносить */
+  }
+}
 
 /* ---------- Слайдер ---------- */
 .hero-slider{
@@ -2216,6 +2228,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
