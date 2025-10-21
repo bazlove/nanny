@@ -147,25 +147,45 @@ section{padding:64px 0}
 
 /* Hero */
 
-/* Общие отступы секции */
+/* Отступы секции */
 #top.hero{
   padding: 96px 0 56px;
 }
 
 /* Двухколоночный layout: текст слева, слайдер справа */
 #top .container.hero-grid{
-  display: grid;
-  grid-template-columns: minmax(480px, 1fr) minmax(420px, 560px);
-  align-items: start;
+  display: grid !important;
+  /* левый столбец «резиновый», правый — контролируемой ширины */
+  grid-template-columns: minmax(420px, 1fr) clamp(420px, 38vw, 560px) !important;
+  align-items: start !important;                 /* верхние кромки в линию */
   gap: clamp(24px, 4vw, 56px);
 }
 
-/* Подстраховка от старого грида на контейнере (чтобы ничего не ломало) */
+/* Подстраховка на случай старых правил для контейнера без .hero-grid */
 #top.hero > .container{ display: block; }
 
-/* Левый столбец */
-#top .container.hero-grid .hero-copy{ min-width: 0; } /* текст не распирает колонку */
+/* Явно кладём блоки в одну строку грида */
+#top .hero-copy{
+  grid-column: 1; grid-row: 1;
+  min-width: 0;                                  /* текст не «распирает» колонку */
+}
+#top .hero-visual{
+  grid-column: 2; grid-row: 1;
+  justify-self: end; align-self: start;
+  /* страховка от возможных наследований */
+  display: block !important;
+  margin: 0 !important;
+  float: none !important;
+  clear: none !important;
+}
 
+/* Контейнер слайдера справа — контролируемая ширина */
+#top .hero-visual .hero-slider{
+  width: 100%;
+  max-width: 560px;
+}
+
+/* Подзаголовок */
 #top .hero-copy .sub{
   font-size: 18px;
   color: #333;
@@ -208,7 +228,7 @@ section{padding:64px 0}
 }
 #top .cta-quote{ font-weight: 700; }
 
-/* Рейтинг + ссылка + цитата */
+/* Соц-строка: рейтинг + ссылка + цитата */
 #top .hero-social{
   display: flex;
   align-items: center;
@@ -217,7 +237,7 @@ section{padding:64px 0}
   flex-wrap: wrap;
 }
 
-/* бейдж рейтинга со звездой */
+/* Бейдж рейтинга со звездой */
 #top .hero-social .rating-badge{
   display: inline-flex;
   align-items: center;
@@ -231,7 +251,7 @@ section{padding:64px 0}
   color: #0b4870;
 }
 
-/* «Читать отзывы родителей»: зелёная по умолчанию, при ховере — серая */
+/* Ссылка «Читать отзывы родителей» */
 .link-dashed{
   display:inline-flex; align-items:center; gap:6px;
   color:#6B7280; text-decoration:none; font-size:14px;
@@ -260,10 +280,7 @@ section{padding:64px 0}
 }
 #top .hero-social .quote.is-fade{ opacity:0; }
 
-/* Правый столбец — слайдер */
-#top .container.hero-grid .hero-visual{ justify-self: end; }
-#top .hero-visual .hero-slider{ width: 100%; max-width: 560px; }
-
+/* ---------- Слайдер ---------- */
 .hero-slider{
   position: relative;
   border-radius: 16px;
@@ -332,44 +349,14 @@ section{padding:64px 0}
   background:#15803D; border-color:#15803D;
 }
 
-/* Адаптив: одна колонка на планшете/мобилке */
-@media (max-width: 1024px){
-  #top .container.hero-grid{ display:block; }
-  #top .container.hero-grid .hero-visual{ margin-top:16px; }
-}
-
-/* === HERO: двухколоночный grid и явная раскладка ================== */
-#top .container.hero-grid{
-  display:grid !important;
-  /* левый столбец «резиновый», правый – контролируемой ширины */
-  grid-template-columns: minmax(420px, 1fr) clamp(420px, 38vw, 560px) !important;
-  align-items: start !important;            /* выравнивание по верху */
-  gap: clamp(24px, 4vw, 56px);
-}
-
-/* ЯВНО кладём блоки в 1-ю строку грида */
-#top .hero-copy{
-  grid-column: 1; grid-row: 1;
-  min-width: 0;                             /* текст не распирает колонку */
-}
-#top .hero-visual{
-  grid-column: 2; grid-row: 1;
-  justify-self: end; align-self: start;
-  /* на случай «странных» наследований где-то наверху */
-  display: block !important;
-  float: none !important;
-  clear: none !important;
-  margin: 0 !important;
-}
-#top .hero-visual .hero-slider{ width:100%; max-width:560px; }
-
-/* Планшет/мобилка — одна колонка */
+/* ---------- Адаптив ---------- */
 @media (max-width:1024px){
-  #top .container.hero-grid{
-    grid-template-columns: 1fr !important;
+  #top .container.hero-grid{ grid-template-columns: 1fr !important; }
+  #top .hero-copy, #top .hero-visual{
+    grid-column: auto; grid-row: auto; justify-self: stretch; align-self: start;
   }
-  #top .hero-copy{ grid-column:auto; grid-row:auto; }
-  #top .hero-visual{ grid-column:auto; grid-row:auto; justify-self:stretch; }
+  /* чуть воздуха между колонками при стэке */
+  #top .container.hero-grid .hero-visual{ margin-top:16px; }
 }
 
 /* === SERVICES === */
@@ -2170,6 +2157,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
