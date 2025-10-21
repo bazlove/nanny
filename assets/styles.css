@@ -23,7 +23,6 @@
 .section{ padding-block: var(--section-y); }
 .section-title{ margin:0 0 var(--space-3); }
 
-}
 *{box-sizing:border-box}
 body{margin:0;font-family:'Nunito',sans-serif;color:var(--text);background:var(--bg)}
 h1,h2,h3{font-family:'Poppins',sans-serif;margin:0 0 .5rem}
@@ -2277,6 +2276,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
