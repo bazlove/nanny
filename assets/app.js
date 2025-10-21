@@ -454,20 +454,18 @@ if (yEl) yEl.textContent = new Date().getFullYear();
 /* ===== Slots: fetch + render per-day cards + header badge ===== */
 (function initSlots(){
   const API_SLOTS_URL = 'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
+  const wrap  = document.querySelector('#slotsList');
+  const badge = document.querySelector('#headerFreeBadge') || document.getElementById('availability-badge');
+  const badgeText = badge?.querySelector('.avail-text') || badge?.querySelector('.txt') || badge;
 
-  const wrap  = document.querySelector('#slotsList');        // контейнер карточек (grid)
-  const badge = document.querySelector('#headerFreeBadge');  // бейдж в шапке
+  function setBadge(text, classes = []) {
+    if (!badge || !badgeText) return;
+    badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
+    classes.forEach(c => badge.classList.add(c));
+    badgeText.textContent = text;
+    badge.style.display = 'inline-flex';
+  }
 
-  const badgeText = badge ? badge.querySelector('.avail-text') : null;
-
-function setBadge(text, classes = []) {
-  if (!badge || !badgeText) return;
-  badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
-  classes.forEach(c => badge.classList.add(c));
-  badgeText.textContent = text;
-  badge.style.display = 'inline-flex';
-}
-  
   if (!wrap) return;
 
   // ---- helpers -------------------------------------------------
@@ -1105,6 +1103,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
