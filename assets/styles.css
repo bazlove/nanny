@@ -2158,6 +2158,40 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
 
+/* --- HERO: стабилизация левой колонки --- */
+#top .hero-copy{
+  /* остаётся grid-элементом (col=1/row=1), но внутри кладём всё в колонку */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start;
+  gap: 10px;                       /* аккуратный вертикальный ритм */
+  min-width: 0;
+}
+
+/* любой унаследованный float/clear/position у потомков отключаем */
+#top .hero-copy > *{
+  float: none !important;
+  clear: none !important;
+  grid-column: auto !important;    /* на случай, если где-то задавался grid-area */
+}
+
+/* специально страхуем подзаголовок, чтобы он не «становился» сбоку */
+#top .hero-copy .sub{
+  float: none !important;
+  width: auto !important;
+  max-width: 68ch;                 /* читабельная ширина строки, опционально */
+}
+
+/* правая колонка — строго сверху и без наследованных отступов */
+#top .hero-visual{
+  justify-self: end;
+  align-self: start;
+  margin: 0 !important;
+  float: none !important;
+  clear: none !important;
+}
+#top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
