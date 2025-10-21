@@ -400,6 +400,49 @@ section{padding:64px 0}
   #top .container.hero-grid .hero-visual{ margin-top:16px; }
 }
 
+/* Две колонки одинаковой высоты */
+#top .container.hero-grid{
+  align-items: stretch;                 /* обе ячейки растягиваются по высоте */
+}
+
+/* Колонки как вертикальные флексы */
+#top .hero-copy,
+#top .hero-visual{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* Кнопки слева — к нижнему краю */
+#top .hero-copy .cta{
+  margin-top: auto;                     /* прижимает блок CTA вниз */
+}
+
+/* Справа: сначала слайдер, внизу соц-строка */
+#top .hero-visual .hero-slider{
+  flex: 0 0 auto;                       /* фиксированная высота карточки */
+}
+#top .hero-visual .hero-social{
+  margin-top: auto;                     /* прижать к низу правой колонки */
+  display: flex; align-items: center; gap: 10px;
+  min-width: 0; flex-wrap: nowrap;      /* всё в одну строку */
+}
+#top .hero-visual .hero-social a{ white-space: nowrap; }
+#top .hero-visual .hero-social .quote{
+  margin-left: auto;                    /* уехать вправо */
+  flex: 1 1 auto; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-align: right;
+}
+
+/* На мобильном — убираем «прижим к низу», чтобы не появлялись лишние пустоты */
+@media (max-width: 1024px){
+  #top .hero-copy .cta{ margin-top: 16px; }
+  #top .hero-visual .hero-social{
+    margin-top: 12px;                   /* обычный отступ под карточкой */
+  }
+}
+
 /* === SERVICES === */
 
 /* --- layout секции: слева title+hint, справа чипы; ниже сетка карточек --- */
@@ -2232,6 +2275,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
