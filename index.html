@@ -94,86 +94,96 @@
     <!-- HERO -->
 	  
     <section id="top" class="hero">
-      <div class="container hero-grid hero-copy">
-        
-  <h1>Няня в Нови-Саде — забота, безопасность и бережное развитие</h1>
+  <div class="container hero-grid">
 
-  <p class="sub">
-    Освободите время для личных дел, спокойно работайте из дома
-    или проведите вечер в тишине — без тревоги, отвлечения и стресса.
-  </p></div>
+    <!-- ЛЕВАЯ КОЛОНКА: копирайт, бейджи, CTA, соц-строка -->
+    <div class="hero-copy">
+      <h1>Няня в Нови-Саде — забота, безопасность и бережное развитие</h1>
 
-  <!-- 2 строки бейджей с контрастом -->
-			  
-<ul class="hero-tags">
-  <li data-emoji="📅">31 год</li>
-  <li data-emoji="👩‍👦">Мама</li>
-  <li data-emoji="🧑‍🏫">Воспитатель</li>
-  <li data-emoji="🤸">Детский тренер</li>
-</ul>
-			  
-  <ul class="hero-tags">
-	<li data-emoji="⏱️">Слоты 2–4 часа</li>
-  	<li data-emoji="📸">Фото-отчёты</li>
-	<li data-emoji="📵">Занятия без гаджетов</li>
-</ul>
+      <p class="sub">
+        Освободите время для личных дел, спокойно работайте из дома
+        или проведите вечер в тишине — без тревоги, отвлечения и стресса.
+      </p>
 
-  <!-- CTA: 2 кнопки -->
-  <div class="cta">
-    <a class="btn btn-primary" href="#slots">Проверить свободные слоты</a>
-    <a class="btn btn-outline cta-quote" href="#calc">Рассчитать цену за 1 минуту</a>
-  </div>
+      <!-- 2 строки бейджей -->
+      <ul class="hero-tags">
+        <li data-emoji="📅">31 год</li>
+        <li data-emoji="👩‍👦">Мама</li>
+        <li data-emoji="🧑‍🏫">Воспитатель</li>
+        <li data-emoji="🤸">Детский тренер</li>
+		<li data-emoji="🤸">Опыт 10 лет</li>
+      </ul>
+      <ul class="hero-tags">
+		<li data-emoji="⏱️">Прихожу вовремя</li>
+        <li data-emoji="⏱️">Слоты 2–4 часа</li>
+        <li data-emoji="📸">Фото / заметки</li>
+        <li data-emoji="📵">Занятия без гаджетов</li>
+      </ul>
 
-  <!-- Рейтинг + «бегущая» короткая цитата -->
-<div class="hero-social">
-	<span class="rating-badge">
-		<!-- золотистая svg-звезда -->
-  <svg class="star" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.86L18.18 22 12 18.8 5.82 22 7 14.13 2 9.27l6.91-1.01L12 2z"/>
-  </svg>
-		<strong class="rating-score">4.8</strong>
-</span> ·
-	<a href="#reviews" class="link-dashed link-dashed--inverse">
-  <span class="txt">Читать отзывы родителей</span>
-</a> ·
-  <span id="quoteRotator" class="quote">«всегда вовремя, ребёнок спокоен»</span>
-</div>
-		  
-        
-		  <div class="hero-visual">
-  <div class="hero-slider" role="region" aria-roledescription="carousel" aria-label="Фотографии няни и рабочих моментов">
-    <button class="hs-nav prev" type="button" aria-label="Предыдущее фото">‹</button>
+      <!-- CTA -->
+      <div class="cta">
+        <a class="btn btn-primary" href="#slots">Проверить свободные слоты</a>
+        <a class="btn btn-outline cta-quote" href="#calc">Рассчитать цену за 1 минуту</a>
+      </div>
 
-    <div class="hs-viewport">
-      <div class="hs-track">
-        <!-- 1 -->
-        <figure class="hs-slide is-active">
-          <img src="img/hero/01.jpg" width="720" height="480" loading="eager"
-               alt="Няня играет с ребёнком в развивающую игру" />
-        </figure>
-        <!-- 2 -->
-        <figure class="hs-slide">
-          <img src="img/hero/02.jpg" width="720" height="480" loading="lazy"
-               alt="Прогулка во дворе без гаджетов" />
-        </figure>
-        <!-- 3 -->
-        <figure class="hs-slide">
-          <img src="img/hero/03.jpg" width="720" height="480" loading="lazy"
-               alt="Творческое занятие: рисование и аппликация" />
-        </figure>
+      <!-- Рейтинг + бегущая цитата -->
+      <div class="hero-social">
+        <span class="rating-badge">
+          <svg class="star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.86L18.18 22 12 18.8 5.82 22 7 14.13 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <strong class="rating-score">4.8</strong>
+        </span> ·
+        <a href="#reviews" class="link-dashed link-dashed--inverse">
+          <span class="txt">Читать отзывы родителей</span>
+        </a> ·
+        <span id="quoteRotator" class="quote">«всегда вовремя, ребёнок спокоен»</span>
       </div>
     </div>
 
-    <button class="hs-nav next" type="button" aria-label="Следующее фото">›</button>
+    <!-- ПРАВАЯ КОЛОНКА: слайдер -->
+    <div class="hero-visual">
+      <div class="hero-slider" role="region" aria-roledescription="carousel" aria-label="Фотографии няни и рабочих моментов">
+        <button class="hs-nav prev" type="button" aria-label="Предыдущее фото">‹</button>
 
-    <div class="hs-dots" role="tablist" aria-label="Навигация по фото">
-      <button class="hs-dot is-active" role="tab" aria-selected="true" aria-label="Слайд 1"></button>
-      <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 2"></button>
-      <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 3"></button>
+        <div class="hs-viewport">
+          <div class="hs-track">
+            <!-- 1 -->
+            <figure class="hs-slide is-active">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'><rect width='100%25' height='100%25' fill='%23e5e7eb'/></svg>"
+                width="720" height="480" loading="eager"
+                alt="Няня играет с ребёнком в развивающую игру" />
+            </figure>
+            <!-- 2 -->
+            <figure class="hs-slide">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'><rect width='100%25' height='100%25' fill='%23f3f4f6'/></svg>"
+                width="720" height="480" loading="lazy"
+                alt="Прогулка во дворе без гаджетов" />
+            </figure>
+            <!-- 3 -->
+            <figure class="hs-slide">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'><rect width='100%25' height='100%25' fill='%23eaeef3'/></svg>"
+                width="720" height="480" loading="lazy"
+                alt="Творческое занятие: рисование и аппликация" />
+            </figure>
+          </div>
+        </div>
+
+        <button class="hs-nav next" type="button" aria-label="Следующее фото">›</button>
+
+        <div class="hs-dots" role="tablist" aria-label="Навигация по фото">
+          <button class="hs-dot is-active" role="tab" aria-selected="true" aria-label="Слайд 1"></button>
+          <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 2"></button>
+          <button class="hs-dot" role="tab" aria-selected="false" aria-label="Слайд 3"></button>
+        </div>
+      </div>
     </div>
+
   </div>
-</div>
-	</section>
+</section>
 
    <!-- SERVICES -->
 <section id="services" class="services section">
@@ -779,6 +789,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
