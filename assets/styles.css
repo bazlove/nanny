@@ -268,6 +268,14 @@ section{padding:64px 0}
   color: #0b4870;
 }
 
+#top .hero-social .quote{
+  margin-left: auto;           /* уезжаем к правому краю строки */
+  white-space: nowrap;         /* чтобы короткая цитата не ломалась */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-inline-size: 50%;        /* не отъедать всю строку на малых ширинах */
+}
+
 /* Ссылка «Читать отзывы родителей» */
 .link-dashed{
   display:inline-flex; align-items:center; gap:6px;
@@ -2208,6 +2216,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
