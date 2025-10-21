@@ -1010,7 +1010,7 @@ if (badName || badCont) {
 
     function go(n){
       i = (n + slides.length) % slides.length;
-      track.style.transform = `translateX(${-i*100}%)`;
+      track.style.transform = `translate3d(${-i*100}%,0,0)`;
       slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
       dots.forEach((d,idx)=>{
         d.classList.toggle('is-active', idx===i);
@@ -1068,6 +1068,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
