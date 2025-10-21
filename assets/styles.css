@@ -250,6 +250,7 @@ section{padding:64px 0}
 #top .hero-visual .hero-social{
   /* фиксированный отступ от карточки, чтобы не «липло» */
   margin-top: 14px;
+  min-height: 28px;
   display: flex; align-items: center; gap: 10px;
   flex-wrap: nowrap; min-width: 0;
 }
@@ -2263,6 +2264,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 .hero-slider .hs-nav.prev{ left:10px; }
 .hero-slider .hs-nav.next{ right:10px; }
 .hero-slider .hs-dots{ position:absolute; left:0; right:0; bottom:12px; display:flex; justify-content:center; gap:8px; }
+
 
 
 
