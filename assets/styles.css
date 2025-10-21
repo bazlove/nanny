@@ -182,8 +182,8 @@ section{padding:64px 0}
 /* Hero — h1: стараемся удержать в 2 строки */
 #top .hero-copy h1{
   margin: 0 0 8px;
-  font-size: clamp(32px, 3.8vw, 52px);
-  line-height: 1.1;
+  font-size: clamp(32px, 3.6vw, 52px);
+  line-height: 1.08;
   letter-spacing: -0.01em;
   max-inline-size: 26ch;      /* ширина текста ≈ 26 символов */
   text-wrap: balance;         /* балансируем переносы (совр. браузеры) */
@@ -210,20 +210,20 @@ section{padding:64px 0}
 #top .hero-tags{
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 8px 0 0;
+  gap: 6px;
+  margin: 6px 0 0;
   padding: 0;
   list-style: none;
 }
 #top .hero-tags + .hero-tags{
-  margin-top: 8px;   /* межстрочный зазор между 1-й и 2-й строками */
+  margin-top: 6px;   /* межстрочный зазор между 1-й и 2-й строками */
 }
 #top .hero-tags li{
   display: inline-flex;
   align-items: center;
   height: 30px;
-  gap: 10px;               /* расстояние между эмоджи и текстом */
-  padding: 0 10px;         /* симметричные внутренние отступы */
+  gap: 6px;               /* расстояние между эмоджи и текстом */
+  padding: 0 6px;         /* симметричные внутренние отступы */
   border: 1px solid #d9dee6;
   border-radius: 999px;
   background: #fff;
@@ -381,6 +381,10 @@ section{padding:64px 0}
   background:rgba(255,255,255,.65);
   border:1px solid rgba(0,0,0,.08);
   cursor:pointer;
+}
+.hero-slider .hs-dot:focus-visible{
+  outline: 2px solid #15803D;
+  outline-offset: 2px;
 }
 .hero-slider .hs-dot.is-active{
   background:#15803D; border-color:#15803D;
@@ -2228,6 +2232,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
