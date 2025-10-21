@@ -361,6 +361,44 @@ section{padding:64px 0}
 .hero-slider .hs-dot:focus-visible{ outline:2px solid #15803D; outline-offset:2px; }
 .hero-slider .hs-dot.is-active{ background:#15803D; border-color:#15803D; }
 
+/* === HERO: стабильная цитата без рефлоу под слайдером === */
+#top .hero-visual .hero-social{
+  align-items: center;      /* можно baseline, если нравится визуально */
+}
+
+/* Обёртка фиксирует высоту строки (≈ высота шрифта) */
+#top .hero-visual .hero-social .quote-wrap{
+  position: relative;
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 1.3em;            /* резерв под одну строку */
+  line-height: 1.3em;
+}
+
+/* Два слоя цитаты накладываются друг на друга и плавно меняются */
+#top .hero-visual .hero-social .quote-wrap .quote{
+  position: absolute; inset: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-align: right;
+  opacity: 0; transition: opacity .25s ease;
+  will-change: opacity;
+}
+
+/* активный слой видим, неактивный — прозрачен */
+#top .hero-visual .hero-social .quote-wrap .quote.is-active{ opacity: .9; }
+
+/* На узких экранах разрешаем перенос (как и раньше) */
+@media (max-width: 520px){
+  #top .hero-visual .hero-social .quote-wrap{
+    height:auto; line-height:inherit;     /* многострочно */
+  }
+  #top .hero-visual .hero-social .quote-wrap .quote{
+    position: static;                      /* обычный поток */
+    white-space: normal; text-align: left; opacity:.9;
+  }
+}
+
 /* ===== Адаптив ===== */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns: 1fr; }
@@ -2169,6 +2207,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
