@@ -179,6 +179,20 @@ section{padding:64px 0}
   clear: none !important;
 }
 
+/* Hero — h1: стараемся удержать в 2 строки */
+#top .hero-copy h1{
+  margin: 0 0 8px;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  max-inline-size: 26ch;      /* ширина текста ≈ 26 символов */
+  text-wrap: balance;         /* балансируем переносы (совр. браузеры) */
+  hyphens: auto;              /* если допустима расстановка переносов */
+}
+@media (max-width: 1280px){
+  #top .hero-copy h1{ max-inline-size: 24ch; }
+}
+
 /* Контейнер слайдера справа — контролируемая ширина */
 #top .hero-visual .hero-slider{
   width: 100%;
@@ -2191,6 +2205,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   clear: none !important;
 }
 #top .hero-visual .hero-slider{ width:100%; max-width:560px; }
+
 
 
 
