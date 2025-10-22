@@ -265,22 +265,6 @@ section{padding:64px 0}
   color:#374151; font-style:italic;
 }
 
-/* === Стабильная цитата без рефлоу (кросс-фейд слоёв) === */
-#top .hero-visual .hero-social .quote-wrap{
-  position: relative;
-  display: block;
-  flex: 1 1 auto; min-width: 0;
-  height: 1.3em; line-height: 1.3em;      /* резерв под одну строку */
-  margin-left: auto;                       /* уехали вправо */
-  text-align: right;
-}
-#top .hero-visual .hero-social .quote-wrap .quote{
-  position: absolute; inset: 0;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  opacity: 0; transition: opacity .25s ease; will-change: opacity;
-}
-#top .hero-visual .hero-social .quote-wrap .quote.is-active{ opacity: .9; }
-
 @media (max-width: 520px){
   #top .hero-visual .hero-social{ flex-wrap:wrap; }
   #top .hero-visual .hero-social .quote-wrap{
@@ -288,6 +272,40 @@ section{padding:64px 0}
   }
   #top .hero-visual .hero-social .quote-wrap .quote{
     position: static; white-space: normal; opacity:.9;
+  }
+}
+
+/* === Стабильная цитата  === */
+#top .hero-visual .hero-social .quote-wrap{
+  position: relative;
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 1.3em;                 /* фикс высоты строки — верстка не прыгает */
+  line-height: 1.3em;
+  margin-left: auto;
+  text-align: right;
+  overflow: hidden;
+}
+#top .hero-visual .hero-social .quote{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: .9;
+  transition: opacity .25s ease;
+}
+#top .hero-visual .hero-social .quote.is-fade{ opacity: 0; }
+
+@media (max-width: 520px){
+  #top .hero-visual .hero-social{ flex-wrap: wrap; }
+  #top .hero-visual .hero-social .quote-wrap{
+    height: auto;
+    line-height: inherit;
+    text-align: left;
+    margin-left: 0;
+  }
+  #top .hero-visual .hero-social .quote{
+    white-space: normal;
   }
 }
 
@@ -2134,6 +2152,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
