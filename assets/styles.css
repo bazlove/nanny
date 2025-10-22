@@ -2166,9 +2166,11 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* Правый столбец: фото с фиксированным соотношением 4:3 */
+/* === HERO: правая колонка — статичное фото === */
 #top .hero-visual{
-  display:flex; flex-direction:column; min-width:0;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
 }
 
 #top .hero-visual .hero-photo{
@@ -2176,33 +2178,41 @@ section[id], #services, #calc, #faq, #contact, #main {
   display: block;
   width: 100%;
   max-width: clamp(420px, 38vw, 560px);
-  aspect-ratio: 4 / 3;              /* именно контейнер задаёт высоту */
+  aspect-ratio: 4 / 3;                 /* контейнер задаёт высоту */
   border-radius: 16px;
   overflow: hidden;
-  background: #fff;
+  background: #fff;                     /* на случай поздней загрузки */
   box-shadow: 0 12px 28px rgba(0,0,0,.10);
 }
 
-/* Картинка НЕ абсолютная, чтобы не зависеть от высоты родителя */
+/* СБРОС старых абсолютов и стабильная отрисовка */
 #top .hero-visual .hero-photo img{
-  position: static;   /* <— ключевой сброс */
-  inset: auto;        /* <— на всякий случай */
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;              /* заполняем контейнер */
+  object-fit: cover !important;
 }
 
-/* Фоллбэк для старых браузеров без aspect-ratio */
+/* Фоллбэк, если aspect-ratio вдруг не поддерживается */
 @supports not (aspect-ratio: 4 / 3){
-  #top .hero-visual .hero-photo::before{
-    content:""; display:block; padding-top:75%; /* 4:3 */
-  }
   #top .hero-visual .hero-photo{ position: relative; }
+  #top .hero-visual .hero-photo::before{
+    content:""; display:block; padding-top:75%;   /* 4:3 */
+  }
   #top .hero-visual .hero-photo img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    position:absolute !important; inset:0 !important;
+    width:100% !important; height:100% !important; object-fit:cover !important;
   }
 }
+
+/* Отступ под фото (рейтинг/цитата) */
+#top .hero-visual .hero-social{
+  margin-top:14px; display:flex; align-items:center; gap:10px; min-width:0;
+}
+
+
 
 
 
