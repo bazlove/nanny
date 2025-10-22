@@ -190,33 +190,79 @@ window.updateBadge = function updateBadge(slots) {
   const API_SLOTS_URL =
     'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
 
-  // 2) DOM-ссылки
-  const wrap  = document.querySelector('#slotsList');
+  // DOM
+  const wrap   = document.querySelector('#slotsList');
   const hasList = !!wrap;
+  if (hasList) wrap.classList.add('slots-grid'); // грид под карточки
 
-  const badge = document.querySelector('#headerFreeBadge');
+  const badge     = document.querySelector('#headerFreeBadge');
   const badgeText = badge ? badge.querySelector('.avail-text') : null;
 
-  // 3) Безопасный setter для бейджа (не трогаем .dot и разметку)
+  // Безопасный setter бейджа (если нет твоего window.setBadge)
   const setB = (typeof window.setBadge === 'function')
     ? window.setBadge
-    : function(text, classes){
+    : function (text, classes){
         if (!badge || !badgeText) return;
-        // сброс только контролируемых классов, база остаётся
         ['is-today','is-tomorrow','is-next','is-none','is-live']
           .forEach(c => badge.classList.remove(c));
         (classes || []).forEach(c => badge.classList.add(c));
-        badgeText.textContent = text;
+        badgeText.textContent = text;              // .dot не трогаем
         badge.style.display = 'inline-flex';
       };
 
-  // 4) Забираем управление бейджем и ставим статус загрузки
+  // Статус загрузки
   if (badge) {
-    window.__SLOTS_BADGE__ = 'slots';             // флаг владения
+    window.__SLOTS_BADGE__ = 'slots';
     setB('Проверяю свободные слоты…', ['is-live']);
   }
 
-  // 5) Запрашиваем слоты
+  // ===== helpers для карточек =====
+  const pad2 = n => String(n).padStart(2,'0');
+  const timeFromISO = iso => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  };
+  const safeStart  = s => s.startLabel || timeFromISO(s.startISO);
+  const safeEnd    = s => s.endLabel   || timeFromISO(s.endISO);
+  const getStartTs = s => s.startTs ?? Date.parse(s.startISO || 0);
+
+  const groupByDate = (slots) => {
+    const m = new Map();
+    for (const s of slots) {
+      const key = s.date || (s.startISO || '').slice(0,10);
+      if (!key) continue;
+      if (!m.has(key)) m.set(key, []);
+      m.get(key).push(s);
+    }
+    for (const arr of m.values()) arr.sort((a,b) => getStartTs(a) - getStartTs(b));
+    return Array.from(m.entries())
+      .map(([date, items]) => ({ date, items }))
+      .sort((a,b) => a.date.localeCompare(b.date));
+  };
+
+  const fmtDateRUshort = (ymd) => {
+    if (!ymd) return '';
+    const [y,m,d] = ymd.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m-1, d));
+    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+  };
+
+  const makeTimesLine = (items) => items.map(s => `${safeStart(s)}–${safeEnd(s)}`).join(', ');
+
+  const cardHTML = (date, items) => {
+    const dayLabel = (items[0] && items[0].dayLabel) ? items[0].dayLabel : fmtDateRUshort(date);
+    const times    = makeTimesLine(items);
+    return `
+      <article class="slot-card">
+        <div class="slot-date">${dayLabel}</div>
+        <div class="slot-time">${times}</div>
+        <a class="slot-cta" href="#contact">Запросить</a>
+      </article>
+    `;
+  };
+
+  // ===== fetch + render =====
   fetch(API_SLOTS_URL, { cache: 'no-store', mode: 'cors' })
     .then(r => r.json())
     .then(data => {
@@ -224,56 +270,34 @@ window.updateBadge = function updateBadge(slots) {
                 : Array.isArray(data) ? data : [];
       window.__freeSlots = raw;
 
-      // Обновляем бейдж «умным» алгоритмом, если он есть в файле
+      // Бейдж
       if (typeof window.updateBadge === 'function') {
         window.updateBadge(raw);
       } else {
-        // простой фоллбек
         if (raw.length) {
           const first = raw[0];
-          setB(`Ближайший слот ${first.startLabel}–${first.endLabel}`, ['is-next']);
+          setB(`Ближайший слот ${safeStart(first)}–${safeEnd(first)}`, ['is-next']);
         } else {
           setB('Свободно: по запросу', ['is-none']);
         }
       }
 
-      // Рендер списка по дням — только если на странице есть контейнер
+      // Карточки
       if (!hasList) return;
       if (!raw.length) {
         wrap.innerHTML = '<p class="muted">Свободных слотов не найдено.</p>';
         return;
       }
-
-      const days = (typeof window.groupByDate === 'function')
-        ? window.groupByDate(raw)
-        : fallbackGroupByDate(raw);
-
-      const html = days.slice(0, 5)
-        .map(d => (typeof window.cardHTML === 'function'
-          ? window.cardHTML(d.date, d.items)
-          : fallbackCardHTML(d.date, d.items)))
-        .join('');
-
-      wrap.innerHTML = html;
+      const groups = groupByDate(raw);
+      wrap.innerHTML = groups.map(g => cardHTML(g.date, g.items)).join('');
     })
     .catch(err => {
       console.warn('Slots API error:', err);
       if (hasList) {
         wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
       }
-      setB('Свободно: по запросу', ['is-none']); // не ломаем разметку бейджа
+      setB('Свободно: по запросу', ['is-none']);
     });
-
-  // --- компактные фоллбеки на случай отсутствия утилит в файле ---
-  function fallbackGroupByDate(raw){
-    const map = {};
-    raw.forEach(s => { (map[s.date] = map[s.date] || []).push(s); });
-    return Object.keys(map).sort().map(date => ({ date, items: map[date] }));
-  }
-  function fallbackCardHTML(date, items){
-    const lis = items.map(s => `<li>${s.startLabel}–${s.endLabel}</li>`).join('');
-    return `<section class="slot-day"><h4>${date}</h4><ul>${lis}</ul></section>`;
-  }
 })();
 
 // Calculator
@@ -1076,6 +1100,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
