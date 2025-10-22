@@ -107,17 +107,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 7000);
 })();
 
-  // Mock one slot today (remove if not needed)
-  (function mock(){
-    const cal=document.getElementById('slots-calendar'); if(!cal) return;
-    const iso=todayISO(new Date());
-    if(!cal.querySelector(`[data-date="${iso}"]`)){
-      cal.innerHTML = `<div class="slot--free" data-date="${iso}" data-from="16:00" data-to="19:00"></div>`;
-    }
-  })();
-  window.addEventListener('DOMContentLoaded', update);
-})();
-
 // === SetBadge: меняем только текст и классы ===
 window.setBadge = function setBadge(text, classes = []) {
   const badge = document.querySelector('#headerFreeBadge');
@@ -582,104 +571,6 @@ if (yEl) yEl.textContent = new Date().getFullYear();
   openFromHash();
 })();
 
-/* ===== Slots: fetch + render per-day cards + header badge ===== */
-(function initSlots(){
-  const API_SLOTS_URL = 'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
-  const wrap  = document.querySelector('#slotsList');
-  const badge = document.querySelector('#headerFreeBadge') || document.getElementById('availability-badge');
-  const badgeText = badge?.querySelector('.avail-text') || badge?.querySelector('.txt') || badge;
-
-  function setBadge(text, classes = []) {
-    if (!badge || !badgeText) return;
-    badge.classList.remove('is-today','is-tomorrow','is-next','is-none','is-live');
-    classes.forEach(c => badge.classList.add(c));
-    badgeText.textContent = text;
-    badge.style.display = 'inline-flex';
-  }
-
-  if (!wrap) return;
-
-  // ---- helpers -------------------------------------------------
-  const pad2 = n => String(n).padStart(2,'0');
-  const timeFromISO = iso => {
-    if (!iso) return '';
-    const d = new Date(iso);
-    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-  };
-  const fmtDateRUshort = ymd => {
-    // ymd: 'YYYY-MM-DD'
-    if (!ymd) return '';
-    const [y,m,d] = ymd.split('-').map(Number);
-    const dt = new Date(Date.UTC(y, m-1, d));
-    // пример: "вт, 15.10"
-    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
-  };
-
-  const safeStart = s => s.startLabel || timeFromISO(s.startISO);
-  const safeEnd   = s => s.endLabel   || timeFromISO(s.endISO);
-
-  const groupByDate = (slots) => {
-    const map = new Map();
-    for (const s of slots) {
-      const key = s.date || (s.startISO ? s.startISO.slice(0,10) : 'unknown');
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(s);
-    }
-    // сортируем интервалы внутри дня по началу
-    for (const arr of map.values()) {
-      arr.sort((a,b) => (a.startTs ?? Date.parse(a.startISO||0)) - (b.startTs ?? Date.parse(b.startISO||0)));
-    }
-    // вернём как массив [{date, items:[]}] — удобно сортировать по дате
-    const out = Array.from(map.entries()).map(([date, items]) => ({ date, items }));
-    out.sort((a,b) => a.date.localeCompare(b.date));
-    return out;
-  };
-
-  const makeTimesLine = (items) => items
-    .map(s => `${safeStart(s)}–${safeEnd(s)}`)
-    .join(', ');
-
-  const cardHTML = (date, items) => {
-    const dayLabel = (items[0] && items[0].dayLabel) ? items[0].dayLabel : fmtDateRUshort(date);
-    const times    = makeTimesLine(items);
-    const href     = '#contact'; // при желании подставьте сюда ссылку на форму
-    return `
-      <div class="slot-card">
-        <div class="slot-date">${dayLabel}</div>
-        <div class="slot-time">${times}</div>
-        <a class="slot-cta" href="${href}">Запросить</a>
-      </div>
-    `;
-  };
-
-  // ---- load & render -------------------------------------------
-  fetch(API_SLOTS_URL, { cache: 'no-store' })
-    .then(r => r.json())
-    .then(data => {
-      const raw = Array.isArray(data?.slots) ? data.slots : (Array.isArray(data) ? data : []);
-
-      window.__freeSlots = raw;
-
-      updateBadge(raw);
-
-      if (!raw.length) {
-        wrap.innerHTML = '<p class="muted">Свободных слотов не найдено.</p>';
-        return;
-      }
-
-      const days = groupByDate(raw);     // [{date, items:[...]}, ...]
-      const topDays = days.slice(0, 5);  // показываем первые 5 дней (по возрастанию)
-
-      wrap.innerHTML = topDays.map(d => cardHTML(d.date, d.items)).join('');
-    })
-    catch(err){
-  console.warn('Slots API error:', err);
-  wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
-  setBadge('Свободно: по запросу', ['is-none']);
-    }
-  );
-})();
-
 // Active menu on scroll
 (function(){
   const links = [...document.querySelectorAll('.header-nav a[href^="#"]')];
@@ -883,7 +774,7 @@ if (badName || badCont) {
   manage?.addEventListener('click', () => show());
 })();
 
-/* === PHONE MASK (+381 XX XXX XX XX) & AUTOFILL NEAREST SLOT ============= */
+/* === PHONE MASK & AUTOFILL NEAREST SLOT ============= */
 (function contactEnhance(){
   const phoneInput = document.getElementById('ccontact');
   const timeInput  = document.getElementById('ctime');
@@ -1185,6 +1076,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
