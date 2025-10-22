@@ -92,11 +92,11 @@
   <main>
 	  
     <!-- HERO -->
-	  
+	
 <section id="top" class="hero">
   <div class="container hero-grid">
 
-    <!-- ЛЕВАЯ КОЛОНКА: копирайт, бейджи, CTA -->
+    <!-- ЛЕВАЯ КОЛОНКА -->
     <div class="hero-copy">
       <h1>Няня в Нови-Саде — забота, безопасность и бережное развитие</h1>
 
@@ -105,7 +105,6 @@
         или проведите вечер в тишине — без тревоги, отвлечения и стресса.
       </p>
 
-      <!-- 2 строки бейджей -->
       <ul class="hero-tags">
         <li data-emoji="📅">31 год</li>
         <li data-emoji="👩‍👦">Мама</li>
@@ -118,28 +117,23 @@
         <li data-emoji="📵">Занятия без гаджетов</li>
       </ul>
 
-      <!-- CTA -->
       <div class="cta">
         <a class="btn btn-primary" href="#slots">Проверить свободные слоты</a>
         <a class="btn btn-outline cta-quote" href="#calc">Рассчитать цену за 1 минуту</a>
       </div>
-    </div><!-- /hero-copy -->
+    </div>
 
-    <!-- ПРАВАЯ КОЛОНКА: фото + соц-строка -->
+    <!-- ПРАВАЯ КОЛОНКА: фото + рейтинг/цитата -->
     <div class="hero-visual">
-  
-		<figure class="hero-photo">
-    <picture>
-      <img
-        src="img/hero.jpg"
-        width="720" height="540"
-        loading="eager" decoding="async"
-        alt="Няня играет с ребёнком дома"
-      >
-    </picture>
-  </figure>
+      <figure class="hero-photo">
+        <img
+          src="img/hero.jpg"
+          width="720" height="540"
+          loading="eager" decoding="async"
+          alt="Няня играет с ребёнком дома"
+        >
+      </figure>
 
-      <!-- Рейтинг + бегущая цитата -->
       <div class="hero-social">
         <span class="rating-badge">
           <svg class="star" viewBox="0 0 24 24" aria-hidden="true">
@@ -150,12 +144,17 @@
         <a href="#reviews" class="link-dashed link-dashed--inverse">
           <span class="txt">Читать отзывы родителей</span>
         </a> ·
-        <span id="quoteRotator" class="quote">«всегда вовремя, ребёнок спокоен»</span>
+
+        <!-- фиксированная по высоте обёртка, чтобы не прыгало -->
+        <span class="quote-wrap">
+          <span id="quoteRotator" class="quote">«всегда вовремя, ребёнок спокоен»</span>
+        </span>
       </div>
-    </div><!-- /hero-visual -->
+    </div>
 
   </div>
 </section>
+
 
    <!-- SERVICES -->
 <section id="services" class="services section">
@@ -761,6 +760,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
