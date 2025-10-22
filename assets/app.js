@@ -118,6 +118,97 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('DOMContentLoaded', update);
 })();
 
+/* ===== Slots: fetch + render + header badge (final) ===== */
+(function initSlots(){
+  const API_SLOTS_URL =
+    'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
+
+  // 2) DOM-ссылки
+  const wrap  = document.querySelector('#slotsList');
+  const hasList = !!wrap;
+
+  const badge = document.querySelector('#headerFreeBadge');
+  const badgeText = badge ? badge.querySelector('.avail-text') : null;
+
+  // 3) Безопасный setter для бейджа (не трогаем .dot и разметку)
+  const setB = (typeof window.setBadge === 'function')
+    ? window.setBadge
+    : function(text, classes){
+        if (!badge || !badgeText) return;
+        // сброс только контролируемых классов, база остаётся
+        ['is-today','is-tomorrow','is-next','is-none','is-live']
+          .forEach(c => badge.classList.remove(c));
+        (classes || []).forEach(c => badge.classList.add(c));
+        badgeText.textContent = text;
+        badge.style.display = 'inline-flex';
+      };
+
+  // 4) Забираем управление бейджем и ставим статус загрузки
+  if (badge) {
+    window.__SLOTS_BADGE__ = 'slots';             // флаг владения
+    setB('Проверяю свободные слоты…', ['is-live']);
+  }
+
+  // 5) Запрашиваем слоты
+  fetch(API_SLOTS_URL, { cache: 'no-store', mode: 'cors' })
+    .then(r => r.json())
+    .then(data => {
+      const raw = Array.isArray(data?.slots) ? data.slots
+                : Array.isArray(data) ? data : [];
+      window.__freeSlots = raw;
+
+      // Обновляем бейдж «умным» алгоритмом, если он есть в файле
+      if (typeof window.updateBadge === 'function') {
+        window.updateBadge(raw);
+      } else {
+        // простой фоллбек
+        if (raw.length) {
+          const first = raw[0];
+          setB(`Ближайший слот ${first.startLabel}–${first.endLabel}`, ['is-next']);
+        } else {
+          setB('Свободно: по запросу', ['is-none']);
+        }
+      }
+
+      // Рендер списка по дням — только если на странице есть контейнер
+      if (!hasList) return;
+      if (!raw.length) {
+        wrap.innerHTML = '<p class="muted">Свободных слотов не найдено.</p>';
+        return;
+      }
+
+      const days = (typeof window.groupByDate === 'function')
+        ? window.groupByDate(raw)
+        : fallbackGroupByDate(raw);
+
+      const html = days.slice(0, 5)
+        .map(d => (typeof window.cardHTML === 'function'
+          ? window.cardHTML(d.date, d.items)
+          : fallbackCardHTML(d.date, d.items)))
+        .join('');
+
+      wrap.innerHTML = html;
+    })
+    .catch(err => {
+      console.warn('Slots API error:', err);
+      if (hasList) {
+        wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
+      }
+      setB('Свободно: по запросу', ['is-none']); // не ломаем разметку бейджа
+    });
+
+  // --- компактные фоллбеки на случай отсутствия утилит в файле ---
+  function fallbackGroupByDate(raw){
+    const map = {};
+    raw.forEach(s => { (map[s.date] = map[s.date] || []).push(s); });
+    return Object.keys(map).sort().map(date => ({ date, items: map[date] }));
+  }
+  function fallbackCardHTML(date, items){
+    const lis = items.map(s => `<li>${s.startLabel}–${s.endLabel}</li>`).join('');
+    return `<section class="slot-day"><h4>${date}</h4><ul>${lis}</ul></section>`;
+  }
+})();
+
 // Calculator
 
 (function(){
@@ -482,53 +573,6 @@ if (yEl) yEl.textContent = new Date().getFullYear();
       </div>
     `;
   };
-
-  // === НОВАЯ ВЕРСИЯ updateBadge c сохранением .dot для пульса ===
-function updateBadge(slots) {
-  if (!badge) return;
-
-  const now          = Date.now();
-  const todayYMD     = new Date().toISOString().slice(0,10);
-  const tomorrowYMD  = new Date(Date.now() + 86400000).toISOString().slice(0,10);
-
-  const getStartTs = (s) => s.startTs ?? Date.parse(s.startISO || 0);
-  const timeLabel  = (s) => `${safeStart(s)}–${safeEnd(s)}`;
-
-  // 1) сегодня
-  const todaySlot = slots
-    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === todayYMD)
-    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-  if (todaySlot){
-    setBadge(`Свободно сегодня ${timeLabel(todaySlot)}`, ['is-today','is-live']);
-    return;
-  }
-
-  // 2) завтра
-  const tomorrowSlot = slots
-    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === tomorrowYMD)
-    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-  if (tomorrowSlot){
-    setBadge(`Свободно завтра ${timeLabel(tomorrowSlot)}`, ['is-tomorrow','is-live']);
-    return;
-  }
-
-  // 3) ближайшее окно дальше по времени
-  const next = slots
-    .filter(s => getStartTs(s) > now)
-    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
-
-  if (next){
-    const d   = new Date(next.startISO || getStartTs(next));
-    const day = d.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
-    setBadge(`Ближайший слот: ${day} | ${timeLabel(next)}`, ['is-next','is-live']);
-    return;
-  }
-
-  // 4) ничего — по запросу (пульс отключаем)
-  setBadge('Свободно: по запросу', ['is-none']);
-}
 
   // ---- load & render -------------------------------------------
   fetch(API_SLOTS_URL, { cache: 'no-store' })
@@ -1063,6 +1107,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
