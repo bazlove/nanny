@@ -5,7 +5,6 @@ const safe = fn => { try { fn && fn(); } catch (e) { console.error(`${fn.name||'
 
 // запуск после готовности DOM — и каждая инициализация в try/catch
 window.addEventListener('DOMContentLoaded', () => {
-  safe(initHeroSlider);      // твой слайдер
   safe(initQuoteRotator);    // ротатор цитат (если вынесен в функцию)
   safe(initSlots);           // загрузка слотов (может падать — нам нельзя ломаться)
   safe(initAvailabilityBadge); // если есть отдельная функция для бейджа
@@ -1063,6 +1062,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
