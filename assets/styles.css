@@ -146,7 +146,8 @@ section{padding:64px 0}
 
 #top .container.hero-grid{
   display:grid;
-  grid-template-columns: minmax(420px,1fr) clamp(420px,38vw,560px);
+  /* левый столбец резиновый, правый — контролируемой ширины */
+  grid-template-columns: minmax(460px,1fr) clamp(420px,36vw,560px);
   gap: clamp(24px,4vw,56px);
   align-items:start;
 }
@@ -163,7 +164,7 @@ section{padding:64px 0}
   min-width:0;
 }
 
-/* === Типографика и бейджи (как у тебя) === */
+/* === Типографика и бейджи === */
 #top .hero-copy h1{
   margin:0 0 8px;
   font-size:clamp(32px,3.6vw,52px);
@@ -183,12 +184,12 @@ section{padding:64px 0}
 #top .cta{ display:flex; gap:12px; margin:16px 0 12px; flex-wrap:wrap; }
 #top .cta-quote{ font-weight:700; }
 
-/* === Фото: без position:absolute, высота от контейнера */
+/* === Фото: карточка строго по ширине колонки */
 #top .hero-photo{
   display:block;
   width:100%;
-  max-width:560px;
-  aspect-ratio:4 / 3;         /* держим форму карточки */
+  max-width:100%;         /* КЛЮЧ: не шире правой колонки сетки */
+  aspect-ratio:4 / 3;
   border-radius:16px;
   overflow:hidden;
   background:#fff;
@@ -212,15 +213,22 @@ section{padding:64px 0}
 #top .rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
 #top .rating-score{ font-weight:700; color:#0b4870; }
 
+/* ссылка фиксированной ширины (не переносится) */
+#top .hero-visual .hero-social a{
+  white-space:nowrap;
+  flex:0 0 auto;
+}
+
 .link-dashed{ display:inline-flex; align-items:center; gap:6px; color:#6B7280; text-decoration:none; font-size:14px; }
 .link-dashed .txt{ border-bottom:1px dashed transparent; transition:color .15s, border-color .15s; }
 .link-dashed:hover .txt{ color:#15803D; border-bottom-color:#15803D; }
 .link-dashed--inverse .txt{ color:#15803D; border-bottom:1px dashed #15803D; }
 .link-dashed--inverse:hover .txt{ color:#6B7280; border-bottom-color:transparent; }
 
-/* цитата — одна нода, но высота фикcирована обёрткой */
+/* цитата — одна нода, высота фиксируется обёрткой, текст уезжает вправо */
 #top .hero-social .quote-wrap{
-  margin-left:auto; flex:1 1 auto; min-width:0;
+  margin-left:auto;
+  flex:1 1 auto; min-width:0;
   height:1.35em; line-height:1.35em;
   text-align:right;
 }
@@ -231,10 +239,11 @@ section{padding:64px 0}
 }
 #top .hero-social .quote.is-fade{ opacity:0; }
 
+/* === Адаптив === */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns:1fr; }
   #top .hero-visual{ justify-self:stretch; }
-  #top .hero-visual .hero-social{ margin-top:16px; }
+  #top .hero-visual .hero-social{ margin-top:16px; flex-wrap:wrap; }
   #top .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
 }
 
@@ -2043,6 +2052,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
