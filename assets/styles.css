@@ -159,7 +159,7 @@ section{padding:64px 0}
   align-items: stretch;                 /* обе ячейки одинаковой высоты */
 }
 
-/* Подстраховка на случай старых правил для контейнера без .hero-grid */
+/* Подстраховка на случай старых правил для контейнера без .hero-grid
 #top.hero > .container:not(.hero-grid){ display:block; }
 
 /* Колонки грида */
@@ -2203,6 +2203,7 @@ section[id], #services, #calc, #faq, #contact, #main {
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   }
 }
+
 
 
 
