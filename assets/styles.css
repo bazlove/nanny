@@ -146,12 +146,12 @@ section{padding:64px 0}
 
 #top .container.hero-grid{
   display:grid;
-  /* левый столбец резиновый, правый — контролируемой ширины */
-  grid-template-columns: minmax(460px,1fr) clamp(420px,36vw,560px);
+  grid-template-columns: minmax(420px,1fr) clamp(420px,36vw,560px);
   gap: clamp(24px,4vw,56px);
   align-items:start;
 }
 
+/* колонки */
 #top .hero-copy{
   grid-column:1; grid-row:1;
   display:flex; flex-direction:column;
@@ -160,7 +160,8 @@ section{padding:64px 0}
 #top .hero-visual{
   grid-column:2; grid-row:1;
   display:flex; flex-direction:column;
-  justify-self:end; align-self:start;
+  justify-self:stretch;      /* ← было end, из-за этого картинка «липла» вправо */
+  align-self:start;
   min-width:0;
 }
 
@@ -181,14 +182,15 @@ section{padding:64px 0}
   font-weight:700; font-size:14px; color:#0f172a;
 }
 #top .hero-tags li::before{ content:attr(data-emoji); line-height:1; }
+
 #top .cta{ display:flex; gap:12px; margin:16px 0 12px; flex-wrap:wrap; }
 #top .cta-quote{ font-weight:700; }
 
-/* === Фото: карточка строго по ширине колонки */
+/* === Фото: строго по ширине колонки, без absolute === */
 #top .hero-photo{
   display:block;
   width:100%;
-  max-width:100%;         /* КЛЮЧ: не шире правой колонки сетки */
+  max-width:100%;             /* ← важно: не шире своей колонки */
   aspect-ratio:4 / 3;
   border-radius:16px;
   overflow:hidden;
@@ -202,10 +204,10 @@ section{padding:64px 0}
   object-fit:cover;
 }
 
-/* === Рейтинг + цитата: стабильная строка */
+/* === Рейтинг + цитата: стабильная строка без рефлоу === */
 #top .hero-visual .hero-social{
   margin-top:14px;
-  min-height:28px;                 /* резерв чтобы не прыгало */
+  min-height:28px;
   display:flex; align-items:center; gap:10px;
   flex-wrap:nowrap; min-width:0;
 }
@@ -213,39 +215,43 @@ section{padding:64px 0}
 #top .rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
 #top .rating-score{ font-weight:700; color:#0b4870; }
 
-/* ссылка фиксированной ширины (не переносится) */
-#top .hero-visual .hero-social a{
-  white-space:nowrap;
-  flex:0 0 auto;
-}
-
 .link-dashed{ display:inline-flex; align-items:center; gap:6px; color:#6B7280; text-decoration:none; font-size:14px; }
 .link-dashed .txt{ border-bottom:1px dashed transparent; transition:color .15s, border-color .15s; }
 .link-dashed:hover .txt{ color:#15803D; border-bottom-color:#15803D; }
 .link-dashed--inverse .txt{ color:#15803D; border-bottom:1px dashed #15803D; }
 .link-dashed--inverse:hover .txt{ color:#6B7280; border-bottom-color:transparent; }
 
-/* цитата — одна нода, высота фиксируется обёрткой, текст уезжает вправо */
-#top .hero-social .quote-wrap{
+#top .hero-visual .hero-social a{ white-space:nowrap; flex:0 0 auto; }
+
+/* фиксируем геометрию цитаты с двухслойным кросс-фейдом */
+#top .hero-visual .hero-social .quote-wrap{
+  position:relative;
   margin-left:auto;
   flex:1 1 auto; min-width:0;
   height:1.35em; line-height:1.35em;
   text-align:right;
 }
-#top .hero-social .quote{
-  display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  color:#374151; font-style:italic; opacity:.9;
-  transition:opacity .25s ease;
+#top .hero-visual .hero-social .quote-wrap .quote{
+  position:absolute; inset:0;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  color:#374151; font-style:italic;
+  opacity:0; transition:opacity .25s ease;
 }
-#top .hero-social .quote.is-fade{ opacity:0; }
+#top .hero-visual .hero-social .quote-wrap .quote.is-active{ opacity:.9; }
 
 /* === Адаптив === */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns:1fr; }
   #top .hero-visual{ justify-self:stretch; }
   #top .hero-visual .hero-social{ margin-top:16px; flex-wrap:wrap; }
-  #top .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
+  #top .hero-visual .hero-social .quote-wrap{
+    text-align:left; margin-left:0; height:auto; line-height:inherit;
+  }
+  #top .hero-visual .hero-social .quote-wrap .quote{
+    position:static; opacity:.9;
+  }
 }
+
 
 
 
@@ -2052,6 +2058,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
