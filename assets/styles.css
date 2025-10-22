@@ -609,15 +609,6 @@ section{padding:64px 0}
   #experience .xp-card{ transition: none; }
 }
 
-
-/* Calculator layout */
-.calc-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.calc-grid{display:grid;gap:18px;grid-template-columns:repeat(3,1fr);align-items:start;margin-top:60px}
-.calc-grid>div{display:flex;flex-direction:column;gap:8px}
-.label-row{display:flex;align-items:center;gap:8px;font-weight:600;position:relative}
-.label-row svg{width:18px;height:18px;fill:var(--primary)}
-.input,select,input[type=number]{min-height:52px}
-
 /* Sub options */
 .subcheck{display:flex;align-items:center;gap:8px;font-size:14px;color:#444}
 .subnote{font-size:12px;color:#777}
@@ -645,7 +636,6 @@ section{padding:64px 0}
 /* Result card */
 .result-card{margin-top:20px;padding:18px 18px 28px;background:#fff;border-radius:12px;box-shadow:var(--shadow);position:relative;overflow:visible}
 .result-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--primary);border-top-left-radius:12px;border-bottom-left-radius:12px}
-.calc-summary{display:flex;flex-direction:column;gap:8px}
 .result-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .res-sep{height:1px;background:#EEE8E1;margin:12px 0}
 .badges{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
@@ -1179,60 +1169,6 @@ section[id], #services, #calc, #faq, #contact, #main {
   .site-header .tz-tip.info{ display:none; }
 }
 
-/* === Calc: ширина как у контента, без растяжек === */
-:root{
-  /* подставь те же значения, что и у общей .container страницы */
-  --container: 1200px;  /* общая «сетка» */
-  --gutter: 20px;       /* боковые поля контейнера */
-}
-
-/* сам контейнер секции калькулятора */
-#calc > .container{
-  max-width: var(--container);
-  width: 100%;
-  margin: 0 auto;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-  box-sizing: border-box;
-}
-
-/* белая карточка: центрируем и запрещаем «растяжки» */
-#calc > .container.card,
-#calc > .container.calc-elevate,
-#calc > .container.card.calc-elevate{
-  width: auto !important;                   /* вместо calc(100% + …) */
-  max-width: var(--container) !important;   /* как у остального контента */
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-inline: auto !important;           /* гасим возможные отрицательные margin */
-  padding: 24px var(--gutter);
-  box-sizing: border-box;
-
-  /* визуал карточки (если задаётся именно на этом элементе) */
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.06);
-}
-
-/* на всякий случай: если внутри есть ещё .card, убираем растяжки и там */
-#calc .card{
-  width: auto !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  box-sizing: border-box;
-}
-
-/* мобильные — всё резиновое, просто мягче паддинги/радиусы */
-@media (max-width: 1024px){
-  #calc > .container{ max-width: 100%; }
-  #calc > .container.card,
-  #calc > .container.calc-elevate,
-  #calc > .container.card.calc-elevate{
-    padding: 16px var(--gutter);
-    border-radius: 12px;
-  }
-}
-
 /* ===== Reviews: заголовок + чипы ======================================= */
 .rv-reviews{ margin: 48px 0; }
 .rv-reviews .container{ position: relative; }
@@ -1319,48 +1255,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   to  { transform: translateX(-50%); }
 }
 
-/* === Calc: фиксируем ширину карточки в границах контейнера страницы === */
 
-/* базовые отступы контейнера; если global .container уже задаёт ширину —
-   мы просто гарантируем одинаковые паддинги */
-#calc { --gutter: 24px; }
-
-#calc > .container{
-  /* берём ширину из глобального контейнера, но на всякий случай оставим дефолт */
-  max-width: var(--container, 1200px);
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-  box-sizing: border-box;
-}
-
-/* перебиваем любые глобальные хаки у .card (100vw / отрицательные margin и т.п.)
-   — только внутри #calc */
-#calc > .container.card,
-#calc > .container.calc-elevate,
-#calc > .container.card.calc-elevate{
-  width: auto !important;
-  max-width: var(--container, 1200px) !important;
-  margin-inline: auto !important;
-  padding-inline: var(--gutter);
-  box-sizing: border-box;
-}
-
-/* сама «белая» карточка не должна становиться шире своего контейнера */
-#calc .calc-elevate.card{
-  max-width: 100% !important;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.06);
-}
-
-/* на узких экранах просто резина по ширине окна */
-@media (max-width: 1024px){
-  #calc > .container,
-  #calc > .container.card.calc-elevate{
-    max-width: 100% !important;
-    padding-inline: var(--gutter);
-  }
-}
 
 /* ===== Contact ===== */
 
@@ -2112,49 +2007,155 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* общий контейнер «Ставка…» + бэйджи */
-#calc .calc-summary{
+
+
+
+/* ===================== CALCULATOR (final) ===================== */
+
+/* — Сетка и заголовок — */
+.calc-head{
   display:flex;
   align-items:center;
-  gap:12px 14px;         /* горизонталь/вертикаль */
-  flex-wrap:wrap;        /* если не влезло — переносим */
-  margin:8px 0 6px;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
 }
 
-/* сама строка «Ставка: … | доп. занятия: …» */
-#calc .calc-summary .calc-rate,
-#calc .calc-summary .rate-line,
-#calc .calc-summary .js-rate{
-  margin:0;              /* убираем лишние отступы абзаца */
+.calc-grid{
+  display:grid;
+  gap:18px;
+  grid-template-columns:repeat(3,1fr);
+  align-items:start;
+  margin-top:60px;
+}
+.calc-grid > .field{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-/* контейнер с чипами +25% … */
-#calc .calc-summary .calc-chips,
-#calc .calc-summary .mod-chips,
-#calc .calc-summary .js-modifiers{
+.label-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+  position:relative;
+}
+.label-row svg{ width:18px; height:18px; fill:var(--primary); }
+
+.input,
+select,
+input[type="number"]{
+  min-height:52px;
+}
+
+/* — Размер подписи у «доп. занятий» под полями — */
+#calc .field .subcheck{
+  font-size:14px;
+  line-height:1.3;
+  color:#333;
+}
+#calc .field .subcheck .subnote{
+  font-size:12px;
+  margin-left:6px;
+  color:#8a94a6;
+}
+
+/* — Контейнер калькулятора = как у общего .container — */
+:root{
+  /* подставь те же значения, что и для основного контейнера сайта */
+  --container: 1200px;
+  --gutter: 20px;
+}
+#calc > .container{
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  box-sizing: border-box;
+}
+
+/* Белая карточка без «растяжек» по краям */
+#calc > .container.card,
+#calc > .container.calc-elevate,
+#calc > .container.card.calc-elevate{
+  width: auto !important;
+  max-width: var(--container) !important;
+  margin-inline: auto !important;
+  padding: 24px var(--gutter);
+  box-sizing: border-box;
+
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.06);
+}
+
+/* На всякий случай, если внутри ещё .card */
+#calc .card{
+  width:auto !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  box-sizing:border-box;
+}
+
+/* — РЕЗУЛЬТАТ — */
+
+/* 1) Возвращаем нормальное блочное поведение всего summary */
+#calc .calc-summary{
+  display:block;            /* важно: НЕ flex */
+  text-align:left;
+}
+
+/* 2) «Итог…  Поделиться» — как было (через .result-row) */
+
+/* 3) Строка «Ставка…» + бэйджи — в одну линию, с переносом при нехватке места */
+#calc .calc-line{
+  display:flex;
+  align-items:baseline;
+  gap:12px 14px;
+  flex-wrap:wrap;
+  margin:8px 0 4px;
+}
+#calc .calc-rate{
+  margin:0;                 /* <small> без стандартных отступов */
+}
+
+/* Контейнер с бэйджами модификаторов */
+#calc .calc-chips,
+#calc #badges{               /* поддерживаем прежний id */
   display:flex;
   gap:8px;
-  flex-wrap:wrap;        /* на десктопе — в одну строку, но без переполнений */
+  flex-wrap:wrap;
 }
 
-/* чекбокс «в евро» сразу после блока выше */
+/* Чекбокс «показать в евро» — ближе к блоку выше */
 #calc .calc-eur{
-  margin-top:6px;
+  margin-top:4px;
 }
 
-/* Мобильная адаптация: ставим по вертикали */
+/* — АДАПТИВ — */
+@media (max-width: 1024px){
+  #calc > .container{ max-width:100%; }
+  #calc > .container.card,
+  #calc > .container.calc-elevate,
+  #calc > .container.card.calc-elevate{
+    padding:16px var(--gutter);
+    border-radius:12px;
+  }
+  .calc-grid{ grid-template-columns:1fr; }
+}
+
 @media (max-width: 640px){
-  #calc .calc-summary{
+  #calc .calc-line{
     flex-direction:column;
     align-items:flex-start;
     gap:8px;
   }
-  #calc .calc-eur{
-    margin-top:10px;
-  }
+  #calc .calc-eur{ margin-top:8px; }
 }
 
-
+/* =================== /CALCULATOR (final) ===================== */
 
 
 html, body {
@@ -2175,6 +2176,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
