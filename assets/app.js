@@ -99,62 +99,6 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 })();
 
-// ===== Hero: ротатор коротких цитат =====
-(function quoteRotator(){
-  const el = document.getElementById('quoteRotator');
-  if (!el) return;
-
-  // Гарантируем наличие .quote-wrap вокруг (фиксируем высоту строки)
-  if (!el.parentElement || !el.parentElement.classList.contains('quote-wrap')) {
-    const wrap = document.createElement('span');
-    wrap.className = 'quote-wrap';
-    el.replaceWith(wrap);
-    wrap.appendChild(el);
-  }
-
-  const quotes = [
-    '«всегда вовремя, ребёнок спокоен»',
-    '«без экранов, спокойная дисциплина»',
-    '«всегда на связи, фото после визита»',
-    '«мягко и бережно, но порядок есть»'
-  ];
-
-  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const HOLD   = 7000;   // пауза между цитатами
-  const FADE   = 250;    // длительность затухания
-
-  let i = 0, tid;
-
-  function tick(){
-    i = (i + 1) % quotes.length;
-
-    if (REDUCE) {
-      // Без анимаций — берём следующую цитату и планируем следующий шаг
-      el.textContent = quotes[i];
-      tid = setTimeout(tick, HOLD);
-      return;
-    }
-
-    // Лёгкий кросс-фейд одной ноды (без «двойных слоёв»)
-    el.classList.add('is-fade');
-    setTimeout(() => {
-      el.textContent = quotes[i];
-      el.classList.remove('is-fade');
-    }, FADE);
-
-    tid = setTimeout(tick, HOLD);
-  }
-
-  // Старт
-  tid = setTimeout(tick, HOLD);
-
-  // Аккуратно останавливаем, если узел удалили (страховка)
-  const obs = new MutationObserver(() => {
-    if (!document.body.contains(el)) { clearTimeout(tid); obs.disconnect(); }
-  });
-  obs.observe(document.body, { childList: true, subtree: true });
-})();
-
 // === SetBadge: меняем только текст и классы ===
 window.setBadge = function setBadge(text, classes = []) {
   const badge = document.querySelector('#headerFreeBadge');
@@ -1095,6 +1039,40 @@ if (badName || badCont) {
   }));
 })();
 
+
+// HERO: лёгкий ротатор цитат без рефлоу
+(function quoteRotator(){
+  const el = document.getElementById('quoteRotator');
+  if (!el) return;
+
+  const quotes = [
+    '«всегда вовремя, ребёнок спокоен»',
+    '«без экранов, спокойная дисциплина»',
+    '«всегда на связи, фото после визита»',
+    '«мягко и бережно, но порядок есть»'
+  ];
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const HOLD = 7000, FADE = 250;
+  let i = 0, tid;
+
+  function tick(){
+    i = (i + 1) % quotes.length;
+    if (REDUCE) {
+      el.textContent = quotes[i];
+      tid = setTimeout(tick, HOLD);
+      return;
+    }
+    el.classList.add('is-fade');
+    setTimeout(() => { el.textContent = quotes[i]; el.classList.remove('is-fade'); }, FADE);
+    tid = setTimeout(tick, HOLD);
+  }
+
+  tid = setTimeout(tick, HOLD);
+  const obs = new MutationObserver(() => {
+    if (!document.body.contains(el)) { clearTimeout(tid); obs.disconnect(); }
+  });
+  obs.observe(document.body, {childList:true, subtree:true});
+})();
 
 
 
