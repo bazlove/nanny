@@ -310,30 +310,42 @@ section{padding:64px 0}
 }
 
 /* ===== HERO: статичное фото ===== */
-#top .hero-visual { display:flex; flex-direction:column; min-width:0; } /* страховка */
 
 #top .hero-visual .hero-photo{
+  position: relative;
+  display: block;
   width: 100%;
-  max-width: 520px;                 /* как у слайдера, чтобы не «разъехался» макет */
+  max-width: 520px;                /* как у прежнего слайдера */
+  aspect-ratio: 4 / 3;             /* высоту резервирует контейнер */
   border-radius: 16px;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 12px 28px rgba(0,0,0,.10);
 }
 
-#top .hero-visual .hero-photo picture,
+/* картинка заполняет контейнер целиком */
 #top .hero-visual .hero-photo img{
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;                     /* если браузер понимает aspect-ratio у контейнера */
+  height: 100%;
   object-fit: cover;
-  aspect-ratio: 4 / 3;              /* форма карточки */
+  display: block;
 }
 
-/* Фоллбэк, если aspect-ratio не поддерживается */
+/* Фоллбэк для браузеров без aspect-ratio: "паддинг-хак" */
 @supports not (aspect-ratio: 4 / 3){
+  #top .hero-visual .hero-photo::before{
+    content: "";
+    display: block;
+    padding-top: 75%;              /* 4:3 */
+  }
   #top .hero-visual .hero-photo img{
-    height: clamp(280px, 33vw, 420px);
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
@@ -2142,6 +2154,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
