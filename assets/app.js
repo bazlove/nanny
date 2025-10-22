@@ -1040,7 +1040,8 @@ if (badName || badCont) {
 })();
 
 
-// ===== Hero: ротатор =====
+
+// ===== Hero: ротатор без рефлоу (двухслойный кросс-фейд) =====
 (function initQuoteRotator(){
   const el = document.getElementById('quoteRotator');
   if (!el) return;
@@ -1052,19 +1053,24 @@ if (badName || badCont) {
     '«мягко и бережно, но порядок есть»'
   ];
 
-  // Обёртка фиксирует высоту/ширину строки
-  const wrap = document.createElement('span');
-  wrap.className = 'quote-wrap';
-  el.parentNode.replaceChild(wrap, el);
+  // Гарантируем обёртку фиксированной высоты
+  let wrap = el.closest('.quote-wrap');
+  if (!wrap) {
+    wrap = document.createElement('span');
+    wrap.className = 'quote-wrap';
+    el.replaceWith(wrap);
+    wrap.appendChild(el);
+  }
 
-  // Два слоя
+  // Два слоя: видимый + скрытый
   const a = el;
-  a.classList.add('quote','is-active');
-  wrap.appendChild(a);
+  a.classList.add('quote', 'is-active');
+  a.textContent = quotes[0];
 
   const b = a.cloneNode(true);
   b.removeAttribute('id');
   b.classList.remove('is-active');
+  b.setAttribute('aria-hidden','true');
   wrap.appendChild(b);
 
   let i = 0, visible = a, hidden = b;
@@ -1076,6 +1082,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
