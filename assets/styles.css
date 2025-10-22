@@ -337,16 +337,6 @@ section{padding:64px 0}
   }
 }
 
-/* Отступ между фото и соц-строкой (рейтинг+цитата) */
-#top .hero-visual .hero-social{
-  margin-top: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-#top .hero-visual .hero-social a{ white-space: nowrap; }
-
 /* ===== HERO Адаптив ===== */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns: 1fr; }
@@ -2152,6 +2142,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
