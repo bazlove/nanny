@@ -522,8 +522,8 @@ window.updateBadge = function updateBadge(slots) {
 
 // Footer year
 
-const yEl = document.getElementById('y');
-if (yEl) yEl.textContent = new Date().getFullYear();
+(function(){var y=document.getElementById('yCopy'); if(y) y.textContent=new Date().getFullYear();})();
+
 
 /* ===== FAQ (финальная версия) ===== */
 (function () {
@@ -1075,6 +1075,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
