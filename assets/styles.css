@@ -252,11 +252,22 @@ section{padding:64px 0}
   }
 }
 
+/* === HERO: гибрид для отступа CTA === */
+/* База: прижимаем CTA книзу левой колонки (красиво, когда колонка высокая) */
+#top .hero-copy { display:flex; flex-direction:column; }
+#top .hero-copy .cta { margin-top:auto; }
 
-/* CTA: на мобильном обычный отступ, на десктопе — прижать к низу */
-#top .hero-copy .cta{ margin-top: 20px; }               /* базово — побольше зазор от бейджей */
-@media (min-width:1025px){
-  #top .hero-copy .cta{ margin-top: auto; }             /* на десктопе — вниз колонки */
+/* На «широких и высоких» экранах большой зазор от auto — ограничим его: */
+@media (min-width: 1280px) and (min-height: 820px){
+  #top .hero-copy .cta{
+    /* вместо auto используем вменяемый адаптивный промежуток */
+    margin-top: clamp(20px, 3vh, 40px);
+  }
+}
+
+/* На планшетах/узких — снова лёгкий фикс-отступ, чтобы не залипало вплотную */
+@media (max-width: 1024px){
+  #top .hero-copy .cta{ margin-top: 16px; }
 }
 
 
@@ -2099,6 +2110,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   #top .hero-visual .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
   #top .hero-visual .hero-social .quote-wrap .quote{ position:static; opacity:.9; }
 }
+
 
 
 
