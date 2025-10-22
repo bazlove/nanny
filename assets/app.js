@@ -28,6 +28,41 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 })();
 
+
+function isWhitelistTarget(target) {
+  return !!target.closest('input, textarea, [contenteditable="true"], .allow-select, .allow-copy');
+}
+
+document.addEventListener('contextmenu', function (e) {
+  if (!isWhitelistTarget(e.target)) e.preventDefault();
+}, { capture: true });
+
+document.addEventListener('selectstart', function (e) {
+  if (!isWhitelistTarget(e.target)) e.preventDefault();
+}, { capture: true });
+
+document.addEventListener('dragstart', function (e) {
+  if (!isWhitelistTarget(e.target)) e.preventDefault();
+}, { capture: true });
+
+document.addEventListener('keydown', function (e) {
+  const k = e.key.toLowerCase();
+  if ((e.ctrlKey || e.metaKey) && ['c','x','a','p','s'].includes(k) && !isWhitelistTarget(e.target)) {
+    e.preventDefault();
+  }
+}, { capture: true });
+
+document.addEventListener('copy', function (e) {
+  if (isWhitelistTarget(e.target)) return; // в полях ввода копирование работает как обычно
+  e.preventDefault();
+  const text = '© ' + location.hostname + ' — копирование запрещено.';
+  if (e.clipboardData) {
+    e.clipboardData.setData('text/plain', text);
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(()=>{});
+  }
+}, { capture: true });
+
 // Console banner
 (function(){try{console.log('%cLanding (split files)','background:#16324a;color:#fff;padding:2px 8px;border-radius:6px')}catch(e){}})();
 
@@ -1082,6 +1117,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
