@@ -118,6 +118,84 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('DOMContentLoaded', update);
 })();
 
+// === SetBadge: меняем только текст и классы ===
+window.setBadge = function setBadge(text, classes = []) {
+  const badge = document.querySelector('#headerFreeBadge');
+  const badgeText = badge ? badge.querySelector('.avail-text') : null;
+  if (!badge || !badgeText) return;
+
+  // сбрасываем только управляемые классы
+  ['is-today','is-tomorrow','is-next','is-none','is-live']
+    .forEach(c => badge.classList.remove(c));
+  classes.forEach(c => badge.classList.add(c));
+
+  badgeText.textContent = text;        // НЕ трогаем .dot → пульс сохраняется
+  badge.style.display = 'inline-flex';
+};
+
+// === Вспомогалки для форматов времени ===
+function safeStart(s) {
+  if (s.startLabel) return s.startLabel;
+  const d = s.startISO ? new Date(s.startISO) : new Date(s.startTs || 0);
+  return isFinite(d) ? d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}) : '';
+}
+function safeEnd(s) {
+  if (s.endLabel) return s.endLabel;
+  const d = s.endISO ? new Date(s.endISO) : new Date(s.endTs || 0);
+  return isFinite(d) ? d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}) : '';
+}
+function getStartTs(s) { return s.startTs ?? Date.parse(s.startISO || 0); }
+function timeLabel(s)  { return `${safeStart(s)}–${safeEnd(s)}`; }
+
+// === НОВАЯ ВЕРСИЯ updateBadge c сохранением .dot для пульса ===
+window.updateBadge = function updateBadge(slots) {
+  // 0) нормализуем вход
+  const list = Array.isArray(slots) ? slots : [];
+  if (!list.length) {
+    setBadge('Свободно: по запросу', ['is-none']); // пульс отключаем
+    return;
+  }
+
+  const now         = Date.now();
+  const todayYMD    = new Date().toISOString().slice(0,10);
+  const tomorrowYMD = new Date(now + 86400000).toISOString().slice(0,10);
+
+  // 1) Сегодня
+  const todaySlot = list
+    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === todayYMD)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (todaySlot){
+    setBadge(`Свободно сегодня ${timeLabel(todaySlot)}`, ['is-today','is-live']);
+    return;
+  }
+
+  // 2) Завтра
+  const tomorrowSlot = list
+    .filter(s => (s.date || (s.startISO||'').slice(0,10)) === tomorrowYMD)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (tomorrowSlot){
+    setBadge(`Свободно завтра ${timeLabel(tomorrowSlot)}`, ['is-tomorrow','is-live']);
+    return;
+  }
+
+  // 3) Ближайший далее
+  const next = list
+    .filter(s => getStartTs(s) > now)
+    .sort((a,b) => getStartTs(a) - getStartTs(b))[0];
+
+  if (next){
+    const d   = new Date(next.startISO || getStartTs(next));
+    const day = d.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
+    setBadge(`Ближайший слот: ${day} | ${timeLabel(next)}`, ['is-next','is-live']);
+    return;
+  }
+
+  // 4) Иначе — по запросу
+  setBadge('Свободно: по запросу', ['is-none']);
+};
+
 /* ===== Slots: fetch + render + header badge (final) ===== */
 (function initSlots(){
   const API_SLOTS_URL =
@@ -1107,6 +1185,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
