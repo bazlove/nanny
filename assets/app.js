@@ -1,3 +1,8 @@
+/* ===== Legacy stubs ===== */
+window.initSlots        = window.initSlots        || function(){ /* no-op: slots стартуют сами */ };
+window.initHeroSlider   = window.initHeroSlider   || function(){ /* no-op: слайдер убрали */ };
+window.initQuoteRotator = window.initQuoteRotator || function(){ /* no-op: ротатор работает IIFE */ };
+
 // helpers
 const $  = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
@@ -1089,6 +1094,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
