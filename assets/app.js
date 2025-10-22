@@ -65,6 +65,23 @@ window.addEventListener('DOMContentLoaded', () => {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
+/* --- Бейдж в шапке: защитный слой, чтобы не падать на null --- */
+(function hardenBadge(){
+  const badge = document.querySelector('#headerFreeBadge');
+  const badgeText = badge?.querySelector('.avail-text');
+  if (!badge || !badgeText) return;
+
+  // Унифицированный безопасный апдейтер (сохраняем .dot)
+  window.setBadge = function setBadge(text, classes = []) {
+    if (!badge || !badgeText) return;
+    ['is-today','is-tomorrow','is-next','is-none','is-live']
+      .forEach(c => badge.classList.remove(c));
+    classes.forEach(c => badge.classList.add(c));
+    badgeText.textContent = text;
+    badge.style.display = 'inline-flex';
+  };
+})();
+
 // ===== Hero: ротатор коротких цитат рядом с рейтингом =====
 (function initQuoteRotator(){
   const el = document.getElementById('quoteRotator');
@@ -1026,7 +1043,7 @@ if (badName || badCont) {
 })();
 
 /* === HERO slider ===================================================== */
-(function initHeroSlider(){
+(function(){
   function boot(){
     const root = document.querySelector('.hero-slider');
     if (!root) return;
@@ -1063,7 +1080,7 @@ if (badName || badCont) {
     root.addEventListener('pointermove',  e => { if(!startX) return; dx=e.clientX-startX; });
     root.addEventListener('pointerup',    () => { if(Math.abs(dx)>40) go(i + (dx<0?1:-1)); startX=0; dx=0; play(); });
 
-    root.tabIndex = 0; // фокусируемый регион карусели
+    root.tabIndex = 0;
     root.addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft')  { e.preventDefault(); go(i-1); play(); }
       if (e.key === 'ArrowRight') { e.preventDefault(); go(i+1); play(); }
@@ -1071,6 +1088,9 @@ if (badName || badCont) {
 
     go(0); play();
   }
+
+  // Экспортируем в глобальную область, чтобы внешний вызов не падал
+  window.initHeroSlider = window.initHeroSlider || boot;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -1100,6 +1120,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
