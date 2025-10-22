@@ -291,6 +291,44 @@ section{padding:64px 0}
   }
 }
 
+/* ===== HERO: статичное фото ===== */
+#top .hero-visual { display:flex; flex-direction:column; min-width:0; } /* страховка */
+
+#top .hero-visual .hero-photo{
+  width: 100%;
+  max-width: 520px;                 /* как у слайдера, чтобы не «разъехался» макет */
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(0,0,0,.10);
+}
+
+#top .hero-visual .hero-photo picture,
+#top .hero-visual .hero-photo img{
+  display: block;
+  width: 100%;
+  height: auto;                     /* если браузер понимает aspect-ratio у контейнера */
+  object-fit: cover;
+  aspect-ratio: 4 / 3;              /* форма карточки */
+}
+
+/* Фоллбэк, если aspect-ratio не поддерживается */
+@supports not (aspect-ratio: 4 / 3){
+  #top .hero-visual .hero-photo img{
+    height: clamp(280px, 33vw, 420px);
+  }
+}
+
+/* Отступ между фото и соц-строкой (рейтинг+цитата) */
+#top .hero-visual .hero-social{
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+#top .hero-visual .hero-social a{ white-space: nowrap; }
+
 /* ===== HERO Адаптив ===== */
 @media (max-width:1024px){
   #top .container.hero-grid{ grid-template-columns: 1fr; }
@@ -2096,6 +2134,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
