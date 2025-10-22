@@ -1179,7 +1179,6 @@ section[id], #services, #calc, #faq, #contact, #main {
   .site-header .tz-tip.info{ display:none; }
 }
 
-/* === Выровнять ширину калькулятора с общим контейнером === */
 /* === Calc: ширина как у контента, без растяжек === */
 :root{
   /* подставь те же значения, что и у общей .container страницы */
@@ -2113,6 +2112,51 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+/* общий контейнер «Ставка…» + бэйджи */
+#calc .calc-summary{
+  display:flex;
+  align-items:center;
+  gap:12px 14px;         /* горизонталь/вертикаль */
+  flex-wrap:wrap;        /* если не влезло — переносим */
+  margin:8px 0 6px;
+}
+
+/* сама строка «Ставка: … | доп. занятия: …» */
+#calc .calc-summary .calc-rate,
+#calc .calc-summary .rate-line,
+#calc .calc-summary .js-rate{
+  margin:0;              /* убираем лишние отступы абзаца */
+}
+
+/* контейнер с чипами +25% … */
+#calc .calc-summary .calc-chips,
+#calc .calc-summary .mod-chips,
+#calc .calc-summary .js-modifiers{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;        /* на десктопе — в одну строку, но без переполнений */
+}
+
+/* чекбокс «в евро» сразу после блока выше */
+#calc .calc-eur{
+  margin-top:6px;
+}
+
+/* Мобильная адаптация: ставим по вертикали */
+@media (max-width: 640px){
+  #calc .calc-summary{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  #calc .calc-eur{
+    margin-top:10px;
+  }
+}
+
+
+
+
 html, body {
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -2131,6 +2175,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
