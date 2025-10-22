@@ -1040,8 +1040,8 @@ if (badName || badCont) {
 })();
 
 
-// HERO: лёгкий ротатор цитат без рефлоу
-(function quoteRotator(){
+// ===== Hero: ротатор =====
+(function initQuoteRotator(){
   const el = document.getElementById('quoteRotator');
   if (!el) return;
 
@@ -1051,28 +1051,33 @@ if (badName || badCont) {
     '«всегда на связи, фото после визита»',
     '«мягко и бережно, но порядок есть»'
   ];
-  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const HOLD = 7000, FADE = 250;
-  let i = 0, tid;
 
-  function tick(){
+  // Обёртка фиксирует высоту/ширину строки
+  const wrap = document.createElement('span');
+  wrap.className = 'quote-wrap';
+  el.parentNode.replaceChild(wrap, el);
+
+  // Два слоя
+  const a = el;
+  a.classList.add('quote','is-active');
+  wrap.appendChild(a);
+
+  const b = a.cloneNode(true);
+  b.removeAttribute('id');
+  b.classList.remove('is-active');
+  wrap.appendChild(b);
+
+  let i = 0, visible = a, hidden = b;
+  setInterval(() => {
     i = (i + 1) % quotes.length;
-    if (REDUCE) {
-      el.textContent = quotes[i];
-      tid = setTimeout(tick, HOLD);
-      return;
-    }
-    el.classList.add('is-fade');
-    setTimeout(() => { el.textContent = quotes[i]; el.classList.remove('is-fade'); }, FADE);
-    tid = setTimeout(tick, HOLD);
-  }
-
-  tid = setTimeout(tick, HOLD);
-  const obs = new MutationObserver(() => {
-    if (!document.body.contains(el)) { clearTimeout(tid); obs.disconnect(); }
-  });
-  obs.observe(document.body, {childList:true, subtree:true});
+    hidden.textContent = quotes[i];
+    visible.classList.remove('is-active');
+    hidden.classList.add('is-active');
+    [visible, hidden] = [hidden, visible];
+  }, 7000);
 })();
+
+
 
 
 
