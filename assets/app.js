@@ -107,41 +107,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 7000);
 })();
 
-// Availability badge + mock slot
-(function(){
-  // если новый модуль уже взял бейдж под управление — выходим
-  if (window.__SLOTS_BADGE__) return;
-
-  // если внутри есть .txt — пишем туда, иначе в сам элемент
-  const target = badge.querySelector?.('.txt') || badge;
-  target.textContent = 'Календарь недоступен';   // или актуальный текст
-  const CAL_SELECTOR='#slots-calendar'; const SLOT_SELECTOR='.slot--free';
-  const pad=n=> (n<10?'0':'')+n;
-  const fmt=(h,m)=> pad(h)+':'+pad(m);
-  const todayISO=(d)=>{d=d||new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
-  const addDaysISO=(iso,add)=>{const p=iso.split('-'); const dt=new Date(+p[0],+p[1]-1,+p[2]); dt.setDate(dt.getDate()+add); return todayISO(dt)};
-  const toMin=hhmm=>{const a=String(hhmm).split(':'); return (+a[0])*60+(+a[1]||0)};
-  function collectDaySlots(root, iso){
-    const nodes=[...root.querySelectorAll(`${SLOT_SELECTOR}[data-date="${iso}"]`)];
-    const out=[]; nodes.forEach(el=>{ const f=el.getAttribute('data-from'); const t=el.getAttribute('data-to'); if(!f||!t) return; out.push({fromMin:toMin(f), toMin:toMin(t)}); });
-    return out;
-  }
-  function best(root){
-    const now=new Date(), iso=todayISO(now), nowMin=now.getHours()*60+now.getMinutes();
-    const today=collectDaySlots(root,iso).filter(s=>s.toMin>nowMin).sort((a,b)=>a.fromMin-b.fromMin);
-    if(today.length){ const c=today.filter(s=>s.fromMin>=nowMin)[0]; return {type:'today', slot:c||today[0]}; }
-    for(let d=1; d<=6; d++){ const isoN=addDaysISO(iso,d); const arr=collectDaySlots(root,isoN).sort((a,b)=>a.fromMin-b.fromMin); if(arr.length) return {type:(d===1?'tomorrow':'future'), days:d, slot:arr[0], iso:isoN}; }
-    return {type:'none'};
-  }
-  const human=(type,days)=>{ if(type==='today') return 'сегодня'; if(type==='tomorrow') return 'завтра'; const dt=new Date(); dt.setDate(dt.getDate()+days); return dt.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'}).replace('.',''); };
-  function update(){
-    const root=document.querySelector(CAL_SELECTOR); const dot='<span class="dot" aria-hidden="true"></span>';
-    if(!root){ badge.className='avail-badge none'; badge.innerHTML=dot+' Календарь недоступен'; return; }
-    const b=best(root);
-    if(b.type==='today'){ const f=b.slot.fromMin, t=b.slot.toMin; badge.className='avail-badge ok'; badge.innerHTML=dot+' Свободно сегодня '+fmt(Math.floor(f/60),f%60)+'–'+fmt(Math.floor(t/60),t%60); return; }
-    if(b.type==='tomorrow'||b.type==='future'){ const f2=b.slot.fromMin, t2=b.slot.toMin; badge.className='avail-badge next'; badge.innerHTML=dot+' Ближайшее: '+human(b.type,b.days)+' '+fmt(Math.floor(f2/60),f2%60)+'–'+fmt(Math.floor(t2/60),t2%60); return; }
-    badge.className='avail-badge none'; badge.innerHTML=dot+' Нет свободных слотов на этой неделе';
-  }
   // Mock one slot today (remove if not needed)
   (function mock(){
     const cal=document.getElementById('slots-calendar'); if(!cal) return;
@@ -152,8 +117,6 @@ window.addEventListener('DOMContentLoaded', () => {
   })();
   window.addEventListener('DOMContentLoaded', update);
 })();
-
-// Calculator
 
 // Calculator
 
@@ -1100,6 +1063,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
