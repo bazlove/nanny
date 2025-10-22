@@ -2059,6 +2059,57 @@ section[id], #services, #calc, #faq, #contact, #main {
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
 
+/* Колонки */
+#top .hero-copy{
+  grid-column:1; grid-row:1;
+  display:flex; flex-direction:column; min-width:0;
+}
+#top .hero-visual{
+  grid-column:2; grid-row:1;
+  display:flex; flex-direction:column;
+  justify-self: start;     /* было end/stretch → начинаем строго от левого края колонки */
+  align-self: start;
+  min-width:0;
+}
+
+/* Карточка фото — растягиваем по колонке, без авто-отступов */
+#top .hero-photo{
+  box-sizing:border-box;
+  align-self: stretch !important;
+  margin: 0 !important;
+  width: 100%;
+  max-width: none;         /* не ограничиваем — шириной рулит колонка */
+  aspect-ratio: 4 / 3;
+  border-radius:16px; overflow:hidden; background:#fff;
+  box-shadow:0 12px 28px rgba(0,0,0,.10);
+}
+#top .hero-photo img{
+  display:block; width:100%; height:100%; object-fit:cover;
+}
+
+
+
+#top .hero-visual .hero-social{ margin-top:14px; min-height:28px; display:flex; align-items:center; gap:10px; min-width:0; }
+#top .hero-visual .hero-social a{ white-space:nowrap; }
+
+#top .hero-visual .hero-social .quote-wrap{
+  position:relative; margin-left:auto; flex:1 1 auto; min-width:0;
+  height:1.35em; line-height:1.35em; text-align:right;
+}
+#top .hero-visual .hero-social .quote-wrap .quote{
+  position:absolute; inset:0;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  color:#374151; font-style:italic;
+  opacity:0; transition:opacity .25s ease;
+}
+#top .hero-visual .hero-social .quote-wrap .quote.is-active{ opacity:.9; }
+
+@media (max-width:1024px){
+  #top .hero-visual .hero-social{ flex-wrap:wrap; }
+  #top .hero-visual .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
+  #top .hero-visual .hero-social .quote-wrap .quote{ position:static; opacity:.9; }
+}
+
 
 
 
