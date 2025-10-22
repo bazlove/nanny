@@ -435,22 +435,35 @@
     <div id="calcNotice" class="note notice">Минимальный расчёт ведётся от 2 часов.</div>
 
     <div class="result-card">
-      <div class="calc-summary">
-        <div class="result-row">
-          <div id="result" style="font-weight:700" aria-live="polite">Итог: — дин</div>
-          <a href="#" id="shareLink" class="share-link">
-  			<span class="icon">🔗</span>
-  			<span class="txt">Поделиться</span>
-		  </a>
-        </div>
-        <div class="res-sep"></div>
-        <small id="breakdown" style="color:#555"></small>
-        <div class="badges" id="badges"></div>
-        <label id="eurWrap"><input id="eurToggle" type="checkbox"><span>Показать результат в евро (курс <span id="eurRateLabel">117</span> дин/€)</span></label>
-        <div class="cta-bottom-wrap"><a id="ctaForm" class="btn btn-primary" href="#contact">Уточнить стоимость</a></div>
-      </div>
+  <div class="calc-summary">
+    <div class="result-row">
+      <div id="result" style="font-weight:700" aria-live="polite">Итог: — дин</div>
+      <a href="#" id="shareLink" class="share-link">
+        <span class="icon">🔗</span>
+        <span class="txt">Поделиться</span>
+      </a>
+    </div>
+
+    <div class="res-sep"></div>
+
+    <div class="calc-line">
+      <small id="breakdown" class="calc-rate" style="color:#555"></small>
+      <div class="calc-chips" id="badges"></div>
+    </div>
+
+    <label id="eurWrap" class="calc-eur">
+      <input id="eurToggle" type="checkbox">
+      <span>Показать результат в евро (курс <span id="eurRateLabel">117</span> дин/€)</span>
+    </label>
+
+    <div class="cta-bottom-wrap">
+      <a id="ctaForm" class="btn btn-primary" href="#contact">Уточнить стоимость</a>
     </div>
   </div>
+</div>
+  
+  </div>
+
 </section>
 
 <!-- FAQ -->
@@ -760,6 +773,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
