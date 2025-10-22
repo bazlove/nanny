@@ -1042,63 +1042,6 @@ if (badName || badCont) {
   });
 })();
 
-/* === HERO slider ===================================================== */
-(function(){
-  function boot(){
-    const root = document.querySelector('.hero-slider');
-    if (!root) return;
-
-    const track  = root.querySelector('.hs-track');
-    const slides = [...root.querySelectorAll('.hs-slide')];
-    const prev   = root.querySelector('.hs-nav.prev');
-    const next   = root.querySelector('.hs-nav.next');
-    const dots   = [...root.querySelectorAll('.hs-dot')];
-    const mrm    = matchMedia('(prefers-reduced-motion: reduce)');
-
-    let i = 0, timer = null, startX = 0, dx = 0;
-
-    function go(n){
-      i = (n + slides.length) % slides.length;
-      track.style.transform = `translate3d(${-i*100}%,0,0)`;
-      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
-      dots.forEach((d,idx)=>{
-        d.classList.toggle('is-active', idx===i);
-        d.setAttribute('aria-selected', idx===i ? 'true' : 'false');
-      });
-    }
-    function play(){ if(!mrm.matches){ stop(); timer=setInterval(()=>go(i+1),5000);} }
-    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-
-    prev?.addEventListener('click', ()=>{ go(i-1); play(); });
-    next?.addEventListener('click', ()=>{ go(i+1); play(); });
-    dots.forEach((d,idx)=> d.addEventListener('click', ()=>{ go(idx); play(); }));
-
-    ['mouseenter','focusin'].forEach(ev => root.addEventListener(ev, stop));
-    ['mouseleave','focusout'].forEach(ev => root.addEventListener(ev, play));
-
-    root.addEventListener('pointerdown', e => { startX=e.clientX; dx=0; root.setPointerCapture(e.pointerId); stop(); });
-    root.addEventListener('pointermove',  e => { if(!startX) return; dx=e.clientX-startX; });
-    root.addEventListener('pointerup',    () => { if(Math.abs(dx)>40) go(i + (dx<0?1:-1)); startX=0; dx=0; play(); });
-
-    root.tabIndex = 0;
-    root.addEventListener('keydown', e => {
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); go(i-1); play(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); go(i+1); play(); }
-    });
-
-    go(0); play();
-  }
-
-  // Экспортируем в глобальную область, чтобы внешний вызов не падал
-  window.initHeroSlider = window.initHeroSlider || boot;
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-})();
-
 // Фильтр "Все / Базовые / Дополнительные"
 (() => {
   const root = document.querySelector('#services');
@@ -1120,6 +1063,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
