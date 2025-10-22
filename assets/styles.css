@@ -717,9 +717,6 @@ section{padding:64px 0}
   #experience .xp-card{ transition: none; }
 }
 
-/* Slots */
-.slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
-.slot--free{padding:12px;border:1px solid #dbe1ea;border-radius:12px;background:#fff}
 
 /* Calculator layout */
 .calc-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -1127,7 +1124,7 @@ select:focus{
   .avail-badge.is-live .dot::after{ content:none !important; animation:none !important; }
 }
 
-/* === Cards «Свободные слоты» (оставлены как у вас) ======================= */
+/* === Slots Cards Свободные слоты ======================= */
 .slots{ margin:40px 0 24px; }
 .slots-grid{
   display:grid;
@@ -2184,6 +2181,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-radius:4px;
   accent-color:#EF4444; /* если вдруг отмечен — галочка красная */
 }
+
 
 
 
