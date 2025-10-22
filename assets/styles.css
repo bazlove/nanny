@@ -1490,20 +1490,6 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* ===== Ховер как у «Поделиться»: серый → зелёный + пунктир ===== */
-/* Базовый класс для ссылок футера (и карты) */
-.link-dashed{
-  display:inline-flex; align-items:center; gap:6px;
-  color:#6B7280; text-decoration:none;               /* без стандартного underline */
-  font-size:14px;
-}
-.link-dashed .txt{
-  border-bottom:1px dashed transparent;
-  transition:color .15s, border-color .15s;
-}
-.link-dashed:hover .txt{
-  color:#15803D;
-  border-bottom-color:#15803D;                       /* пунктир у текста */
-}
 
 /* подгонка эмодзи, чтобы не подчеркивалась */
 .foot-left .emoji{ line-height:1; }
@@ -2113,6 +2099,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   #top .hero-visual .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
   #top .hero-visual .hero-social .quote-wrap .quote{ position:static; opacity:.9; }
 }
+
 
 
 
