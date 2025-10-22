@@ -9,6 +9,20 @@ window.addEventListener('DOMContentLoaded', () => {
   safe(initAvailabilityBadge); // если есть отдельная функция для бейджа
 });
 
+// Бейдж: жёсткая защита, чтобы никто не уронил страницу
+(function hardenBadge(){
+  const badge = document.querySelector('#headerFreeBadge');
+  const badgeText = badge?.querySelector('.avail-text');
+  if (!badge || !badgeText) return;
+  window.setBadge = function setBadge(text, classes = []) {
+    ['is-today','is-tomorrow','is-next','is-none','is-live']
+      .forEach(c => badge.classList.remove(c));
+    classes.forEach(c => badge.classList.add(c));
+    badgeText.textContent = text;          // .dot не трогаем — пульс живёт
+    badge.style.display = 'inline-flex';
+  };
+})();
+
 // Console banner
 (function(){try{console.log('%cLanding (split files)','background:#16324a;color:#fff;padding:2px 8px;border-radius:6px')}catch(e){}})();
 
@@ -1061,6 +1075,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
