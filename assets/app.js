@@ -109,9 +109,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Availability badge + mock slot
 (function(){
-  const badge = document.getElementById('availability-badge')
-             || document.getElementById('headerFreeBadge');
-  if (!badge) return;                   // <-- ключевое: не падаем, если элемента нет
+  // если новый модуль уже взял бейдж под управление — выходим
+  if (window.__SLOTS_BADGE__) return;
 
   // если внутри есть .txt — пишем туда, иначе в сам элемент
   const target = badge.querySelector?.('.txt') || badge;
@@ -1101,6 +1100,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
