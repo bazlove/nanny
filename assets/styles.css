@@ -2100,7 +2100,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 #top .hero-visual .hero-social .quote-wrap .quote{
   position:absolute; inset:0;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  color:#374151; font-style:italic;
+  color:#374151; font-style:italic; font-size:14px;
   opacity:0; transition:opacity .25s ease;
 }
 #top .hero-visual .hero-social .quote-wrap .quote.is-active{ opacity:.9; }
@@ -2110,6 +2110,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   #top .hero-visual .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
   #top .hero-visual .hero-social .quote-wrap .quote{ position:static; opacity:.9; }
 }
+
 
 
 
