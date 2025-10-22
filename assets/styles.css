@@ -148,7 +148,7 @@ section{padding:64px 0}
   display:grid;
   grid-template-columns: minmax(420px,1fr) clamp(420px,36vw,560px);
   gap: clamp(24px,4vw,56px);
-  align-items:start;
+  align-items: stretch;
 }
 
 /* колонки */
@@ -253,7 +253,11 @@ section{padding:64px 0}
 }
 
 
-
+/* CTA: на мобильном обычный отступ, на десктопе — прижать к низу */
+#top .hero-copy .cta{ margin-top: 20px; }               /* базово — побольше зазор от бейджей */
+@media (min-width:1025px){
+  #top .hero-copy .cta{ margin-top: auto; }             /* на десктопе — вниз колонки */
+}
 
 
 /* Lang switch
@@ -2109,6 +2113,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   #top .hero-visual .hero-social .quote-wrap{ text-align:left; margin-left:0; height:auto; line-height:inherit; }
   #top .hero-visual .hero-social .quote-wrap .quote{ position:static; opacity:.9; }
 }
+
 
 
 
