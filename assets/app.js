@@ -588,14 +588,12 @@ function updateBadge(slots) {
 
       wrap.innerHTML = topDays.map(d => cardHTML(d.date, d.items)).join('');
     })
-    .catch(err => {
-      console.warn('Slots API error:', err);
-      wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
-      if (badge) {
-        badge.textContent = 'Свободно: по запросу';
-        badge.style.display = 'inline-flex';
-      }
-    });
+    catch(err){
+  console.warn('Slots API error:', err);
+  wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
+  setBadge('Свободно: по запросу', ['is-none']);
+    }
+  );
 })();
 
 // Active menu on scroll
@@ -1103,6 +1101,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
