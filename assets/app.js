@@ -94,10 +94,18 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 })();
 
-// ===== Hero: ротатор коротких цитат рядом с рейтингом =====
-(function initQuoteRotator(){
+// ===== Hero: ротатор коротких цитат =====
+(function quoteRotator(){
   const el = document.getElementById('quoteRotator');
   if (!el) return;
+
+  // Гарантируем наличие .quote-wrap вокруг (фиксируем высоту строки)
+  if (!el.parentElement || !el.parentElement.classList.contains('quote-wrap')) {
+    const wrap = document.createElement('span');
+    wrap.className = 'quote-wrap';
+    el.replaceWith(wrap);
+    wrap.appendChild(el);
+  }
 
   const quotes = [
     '«всегда вовремя, ребёнок спокоен»',
@@ -106,34 +114,40 @@ window.addEventListener('DOMContentLoaded', () => {
     '«мягко и бережно, но порядок есть»'
   ];
 
-  // 1) Оборачиваем в контейнер фиксированной высоты и создаём второй слой
-  const wrap = document.createElement('span');
-  wrap.className = 'quote-wrap';
-  el.parentNode.replaceChild(wrap, el);
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const HOLD   = 7000;   // пауза между цитатами
+  const FADE   = 250;    // длительность затухания
 
-  const a = el;                             // первый слой
-  a.classList.add('quote','is-active');     // сразу активный
-  wrap.appendChild(a);
+  let i = 0, tid;
 
-  const b = a.cloneNode(true);              // второй слой
-  b.removeAttribute('id');
-  b.setAttribute('aria-hidden','true');
-  b.classList.remove('is-active');
-  wrap.appendChild(b);
-
-  // 2) Кросс-фейд без изменения геометрии
-  let i = 0, visible = a, hidden = b;
-  setInterval(() => {
+  function tick(){
     i = (i + 1) % quotes.length;
-    hidden.textContent = quotes[i];
 
-    // плавная смена слоёв
-    visible.classList.remove('is-active');
-    hidden.classList.add('is-active');
+    if (REDUCE) {
+      // Без анимаций — берём следующую цитату и планируем следующий шаг
+      el.textContent = quotes[i];
+      tid = setTimeout(tick, HOLD);
+      return;
+    }
 
-    // меняем роли
-    const tmp = visible; visible = hidden; hidden = tmp;
-  }, 7000);
+    // Лёгкий кросс-фейд одной ноды (без «двойных слоёв»)
+    el.classList.add('is-fade');
+    setTimeout(() => {
+      el.textContent = quotes[i];
+      el.classList.remove('is-fade');
+    }, FADE);
+
+    tid = setTimeout(tick, HOLD);
+  }
+
+  // Старт
+  tid = setTimeout(tick, HOLD);
+
+  // Аккуратно останавливаем, если узел удалили (страховка)
+  const obs = new MutationObserver(() => {
+    if (!document.body.contains(el)) { clearTimeout(tid); obs.disconnect(); }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
 })();
 
 // === SetBadge: меняем только текст и классы ===
@@ -1075,6 +1089,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
