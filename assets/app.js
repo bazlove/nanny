@@ -967,7 +967,7 @@ if (badName || badCont) {
 
   // какие поля валидируем таким способом
   const fields = [
-    { sel: '#cname',    err: '#err-name',    msg: 'Укажите имя: минимум 3 символа', minLen: 3 },
+    { sel: '#cname',    err: '#err-name',    msg: 'Укажите ваше имя', minLen: 3 },
     { sel: '#ccontact', err: '#err-contact', msg: 'Укажите ваш телефон или @username' }
   ];
 
@@ -1107,6 +1107,7 @@ if (badName || badCont) {
     });
   }));
 })();
+
 
 
 
