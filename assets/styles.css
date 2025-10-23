@@ -2102,6 +2102,40 @@ section[id], #services, #calc, #faq, #contact, #main {
   border-color:#34d399; box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
 }
 
+/* === Calc: фикс мелких иконок и стрелок в селектах ================== */
+
+/* 1) Иконки в заголовках полей: размер 18×18 и цвет */
+#calc .label-row > svg{
+  width:18px !important;
+  height:18px !important;
+  flex:0 0 18px;
+  display:inline-block;
+  vertical-align:middle;
+  fill:var(--primary);
+}
+
+/* 2) Вернуть нативные стрелки в селектах "Дети" и "День недели" */
+#kids, #dayType{
+  appearance:auto !important;
+  -webkit-appearance:auto !important;
+  -moz-appearance:auto !important;
+  background-image:none !important;  /* на случай кастомных фонов */
+  padding-right:14px;                /* запас справа под стрелку */
+}
+
+/* 3) Спиннер у поля "Часы" — оставить включённым */
+#hours{
+  appearance:auto !important;
+  -webkit-appearance:auto !important;
+  -moz-appearance:auto !important;
+}
+#hours::-webkit-outer-spin-button,
+#hours::-webkit-inner-spin-button{
+  -webkit-appearance:auto !important;
+  margin:0;
+}
+
+
 
 
 
@@ -2126,6 +2160,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
