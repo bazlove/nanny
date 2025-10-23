@@ -2162,15 +2162,52 @@ input[type="number"]{
   margin-top: 6px;           /* можно увеличить до 10–12px по вкусу */
 }
 
-/* мобильный тюнинг: каплю больше воздуха */
-@media (max-width: 640px){
-  #calc .calc-line{ margin-top: 8px; }
-  #calc .calc-eur{
-    margin-top: 10px;
-    margin-bottom: 14px;
-  }
-  #calc .cta-bottom-wrap{ margin-top: 12px; }
+/* === Calc: чекбоксы как зелёные чипы === */
+/* Базовый вид для чекбоксов под полями и для "в евро" */
+#calc .subcheck,
+#calc #eurWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #e6ebf3;
+  border-radius: 10px;
+  background: #fafcff;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
+
+/* сам чекбокс: зелёная галочка */
+#calc .subcheck input[type="checkbox"],
+#calc #eurWrap input[type="checkbox"]{
+  accent-color: #10b981;               /* зелёная галочка (совр. браузеры) */
+}
+
+/* Активное состояние — когда чекбокс включён */
+#calc .subcheck:has(input:checked),
+#calc #eurWrap:has(input:checked){
+  background: #ecfdf5;                 /* мягкий мятный фон */
+  border-color: #34d399;               /* зелёная кайма */
+  box-shadow: 0 0 0 2px rgba(16,185,129,.12) inset;
+  color: #065f46;                      /* чуть темнее текст для контраста */
+}
+
+/* Ховер/фокус: лёгкий намёк на интерактив */
+#calc .subcheck:hover,
+#calc #eurWrap:hover,
+#calc .subcheck:has(input:focus-visible),
+#calc #eurWrap:has(input:focus-visible){
+  border-color: #cdd7e6;
+  box-shadow: 0 0 0 2px rgba(203,213,225,.25) inset;
+}
+
+/* мелкая приправка к подписи «+300 дин»/«+500 дин» */
+#calc .subcheck .subnote{ color:#5f6b7c; }
+
+/* Если чипы должны выглядеть компактнее — можно чуть уменьшить паддинги:
+#calc .subcheck, #calc #eurWrap { padding: 6px 10px; }
+*/
+
+
 
 /* — АДАПТИВ — */
 @media (max-width: 1024px){
@@ -2189,8 +2226,13 @@ input[type="number"]{
     flex-direction:column;
     align-items:flex-start;
     gap:8px;
+    margin-top: 8px;
   }
-  #calc .calc-eur{ margin-top:8px; }
+  #calc .calc-eur{
+    margin-top: 10px;
+    margin-bottom: 14px;
+  }
+#calc .cta-bottom-wrap{ margin-top: 12px; }
 }
 
 /* =================== /CALCULATOR (final) ===================== */
@@ -2214,6 +2256,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
