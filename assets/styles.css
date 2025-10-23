@@ -2010,23 +2010,14 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* ===================== CALCULATOR ===================== */
+/* ===================== CALCULATOR (final clean) ===================== */
 
-/* Calc: используем системный контейнер, не переопределяем :root */
+/* Карточка секции — только визуал, ширину не трогаем */
 #calc > .container.card,
-#calc > .container.calc-elevate {
-  box-shadow:0 20px 60px rgba(0,0,0,.06);
+#calc > .container.calc-elevate{
   border-radius:16px;
-  padding:24px 16px; /* равняется общему .container padding-inline */
-}
-
-/* Карточка секции *
-#calc>.container.card,
-#calc>.container.calc-elevate,
-#calc>.container.card.calc-elevate{
-  width:auto; max-width:1200px; margin-inline:auto;
-  padding:24px 20px; box-sizing:border-box;
-  background:#fff; border-radius:16px;
+  padding:24px 16px;
+  background:#fff;
   box-shadow:0 20px 60px rgba(0,0,0,.06);
 }
 
@@ -2036,13 +2027,17 @@ section[id], #services, #calc, #faq, #contact, #main {
   display:grid; gap:18px; grid-template-columns:repeat(3,1fr);
   align-items:start; margin-top:32px;
 }
-.calc-grid>.field{ display:flex; flex-direction:column; gap:8px; }
-
+.calc-grid > .field{ display:flex; flex-direction:column; gap:8px; }
 @media (max-width:1024px){ .calc-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:640px){ .calc-grid{ grid-template-columns:1fr; gap:14px; } }
 
 /* Лейблы и иконки */
 #calc .label-row{ display:flex; align-items:center; gap:8px; font-weight:600; }
+#calc .label-row > svg{
+  width:20px; height:20px; flex:0 0 20px;
+  color:#6B7280;           /* серый системный */
+  fill:currentColor;       /* путь берёт цвет текста */
+}
 #calc .label-row .hint{ display:inline-flex; align-items:center; }
 #calc .label-row .hint .i{
   width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
@@ -2050,31 +2045,53 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 #calc .label-row .hint .tip{ white-space:nowrap; }
 
-/* Поля ввода (единый вид) */
-#calc .input, #calc select {
-  w width:100%;
+/* Поля формы: единый вид */
+#calc .input,
+#calc select,
+#calc input[type="number"]{
+  width:100%;
   min-height:52px;
   padding:12px 14px;
-  border:1px solid #E1E8E1;
+  border:1px solid #E5E7EB;
   border-radius:12px;
   background:#fff;
-  font-size:14.5px;
-  color:#222;
+  line-height:1.35;
   transition:border-color .15s, box-shadow .15s;
 }
-
-#calc .input:focus, #calc select:focus, #calc input[type="number"]:focus{
-  outline:none; border-color:#A7DCC2; box-shadow:0 0 0 4px rgba(34,197,94,.12);
+#calc .input:focus,
+#calc select:focus,
+#calc input[type="number"]:focus{
+  outline:none;
+  border-color:#A7DCC2;
+  box-shadow:0 0 0 4px rgba(34,197,94,.12);
 }
 
-/* ВЕРНУТЬ спиннеры только в #hours (глобальное appearance:none выше не мешает) */
+/* Number: всегда нативные спиннеры у часов */
 #hours{
-  appearance:auto !important; -webkit-appearance:auto !important; -moz-appearance:auto !important;
+  appearance:auto !important;
+  -webkit-appearance:auto !important;
+  -moz-appearance:auto !important;
+  padding-right:40px; /* запас справа под спиннеры */
 }
-#hours::-webkit-outer-spin-button,
-#hours::-webkit-inner-spin-button{ -webkit-appearance:auto !important; margin:0; }
+#hours::-webkit-inner-spin-button,
+#hours::-webkit-outer-spin-button{
+  -webkit-appearance:auto !important;
+  opacity:1; /* не прятать до hover */
+  margin:0;
+}
 
-/* Пресеты (быстрые чипы) */
+/* Select: нативная стрелка + отступ справа (чтобы текст не лип) */
+#kids,
+#dayType{
+  appearance:auto !important;
+  -webkit-appearance:auto !important;
+  -moz-appearance:auto !important;
+  background-image:none !important;
+  padding-right:42px;
+  cursor:pointer;
+}
+
+/* Быстрые пресеты (чипы) */
 #calc .presets{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
 #calc .presets .tag{
   padding:6px 12px; border:1px solid #E5E7EB; border-radius:999px;
@@ -2083,9 +2100,10 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 #calc .presets .tag:hover{ transform:translateY(-1px); border-color:#B9E0D1; background:#F2FAF6; color:#146C43; }
 
-/* Карточка результата */
+/* Результат */
 #calc .result-card{
-  margin-top:18px; padding:14px; border:1px solid #E5E7EB; border-radius:14px; background:#fff;
+  margin-top:18px; padding:14px;
+  border:1px solid #E5E7EB; border-radius:14px; background:#fff;
   box-shadow:0 8px 24px rgba(0,0,0,.04);
 }
 #calc .result-card .result-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -2093,9 +2111,12 @@ section[id], #services, #calc, #faq, #contact, #main {
 #calc .calc-chips, #calc #badges{ display:flex; gap:8px; flex-wrap:wrap; }
 #calc .badge{ display:inline-block; padding:4px 8px; border-radius:999px; background:#F2FAF6; border:1px solid #B9E0D1; color:#146C43; font-size:12px; }
 #calc .calc-eur{ display:inline-flex; align-items:center; gap:8px; margin:12px 0; }
-@media (max-width:640px){ #calc .calc-line{ flex-direction:column; align-items:flex-start; gap:8px; } #calc .calc-eur{ margin-top:8px; } }
+@media (max-width:640px){
+  #calc .calc-line{ flex-direction:column; align-items:flex-start; gap:8px; }
+  #calc .calc-eur{ margin-top:8px; }
+}
 
-/* Чекбоксы в калькуляторе */
+/* Чекбоксы в калькуляторе — нативные, 14px */
 #calc .subcheck, #calc #eurWrap{
   display:inline-flex; align-items:center; gap:8px;
   padding:8px 10px; border:1px solid #e6ebf3; border-radius:10px; background:#fafcff;
@@ -2105,66 +2126,13 @@ section[id], #services, #calc, #faq, #contact, #main {
   appearance:auto !important; -webkit-appearance:auto !important; -moz-appearance:auto !important;
   width:14px; height:14px; accent-color:#15803D; cursor:pointer;
 }
-/* гасим старую кастом-галочку, если осталась в коде выше */
-#calc .subcheck input[type="checkbox"]::after,
-#calc #eurWrap  input[type="checkbox"]::after{ content:none !important; }
+#calc .subcheck:has(input:checked),
+#calc #eurWrap:has(input:checked){ border-color:#e6ebf3; box-shadow:0 0 0 2px rgba(16,185,129,.10) inset; }
+#calc .subcheck:hover,
+#calc #eurWrap:hover{ border-color:#34d399; box-shadow:0 0 0 2px rgba(16,185,129,.14) inset; }
 
-/* активный чип — лёгкое внутреннее свечение; hover — более яркая рамка */
-#calc .subcheck:has(input:checked), #calc #eurWrap:has(input:checked){
-  border-color:#e6ebf3; box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
-}
-#calc .subcheck:hover, #calc #eurWrap:hover{
-  border-color:#34d399; box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
-}
+/* =================== /CALCULATOR ===================== */
 
-/* === Calc: фикс мелких иконок и стрелок в селектах ================== */
-
-/* 1) Иконки в заголовках полей: размер 18×18 и цвет */
-#calc .label-row > svg{
-  width:18px !important;
-  height:18px !important;
-  flex:0 0 18px;
-  display:inline-block;
-  vertical-align:middle;
-  fill:var(--primary);
-}
-
-/* 2) Вернуть нативные стрелки в селектах "Дети" и "День недели" */
-#kids, #dayType{
-  appearance:auto !important;
-  -webkit-appearance:auto !important;
-  -moz-appearance:auto !important;
-  background-image:none !important;  /* на случай кастомных фонов */
-  padding-right:14px;                /* запас справа под стрелку */
-}
-
-/* 3) Спиннер у поля "Часы" — оставить включённым */
-#hours{
-  appearance:auto !important;
-  -webkit-appearance:auto !important;
-  -moz-appearance:auto !important;
-}
-#hours::-webkit-outer-spin-button,
-#hours::-webkit-inner-spin-button{
-  -webkit-appearance:auto !important;
-  margin:0;
-}
-
-/* Вернуть нативные спиннеры всем number (и точно #hours) */
-#calc input[type="number"]{ appearance:auto; -moz-appearance:auto; }
-#calc input[type="number"]::-webkit-inner-spin-button,
-#calc input[type="number"]::-webkit-outer-spin-button{ -webkit-appearance:auto; margin:0; }
-
-/* 2) Кастомная стрелка у select + всегда место под неё */
-#calc select{
-  -webkit-appearance:none; -moz-appearance:none; appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 12px center;
-  background-size:18px 18px;
-  padding-right:42px; /* ← важно оставить после общего padding */
-  cursor:pointer;
-}
 
 
 
@@ -2189,6 +2157,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
