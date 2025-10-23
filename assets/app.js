@@ -330,7 +330,7 @@ window.updateBadge = function updateBadge(slots) {
 // Calculator
 
 (function(){
-  const EUR_RATE=117, BASE=800, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, OPT_FIT=500 MIN=2, HOURS_MAX=10;
+  const EUR_RATE=117, BASE=800, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, OPT_FIT=500, MIN=2, HOURS_MAX=10;
   const $=id=>document.getElementById(id);
   const money=v=>{ try{return v.toLocaleString('ru-RS')}catch(_){return String(v)} };
 
@@ -1120,6 +1120,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
