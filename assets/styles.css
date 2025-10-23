@@ -2203,6 +2203,54 @@ input[type="number"]{
 /* подпись «+300 дин»/«+500 дин» внутри чипа */
 #calc .subcheck .subnote{ color:#5f6b7c; }
 
+
+#calc{
+  --cb-size: 14px;   /* размер чекбокса */
+  --cb-on:   #10b981;
+  --cb-on-h: #374151;
+  --cb-off:  #fff;
+  --cb-brd:  #cbd5e1;
+}
+
+#calc .subcheck input[type="checkbox"],
+#calc #eurWrap input[type="checkbox"]{
+  -webkit-appearance:none; appearance:none;
+  width:var(--cb-size); height:var(--cb-size);
+  border:1.5px solid var(--cb-brd);
+  border-radius:4px;
+  background:var(--cb-off);
+  margin:0; display:grid; place-content:center;
+  transition:background-color .15s, border-color .15s;
+}
+
+#calc .subcheck input[type="checkbox"]::after,
+#calc #eurWrap input[type="checkbox"]::after{
+  content:"";
+  width:calc(var(--cb-size)*.60);
+  height:calc(var(--cb-size)*.35);
+  border:2px solid #fff;      /* ← БЕЛАЯ галочка */
+  border-top:0; border-left:0;
+  transform:rotate(45deg) scale(0);
+  transform-origin:center;
+  transition:transform .12s ease-in-out;
+}
+
+#calc .subcheck input[type="checkbox"]:checked,
+#calc #eurWrap input[type="checkbox"]:checked{
+  background:var(--cb-on); border-color:var(--cb-on);
+}
+#calc .subcheck input[type="checkbox"]:checked::after,
+#calc #eurWrap input[type="checkbox"]:checked::after{
+  transform:rotate(45deg) scale(1);
+}
+
+#calc .subcheck:hover input[type="checkbox"]:checked,
+#calc #eurWrap:hover  input[type="checkbox"]:checked{
+  background:var(--cb-on-h); border-color:var(--cb-on-h);
+}
+
+
+
 /* — АДАПТИВ — */
 @media (max-width: 1024px){
   #calc > .container{ max-width:100%; }
@@ -2251,6 +2299,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
