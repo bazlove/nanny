@@ -2010,339 +2010,99 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* ===================== CALCULATOR (final, consolidated) ===================== */
+/* ===================== CALCULATOR ===================== */
 
-/* — Грид и заголовок — */
-.calc-head{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:16px; flex-wrap:wrap;
+/* Карточка секции */
+#calc>.container.card,
+#calc>.container.calc-elevate,
+#calc>.container.card.calc-elevate{
+  width:auto; max-width:1200px; margin-inline:auto;
+  padding:24px 20px; box-sizing:border-box;
+  background:#fff; border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.06);
 }
+
+/* Сетка */
+.calc-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .calc-grid{
   display:grid; gap:18px; grid-template-columns:repeat(3,1fr);
-  align-items:start; margin-top:60px;
+  align-items:start; margin-top:32px;
 }
 .calc-grid>.field{ display:flex; flex-direction:column; gap:8px; }
 
-.label-row{ display:flex; align-items:center; gap:8px; font-weight:600; position:relative; }
-.label-row svg{ width:18px; height:18px; fill:var(--primary); }
+@media (max-width:1024px){ .calc-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:640px){ .calc-grid{ grid-template-columns:1fr; gap:14px; } }
 
-.input, select, input[type="number"]{ min-height:52px; }
-
-/* — Контейнер под ширину общего .container — */
-:root{ --container:1200px; --gutter:20px; }
-#calc>.container{
-  max-width:var(--container); width:100%; margin:0 auto;
-  padding-inline:var(--gutter); box-sizing:border-box;
-}
-#calc>.container.card,
-#calc>.container.calc-elevate,
-#calc>.container.card.calc-elevate{
-  width:auto!important; max-width:var(--container)!important; margin-inline:auto!important;
-  padding:24px var(--gutter); box-sizing:border-box;
-  background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.06);
-}
-#calc .card{ width:auto!important; margin-left:0!important; margin-right:0!important; box-sizing:border-box; }
-
-/* — Типографика подписи у «доп. занятий» — */
-#calc .field .subcheck{ font-size:14px; line-height:1.3; color:#333; }
-#calc .field .subcheck .subnote{ font-size:12px; margin-left:6px; color:#8a94a6; }
-
-/* — Блок результата — */
-#calc .calc-summary{ display:block; text-align:left; }
-#calc .res-sep{ height:1px; background:#e9edf3; margin:12px 0 14px; }
-
-#calc .calc-line{
-  display:flex; align-items:baseline; gap:12px 14px; flex-wrap:wrap;
-  margin:10px 0 0;
-}
-#calc .calc-rate{ margin:0; }
-
-#calc .calc-chips, #calc #badges{ display:flex; gap:8px; flex-wrap:wrap; }
-
-#calc .calc-eur{
-  display:inline-flex; align-items:center; gap:8px;
-  margin-top:12px; margin-bottom:12px;
-}
-#calc .cta-bottom-wrap{ margin-top:6px; }
-
-/* — Чекбоксы как чипы (контейнер) — */
-#calc .subcheck, #calc #eurWrap{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:8px 10px;
-  border:1px solid #e6ebf3;           /* нейтральный контур */
-  border-radius:10px;
-  background:#fafcff;                 /* лёгкий фон */
-  transition: box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease;
-  cursor:pointer; user-select:none;
-}
-
-/* — Кастомный чекбокс: ровная коробка + белая галочка — */
-#calc{
-  --cb-size:14px;      /* ⇦ размер чекбокса (меняй при желании) */
-  --cb-brd:#cbd5e1;    /* нейтральная рамка коробки */
-  --cb-on:#10b981;     /* зелёный фон при checked */
-  --cb-on-h:#374151;   /* тёмно-серый фон при hover на checked */
-  --cb-off:#fff;       /* фон по умолчанию */
-}
-#calc .subcheck input[type="checkbox"],
-#calc #eurWrap input[type="checkbox"]{
-  -webkit-appearance:none; appearance:none;            /* полностью убираем нативный рендер */
-  width:var(--cb-size); height:var(--cb-size);
-  border:2px solid var(--cb-brd);
-  border-radius:4px;
-  background:var(--cb-off);
-  margin:0;
-  display:inline-grid; place-content:center;
-  position:relative;
-  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-/* белая «галочка» — геометрически ровная */
-#calc .subcheck input[type="checkbox"]::after,
-#calc #eurWrap  input[type="checkbox"]::after{
-  content:"";
-  width:7px;                  /* под 14px бокс: 7×4 и толщина 2px — выглядит чётко */
-  height:4px;
-  border:2px solid #fff;      /* БЕЛАЯ галочка */
-  border-top:0; border-left:0;
-  transform:rotate(40deg) scale(0);
-  transform-origin:center;
-  transition:transform .18s ease;
-  position:absolute;
-}
-
-/* checked: зелёная коробка + белая галочка */
-#calc .subcheck input[type="checkbox"]:checked,
-#calc #eurWrap input[type="checkbox"]:checked{
-  background:var(--cb-on); border-color:var(--cb-on);
-}
-#calc .subcheck input[type="checkbox"]:checked::after,
-#calc #eurWrap input[type="checkbox"]:checked::after{
-  transform:rotate(40deg) scale(1);
-}
-/* hover на включённом чекбоксе — темнее коробка, галочка остаётся белой */
-#calc .subcheck:hover input[type="checkbox"]:checked,
-#calc #eurWrap:hover  input[type="checkbox"]:checked{
-  background:var(--cb-on-h); border-color:var(--cb-on-h);
-}
-
-/* — SWAP состояний контура чипа — */
-/* Активный (checked): ТОЛЬКО мягкая зелёная подсветка, контур нейтральный */
-#calc .subcheck:has(input:checked),
-#calc #eurWrap:has(input:checked){
-  border-color:#e6ebf3;
-  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
-  background:#fafcff; color:inherit;
-}
-/* :hover (и для checked, и для unchecked): ярче рамка и glow */
-#calc .subcheck:hover,
-#calc #eurWrap:hover{
-  border-color:#34d399;
-  box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
-}
-
-/* подпись «+300 дин»/«+500 дин» внутри чипа */
-#calc .subcheck .subnote{ color:#5f6b7c; }
-
-/* === Calc: ровная белая галочка через SVG, без «размазанности» === */
-
-/* Размеры/цвета в одном месте */
-#calc{
-  --cb-size:14px;         /* размер коробки чекбокса */
-  --cb-brd:#cbd5e1;       /* нейтральная рамка */
-  --cb-on:#10b981;        /* зелёный, когда отмечен */
-  --cb-on-h:#374151;      /* тёмно-серый при hover на отмеченном */
-  --cb-off:#fff;          /* фон по умолчанию */
-}
-
-/* базовая коробка */
-#calc .subcheck input[type="checkbox"],
-#calc #eurWrap input[type="checkbox"]{
-  -webkit-appearance:none; appearance:none;
-  inline-size:var(--cb-size);
-  block-size:var(--cb-size);
-  border:2px solid var(--cb-brd);
-  border-radius:4px;
-  background:var(--cb-off);
-  margin:0;
-  display:inline-grid; place-items:center;
-  position:relative;
-  transition:background-color .15s, border-color .15s, box-shadow .15s;
-}
-
-/* сама «галочка» — SVG фоном, всегда идеально ровная */
-#calc .subcheck input[type="checkbox"]::after,
-#calc #eurWrap input[type="checkbox"]::after{
-  content:"";
-  position:absolute; inset:0;
-  opacity:0; transition:opacity .14s ease;
-  background:
-    center/80% 80% no-repeat
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-6' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-
-/* отмечено: зелёная коробка + показываем белую галочку */
-#calc .subcheck input[type="checkbox"]:checked,
-#calc #eurWrap input[type="checkbox"]:checked{
-  background:var(--cb-on);
-  border-color:var(--cb-on);
-}
-#calc .subcheck input[type="checkbox"]:checked::after,
-#calc #eurWrap input[type="checkbox"]:checked::after{
-  opacity:1;
-}
-
-/* hover на отмеченном — только сама коробка темнее, галочка остаётся белой */
-#calc .subcheck:hover input[type="checkbox"]:checked,
-#calc #eurWrap:hover input[type="checkbox"]:checked{
-  background:var(--cb-on-h);
-  border-color:var(--cb-on-h);
-}
-
-/* === Swap: мягкое свечение в checked, яркая рамка на hover (как просил) === */
-/* активный (checked): нейтральный контур + лёгкое зелёное внутреннее свечение */
-#calc .subcheck:has(input:checked),
-#calc #eurWrap:has(input:checked){
-  border-color:#e6ebf3;
-  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
-  background:#fafcff; color:inherit;
-}
-/* hover (и для checked, и для unchecked): яркая зелёная рамка + чуть сильнее свечение */
-#calc .subcheck:hover,
-#calc #eurWrap:hover{
-  border-color:#34d399;
-  box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
-}
-
-
-
-
-/* === Calc v2: layout/visual pass =============================== */
-
-/* 1) Карточка секции: фикс альфа-канала тени (.06, а не 06) */
-#calc>.container.card,
-#calc>.container.calc-elevate,
-#calc>.container.card.calc-elevate{
-  box-shadow: 0 20px 60px rgba(0,0,0,.06);
-}
-
-/* 2) Сетка и отступы */
-.calc-grid{ margin-top:32px; }
-@media (max-width:1024px){
-  .calc-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (max-width:640px){
-  .calc-grid{ grid-template-columns:1fr; gap:14px; }
-}
-
-/* 3) Инпуты/селекты: единые паддинги, рамка и focus-ring */
-#calc .input, #calc select, #calc input[type="number"]{
-  padding:12px 14px;
-  border:1px solid #E5E7EB;
-  border-radius:12px;
-  line-height:1.35;
-}
-#calc .input:focus, #calc select:focus, #calc input[type="number"]:focus{
-  outline:none;
-  border-color:#A7DCC2;
-  box-shadow:0 0 0 4px rgba(34,197,94,.12);
-}
-
-/* 4) Спрятать спиннеры у input[type=number] */
-#calc input[type="number"]::-webkit-outer-spin-button,
-#calc input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-#calc input[type="number"]{ -moz-appearance:textfield; }
-
-/* 5) Пресеты (быстрые кнопки выбора) */
-#calc .presets{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
-#calc .presets .tag{
-  padding:6px 12px;
-  border:1px solid #E5E7EB; border-radius:999px;
-  background:#fff; cursor:pointer; font-size:14px;
-  transition: background .12s, border-color .12s, color .12s, transform .12s;
-}
-#calc .presets .tag:hover{
-  transform: translateY(-1px);
-  border-color:#B9E0D1; background:#F2FAF6; color:#146C43;
-}
-
-/* 6) Карточка результата */
-#calc .result-card{
-  margin-top:18px; padding:14px;
-  border:1px solid #E5E7EB; border-radius:14px; background:#fff;
-  box-shadow:0 8px 24px rgba(0,0,0,.04);
-}
-#calc .result-card .result-row{
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-}
-
-/* 7) Пилюли-бейджи разъяснений */
-#calc .badge{
-  display:inline-block; padding:4px 8px; border-radius:999px;
-  background:#F2FAF6; border:1px solid #B9E0D1; color:#146C43; font-size:12px;
-}
-
-/* 8) Аккуратнее значок подсказки в label */
+/* Лейблы и иконки */
+#calc .label-row{ display:flex; align-items:center; gap:8px; font-weight:600; }
+#calc .label-row .hint{ display:inline-flex; align-items:center; }
 #calc .label-row .hint .i{
   width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
-  border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
+  line-height:1; border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
 }
 #calc .label-row .hint .tip{ white-space:nowrap; }
 
-/* 9) Евро-переключатель — чуть плотнее на мобилке */
-@media (max-width:640px){
-  #calc .calc-eur{ margin-top:8px; }
+/* Поля ввода (единый вид) */
+#calc .input, #calc select, #calc input[type="number"]{
+  width:100%; min-height:52px; padding:12px 14px;
+  border:1px solid #E5E7EB; border-radius:12px; background:#fff;
+  line-height:1.35; transition:border-color .15s, box-shadow .15s;
+}
+#calc .input:focus, #calc select:focus, #calc input[type="number"]:focus{
+  outline:none; border-color:#A7DCC2; box-shadow:0 0 0 4px rgba(34,197,94,.12);
 }
 
-
-
-/* === Calc: правки UI по скриншоту ============================== */
-
-/* 1) Вернуть стрелочки (спиннер) только для поля "Часы" */
-#hours{ appearance:auto; -moz-appearance:auto; }
+/* ВЕРНУТЬ спиннеры только в #hours (глобальное appearance:none выше не мешает) */
+#hours{
+  appearance:auto !important; -webkit-appearance:auto !important; -moz-appearance:auto !important;
+}
 #hours::-webkit-outer-spin-button,
-#hours::-webkit-inner-spin-button{ -webkit-appearance:auto; margin:0; }
+#hours::-webkit-inner-spin-button{ -webkit-appearance:auto !important; margin:0; }
 
-/* 2) Выровнять значок подсказки "i" по вертикали в label */
-#calc .label-row{ align-items:center; }                  /* осевая центровка всей строки */
-#calc .label-row .hint{ display:inline-flex; align-items:center; }
-#calc .label-row .hint .i{
-  width:18px; height:18px; line-height:1;
-  display:inline-flex; align-items:center; justify-content:center;
-  border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
-  transform: translateY(-1px);                           /* оптическая подправка */
+/* Пресеты (быстрые чипы) */
+#calc .presets{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
+#calc .presets .tag{
+  padding:6px 12px; border:1px solid #E5E7EB; border-radius:999px;
+  background:#fff; cursor:pointer; font-size:14px;
+  transition:background .12s, border-color .12s, color .12s, transform .12s;
 }
+#calc .presets .tag:hover{ transform:translateY(-1px); border-color:#B9E0D1; background:#F2FAF6; color:#146C43; }
 
-/* 3) Чекбоксы — нативная галочка через accent-color, размер 14px */
+/* Карточка результата */
+#calc .result-card{
+  margin-top:18px; padding:14px; border:1px solid #E5E7EB; border-radius:14px; background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.04);
+}
+#calc .result-card .result-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+#calc .calc-line{ display:flex; align-items:baseline; gap:12px 14px; flex-wrap:wrap; margin-top:10px; }
+#calc .calc-chips, #calc #badges{ display:flex; gap:8px; flex-wrap:wrap; }
+#calc .badge{ display:inline-block; padding:4px 8px; border-radius:999px; background:#F2FAF6; border:1px solid #B9E0D1; color:#146C43; font-size:12px; }
+#calc .calc-eur{ display:inline-flex; align-items:center; gap:8px; margin:12px 0; }
+@media (max-width:640px){ #calc .calc-line{ flex-direction:column; align-items:flex-start; gap:8px; } #calc .calc-eur{ margin-top:8px; } }
+
+/* Чекбоксы в калькуляторе — нативные, 14px, белая галка через accent-color */
+#calc .subcheck, #calc #eurWrap{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 10px; border:1px solid #e6ebf3; border-radius:10px; background:#fafcff;
+  transition: box-shadow .18s, border-color .18s, background-color .18s, color .18s; cursor:pointer; user-select:none;
+}
 #calc input[type="checkbox"]{
-  appearance:auto; -webkit-appearance:auto; -moz-appearance:auto; /* вернуть нативный вид */
-  width:14px; height:14px;
-  accent-color:#15803D;                                      /* зелёный; галка будет белой */
+  appearance:auto !important; -webkit-appearance:auto !important; -moz-appearance:auto !important;
+  width:14px; height:14px; accent-color:#15803D; cursor:pointer;
 }
-#calc .opt, #calc .opts label, #calc .extras label{          /* выравнивание текста с боксом */
-  display:flex; align-items:center; gap:8px;
+/* гасим старую кастом-галочку, если осталась в коде выше */
+#calc .subcheck input[type="checkbox"]::after,
+#calc #eurWrap  input[type="checkbox"]::after{ content:none !important; }
+
+/* активный чип — лёгкое внутреннее свечение; hover — более яркая рамка */
+#calc .subcheck:has(input:checked), #calc #eurWrap:has(input:checked){
+  border-color:#e6ebf3; box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
 }
-
-
-
-
-
-/* — Адаптив — */
-@media (max-width:1024px){
-  #calc>.container{ max-width:100%; }
-  #calc>.container.card,
-  #calc>.container.calc-elevate,
-  #calc>.container.card.calc-elevate{
-    padding:16px var(--gutter); border-radius:12px;
-  }
-  .calc-grid{ grid-template-columns:1fr; }
-}
-@media (max-width:640px){
-  #calc .calc-line{ flex-direction:column; align-items:flex-start; gap:8px; margin-top:8px; }
-  #calc .calc-eur{ margin-top:10px; margin-bottom:14px; }
-  #calc .cta-bottom-wrap{ margin-top:12px; }
+#calc .subcheck:hover, #calc #eurWrap:hover{
+  border-color:#34d399; box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
 }
 
-/* =================== /CALCULATOR (final) ===================== */
+
 
 
 
@@ -2366,6 +2126,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
