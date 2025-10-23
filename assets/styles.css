@@ -2213,6 +2213,90 @@ section[id], #services, #calc, #faq, #contact, #main {
   box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
 }
 
+
+
+
+/* === Calc v2: layout/visual pass =============================== */
+
+/* 1) Карточка секции: фикс альфа-канала тени (.06, а не 06) */
+#calc>.container.card,
+#calc>.container.calc-elevate,
+#calc>.container.card.calc-elevate{
+  box-shadow: 0 20px 60px rgba(0,0,0,.06);
+}
+
+/* 2) Сетка и отступы */
+.calc-grid{ margin-top:32px; }
+@media (max-width:1024px){
+  .calc-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width:640px){
+  .calc-grid{ grid-template-columns:1fr; gap:14px; }
+}
+
+/* 3) Инпуты/селекты: единые паддинги, рамка и focus-ring */
+#calc .input, #calc select, #calc input[type="number"]{
+  padding:12px 14px;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  line-height:1.35;
+}
+#calc .input:focus, #calc select:focus, #calc input[type="number"]:focus{
+  outline:none;
+  border-color:#A7DCC2;
+  box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
+
+/* 4) Спрятать спиннеры у input[type=number] */
+#calc input[type="number"]::-webkit-outer-spin-button,
+#calc input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+#calc input[type="number"]{ -moz-appearance:textfield; }
+
+/* 5) Пресеты (быстрые кнопки выбора) */
+#calc .presets{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
+#calc .presets .tag{
+  padding:6px 12px;
+  border:1px solid #E5E7EB; border-radius:999px;
+  background:#fff; cursor:pointer; font-size:14px;
+  transition: background .12s, border-color .12s, color .12s, transform .12s;
+}
+#calc .presets .tag:hover{
+  transform: translateY(-1px);
+  border-color:#B9E0D1; background:#F2FAF6; color:#146C43;
+}
+
+/* 6) Карточка результата */
+#calc .result-card{
+  margin-top:18px; padding:14px;
+  border:1px solid #E5E7EB; border-radius:14px; background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.04);
+}
+#calc .result-card .result-row{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+
+/* 7) Пилюли-бейджи разъяснений */
+#calc .badge{
+  display:inline-block; padding:4px 8px; border-radius:999px;
+  background:#F2FAF6; border:1px solid #B9E0D1; color:#146C43; font-size:12px;
+}
+
+/* 8) Аккуратнее значок подсказки в label */
+#calc .label-row .hint .i{
+  width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
+}
+#calc .label-row .hint .tip{ white-space:nowrap; }
+
+/* 9) Евро-переключатель — чуть плотнее на мобилке */
+@media (max-width:640px){
+  #calc .calc-eur{ margin-top:8px; }
+}
+
+
+
+
+
 /* — Адаптив — */
 @media (max-width:1024px){
   #calc>.container{ max-width:100%; }
@@ -2253,6 +2337,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
