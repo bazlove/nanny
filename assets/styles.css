@@ -2167,7 +2167,7 @@ input[type="number"]{
 #calc .subcheck input[type="checkbox"],
 #calc #eurWrap input[type="checkbox"]{
   accent-color:#cbd5e1;            /* slate-300 */
-  width:18px; height:18px;
+  width:10px; height:10px;
   margin:0;
   transition:accent-color .15s linear;
 }
@@ -2251,6 +2251,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
