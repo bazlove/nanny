@@ -2251,6 +2251,37 @@ input[type="number"]{
 
 
 
+/* === Calc: swap border/glow states for checkbox chips (override) === */
+
+/* 1) Активное состояние (checked) — теперь ТОЛЬКО мягкая подсветка,
+      без яркой зелёной рамки */
+#calc .subcheck:has(input:checked),
+#calc #eurWrap:has(input:checked){
+  border-color: #e6ebf3;                              /* вернули нейтральный контур */
+  box-shadow: 0 0 0 2px rgba(16,185,129,.10) inset;   /* мягкий зелёный inner-glow (был на :hover) */
+  background: #fafcff;
+  color: inherit;
+}
+
+/* 2) :hover — теперь ЯРКАЯ зелёная рамка + более заметная подсветка
+      (работает как для checked, так и для unchecked) */
+#calc .subcheck:hover,
+#calc #eurWrap:hover{
+  border-color: #34d399;                              /* яркая зелёная обводка */
+  box-shadow: 0 0 0 2px rgba(16,185,129,.14) inset;   /* чуть сильнее, чем в checked */
+}
+
+/* 3) Сохраняем прежнюю логику «checked + hover»: темнеет ТОЛЬКО сам чекбокс,
+      галочка остаётся белой (эти правила у тебя уже есть — оставляем) */
+/*  #calc .subcheck:hover input[type="checkbox"]:checked,
+    #calc #eurWrap:hover  input[type="checkbox"]:checked{
+      accent-color:#374151;  // тёмно-серый фон самого чекбокса
+    }
+*/
+
+
+
+
 /* — АДАПТИВ — */
 @media (max-width: 1024px){
   #calc > .container{ max-width:100%; }
@@ -2299,6 +2330,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
