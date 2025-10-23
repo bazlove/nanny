@@ -2295,6 +2295,35 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+/* === Calc: правки UI по скриншоту ============================== */
+
+/* 1) Вернуть стрелочки (спиннер) только для поля "Часы" */
+#hours{ appearance:auto; -moz-appearance:auto; }
+#hours::-webkit-outer-spin-button,
+#hours::-webkit-inner-spin-button{ -webkit-appearance:auto; margin:0; }
+
+/* 2) Выровнять значок подсказки "i" по вертикали в label */
+#calc .label-row{ align-items:center; }                  /* осевая центровка всей строки */
+#calc .label-row .hint{ display:inline-flex; align-items:center; }
+#calc .label-row .hint .i{
+  width:18px; height:18px; line-height:1;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
+  transform: translateY(-1px);                           /* оптическая подправка */
+}
+
+/* 3) Чекбоксы — нативная галочка через accent-color, размер 14px */
+#calc input[type="checkbox"]{
+  appearance:auto; -webkit-appearance:auto; -moz-appearance:auto; /* вернуть нативный вид */
+  width:14px; height:14px;
+  accent-color:#15803D;                                      /* зелёный; галка будет белой */
+}
+#calc .opt, #calc .opts label, #calc .extras label{          /* выравнивание текста с боксом */
+  display:flex; align-items:center; gap:8px;
+}
+
+
+
 
 
 /* — Адаптив — */
@@ -2337,6 +2366,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
