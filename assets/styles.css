@@ -412,66 +412,45 @@ section{padding:64px 0}
 }
 */
 
-/* === WHY: Checklist rows (panel--check) ================================ */
-#why.panel--check .why-grid{
-  display:grid;
-  gap: var(--space-4, 16px);
-}
-@media (min-width:1100px){ #why.panel--check .why-grid{ grid-template-columns: repeat(4, 1fr); } }
-@media (max-width:1099.98px) and (min-width:641px){ #why.panel--check .why-grid{ grid-template-columns: repeat(2, 1fr); } }
-@media (max-width:640px){ #why.panel--check .why-grid{ grid-template-columns: 1fr; } }
 
-/* Карточка → «строка чек-листа»: без тени, тонкая рамка, плотный контент */
-#why.panel--check .why-card{
-  display:flex; align-items:flex-start; gap:12px;
-  padding:12px 14px;
-  background:#fff;
-  border:1px solid #E6F0FA;          /* холодная, «доверительная» рамка */
-  border-radius:12px;
-  box-shadow:none;                    /* отличаем от блока «Услуги» */
-  min-height:auto;
-  transition:border-color .12s, box-shadow .12s, transform .12s;
-}
-#why.panel--check .why-card:hover{
-  border-color:#D7E6F7;
-  box-shadow:0 6px 18px rgba(0,0,0,.04);
-  transform:translateY(-1px);
-}
 
-/* Иконка-эмодзи в мягком кружке */
-#why.panel--check .why-emoji{
-  flex:0 0 28px; width:28px; height:28px;
-  display:grid; place-items:center;
-  font-size:18px; line-height:1;
-  color:#0b4870;
-  background:#F3F8FF;
-  border:1px solid #E6F0FA;
-  border-radius:999px;
-  margin-top:2px;                     /* чуть выравниваем с заголовком */
+/* WHY — список с разделителями (панель без карточек) */
+#why.panel--list{ padding-top: 8px; }
+#why.panel--list .why-grid{
+  display:grid; gap:22px 28px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
 }
+@media (max-width:780px){ #why.panel--list .why-grid{ grid-template-columns:1fr; gap:18px; } }
 
-/* Заголовок + мини-галочка (декоративно, как DoD) */
-#why.panel--check .why-headline{ display:flex; align-items:center; gap:10px; margin:0; }
-#why.panel--check .why-title{
-  margin:0;
-  font-size:16px; line-height:1.25; font-weight:700; color:#0f172a;
+#why.panel--list .why-card{
+  display:grid; grid-template-columns:36px 1fr; column-gap:12px; row-gap:6px;
+  background:transparent; border:0; box-shadow:none; padding:0; min-height:auto;
+  position:relative;
+}
+#why.panel--list .why-card::after{
+  content:""; grid-column:1 / -1; height:1px; background:linear-gradient(90deg,#E8EEF7,transparent 70%);
+  margin-top:14px;
+}
+#why.panel--list .why-headline{ grid-column:1 / -1; display:flex; align-items:center; gap:10px; margin:0; }
+#why.panel--list .why-emoji{
+  width:28px; height:28px; display:grid; place-items:center; font-size:18px;
+  background:#F3F8FF; border:1px solid #E4EEF8; border-radius:999px; color:#0b4870;
+}
+#why.panel--list .why-title{
+  margin:0; font-size:17px; line-height:1.25; font-weight:800; color:#0f172a; letter-spacing:.2px;
   display:flex; align-items:center; gap:8px;
 }
-#why.panel--check .why-title::after{
-  content:"";
-  width:16px; height:16px; flex:0 0 16px;
-  background:
-    center/100% 100% no-repeat
+#why.panel--list .why-title::after{
+  content:""; width:14px; height:14px; flex:0 0 14px; opacity:.9;
+  background:center/100% 100% no-repeat
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.3 8.2l2.7 2.7 6-6' fill='none' stroke='%2315803D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  opacity:.9;
+}
+#why.panel--list .why-text{
+  grid-column:2 / -1; margin:2px 0 0; color:#4b5563; font-size:14.5px; line-height:1.55;
 }
 
-/* Описание — компактней, как подпункт чек-листа */
-#why.panel--check .why-text{
-  margin:2px 0 0;
-  color:#4b5563;
-  font-size:14px; line-height:1.5;
-}
+
+
 
 
 /* ============ EXPERIENCE (Рельса + карточки) ============ */
@@ -2232,6 +2211,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
