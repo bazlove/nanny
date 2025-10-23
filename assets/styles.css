@@ -2049,7 +2049,7 @@ input[type="number"]{
   min-height:52px;
 }
 
-/* — Размер подписи у «доп. занятий» под полями — */
+/* — Размер подписи у «доп. занятий» под полями — (типографика) */
 #calc .field .subcheck{
   font-size:14px;
   line-height:1.3;
@@ -2063,8 +2063,7 @@ input[type="number"]{
 
 /* — Контейнер калькулятора = как у общего .container — */
 :root{
-  /* подставь те же значения, что и для основного контейнера сайта */
-  --container: 1200px;
+  --container: 1200px;   /* подставь те же значения, что и у сайта */
   --gutter: 20px;
 }
 #calc > .container{
@@ -2085,7 +2084,6 @@ input[type="number"]{
   margin-inline: auto !important;
   padding: 24px var(--gutter);
   box-sizing: border-box;
-
   background:#fff;
   border-radius:16px;
   box-shadow:0 20px 60px rgba(0,0,0,.06);
@@ -2101,113 +2099,109 @@ input[type="number"]{
 
 /* — РЕЗУЛЬТАТ — */
 
-/* 1) Возвращаем нормальное блочное поведение всего summary */
+/* 1) Итоговый блок как обычный поток */
 #calc .calc-summary{
-  display:block;            /* важно: НЕ flex */
+  display:block;            /* НЕ flex */
   text-align:left;
 }
 
-/* 2) «Итог…  Поделиться» — как было (через .result-row) */
+/* разделитель под «Итог…» */
+#calc .res-sep{
+  height:1px;
+  background:#e9edf3;
+  margin:12px 0 14px;
+}
 
-/* 3) Строка «Ставка…» + бэйджи — в одну линию, с переносом при нехватке места */
+/* 2) «Ставка … | доп. занятия …» + чипы — в одну линию и с переносом */
 #calc .calc-line{
   display:flex;
   align-items:baseline;
   gap:12px 14px;
   flex-wrap:wrap;
-  margin:8px 0 4px;
+  margin:10px 0 0;          /* отступ сверху, без нижнего */
 }
-#calc .calc-rate{
-  margin:0;                 /* <small> без стандартных отступов */
-}
+#calc .calc-rate{ margin:0; }
 
-/* Контейнер с бэйджами модификаторов */
+/* контейнер с бэйджами модификаторов */
 #calc .calc-chips,
-#calc #badges{               /* поддерживаем прежний id */
+#calc #badges{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
 }
 
-/* Чекбокс «показать в евро» — ближе к блоку выше */
+/* 3) чекбокс «в евро» — отступы от верхней строки и кнопки */
 #calc .calc-eur{
-  margin-top:4px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+  margin-bottom:12px;
 }
 
-/* === CALC: вертикальные отступы в блоке результата === */
+/* кнопка — микро-зазор от чекбокса */
+#calc .cta-bottom-wrap{ margin-top:6px; }
 
-/* линия-разделитель под "Итог…" */
-#calc .res-sep{
-  height: 1px;
-  background: #e9edf3;       /* мягкий серый */
-  margin: 12px 0 14px;       /* воздух вокруг линии */
-}
+/* — ЧЕКБОКСЫ как чипы, с нейтральным фоном и зелёными акцентами — */
 
-/* строка "Ставка … | доп. занятия …" + бейджи */
-#calc .calc-line{
-  margin: 10px 0 0;          /* небольшой отступ сверху, без нижнего */
-}
-
-/* чекбокс "Показать в евро" — отступ от верхней строки и от кнопки */
-#calc .calc-eur{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;          /* от "Ставка…" */
-  margin-bottom: 12px;       /* от кнопки */
-}
-
-/* кнопка — на случай конфликтов где-то ещё */
-#calc .cta-bottom-wrap{
-  margin-top: 6px;           /* можно увеличить до 10–12px по вкусу */
-}
-
-/* === Calc: чекбоксы как зелёные чипы === */
-/* Базовый вид для чекбоксов под полями и для "в евро" */
+/* базовый вид контейнера чипа */
 #calc .subcheck,
-#calc #eurWrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border: 1px solid #e6ebf3;
-  border-radius: 10px;
-  background: #fafcff;
-  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+#calc #eurWrap{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid #e6ebf3;        /* серый контур */
+  border-radius:10px;
+  background:#fafcff;              /* лёгкий фон */
+  transition:
+    box-shadow .18s ease,
+    border-color .18s ease,
+    background-color .18s ease,
+    color .18s ease;
+  cursor:pointer;
+  user-select:none;
 }
 
-/* сам чекбокс: зелёная галочка */
+/* сам чекбокс: нейтральный по умолчанию */
 #calc .subcheck input[type="checkbox"],
 #calc #eurWrap input[type="checkbox"]{
-  accent-color: #10b981;               /* зелёная галочка (совр. браузеры) */
+  accent-color:#cbd5e1;            /* slate-300 */
+  width:18px; height:18px;
+  margin:0;
+  transition:accent-color .15s linear;
 }
 
-/* Активное состояние — когда чекбокс включён */
+/* hover (не выбран): деликатная зелёная подсветка контура */
+#calc .subcheck:hover,
+#calc #eurWrap:hover{
+  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset; /* #10b981 */
+}
+
+/* checked: НЕ заливаем фон контейнера, не меняем цвет текста,
+   только зелёная обводка + мягкая подсветка */
 #calc .subcheck:has(input:checked),
 #calc #eurWrap:has(input:checked){
-  background: #ecfdf5;                 /* мягкий мятный фон */
-  border-color: #34d399;               /* зелёная кайма */
-  box-shadow: 0 0 0 2px rgba(16,185,129,.12) inset;
-  color: #065f46;                      /* чуть темнее текст для контраста */
+  border-color:#34d399;
+  box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
+  background:#fafcff;
+  color:inherit;
 }
 
-/* Ховер/фокус: лёгкий намёк на интерактив */
-#calc .subcheck:hover,
-#calc #eurWrap:hover,
-#calc .subcheck:has(input:focus-visible),
-#calc #eurWrap:has(input:focus-visible){
-  border-color: #cdd7e6;
-  box-shadow: 0 0 0 2px rgba(203,213,225,.25) inset;
+/* сам чекбокс при checked — зелёный фон, белая галочка */
+#calc .subcheck input[type="checkbox"]:checked,
+#calc #eurWrap input[type="checkbox"]:checked{
+  accent-color:#10b981;
 }
 
-/* мелкая приправка к подписи «+300 дин»/«+500 дин» */
+/* checked + hover: ТОЛЬКО сам чекбокс становится тёмно-серым */
+#calc .subcheck:hover input[type="checkbox"]:checked,
+#calc #eurWrap:hover input[type="checkbox"]:checked{
+  accent-color:#374151; /* slate-700 */
+}
+
+/* подпись «+300 дин»/«+500 дин» внутри чипа */
 #calc .subcheck .subnote{ color:#5f6b7c; }
-
-/* Если чипы должны выглядеть компактнее — можно чуть уменьшить паддинги:
-#calc .subcheck, #calc #eurWrap { padding: 6px 10px; }
-*/
-
-
 
 /* — АДАПТИВ — */
 @media (max-width: 1024px){
@@ -2226,16 +2220,17 @@ input[type="number"]{
     flex-direction:column;
     align-items:flex-start;
     gap:8px;
-    margin-top: 8px;
+    margin-top:8px;
   }
   #calc .calc-eur{
-    margin-top: 10px;
-    margin-bottom: 14px;
+    margin-top:10px;
+    margin-bottom:14px;
   }
-#calc .cta-bottom-wrap{ margin-top: 12px; }
+  #calc .cta-bottom-wrap{ margin-top:12px; }
 }
 
 /* =================== /CALCULATOR (final) ===================== */
+
 
 
 html, body {
@@ -2256,6 +2251,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
