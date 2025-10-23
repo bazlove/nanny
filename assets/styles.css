@@ -2010,305 +2010,155 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* ===================== CALCULATOR (final) ===================== */
+/* ===================== CALCULATOR (final, consolidated) ===================== */
 
-/* — Сетка и заголовок — */
+/* — Грид и заголовок — */
 .calc-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  flex-wrap:wrap;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; flex-wrap:wrap;
 }
-
 .calc-grid{
-  display:grid;
-  gap:18px;
-  grid-template-columns:repeat(3,1fr);
-  align-items:start;
-  margin-top:60px;
+  display:grid; gap:18px; grid-template-columns:repeat(3,1fr);
+  align-items:start; margin-top:60px;
 }
-.calc-grid > .field{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+.calc-grid>.field{ display:flex; flex-direction:column; gap:8px; }
 
-.label-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:600;
-  position:relative;
-}
+.label-row{ display:flex; align-items:center; gap:8px; font-weight:600; position:relative; }
 .label-row svg{ width:18px; height:18px; fill:var(--primary); }
 
-.input,
-select,
-input[type="number"]{
-  min-height:52px;
-}
+.input, select, input[type="number"]{ min-height:52px; }
 
-/* — Размер подписи у «доп. занятий» под полями — (типографика) */
-#calc .field .subcheck{
-  font-size:14px;
-  line-height:1.3;
-  color:#333;
+/* — Контейнер калькулятора под ширину общего .container — */
+:root{ --container:1200px; --gutter:20px; }
+#calc>.container{
+  max-width:var(--container); width:100%; margin:0 auto;
+  padding-left:var(--gutter); padding-right:var(--gutter); box-sizing:border-box;
 }
-#calc .field .subcheck .subnote{
-  font-size:12px;
-  margin-left:6px;
-  color:#8a94a6;
+#calc>.container.card,
+#calc>.container.calc-elevate,
+#calc>.container.card.calc-elevate{
+  width:auto!important; max-width:var(--container)!important; margin-inline:auto!important;
+  padding:24px var(--gutter); box-sizing:border-box;
+  background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.06);
 }
+#calc .card{ width:auto!important; margin-left:0!important; margin-right:0!important; box-sizing:border-box; }
 
-/* — Контейнер калькулятора = как у общего .container — */
-:root{
-  --container: 1200px;   /* подставь те же значения, что и у сайта */
-  --gutter: 20px;
-}
-#calc > .container{
-  max-width: var(--container);
-  width: 100%;
-  margin: 0 auto;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-  box-sizing: border-box;
-}
+/* — Типографика подписи у «доп. занятий» — */
+#calc .field .subcheck{ font-size:14px; line-height:1.3; color:#333; }
+#calc .field .subcheck .subnote{ font-size:12px; margin-left:6px; color:#8a94a6; }
 
-/* Белая карточка без «растяжек» по краям */
-#calc > .container.card,
-#calc > .container.calc-elevate,
-#calc > .container.card.calc-elevate{
-  width: auto !important;
-  max-width: var(--container) !important;
-  margin-inline: auto !important;
-  padding: 24px var(--gutter);
-  box-sizing: border-box;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.06);
-}
+/* — Блок результата — */
+#calc .calc-summary{ display:block; text-align:left; }
+#calc .res-sep{ height:1px; background:#e9edf3; margin:12px 0 14px; }
 
-/* На всякий случай, если внутри ещё .card */
-#calc .card{
-  width:auto !important;
-  margin-left:0 !important;
-  margin-right:0 !important;
-  box-sizing:border-box;
-}
-
-/* — РЕЗУЛЬТАТ — */
-
-/* 1) Итоговый блок как обычный поток */
-#calc .calc-summary{
-  display:block;            /* НЕ flex */
-  text-align:left;
-}
-
-/* разделитель под «Итог…» */
-#calc .res-sep{
-  height:1px;
-  background:#e9edf3;
-  margin:12px 0 14px;
-}
-
-/* 2) «Ставка … | доп. занятия …» + чипы — в одну линию и с переносом */
 #calc .calc-line{
-  display:flex;
-  align-items:baseline;
-  gap:12px 14px;
-  flex-wrap:wrap;
-  margin:10px 0 0;          /* отступ сверху, без нижнего */
+  display:flex; align-items:baseline; gap:12px 14px; flex-wrap:wrap;
+  margin:10px 0 0;
 }
 #calc .calc-rate{ margin:0; }
 
-/* контейнер с бэйджами модификаторов */
-#calc .calc-chips,
-#calc #badges{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
+#calc .calc-chips, #calc #badges{ display:flex; gap:8px; flex-wrap:wrap; }
 
-/* 3) чекбокс «в евро» — отступы от верхней строки и кнопки */
 #calc .calc-eur{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  margin-top:12px;
-  margin-bottom:12px;
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:12px; margin-bottom:12px;
 }
-
-/* кнопка — микро-зазор от чекбокса */
 #calc .cta-bottom-wrap{ margin-top:6px; }
 
-/* — ЧЕКБОКСЫ как чипы, с нейтральным фоном и зелёными акцентами — */
-
-/* базовый вид контейнера чипа */
-#calc .subcheck,
-#calc #eurWrap{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+/* — Чекбоксы как чипы (контейнер) — */
+#calc .subcheck, #calc #eurWrap{
+  display:inline-flex; align-items:center; gap:8px;
   padding:8px 10px;
-  border:1px solid #e6ebf3;        /* серый контур */
+  border:1px solid #e6ebf3;           /* нейтральный контур */
   border-radius:10px;
-  background:#fafcff;              /* лёгкий фон */
-  transition:
-    box-shadow .18s ease,
-    border-color .18s ease,
-    background-color .18s ease,
-    color .18s ease;
-  cursor:pointer;
-  user-select:none;
+  background:#fafcff;                 /* лёгкий фон */
+  transition: box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease;
+  cursor:pointer; user-select:none;
 }
 
-/* сам чекбокс: нейтральный по умолчанию */
-#calc .subcheck input[type="checkbox"],
-#calc #eurWrap input[type="checkbox"]{
-  accent-color:#cbd5e1;            /* slate-300 */
-  width:10px; height:10px;
-  margin:0;
-  transition:accent-color .15s linear;
-}
-
-/* hover (не выбран): деликатная зелёная подсветка контура */
-#calc .subcheck:hover,
-#calc #eurWrap:hover{
-  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset; /* #10b981 */
-}
-
-/* checked: НЕ заливаем фон контейнера, не меняем цвет текста,
-   только зелёная обводка + мягкая подсветка */
-#calc .subcheck:has(input:checked),
-#calc #eurWrap:has(input:checked){
-  border-color:#34d399;
-  box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
-  background:#fafcff;
-  color:inherit;
-}
-
-/* сам чекбокс при checked — зелёный фон, белая галочка */
-#calc .subcheck input[type="checkbox"]:checked,
-#calc #eurWrap input[type="checkbox"]:checked{
-  accent-color:#10b981;
-}
-
-/* checked + hover: ТОЛЬКО сам чекбокс становится тёмно-серым */
-#calc .subcheck:hover input[type="checkbox"]:checked,
-#calc #eurWrap:hover input[type="checkbox"]:checked{
-  accent-color:#374151; /* slate-700 */
-}
-
-/* подпись «+300 дин»/«+500 дин» внутри чипа */
-#calc .subcheck .subnote{ color:#5f6b7c; }
-
-
+/* — Кастомный чекбокс: ровная коробка + белая галочка — */
 #calc{
-  --cb-size: 14px;   /* размер чекбокса */
-  --cb-on:   #10b981;
-  --cb-on-h: #374151;
-  --cb-off:  #fff;
-  --cb-brd:  #cbd5e1;
+  --cb-size:18px;      /* удобная ручка размера чекбокса */
+  --cb-brd:#cbd5e1;    /* нейтральная рамка */
+  --cb-on:#10b981;     /* зелёный фон при checked */
+  --cb-on-h:#374151;   /* тёмно-серый при hover на checked */
+  --cb-off:#fff;       /* фон по умолчанию */
 }
-
 #calc .subcheck input[type="checkbox"],
 #calc #eurWrap input[type="checkbox"]{
   -webkit-appearance:none; appearance:none;
   width:var(--cb-size); height:var(--cb-size);
-  border:1.5px solid var(--cb-brd);
+  border:2px solid var(--cb-brd);
   border-radius:4px;
   background:var(--cb-off);
-  margin:0; display:grid; place-content:center;
-  transition:background-color .15s, border-color .15s;
+  margin:0;
+  display:inline-grid; place-content:center;
+  position:relative;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease;
 }
-
 #calc .subcheck input[type="checkbox"]::after,
 #calc #eurWrap input[type="checkbox"]::after{
   content:"";
-  width:calc(var(--cb-size)*.60);
-  height:calc(var(--cb-size)*.35);
-  border:2px solid #fff;      /* ← БЕЛАЯ галочка */
+  width:calc(var(--cb-size)*.50);
+  height:calc(var(--cb-size)*.30);
+  border:2px solid #fff;           /* белая галочка */
   border-top:0; border-left:0;
-  transform:rotate(45deg) scale(0);
+  transform:rotate(40deg) scale(0);
   transform-origin:center;
-  transition:transform .12s ease-in-out;
+  transition:transform .18s ease;
+  position:absolute;
 }
 
+/* checked: зелёная коробка + белая галочка */
 #calc .subcheck input[type="checkbox"]:checked,
 #calc #eurWrap input[type="checkbox"]:checked{
   background:var(--cb-on); border-color:var(--cb-on);
 }
 #calc .subcheck input[type="checkbox"]:checked::after,
 #calc #eurWrap input[type="checkbox"]:checked::after{
-  transform:rotate(45deg) scale(1);
+  transform:rotate(40deg) scale(1);
 }
 
+/* hover на включённом чекбоксе — темнее коробка, галочка остаётся белой */
 #calc .subcheck:hover input[type="checkbox"]:checked,
-#calc #eurWrap:hover  input[type="checkbox"]:checked{
+#calc #eurWrap:hover input[type="checkbox"]:checked{
   background:var(--cb-on-h); border-color:var(--cb-on-h);
 }
 
+/* лёгкая зелёная подсветка чипа на hover */
+#calc .subcheck:hover, #calc #eurWrap:hover{
+  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
+}
 
-
-/* === Calc: swap border/glow states for checkbox chips (override) === */
-
-/* 1) Активное состояние (checked) — теперь ТОЛЬКО мягкая подсветка,
-      без яркой зелёной рамки */
+/* когда чекбокс включён — мягкая зелёная подсветка чипа */
 #calc .subcheck:has(input:checked),
 #calc #eurWrap:has(input:checked){
-  border-color: #e6ebf3;                              /* вернули нейтральный контур */
-  box-shadow: 0 0 0 2px rgba(16,185,129,.10) inset;   /* мягкий зелёный inner-glow (был на :hover) */
-  background: #fafcff;
-  color: inherit;
+  border-color:#34d399;
+  box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
+  background:#fafcff; color:inherit;
 }
 
-/* 2) :hover — теперь ЯРКАЯ зелёная рамка + более заметная подсветка
-      (работает как для checked, так и для unchecked) */
-#calc .subcheck:hover,
-#calc #eurWrap:hover{
-  border-color: #34d399;                              /* яркая зелёная обводка */
-  box-shadow: 0 0 0 2px rgba(16,185,129,.14) inset;   /* чуть сильнее, чем в checked */
-}
+/* подпись «+300 дин»/«+500 дин» внутри чипа */
+#calc .subcheck .subnote{ color:#5f6b7c; }
 
-/* 3) Сохраняем прежнюю логику «checked + hover»: темнеет ТОЛЬКО сам чекбокс,
-      галочка остаётся белой (эти правила у тебя уже есть — оставляем) */
-/*  #calc .subcheck:hover input[type="checkbox"]:checked,
-    #calc #eurWrap:hover  input[type="checkbox"]:checked{
-      accent-color:#374151;  // тёмно-серый фон самого чекбокса
-    }
-*/
-
-
-
-
-/* — АДАПТИВ — */
-@media (max-width: 1024px){
-  #calc > .container{ max-width:100%; }
-  #calc > .container.card,
-  #calc > .container.calc-elevate,
-  #calc > .container.card.calc-elevate{
-    padding:16px var(--gutter);
-    border-radius:12px;
+/* — Адаптив — */
+@media (max-width:1024px){
+  #calc>.container{ max-width:100%; }
+  #calc>.container.card,
+  #calc>.container.calc-elevate,
+  #calc>.container.card.calc-elevate{
+    padding:16px var(--gutter); border-radius:12px;
   }
   .calc-grid{ grid-template-columns:1fr; }
 }
-
-@media (max-width: 640px){
-  #calc .calc-line{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-    margin-top:8px;
-  }
-  #calc .calc-eur{
-    margin-top:10px;
-    margin-bottom:14px;
-  }
+@media (max-width:640px){
+  #calc .calc-line{ flex-direction:column; align-items:flex-start; gap:8px; margin-top:8px; }
+  #calc .calc-eur{ margin-top:10px; margin-bottom:14px; }
   #calc .cta-bottom-wrap{ margin-top:12px; }
 }
 
 /* =================== /CALCULATOR (final) ===================== */
+
 
 
 
@@ -2330,6 +2180,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
