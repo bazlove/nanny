@@ -611,7 +611,7 @@ section{padding:64px 0}
 
 /* Sub options */
 .subcheck{display:flex;align-items:center;gap:8px;font-size:13px;color:#444}
-.subnote{font-size:11px;color:#777}
+.subnote{font-size:10px;color:#777}
 
 /* Presets (chips) */
 .presets{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 10px}
@@ -2209,6 +2209,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
