@@ -2134,6 +2134,44 @@ input[type="number"]{
   margin-top:4px;
 }
 
+/* === CALC: вертикальные отступы в блоке результата === */
+
+/* линия-разделитель под "Итог…" */
+#calc .res-sep{
+  height: 1px;
+  background: #e9edf3;       /* мягкий серый */
+  margin: 12px 0 14px;       /* воздух вокруг линии */
+}
+
+/* строка "Ставка … | доп. занятия …" + бейджи */
+#calc .calc-line{
+  margin: 10px 0 0;          /* небольшой отступ сверху, без нижнего */
+}
+
+/* чекбокс "Показать в евро" — отступ от верхней строки и от кнопки */
+#calc .calc-eur{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;          /* от "Ставка…" */
+  margin-bottom: 12px;       /* от кнопки */
+}
+
+/* кнопка — на случай конфликтов где-то ещё */
+#calc .cta-bottom-wrap{
+  margin-top: 6px;           /* можно увеличить до 10–12px по вкусу */
+}
+
+/* мобильный тюнинг: каплю больше воздуха */
+@media (max-width: 640px){
+  #calc .calc-line{ margin-top: 8px; }
+  #calc .calc-eur{
+    margin-top: 10px;
+    margin-bottom: 14px;
+  }
+  #calc .cta-bottom-wrap{ margin-top: 12px; }
+}
+
 /* — АДАПТИВ — */
 @media (max-width: 1024px){
   #calc > .container{ max-width:100%; }
@@ -2176,6 +2214,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
