@@ -385,7 +385,7 @@ window.updateBadge = function updateBadge(slots) {
     const add=( $('optA')?.checked?OPT:0 )+( $('optB')?.checked?OPT:0 )+( $('optC')?.checked?OPT:0 );
     const total=rate*h+add; animate(total);
 
-    const br=$('breakdown'); if(br) br.textContent=`Ставка: ${rate} дин/ч × ${h} ч${add?` | доп. занятия: +${add} дин`:''}`;
+    const br=$('breakdown'); if(br) br.textContent=`Ставка: ${rate} дин/ч × ${h} ч${add?` | Дополнительно: +${add} дин`:''}`;
 
     const badges=$('badges');
     if(badges){
@@ -1117,6 +1117,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
