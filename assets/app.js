@@ -474,33 +474,7 @@ window.updateBadge = function updateBadge(slots) {
 })();
 
 
-(function(){
-  // если :has() поддерживается — выходим (CSS сам всё сделает)
-  try {
-    if (CSS && CSS.supports && CSS.supports('selector(:has(*))')) return;
-  } catch(e){}
 
-  // фоллбек: навешиваем/снимаем класс .is-on
-  function toggleClass(label){
-    const input = label.querySelector('input[type="checkbox"]');
-    if (!input) return;
-    label.classList.toggle('is-on', input.checked);
-  }
-  const labels = document.querySelectorAll('#calc .subcheck, #calc #eurWrap');
-  labels.forEach(l => {
-    toggleClass(l);
-    const input = l.querySelector('input[type="checkbox"]');
-    input && input.addEventListener('change', () => toggleClass(l));
-  });
-
-  // стили для фоллбека (если нет :has())
-  const style = document.createElement('style');
-  style.textContent =
-    '#calc .subcheck.is-on, #calc #eurWrap.is-on{' +
-      'background:#ecfdf5;border-color:#34d399;box-shadow:0 0 0 2px rgba(16,185,129,.12) inset;color:#065f46;' +
-    '}';
-  document.head.appendChild(style);
-})();
 
 // Cookie banner + GA4 loader
 (function() {
@@ -1146,6 +1120,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
