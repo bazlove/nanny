@@ -2153,52 +2153,32 @@ section[id], #services, #calc, #faq, #contact, #main {
   color:#8a94a6;
 }
 
-/* 4) Стрелки в #kids и #dayType: свой SVG, толщина 2px и отступ справа */
-#kids, #dayType{
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;   /* стрелка отступает от края */
-  background-size: 18px 18px;
-  padding-right: 46px;                      /* место под стрелку + дыхание */
-}
 
 
-/* === Calc: кастомные стрелки у селектов (Дети / День недели) ============ */
+/* === Calc: принудительно показываем кастомные стрелки у селектов ======= */
 #calc #kids,
 #calc #dayType{
-  /* выключаем нативную стрелку во всех движках */
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   appearance: none !important;
 
-  /* рисуем свою (тонкая, как у спиннера у "Часы") */
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;  /* отступ от правого края */
-  background-size: 18px 18px;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  background-size: 18px 18px !important;
 
-  /* место под стрелку, чтобы текст не лип */
-  padding-right: 48px;
+  padding-right: 48px !important; /* запас под стрелку */
 }
 
-/* старые IE/Edge (если вдруг): убрать нативную стрелку */
-#calc #kids::-ms-expand,
-#calc #dayType::-ms-expand{ display:none; }
-
-
-/* === Calc: зелёная стрелка у селектов при фокусе ======================== */
+/* Фокус — зелёная стрелка */
 #calc #kids:focus,
 #calc #dayType:focus,
 #calc #kids:focus-visible,
 #calc #dayType:focus-visible{
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23146C43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  outline: none; /* оставляем твой кастомный focus-ring */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23146C43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  outline: none;
 }
 
 
@@ -2229,6 +2209,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
