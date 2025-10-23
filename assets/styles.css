@@ -731,7 +731,7 @@ section{padding:64px 0}
 }
 .hint:hover .tip, .hint:focus-within .tip{ opacity:1; }
 
-.input, select, input[type=number]{
+.input {
   appearance:none;
   width:100%;
   min-height:52px;
@@ -2126,6 +2126,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
