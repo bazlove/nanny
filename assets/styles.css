@@ -2028,11 +2028,11 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 .input, select, input[type="number"]{ min-height:52px; }
 
-/* — Контейнер калькулятора под ширину общего .container — */
+/* — Контейнер под ширину общего .container — */
 :root{ --container:1200px; --gutter:20px; }
 #calc>.container{
   max-width:var(--container); width:100%; margin:0 auto;
-  padding-left:var(--gutter); padding-right:var(--gutter); box-sizing:border-box;
+  padding-inline:var(--gutter); box-sizing:border-box;
 }
 #calc>.container.card,
 #calc>.container.calc-elevate,
@@ -2078,15 +2078,15 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 /* — Кастомный чекбокс: ровная коробка + белая галочка — */
 #calc{
-  --cb-size:18px;      /* удобная ручка размера чекбокса */
-  --cb-brd:#cbd5e1;    /* нейтральная рамка */
+  --cb-size:14px;      /* ⇦ размер чекбокса (меняй при желании) */
+  --cb-brd:#cbd5e1;    /* нейтральная рамка коробки */
   --cb-on:#10b981;     /* зелёный фон при checked */
-  --cb-on-h:#374151;   /* тёмно-серый при hover на checked */
+  --cb-on-h:#374151;   /* тёмно-серый фон при hover на checked */
   --cb-off:#fff;       /* фон по умолчанию */
 }
 #calc .subcheck input[type="checkbox"],
 #calc #eurWrap input[type="checkbox"]{
-  -webkit-appearance:none; appearance:none;
+  -webkit-appearance:none; appearance:none;            /* полностью убираем нативный рендер */
   width:var(--cb-size); height:var(--cb-size);
   border:2px solid var(--cb-brd);
   border-radius:4px;
@@ -2094,14 +2094,15 @@ section[id], #services, #calc, #faq, #contact, #main {
   margin:0;
   display:inline-grid; place-content:center;
   position:relative;
-  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
+/* белая «галочка» — геометрически ровная */
 #calc .subcheck input[type="checkbox"]::after,
-#calc #eurWrap input[type="checkbox"]::after{
+#calc #eurWrap  input[type="checkbox"]::after{
   content:"";
-  width:calc(var(--cb-size)*.50);
-  height:calc(var(--cb-size)*.30);
-  border:2px solid #fff;           /* белая галочка */
+  width:7px;                  /* под 14px бокс: 7×4 и толщина 2px — выглядит чётко */
+  height:4px;
+  border:2px solid #fff;      /* БЕЛАЯ галочка */
   border-top:0; border-left:0;
   transform:rotate(40deg) scale(0);
   transform-origin:center;
@@ -2118,24 +2119,25 @@ section[id], #services, #calc, #faq, #contact, #main {
 #calc #eurWrap input[type="checkbox"]:checked::after{
   transform:rotate(40deg) scale(1);
 }
-
 /* hover на включённом чекбоксе — темнее коробка, галочка остаётся белой */
 #calc .subcheck:hover input[type="checkbox"]:checked,
-#calc #eurWrap:hover input[type="checkbox"]:checked{
+#calc #eurWrap:hover  input[type="checkbox"]:checked{
   background:var(--cb-on-h); border-color:var(--cb-on-h);
 }
 
-/* лёгкая зелёная подсветка чипа на hover */
-#calc .subcheck:hover, #calc #eurWrap:hover{
-  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
-}
-
-/* когда чекбокс включён — мягкая зелёная подсветка чипа */
+/* — SWAP состояний контура чипа — */
+/* Активный (checked): ТОЛЬКО мягкая зелёная подсветка, контур нейтральный */
 #calc .subcheck:has(input:checked),
 #calc #eurWrap:has(input:checked){
+  border-color:#e6ebf3;
+  box-shadow:0 0 0 2px rgba(16,185,129,.10) inset;
+  background:#fafcff; color:inherit;
+}
+/* :hover (и для checked, и для unchecked): ярче рамка и glow */
+#calc .subcheck:hover,
+#calc #eurWrap:hover{
   border-color:#34d399;
   box-shadow:0 0 0 2px rgba(16,185,129,.14) inset;
-  background:#fafcff; color:inherit;
 }
 
 /* подпись «+300 дин»/«+500 дин» внутри чипа */
@@ -2162,6 +2164,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+
 html, body {
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -2180,6 +2183,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
