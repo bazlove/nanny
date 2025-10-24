@@ -779,6 +779,30 @@ section{padding:64px 0}
   border-radius: 0;
 }
 
+/* палитра для карточек опыта */
+#experience{
+  --exp-bg:  #FFF7EC;   /* как плитка иконки */
+  --exp-brd: #F1E7DB;
+  --exp-shadow: 0 10px 24px rgba(200,167,124,.18);
+}
+
+/* фон/бордер именно у карточек внутри опыта */
+#experience .card{
+  background: var(--exp-bg) !important;
+  border: 1px solid var(--exp-brd);
+  box-shadow: var(--exp-shadow);
+}
+
+/* ховер (лёгкое подсветление, опционально) */
+#experience .card:hover{
+  background: #FFF3E0;
+  border-color: #EAD7C3;
+}
+
+
+
+
+
 /* Sub options */
 .subcheck{display:flex;align-items:center;gap:8px;font-size:12px;color:#444}
 .subnote{font-size:10px;color:#777}
@@ -2385,6 +2409,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
