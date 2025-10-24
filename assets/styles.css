@@ -578,6 +578,50 @@ section{padding:64px 0}
   transform: scaleX(1);
 }
 
+/* === Full-bleed фон без горизонтального скролла ======================= */
+/* Why: белый фон на всю ширину, без скруглений */
+#why.panel--list{
+  position: relative;
+  z-index: 0;                 /* чтобы фон ушёл под контент */
+  background: transparent;    /* сам блок прозрачный — фон рисуем псевдоэлементом */
+  border: 0;
+  border-radius: 0;
+  padding: 32px var(--gutter, 20px);   /* внутренние отступы оставляем */
+}
+#why.panel--list::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0; bottom: 0;
+  /* трюк full-bleed: тянем к краям viewport без влияния на layout */
+  left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw;
+  background: #fff;
+}
+
+/* Мой опыт: тот же приём — белый фон на всю ширину */
+#xp.section{                 /* замени на реальный селектор секции «Мой опыт» */
+  position: relative;
+  z-index: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 28px var(--gutter, 20px) 36px;
+}
+#xp.section::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0; bottom: 0;
+  left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw;
+  background: #fff;
+}
+
+/* На всякий случай: если где-то остались «виновники» переполнения */
+img, svg, video, canvas{ max-width:100%; height:auto; }
+
+
 
 
 /* ==================== /WHY (Преимущества) — CLEAN ====================== */
@@ -2343,6 +2387,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
