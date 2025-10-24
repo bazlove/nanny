@@ -578,7 +578,13 @@ section{padding:64px 0}
   transform: scaleX(1);
 }
 
-
+#why.panel--list{
+  background:#fff;
+  margin-inline: calc(-1 * var(--page-pad));
+  padding-inline: var(--page-pad);
+  border-radius: 0;
+}
+#why.panel--list .why-card{ border-left:0 !important; }
 
 
 
@@ -741,6 +747,14 @@ section{padding:64px 0}
 /* уважение prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce){
   #experience .xp-card{ transition: none; }
+}
+
+/* ====== EXPERIENCE: белая подложка на всю ширину, как у WHY ====== */
+#experience.section{
+  background:#fff;
+  margin-inline: calc(-1 * var(--page-pad));
+  padding-inline: var(--page-pad);
+  border-radius: 0;
 }
 
 /* Sub options */
@@ -2324,7 +2338,11 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+/* ====== БАЗОВОЕ: совпадение с отступами контейнера ====== */
+.container{ --page-pad: 20px; padding-inline: var(--page-pad); } /* уже 20px в текущем CSS */
 
+/* Мягко “страхуем” от микровылетов, чтобы не было горизонтального скролла */
+html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей */
 
 
 html, body {
@@ -2345,6 +2363,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
