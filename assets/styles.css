@@ -525,10 +525,10 @@ section{padding:64px 0}
 }
 
 /* Привязка файлов (проверь регистр и наличие файлов на проде) */
-#why .ico-security::before{ -webkit-mask-image:url("nanny/img/icons/security.svg");    mask-image:url("nanny/img/icons/security.svg"); }
-#why .ico-empathy::before{  -webkit-mask-image:url("nanny/img/icons/empathy.svg");     mask-image:url("nanny/img/icons/empathy.svg"); }
-#why .ico-dev::before{      -webkit-mask-image:url("nanny/img/icons/development.svg"); mask-image:url("nanny/img/icons/development.svg"); }
-#why .ico-home::before{     -webkit-mask-image:url("nanny/img/icons/homemode.svg");    mask-image:url("nanny/img/icons/homemode.svg"); }
+#why .ico-security::before{ -webkit-mask-image:url("../img/icons/security.svg");    mask-image:url("../img/icons/security.svg"); }
+#why .ico-empathy::before{  -webkit-mask-image:url("../img/icons/empathy.svg");     mask-image:url("../img/icons/empathy.svg"); }
+#why .ico-dev::before{      -webkit-mask-image:url("../img/icons/development.svg"); mask-image:url("../img/icons/development.svg"); }
+#why .ico-home::before{     -webkit-mask-image:url("../img/icons/homemode.svg");    mask-image:url("../img/icons/homemode.svg"); }
 
 /* Ховер: перекрашиваем только глиф + лёгкое свечение */
 #why.panel--list .why-card:hover .why-icon::before,
@@ -2320,6 +2320,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
