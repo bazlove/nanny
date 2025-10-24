@@ -696,20 +696,30 @@ section{padding:64px 0}
   z-index: 2;
 }
 
+
+/* XP: бежевые карточки как у иконок WHY */
+#experience{
+  --exp-bg:  #FFF7EC;     /* фон плитки */
+  --exp-brd: #F1E7DB;     /* контур */
+  --exp-shadow: 0 10px 24px rgba(200,167,124,.18);
+}
+
+
 /* карточка этапа */
 #experience .xp-card{
-  background: #fff;
-  border: 1px solid #E5E7EB;
+  background: var(--exp-bg) !important; 
+  border: 1px solid var(--exp-brd) !important;
   border-radius: 14px;
   padding: var(--space-4);
-  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+  box-shadow: var(--exp-shadow);
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   text-align: left;
 }
 #experience .xp-card:hover{
+  background: #FFF3E0;
+  border-color: #EAD7C3;
+  box-shadow: 0 14px 30px rgba(200,167,124,.22);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0,0,0,.08);
-  border-color: #E1E7EF;
 }
 /* клавиатурный фокус — на содержимом карточки */
 #experience .xp-card:focus-within{
@@ -2409,6 +2419,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
