@@ -2372,6 +2372,28 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 
+/* если у тебя уже заведена переменная — используем её */
+.container{ --page-pad: 20px; }  /* если есть — не дублируй */
+
+/* белая простыня во всю ширину контентной области (без скруглений) */
+#calc{
+  background:#fff;
+  border-radius:0;
+  margin-inline: calc(-1 * var(--page-pad, 20px));
+  padding-inline: var(--page-pad, 20px);
+}
+
+/* гасим бывшую «карточку» */
+#calc > .container.card,
+#calc > .container.calc-elevate,
+#calc > .container.card.calc-elevate,
+#calc .card{
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+
 
 /* =================== /CALCULATOR ===================== */
 
@@ -2405,6 +2427,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
