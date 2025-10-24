@@ -448,14 +448,6 @@ section{padding:64px 0}
   background: linear-gradient(90deg, #E8EEF7, rgba(232,238,247,0) 70%);
 }
 
-/* 3) Иконка-кружок + заголовок + мини-галочка */
-#why.panel--list .why-emoji{
-  width:28px; height:28px; display:grid; place-items:center;
-  font-size:18px; line-height:1;
-  color:#0b4870; background:#F3F8FF; border:1px solid #E6F0FA; border-radius:999px;
-  transform: translateY(2px); transition: transform .12s;
-}
-#why.panel--list .why-card:hover .why-emoji{ transform: translateY(1px); }
 
 #why.panel--list .why-headline{ grid-column:1 / -1; display:flex; align-items:center; gap:10px; margin:0; }
 #why.panel--list .why-title{
@@ -483,14 +475,9 @@ section{padding:64px 0}
 
 /* Доступность: без навязчивых движений */
 @media (prefers-reduced-motion: reduce){
-  #why.panel--list .why-card, #why.panel--list .why-emoji{ transition:none; }
+  #why.panel--list .why-card{ transition:none; }
 }
 
-/* WHY: большие бежевые SVG-иконки над заголовком */
-#why.panel--list .why-headline{
-  display:flex; flex-direction:column; align-items:flex-start;
-  gap:10px; margin:0;
-}
 
 /* Палитра для иконок */
 #why.panel--list{ --ico-ink:#C8A77C; --ico-bg:#FFF7EC; --ico-brd:#F1E7DB; }
@@ -512,23 +499,63 @@ section{padding:64px 0}
   box-shadow:0 8px 22px rgba(200,167,124,.20);
 }
 
-/* Сам SVG наследует цвет и масштабируется */
-#why.panel--list .why-icon svg{
-  width:28px; height:28px;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  fill: none;
-}
-
 /* Заголовок оставляем как есть (с галочкой) — он уже ниже иконки */
 #why.panel--list .why-title{ margin:0; }
 
 /* Адаптив: на телефоне иконку делаем компактнее */
 @media (max-width:640px){
   #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
-  #why.panel--list .why-icon svg{ width:26px; height:26px; }
 }
 
+/* WHY: иконки из файлов с перекраской и свечением */
+#why.panel--list{ --ico-ink:#C8A77C; --ico-ink-hover:#146C43; --ico-bg:#FFF7EC; --ico-brd:#F1E7DB; }
+
+#why.panel--list .why-headline{
+  display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin:0;
+}
+
+/* контейнер иконки */
+#why.panel--list .why-icon{
+  width:56px; height:56px; display:grid; place-items:center;
+  background:var(--ico-bg); border:1px solid var(--ico-brd); border-radius:14px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+  position:relative; overflow:visible; transition:transform .12s;
+}
+#why.panel--list .why-card:hover .why-icon{ transform:translateY(-1px); }
+
+/* сам глиф — псевдоэлемент, который можно перекрашивать */
+#why.panel--list .why-icon::before{
+  content:""; width:28px; height:28px; display:block;
+  background-color: var(--ico-ink);
+  transition: background-color .15s ease, filter .2s ease;
+  -webkit-mask: center / contain no-repeat;
+          mask: center / contain no-repeat;
+}
+
+/* привязка файлов к модификаторам */
+#why .ico-security::before{ -webkit-mask-image:url("/assets/icons/security.svg");    mask-image:url("/assets/icons/security.svg"); }
+#why .ico-empathy::before{  -webkit-mask-image:url("/assets/icons/empathy.svg");     mask-image:url("/assets/icons/empathy.svg"); }
+#why .ico-dev::before{      -webkit-mask-image:url("/assets/icons/Development.svg"); mask-image:url("/assets/icons/Development.svg"); }
+#why .ico-home::before{     -webkit-mask-image:url("/assets/icons/homemode.svg");    mask-image:url("/assets/icons/homemode.svg"); }
+
+/* hover/focus — перекрашиваем только иконку + мягкое свечение */
+#why.panel--list .why-card:hover .why-icon::before,
+#why.panel--list .why-card:focus-within .why-icon::before{
+  background-color: var(--ico-ink-hover);
+  filter: drop-shadow(0 0 8px rgba(20,108,67,.28));
+}
+
+/* адаптив */
+@media (max-width:640px){
+  #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
+  #why.panel--list .why-icon::before{ width:26px; height:26px; }
+}
+
+/* фолбэк без масок */
+@supports not ((-webkit-mask: url("")) or (mask: url(""))){
+  #why.panel--list .why-icon::before{ content:none; }
+  /* при желании можно подменить на фоном без перекраски */
+}
 
 
 
@@ -2291,6 +2318,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
