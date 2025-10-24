@@ -557,6 +557,29 @@ section{padding:64px 0}
 @media (prefers-reduced-motion: reduce){
   #why.panel--list .why-card, #why.panel--list .why-icon{ transition:none; }
 }
+
+/* базовая линия скрыта (scaleX(0)) */
+#why.panel--list .why-text{
+  position: relative;
+  margin: 12px 0 0;
+}
+#why.panel--list .why-text::after{
+  content:"";
+  position:absolute; left:0; bottom:-10px;
+  width:100%; height:1px; background:#E8EEF7;   /* тот же цвет, что под заголовком */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .28s ease;
+  border-radius:1px;
+}
+/* показываем при hover/focus карточки */
+#why.panel--list .why-card:hover .why-text::after,
+#why.panel--list .why-card:focus-within .why-text::after{
+  transform: scaleX(1);
+}
+
+
+
 /* ==================== /WHY (Преимущества) — CLEAN ====================== */
 
 
@@ -2320,6 +2343,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
