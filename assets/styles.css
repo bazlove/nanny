@@ -2374,42 +2374,38 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* reset прежних бейдов */
 #calc{
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  background: transparent;         /* фон дадим псевдоэлементом */
   position: relative;
   z-index: 0;
+  background: transparent;
+}
+#calc::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0; bottom:0;
+  left:50%; right:50%;
+  margin-left:-50vw;     /* тянем к левому краю окна */
+  margin-right:-50vw;    /* и к правому */
+  background:#fff;
+  border-radius:0;
 }
 
-/* карточность внутри — без боковых паддингов */
-#calc > .container{ padding-inline: 0 !important; }
+/* внутри просто стандартные паддинги */
+#calc > .container{
+  padding-inline: var(--gutter, 20px);
+}
 
-/* если где-то ещё задаётся "карточка" — гасим горизонтальные паддинги */
+/* гасим старые скругления/тени */
 #calc > .container.card,
-#calc > .container.calc-elevate{
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  /* вертикальные можно оставить */
+#calc > .container.calc-elevate,
+#calc > .container.card.calc-elevate,
+#calc .card{
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
-
-/* full-bleed фон, но контент остаётся «в контейнере» */
-#calc{
-  /* тянем секцию на края окна, компенсируя обратно паддингами */
-  margin-left:  calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  padding-left:  calc(50vw - 50%);
-  padding-right: calc(50vw - 50%);
-  background:#fff;                 /* сама простыня */
-  border-radius:0;                 /* без скруглений */
-}
-
-/* на редких дисплеях бывают субпиксельные артефакты — подстрахуемся */
-html{ overflow-x: clip; }          /* лучше, чем hidden */
 
 
 
@@ -2448,6 +2444,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
