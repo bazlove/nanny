@@ -486,6 +486,48 @@ section{padding:64px 0}
   #why.panel--list .why-card, #why.panel--list .why-emoji{ transition:none; }
 }
 
+/* WHY: большие бежевые SVG-иконки над заголовком */
+#why.panel--list .why-headline{
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:10px; margin:0;
+}
+
+/* Палитра для иконок */
+#why.panel--list{ --ico-ink:#C8A77C; --ico-bg:#FFF7EC; --ico-brd:#F1E7DB; }
+
+#why.panel--list .why-icon{
+  width:56px; height:56px;
+  display:grid; place-items:center;
+  background:var(--ico-bg);
+  border:1px solid var(--ico-brd);
+  border-radius:14px;
+  color:var(--ico-ink);          /* ← цвет штрихов иконки */
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+  transition:transform .12s, box-shadow .15s;
+}
+
+/* Тень и лёгкий подъём при hover строки */
+#why.panel--list .why-card:hover .why-icon{
+  transform: translateY(-1px);
+  box-shadow:0 8px 22px rgba(200,167,124,.20);
+}
+
+/* Сам SVG наследует цвет и масштабируется */
+#why.panel--list .why-icon svg{
+  width:28px; height:28px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+}
+
+/* Заголовок оставляем как есть (с галочкой) — он уже ниже иконки */
+#why.panel--list .why-title{ margin:0; }
+
+/* Адаптив: на телефоне иконку делаем компактнее */
+@media (max-width:640px){
+  #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
+  #why.panel--list .why-icon svg{ width:26px; height:26px; }
+}
 
 
 
@@ -2249,6 +2291,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
