@@ -414,183 +414,72 @@ section{padding:64px 0}
 
 
 
-/* === WHY — panel–list: v2 (trustier) =================================== */
-/* 0) Мягкий фон секции → визуально отличает от "Услуг" */
+/* ====================== WHY (Преимущества) — CLEAN ====================== */
+
+/* Палитра иконок (можно менять централизованно) */
 #why.panel--list{
-  background: linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%);
-  border: 1px solid #E8F0FA;
-  border-radius: 16px;
-  padding: 18px;
+  --ico-ink:       #C8A77C;     /* бежевый цвет иконок по умолчанию */
+  --ico-ink-hover: #146C43;     /* зелёный при hover/focus */
+  --ico-bg:        #FFF7EC;     /* фон «плитки» иконки */
+  --ico-brd:       #F1E7DB;     /* контур плитки иконки */
 }
 
-/* 1) Грид — читаемый на любом брейкпоинте */
+/* Секция: белое полотно без скруглений + больше «воздуха» */
+#why.panel--list{
+  background:#fff;
+  border:0;
+  border-radius:0;
+  padding:32px var(--gutter, 20px);
+  margin-inline: calc(-1 * var(--gutter, 20px)); /* растягиваем подложку на ширину контейнера */
+}
+
+/* Грид преимуществ */
 #why.panel--list .why-grid{
   display:grid;
-  gap: 22px 24px;
+  gap:32px 36px;
   grid-template-columns: repeat(3, minmax(0,1fr));
 }
 @media (min-width:1280px){ #why.panel--list .why-grid{ grid-template-columns: repeat(4, 1fr);} }
 @media (max-width:980px){  #why.panel--list .why-grid{ grid-template-columns: repeat(2, 1fr);} }
 @media (max-width:640px){  #why.panel--list .why-grid{ grid-template-columns: 1fr;} }
 
-/* 2) Строка чек-листа: левый акцент + разделитель после */
+/* Карточка-строка без левой «синей» линии */
 #why.panel--list .why-card{
   position:relative;
-  display:grid; grid-template-columns:36px 1fr; column-gap:12px; row-gap:6px;
-  background:transparent; border:0; box-shadow:none; padding:0; min-height:auto;
-  border-left:3px solid transparent;   /* акцент появится на hover */
-  transition: border-color .15s, transform .12s;
+  display:grid;
+  grid-template-columns: 1fr;   /* одна колонка: иконка + заголовок сверху */
+  row-gap:0;
+  border-left:0 !important;
+  background:transparent;
+  box-shadow:none;
+  padding:0;
+  transition: transform .12s ease;
 }
-#why.panel--list .why-card:hover{ border-left-color: var(--primary); transform: translateY(-1px); }
+#why.panel--list .why-card:hover{ transform: translateY(-1px); }
 
-#why.panel--list .why-card::after{
-  content:""; grid-column:1 / -1; height:1px; margin-top:12px;
-  background: linear-gradient(90deg, #E8EEF7, rgba(232,238,247,0) 70%);
+/* Шапка: иконка сверху, затем заголовок, затем тонкий разделитель */
+#why.panel--list .why-headline{
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:12px; margin:0 0 2px;
+}
+#why.panel--list .why-headline::after{
+  content:""; width:100%; height:1px; background:#E8EEF7; margin-top:10px; border-radius:1px;
 }
 
-
-#why.panel--list .why-headline{ grid-column:1 / -1; display:flex; align-items:center; gap:10px; margin:0; }
+/* Заголовок — крупнее; галочка показывается только при hover/focus карточки */
 #why.panel--list .why-title{
-  margin:0; font-size:17px; line-height:1.25; font-weight:800; color:#0f172a; letter-spacing:.2px;
+  margin:0;
+  font-size: clamp(18px, 2.1vw, 20px);
+  line-height:1.25;
+  font-weight:800;
+  color:#0f172a;
   display:flex; align-items:center; gap:8px;
 }
 #why.panel--list .why-title::after{
-  content:""; width:14px; height:14px; flex:0 0 14px; opacity:.9;
+  content:""; width:14px; height:14px; flex:0 0 14px; opacity:0;
   background:center/100% 100% no-repeat
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.3 8.2l2.7 2.7 6-6' fill='none' stroke='%2315803D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-
-/* 4) Текст + бейджи-доказательства + ссылка на пруф */
-#why.panel--list .why-text{ grid-column:2 / -1; margin:2px 0 0; color:#4b5563; font-size:14.5px; line-height:1.55; }
-#why.panel--list .why-meta{ grid-column:2 / -1; display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-#why.panel--list .why-meta .badge{
-  font-size:12px; padding:3px 8px; border-radius:999px;
-  background:#F2FAF6; border:1px solid #B9E0D1; color:#146C43;
-}
-#why.panel--list .why-proof{
-  grid-column:2 / -1; margin-top:6px; font-size:12px; color:#2b6e59;
-  text-decoration: underline dotted; text-underline-offset: 2px;
-}
-#why.panel--list .why-proof:hover{ color:#146C43; text-decoration-style: solid; }
-
-/* Доступность: без навязчивых движений */
-@media (prefers-reduced-motion: reduce){
-  #why.panel--list .why-card{ transition:none; }
-}
-
-
-/* Палитра для иконок */
-#why.panel--list{ --ico-ink:#C8A77C; --ico-bg:#FFF7EC; --ico-brd:#F1E7DB; }
-
-#why.panel--list .why-icon{
-  width:56px; height:56px;
-  display:grid; place-items:center;
-  background:var(--ico-bg);
-  border:1px solid var(--ico-brd);
-  border-radius:14px;
-  color:var(--ico-ink);          /* ← цвет штрихов иконки */
-  box-shadow:0 1px 0 rgba(0,0,0,.03);
-  transition:transform .12s, box-shadow .15s;
-}
-
-/* Тень и лёгкий подъём при hover строки */
-#why.panel--list .why-card:hover .why-icon{
-  transform: translateY(-1px);
-  box-shadow:0 8px 22px rgba(200,167,124,.20);
-}
-
-/* Заголовок оставляем как есть (с галочкой) — он уже ниже иконки */
-#why.panel--list .why-title{ margin:0; }
-
-/* Адаптив: на телефоне иконку делаем компактнее */
-@media (max-width:640px){
-  #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
-}
-
-/* WHY: иконки из файлов с перекраской и свечением */
-#why.panel--list{ --ico-ink:#C8A77C; --ico-ink-hover:#146C43; --ico-bg:#FFF7EC; --ico-brd:#F1E7DB; }
-
-#why.panel--list .why-headline{
-  display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin:0;
-}
-
-/* контейнер иконки */
-#why.panel--list .why-icon{
-  width:56px; height:56px; display:grid; place-items:center;
-  background:var(--ico-bg); border:1px solid var(--ico-brd); border-radius:14px;
-  box-shadow:0 1px 0 rgba(0,0,0,.03);
-  position:relative; overflow:visible; transition:transform .12s;
-}
-#why.panel--list .why-card:hover .why-icon{ transform:translateY(-1px); }
-
-/* сам глиф — псевдоэлемент, который можно перекрашивать */
-#why.panel--list .why-icon::before{
-  content:""; width:28px; height:28px; display:block;
-  background-color: var(--ico-ink);
-  transition: background-color .15s ease, filter .2s ease;
-  -webkit-mask: center / contain no-repeat;
-          mask: center / contain no-repeat;
-}
-
-/* привязка файлов к модификаторам */
-#why .ico-security::before{ -webkit-mask-image:url("/img/icons/security.svg");    mask-image:url("/img/icons/security.svg"); }
-#why .ico-empathy::before{  -webkit-mask-image:url("/img/icons/empathy.svg");     mask-image:url("/img/icons/empathy.svg"); }
-#why .ico-dev::before{      -webkit-mask-image:url("/img/icons/development.svg"); mask-image:url("/img/icons/development.svg"); }
-#why .ico-home::before{     -webkit-mask-image:url("/img/icons/homemode.svg");    mask-image:url("/img/icons/homemode.svg"); }
-
-/* hover/focus — перекрашиваем только иконку + мягкое свечение */
-#why.panel--list .why-card:hover .why-icon::before,
-#why.panel--list .why-card:focus-within .why-icon::before{
-  background-color: var(--ico-ink-hover);
-  filter: drop-shadow(0 0 8px rgba(20,108,67,.28));
-}
-
-/* адаптив */
-@media (max-width:640px){
-  #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
-  #why.panel--list .why-icon::before{ width:26px; height:26px; }
-}
-
-/* фолбэк без масок */
-@supports not ((-webkit-mask: url("")) or (mask: url(""))){
-  #why.panel--list .why-icon::before{ content:none; }
-  /* при желании можно подменить на фоном без перекраски */
-}
-
-/* === WHY panel–list: tuning pass v3 =================================== */
-
-/* 1) Больше «воздуха» внутри секции и между элементами */
-#why.panel--list{ padding:28px 28px; }                    /* было 18px */
-#why.panel--list .why-grid{ gap:28px 32px; }              /* было 22×24 */
-
-/* 2) Карточка одной колонкой, убираем левый акцент (синюю линию) */
-#why.panel--list .why-card{
-  grid-template-columns: 1fr;                             /* раньше было 36px 1fr */
-  border-left:0 !important;
-}
-#why.panel--list .why-card:hover{
-  border-left-color: transparent;                         /* на всякий случай */
-  transform: translateY(-1px);
-}
-
-/* 3) Иконка сверху, заголовок ниже, разделитель под заголовком */
-#why.panel--list .why-headline{
-  grid-column:1 / -1;
-  display:flex; flex-direction:column; align-items:flex-start;
-  gap:12px; margin:0 0 2px 0;
-}
-#why.panel--list .why-headline::after{
-  content:""; display:block; width:100%; height:1px;
-  background:#E8EEF7; margin-top:10px; border-radius:1px;
-}
-
-/* 4) Текст без внутреннего левого отступа (ровно по сетке) */
-#why.panel--list .why-text{ grid-column:1 / -1; margin:10px 0 0; text-align:left; }
-
-/* 5) Галочка у заголовка — ТОЛЬКО при hover/focus карточки */
-#why.panel--list .why-title{ font-size:18px; line-height:1.25; } /* крупнее */
-#why.panel--list .why-title::after{
-  opacity:0; transform: translateY(-2px) scale(.9);
+  transform: translateY(-2px) scale(.9);
   transition: opacity .15s ease, transform .15s ease;
 }
 #why.panel--list .why-card:hover .why-title::after,
@@ -598,26 +487,74 @@ section{padding:64px 0}
   opacity:1; transform:none;
 }
 
-/* 7) Иконки: то же поведение, что было — цвет меняется только у глифа */
-#why.panel--list .why-icon{ position:relative; }          /* на всякий случай */
+/* Текст — ровно по сетке, без «ступеньки» слева */
+#why.panel--list .why-text{
+  grid-column:1 / -1;
+  margin:12px 0 0;
+  color:#4b5563;
+  font-size:14.5px;
+  line-height:1.55;
+  text-align:left;
+}
+
+/* ИКОНКА: плитка + маска-глиф, которую можно перекрашивать */
+#why.panel--list .why-icon{
+  width:56px; height:56px;
+  display:grid; place-items:center;
+  background:var(--ico-bg);
+  border:1px solid var(--ico-brd);
+  border-radius:14px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+  position:relative; overflow:visible;
+  transition: transform .12s ease, box-shadow .15s ease;
+}
+#why.panel--list .why-card:hover .why-icon{ transform: translateY(-1px); box-shadow:0 8px 22px rgba(200,167,124,.20); }
+
+/* Сам глиф — через маску: цвет задаём background-color */
 #why.panel--list .why-icon::before{
   content:""; width:28px; height:28px; display:block;
   background-color: var(--ico-ink);
   transition: background-color .15s ease, filter .2s ease;
-  -webkit-mask: center / contain no-repeat;
-          mask: center / contain no-repeat;
+  -webkit-mask-position:center; mask-position:center;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  -webkit-mask-size:contain;     mask-size:contain;
 }
+
+/* Привязка файлов (проверь регистр и наличие файлов на проде) */
+#why .ico-security::before{ -webkit-mask-image:url("/img/icons/security.svg");    mask-image:url("/img/icons/security.svg"); }
+#why .ico-empathy::before{  -webkit-mask-image:url("/img/icons/empathy.svg");     mask-image:url("/img/icons/empathy.svg"); }
+#why .ico-dev::before{      -webkit-mask-image:url("/img/icons/development.svg"); mask-image:url("/img/icons/development.svg"); }
+#why .ico-home::before{     -webkit-mask-image:url("/img/icons/homemode.svg");    mask-image:url("/img/icons/homemode.svg"); }
+
+/* Ховер: перекрашиваем только глиф + лёгкое свечение */
 #why.panel--list .why-card:hover .why-icon::before,
 #why.panel--list .why-card:focus-within .why-icon::before{
   background-color: var(--ico-ink-hover);
   filter: drop-shadow(0 0 8px rgba(20,108,67,.28));
 }
 
-/* 8) Мобайл — компактнее иконки */
+/* Адаптив иконки */
 @media (max-width:640px){
   #why.panel--list .why-icon{ width:48px; height:48px; border-radius:12px; }
   #why.panel--list .why-icon::before{ width:26px; height:26px; }
 }
+
+/* Легаси: если где-то остались эмодзи-иконки — скрываем их, чтобы не конфликтовали */
+#why.panel--list .why-emoji{ display:none !important; }
+
+/* Стык со следующим блоком «Мой опыт»: такое же белое полотно без радиусов */
+#xp.section{
+  background:#fff;
+  border:0; border-radius:0;
+  padding-top:24px;
+}
+
+/* Доступность: без лишних анимаций при reduce-motion */
+@media (prefers-reduced-motion: reduce){
+  #why.panel--list .why-card, #why.panel--list .why-icon{ transition:none; }
+}
+/* ==================== /WHY (Преимущества) — CLEAN ====================== */
+
 
 
 
@@ -2379,6 +2316,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
