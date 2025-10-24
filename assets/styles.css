@@ -473,7 +473,7 @@ section{padding:64px 0}
 /* Заголовок — крупнее; галочка показывается только при hover/focus карточки */
 #why.panel--list .why-title{
   margin:0;
-  font-size: clamp(18px, 2.1vw, 20px);
+  font-size: clamp(17px, 2.1vw, 19px);
   line-height:1.25;
   font-weight:800;
   color:#0f172a;
@@ -2405,6 +2405,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
