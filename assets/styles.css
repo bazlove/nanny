@@ -2372,29 +2372,27 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 
+
+
+/* используем те же переменные, что и глобальный .container */
+:root{ --gutter: 20px; }                /* у тебя уже есть — не дублируй, если объявлено */
+
+/* простыня на ширину контентной области страницы */
 #calc{
-  position: relative;
-  z-index: 0;
-  background: transparent;
-}
-#calc::before{
-  content:"";
-  position:absolute;
-  z-index:-1;
-  top:0; bottom:0;
-  left:50%; right:50%;
-  margin-left:-50vw;     /* тянем к левому краю окна */
-  margin-right:-50vw;    /* и к правому */
   background:#fff;
   border-radius:0;
+  margin-inline: calc(-1 * var(--gutter));   /* вытягиваем к краям контейнера */
+  padding-inline: var(--gutter);             /* возвращаем стандартный паддинг */
 }
 
-/* внутри просто стандартные паддинги */
+/* очень важно: не дублировать паддинги внутри */
 #calc > .container{
-  padding-inline: var(--gutter, 20px);
+  padding-inline: 0 !important;              /* иначе будет «+20» сверху к нашим 20 */
+  max-width: var(--container, 1200px);
+  margin-inline: auto;
 }
 
-/* гасим старые скругления/тени */
+/* если где-то осталась «карточность» — гасим */
 #calc > .container.card,
 #calc > .container.calc-elevate,
 #calc > .container.card.calc-elevate,
@@ -2403,6 +2401,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   box-shadow: none !important;
   border-radius: 0 !important;
 }
+
 
 
 
@@ -2439,6 +2438,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
