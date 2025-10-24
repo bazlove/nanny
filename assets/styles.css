@@ -587,6 +587,28 @@ section{padding:64px 0}
 #why.panel--list .why-card{ border-left:0 !important; }
 
 
+/* держим заголовок в одну строку и разрешаем ему сжиматься */
+#why.panel--list .why-title{
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;           /* важно внутри flex/grid */
+}
+
+/* колонки WHY: гарантируем минимальную ширину */
+@media (min-width: 1100px){
+  #why.panel--list .why-grid{
+    grid-template-columns: repeat(4, minmax(280px, 1fr)); /* подстрой под макет */
+    column-gap: 36px;
+  }
+}
+
+/* если нужно ещё компактней — чуть уменьшим кегль на узких десктопах */
+@media (max-width: 1260px) and (min-width: 1100px){
+  #why.panel--list .why-title{ font-size: 18px; }
+}
+
+
 
 /* ==================== /WHY (Преимущества) — CLEAN ====================== */
 
@@ -2363,6 +2385,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
