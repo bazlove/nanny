@@ -406,15 +406,21 @@ html, body { overflow-x: clip; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-flow:dense;
     gap:10px;
-    font-weight: 500 !important;
-    letter-spacing: 0; 
   }
   #top .hero-tags > li{
     width:100%;
     min-height:42px;
     display:inline-flex; align-items:center; justify-content:center;
     text-align:center;
+    font-weight: 500 !important;
+    letter-spacing: 0; 
   }
+  @media (min-width:1025px){
+  #top .hero-tags li{
+    font-size: 15px;
+    min-height: 40px;
+  }
+}
   /* Только «без гаджетов» — на всю ширину */
   #top .hero-tags li[data-emoji="📵"]{ grid-column: 1 / -1; }
 }
