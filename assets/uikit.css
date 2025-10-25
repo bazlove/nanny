@@ -136,66 +136,95 @@ a:focus-visible{
 }
 a[disabled], .link--muted{ color: var(--neutral-500); pointer-events:none; }
 
-/* ===================== Кнопки ===================== */
+
+/* ===================== Кнопки (UI Kit — чистовая версия) ===================== */
 .btn{
-  --btn-bg: var(--primary-50);
+  --btn-bg:  var(--primary-50);
   --btn-brd: var(--primary);
   --btn-ink: var(--primary-700);
 
   display:inline-flex; align-items:center; justify-content:center;
-  gap: 10px; font-weight: 700; letter-spacing:.2px;
-  padding: 12px 16px;
+  gap:10px;
+  padding:12px 16px;
   border:1px solid var(--btn-brd);
   border-radius: var(--r-md);
   background: var(--btn-bg);
   color: var(--btn-ink);
-  cursor:pointer; user-select:none;
-  transition: background var(--trans-2), border-color var(--trans-2), transform .05s;
-  text-decoration: none;
+  font-weight:700; letter-spacing:.2px;
+  cursor:pointer; user-select:none; text-decoration:none;
+
+  transition:
+    background var(--trans-2),
+    border-color var(--trans-2),
+    color var(--trans-2),
+    transform .05s;
 }
 .btn:hover{ transform: translateY(-1px); }
 .btn:active{ transform: translateY(0); }
-.btn:focus-visible{ outline: 3px solid rgba(21,128,61,.28); outline-offset:2px; }
+.btn:focus-visible{ outline:3px solid rgba(21,128,61,.28); outline-offset:2px; }
 .btn[disabled]{ opacity:.6; pointer-events:none; }
 
 /* размеры */
-.btn-sm{ padding: 9px 12px; border-radius: var(--r-sm); font-weight: 600; }
-.btn-lg{ padding: 14px 18px; border-radius: var(--r-lg); }
+.btn-sm{ padding:9px 12px; border-radius: var(--r-sm); font-weight:600; }
+.btn-lg{ padding:14px 18px; border-radius: var(--r-lg); }
 
 /* виды */
 .btn-primary{
-  --btn-bg: var(--primary);
+  --btn-bg:  var(--primary);
   --btn-brd: var(--primary);
   --btn-ink: #fff;
 }
-.btn-primary:hover{ --btn-bg: #10793a; --btn-brd:#10793a; }
+/* SWAP-логика: filled → hover как outline (прозрачный фон, зелёный текст/бордер) */
+.btn-primary:hover,
+.btn-primary:focus-visible{
+  --btn-bg:  transparent;
+  --btn-brd: var(--primary-700);
+  --btn-ink: var(--primary-700);
+  background: transparent;
+  color: var(--primary-700);
+}
 
-.btn-secondary{
-  --btn-bg: var(--info-bg);
-  --btn-brd: var(--info-brd);
-  --btn-ink: var(--info-ink);
-}
-.btn-ghost{
-  --btn-bg: transparent;
-  --btn-brd: transparent;
-  --btn-ink: var(--neutral-800);
-  border-color: var(--neutral-300);
-  background: #fff;
-}
 .btn-outline{
-  --btn-bg: transparent;
+  --btn-bg:  transparent;
   --btn-ink: var(--primary-700);
   --btn-brd: var(--primary-700);
   background: transparent;
 }
+/* SWAP-логика: outline → hover как filled (зелёная заливка, белый текст) */
+.btn-outline:hover,
+.btn-outline:focus-visible{
+  --btn-bg:  var(--primary);
+  --btn-brd: var(--primary);
+  --btn-ink: #fff;
+  background: var(--primary);
+  color:#fff;
+}
+
+.btn-secondary{
+  --btn-bg:  var(--info-bg);
+  --btn-brd: var(--info-brd);
+  --btn-ink: var(--info-ink);
+}
+
+.btn-ghost{
+  --btn-bg:  transparent;
+  --btn-brd: transparent;
+  --btn-ink: var(--neutral-800);
+  border-color: var(--neutral-300);
+  background:#fff;
+}
+
 .btn-danger{
-  --btn-bg: #FEE2E2;
+  --btn-bg:  #FEE2E2;
   --btn-brd: #FCA5A5;
   --btn-ink: #B91C1C;
 }
 
 /* иконки в кнопках */
 .btn > .icon{ width:18px; height:18px; display:inline-block; }
+
+
+
 
 /* ===================== Формы (inputs/select/textarea) ===================== */
 .input, select, textarea{
