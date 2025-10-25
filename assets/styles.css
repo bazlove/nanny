@@ -2457,35 +2457,25 @@ img {
 
 
 
-/* ================== MOBILE/TABLET HEADER & HERO PATCH (for styles 2.0) ================== */
-:root{
-  --bp-tablet: 1024px;
-  --bp-mobile:  640px;
+/* ================== MOBILE/TABLET HEADER & HERO PATCH — UI Kit compatible ================== */
+
+/* 1) Языковой переключатель: в шапке скрыть, в мобильном меню показать */
+@media (max-width: 1024.98px){
+  .site-header .lang-switch{ display:none !important; }           /* экземпляр в шапке */
+  .mobile-nav .lang-switch{ display:flex !important; gap: var(--space-3, 12px); }  /* в бургер-меню */
 }
 
-/* 1) Языковой переключатель: в шапке скрываем, в бургер-меню показываем */
-@media (max-width: var(--bp-tablet)){
-  /* экземпляр в шапке */
-  .site-header .lang-switch{ display:none !important; }
-
-  /* экземпляр внутри выпадающего мобильного меню */
-  .mobile-nav .lang-switch{ display:flex !important; gap:10px; }
-}
-
-/* 2) Бейдж «слоты/доступность» — уместить под логотипом, дать переносы строк */
-@media (max-width: var(--bp-tablet)){
-  /* Две строки в шапке: 1) бренд + бургер  2) бейдж со слотами */
+/* 2) Бейдж «свободно …»: укладка под логотипом, переносы строк, «резиновая» типографика */
+@media (max-width: 1024.98px){
   .site-header .header-bar{
     display:grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto;      /* логотип | бургер */
     align-items:center;
-    gap: 8px 12px;
+    gap: var(--space-2, 8px) var(--space-3, 12px);
   }
-
-  /* бургер вправо */
   .site-header .header-bar .burger{ justify-self:end; }
 
-  /* сам бейдж (подхватываем наиболее вероятные классы; не трогаем .header-nav) */
+  /* поддерживаем разные классы бейджа, что встречались в коде */
   .site-header .avail-badge,
   .site-header .availability,
   .site-header .slot-badge,
@@ -2493,60 +2483,71 @@ img {
   .site-header .tz-availability,
   .site-header .tz-badge,
   .site-header .tz-pill{
-    grid-column: 1 / -1;      /* целая строка */
+    grid-column: 1 / -1;              /* на вторую строку — во всю ширину */
     justify-self: start;
     max-width: 100%;
     white-space: normal;
     word-break: break-word;
     line-height: 1.25;
     font-size: clamp(12px, 3.6vw, 14px);
-    padding: 10px 12px;       /* компактнее на мобайле */
+    padding: 10px 12px;
+    border-radius: var(--r-md, 12px);  /* радиус из UI Kit */
+    background: var(--info-bg, #EEF6FF);
+    border: 1px solid var(--info-brd, #9EC5E8);
+    color: var(--info-ink, #0B4870);
   }
 }
 
-/* 3) HERO (#top): на мобилке один столбец: контент → фото → отзывы */
-@media (max-width: var(--bp-tablet)){
-  /* одна колонка */
+/* 3) HERO (#top): одна колонка — контент → фото → отзывы (десктоп не трогаем) */
+@media (max-width: 1024.98px){
   #top .container.hero-grid{
     display:grid;
     grid-template-columns: 1fr;
-    gap: 18px;
-    align-items:start;
+    gap: var(--space-4, 16px);
+    align-items: start;
   }
 
-  /* порядок явный: текст, затем визуал, затем блок отзывов (если есть) */
-  #top .hero-copy{    grid-column:1; grid-row:1; }
-  #top .hero-visual{  grid-column:1; grid-row:2; justify-self:stretch; }
+  /* порядок явно: текст, затем визуал, затем отзывы */
+  #top .hero-copy   { grid-column:1; grid-row:1; }
+  #top .hero-visual { grid-column:1; grid-row:2; justify-self:stretch; }
   #top .hero-reviews{ grid-column:1; grid-row:3; }
 
-  /* медиа аккуратно вписываются */
-  #top .hero-photo,
-  #top .hero-photo img,
+  /* медиа аккуратно вписываются и не ломают сетку */
   #top .hero-visual picture,
   #top .hero-visual img,
   #top .hero-visual .carousel{
     display:block;
     width:100%;
     height:auto;
-    border-radius:18px;
+    border-radius: var(--r-xl, 16px);
+    box-shadow: var(--elev-1, 0 8px 24px rgba(0,0,0,.04));
     overflow:hidden;
   }
 
-  /* чуть компактнее заголовок и текст слева */
+  /* типографика, чтобы заголовок не «сыпался по буквам» */
   #top .hero-copy h1{
     font-size: clamp(22px, 6vw, 32px);
     line-height: 1.15;
-    margin: 0 0 10px;
+    margin: 0 0 var(--space-3, 12px);
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   #top .hero-copy p{
     font-size: clamp(14px, 3.8vw, 16px);
     line-height: 1.5;
+    margin: 0 0 var(--space-3, 12px);
   }
 }
 
-/* 4) Страховка от горизонтального скролла на iOS для full-bleed элементов */
+/* 4) Страховка от горизонтального скролла при full-bleed */
 html, body{ overflow-x: clip; }
-/* ====================================================================== */
+
+/* 5) (Опционально) Полноширинная белая подложка секции «Мой опыт» через утилиту UI Kit:
+   просто добавьте класс .section--white на секцию опыта, без дополнительных стилей.
+   .section--white уже тянет фон на всю ширину и учитывает var(--gutter). */
+/* ========================================================================================= */
+
+
 
 
 
