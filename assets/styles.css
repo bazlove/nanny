@@ -835,8 +835,8 @@ section{padding:64px 0}
 .input.error{border-color:#E5484D;box-shadow:0 0 0 3px rgba(229,72,77,.15)}
 
 /* Tooltip */
-.hint{position:relative;display:inline-block;width:18px;height:18px}
-.hint .i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:999px;background:#E9EDF7;color:#334;font-size:12px;font-weight:800}
+.hint{position:relative;display:inline-block;width:16px;height:16px}
+.hint .i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:999px;background:#E9EDF7;color:#334;font-size:12px;font-weight:600}
 .hint:hover .i,.hint:focus-within .i{background:#E7F7EF;color:#146C43;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
 .hint .tip{position:absolute;left:0;bottom:calc(100% + 10px);background:#111;color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;white-space:normal;max-width:320px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:9999}
 .hint:hover .tip,.hint:focus-within .tip{opacity:1}
@@ -899,10 +899,10 @@ section{padding:64px 0}
 }
 
 .label-row { position: relative; }
-.hint { position: relative; display:inline-block; width:18px; height:18px; margin-left:6px; }
+.hint { position: relative; display:inline-block; width:16px; height:16px; margin-left:6px; }
 .hint .i{
-  display:grid; place-items:center; width:18px; height:18px;
-  border-radius:999px; background:#E9EDF7; color:#334; font-size:12px; font-weight:800;
+  display:grid; place-items:center; width:16px; height:16px;
+  border-radius:999px; background:#E9EDF7; color:#334; font-size:12px; font-weight:600;
 }
 .hint:hover .i, .hint:focus-within .i{
   background:#E7F7EF; color:#146C43; box-shadow:0 0 0 3px rgba(34,197,94,.18);
@@ -2229,7 +2229,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 #calc .label-row .hint{ display:inline-flex; align-items:center; }
 #calc .label-row .hint .i{
-  width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center;
   line-height:1; border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
 }
 #calc .label-row .hint .tip{ white-space:nowrap; }
@@ -2448,6 +2448,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
