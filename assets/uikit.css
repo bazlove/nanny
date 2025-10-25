@@ -258,40 +258,57 @@ input[type="checkbox"], input[type="radio"]{
 
 
 
-/* === Buttons polish: light-green hover for primary & outline ================= */
+/* === Buttons — unified light-green hover with white ink ================== */
 
-/* 1) Полутон для hover: по умолчанию статический, где поддержан color-mix — точный */
+/* 0) Палитра ховера: фолбэки + динамика через color-mix */
 :root{
-  /* Фолбэк (если color-mix нет): светлее базового #15803D примерно на ~12% */
-  --primary-hover: #1fae56;
+  /* Очень бледный зелёный (как «подложка»), если захочешь ультрамягкий ховер */
+  --primary-soft:  #EAF7EF;
+  /* Светлее базового, но достаточно насыщенный для белого текста */
+  --primary-bright:#27AE60;
+  /* Совместимость со старым патчем */
+  --primary-hover: var(--primary-bright);
 }
 @supports (color: color-mix(in srgb, white 50%, black)) {
-  /* Точная подсветка: слегка осветляем базовый var(--primary) */
-  :root{ --primary-hover: color-mix(in srgb, var(--primary) 84%, white 16%); }
+  :root{
+    --primary-soft:   color-mix(in srgb, var(--primary) 18%, white 82%);
+    --primary-bright: color-mix(in srgb, var(--primary) 68%, white 32%);
+    --primary-hover:  var(--primary-bright);
+  }
 }
 
-/* 2) Заполненная зелёная */
-.btn-primary{
-  /* базовые переменные уже есть в UI kit */
-  /* --btn-bg: var(--primary); --btn-brd: var(--primary); --btn-ink:#fff; */
-}
-.btn-primary:hover{
-  --btn-bg: var(--primary-hover);
-  --btn-brd: var(--primary-hover);
-}
-
-/* 3) Контурная зелёная → на hover становится залитой светло-зелёной с белым текстом */
-.btn-outline{
-  /* базово: прозрачный фон + зелёный контур и текст */
-  /* --btn-bg: transparent; --btn-ink: var(--primary-700); --btn-brd: var(--primary-700); */
-  transition: background var(--trans-2), border-color var(--trans-2), color var(--trans-2), transform .05s;
-}
-.btn-outline:hover{
-  --btn-bg: var(--primary-hover);
+/* 1) Заполненная зелёная: ещё светлее на hover, текст остаётся белым */
+.btn.btn-primary:hover,
+button.btn-primary:hover{
+  /* через переменные UI-кита */
+  --btn-bg:  var(--primary-hover);
   --btn-brd: var(--primary-hover);
   --btn-ink: #fff;
-  color:#fff; /* на случай, если где-то нет наследования переменной */
+
+  /* явные свойства — на случай локальных переопределений */
+  background-color: var(--primary-hover) !important;
+  border-color:     var(--primary-hover) !important;
+  color:            #fff !important;
+
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
 }
+
+/* 2) Контурная зелёная: на hover — та же светло-зелёная заливка и белый текст */
+.btn.btn-outline:hover,
+button.btn-outline:hover{
+  --btn-bg:  var(--primary-hover);
+  --btn-brd: var(--primary-hover);
+  --btn-ink: #fff;
+
+  background-color: var(--primary-hover) !important;
+  border-color:     var(--primary-hover) !important;
+  color:            #fff !important;
+
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+/* ======================================================================= */
+
 
 
 
