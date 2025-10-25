@@ -449,6 +449,15 @@ html, body { overflow-x: clip; }
   #top .chips .chip-long,
   #top .hero-chips .chip-long{ grid-column: 1 / -1; }
 
+@media (max-width:1024.98px){
+  .mobile-nav .mobile-nav__top{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .mobile-nav .brand-mini{ font-size:14px; color:#111827; }
+  .mobile-nav .brand-mini .brand-city{ color:#6B7280; margin-left:6px; }
+}
+
+
   
 /* =========================================================================== */
 
