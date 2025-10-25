@@ -254,3 +254,54 @@ input[type="checkbox"], input[type="radio"]{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
   clip: rect(0,0,0,0); white-space:nowrap; border:0;
 }
+
+
+
+
+/* === Buttons polish: light-green hover for primary & outline ================= */
+
+/* 1) Полутон для hover: по умолчанию статический, где поддержан color-mix — точный */
+:root{
+  /* Фолбэк (если color-mix нет): светлее базового #15803D примерно на ~12% */
+  --primary-hover: #1fae56;
+}
+@supports (color: color-mix(in srgb, white 50%, black)) {
+  /* Точная подсветка: слегка осветляем базовый var(--primary) */
+  :root{ --primary-hover: color-mix(in srgb, var(--primary) 84%, white 16%); }
+}
+
+/* 2) Заполненная зелёная */
+.btn-primary{
+  /* базовые переменные уже есть в UI kit */
+  /* --btn-bg: var(--primary); --btn-brd: var(--primary); --btn-ink:#fff; */
+}
+.btn-primary:hover{
+  --btn-bg: var(--primary-hover);
+  --btn-brd: var(--primary-hover);
+}
+
+/* 3) Контурная зелёная → на hover становится залитой светло-зелёной с белым текстом */
+.btn-outline{
+  /* базово: прозрачный фон + зелёный контур и текст */
+  /* --btn-bg: transparent; --btn-ink: var(--primary-700); --btn-brd: var(--primary-700); */
+  transition: background var(--trans-2), border-color var(--trans-2), color var(--trans-2), transform .05s;
+}
+.btn-outline:hover{
+  --btn-bg: var(--primary-hover);
+  --btn-brd: var(--primary-hover);
+  --btn-ink: #fff;
+  color:#fff; /* на случай, если где-то нет наследования переменной */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
