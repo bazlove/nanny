@@ -241,7 +241,6 @@ section{padding:64px 0}
 
 /* === Адаптив === */
 @media (max-width:1024px){
-  #top .container.hero-grid{ grid-template-columns:1fr; }
   #top .hero-visual{ justify-self:stretch; }
   #top .hero-visual .hero-social{ margin-top:16px; flex-wrap:wrap; }
   #top .hero-visual .hero-social .quote-wrap{
@@ -2451,118 +2450,6 @@ img {
 }
 
 
-
-
-
-
-
-
-/* ================= MOBILE FIX v2 — точные селекторы, безопасно ================= */
-
-/* 0) Страховка от горизонтального скролла на iOS с полноширинными секциями */
-html, body { overflow-x: clip; }
-
-/* 1) Шапка: язык только в бургере, бейдж — отдельной строкой */
-@media (max-width: 1024.98px){
-
-  /* язык в шапке — скрыть; в бургере — показать */
-  .site-header .lang-switch{ display:none !important; }
-  .mobile-nav .lang-switch{ display:flex !important; gap: var(--space-3, 12px); }
-
-  /* шапка в 2 строки: бренд | бургер, затем бейдж на всю ширину */
-  .site-header .header-bar{
-    display:grid;
-    grid-template-columns: 1fr auto;
-    align-items:center;
-    gap: var(--space-2, 8px) var(--space-3, 12px);
-  }
-  .site-header .header-bar .burger{ justify-self:end; }
-
-  /* все возможные варианты бейджа доступности — на вторую строку */
-  .site-header .avail-badge,
-  .site-header .availability,
-  .site-header .slot-badge,
-  .site-header .status-badge,
-  .site-header .tz-availability,
-  .site-header .tz-badge,
-  .site-header .tz-pill{
-    grid-column: 1 / -1;
-    justify-self: start;
-    max-width: 100%;
-    white-space: normal;
-    word-break: break-word;
-    line-height: 1.25;
-    font-size: clamp(12px, 3.6vw, 14px);
-    padding: 10px 12px;
-    border-radius: var(--r-md, 12px);
-  }
-}
-
-/* 2) HERO: только контейнер hero, никаких общих «.hero .grid» */
-@media (max-width: 1024.98px){
-
-  /* ваш реальный контейнер грида hero — оставляем единый столбец */
-  #top .container.hero-grid{
-    display:grid;                          /* на всякий случай, если где-то переопределили */
-    grid-template-columns: 1fr;            /* в базовых стилях уже так делается на мобиле */
-    gap: var(--space-4, 16px);
-    align-items: start;
-  }
-
-  /* порядок блоков: текст → медиа → отзывы */
-  #top .hero-copy   { grid-column:1; grid-row:1; }
-  #top .hero-visual { grid-column:1; grid-row:2; justify-self:stretch; }
-  #top .hero-reviews{ grid-column:1; grid-row:3; }
-
-  /* страховка от «вертикального» текста, если где-то прилетела утилита */
-  #top .hero-copy h1{
-    writing-mode: horizontal-tb;
-    white-space: normal;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    /* можно чуть уменьшить верхний зазор, если хочется более плотного старта */
-    margin-top: 0;
-  }
-
-  /* кнопки hero на мобильных одинаковые и на всю ширину */
-  #top .hero-copy .btn,
-  .hero .btn{
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 16px;
-    border-radius: var(--r-lg, 14px);
-    font-weight: 700;
-  }
-
-  /* чипсы/бейджи — 2 колонки, плотная укладка */
-  #top .hero-chips,
-  #top .hero-tags,
-  #top .hero-badges,
-  #top .badges,
-  #top .chips{
-    display:grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-flow: dense;
-    gap: 10px;
-  }
-  #top .hero-chips .chip,
-  #top .chips .chip,
-  #top .badges .badge,
-  #top .hero-tags .tag{
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 42px;
-  }
-}
-
-/* 3) УБЕДИТЕСЬ, что у вас НЕТ этого правила в любом из файлов:
-   .hero .grid { ... } или .hero-grid { ... }
-   Если оно есть — удалите/закомментируйте. В вашем коде уже есть
-   корректный мобильный грид на #top .container.hero-grid.  */
 
 
 
