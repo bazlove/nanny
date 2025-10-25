@@ -86,10 +86,14 @@ body{
 /* ===================== Типографика ===================== */
 /* Заголовки — адаптив через clamp: desktop / tablet / mobile */
 h1, .h1{
-  font-weight: 800; color: var(--neutral-900);
+  max-width: 22ch;   
+  font-weight: 700;
+  color: var(--neutral-900);
   font-size: clamp(28px, 3.6vw, 40px);
-  line-height: 1.15;
+  letter-spacing: -0.015em; 
+  line-height: 1.08;
   margin: 0 0 var(--space-8);
+  font-size: clamp(40px, 4.4vw, 64px);
 }
 h2, .h2{
   font-weight: 800; color: var(--neutral-900);
@@ -107,6 +111,13 @@ h3, .h3{
 /* Параграф, мелкий текст */
 p{ margin: 0 0 var(--space-4); }
 .small{ font-size: .875rem; color: var(--neutral-600); }
+
+@media (max-width: 1440px){
+  #top .hero-copy h1{ max-width: 21ch; font-size: clamp(36px, 4.2vw, 56px); }
+}
+@media (min-width: 1920px){
+  #top .hero-copy h1{ max-width: 23ch; }
+}
 
 /* ===================== Ссылки ===================== */
 a{
