@@ -2429,6 +2429,34 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
 
 
 
+
+
+html, body {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+input, textarea, [contenteditable="true"], .allow-select {
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  user-drag: none;
+}
+
+
+
+
+
+
+
+
 /* ================== MOBILE/TABLET HEADER & HERO PATCH (for styles 2.0) ================== */
 :root{
   --bp-tablet: 1024px;
@@ -2519,37 +2547,6 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
 /* 4) Страховка от горизонтального скролла на iOS для full-bleed элементов */
 html, body{ overflow-x: clip; }
 /* ====================================================================== */
-
-
-
-
-
-html, body {
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-
-input, textarea, [contenteditable="true"], .allow-select {
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-img {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  user-drag: none;
-}
-
-
-
-
-
-
-
-
 
 
 
