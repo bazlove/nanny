@@ -401,6 +401,11 @@ section{padding:64px 0}
   #services .svc-card .svc-text{ font-size: 13.5px; }
 }
 
+#services{
+  --srv-gap-title-note: 20px;
+  --srv-gap-note-grid:  32px;
+}
+
 /* (опционально) ограничить описание тремя строками — ровная сетка высот
 #services .svc-desc,
 #services .svc-text{
@@ -2533,6 +2538,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
