@@ -298,56 +298,41 @@ input[type="checkbox"], input[type="radio"]{
 
 
 
-/* === Buttons — unified light-green hover with white ink ================== */
 
-/* 0) Палитра ховера: фолбэки + динамика через color-mix */
-:root{
-  /* Очень бледный зелёный (как «подложка»), если захочешь ультрамягкий ховер */
-  --primary-soft:  #EAF7EF;
-  /* Светлее базового, но достаточно насыщенный для белого текста */
-  --primary-bright:#27AE60;
-  /* Совместимость со старым патчем */
-  --primary-hover: var(--primary-bright);
-}
-@supports (color: color-mix(in srgb, white 50%, black)) {
-  :root{
-    --primary-soft:   color-mix(in srgb, var(--primary) 18%, white 82%);
-    --primary-bright: color-mix(in srgb, var(--primary) 68%, white 32%);
-    --primary-hover:  var(--primary-bright);
-  }
+/* ================= Buttons — SWAP hover (final single source of truth) =============== */
+
+/* Плавность смены цвета текста тоже анимируем */
+.btn{
+  transition:
+    background var(--trans-2),
+    border-color var(--trans-2),
+    color var(--trans-2),
+    transform .05s;
 }
 
-/* 1) Заполненная зелёная: ещё светлее на hover, текст остаётся белым */
-.btn.btn-primary:hover,
-button.btn-primary:hover{
-  /* через переменные UI-кита */
-  --btn-bg:  var(--primary-hover);
-  --btn-brd: var(--primary-hover);
+/* 1) PRIMARY (зелёная заливка) → hover как outline: прозрачный фон + зелёный текст/бордер */
+.btn-primary:hover,
+.btn-primary:focus-visible{
+  --btn-bg:  transparent;
+  --btn-brd: var(--primary-700);
+  --btn-ink: var(--primary-700);
+  background: transparent;           /* на случай локальных переопределений */
+  color: var(--primary-700);
+}
+
+/* 2) OUTLINE (прозрачная) → hover как filled: зелёная заливка + белый текст */
+.btn-outline:hover,
+.btn-outline:focus-visible{
+  --btn-bg:  var(--primary);
+  --btn-brd: var(--primary);
   --btn-ink: #fff;
-
-  /* явные свойства — на случай локальных переопределений */
-  background-color: var(--primary-hover) !important;
-  border-color:     var(--primary-hover) !important;
-  color:            #fff !important;
-
-  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+  background: var(--primary);
+  color: #fff;
 }
 
-/* 2) Контурная зелёная: на hover — та же светло-зелёная заливка и белый текст */
-.btn.btn-outline:hover,
-button.btn-outline:hover{
-  --btn-bg:  var(--primary-hover);
-  --btn-brd: var(--primary-hover);
-  --btn-ink: #fff;
-
-  background-color: var(--primary-hover) !important;
-  border-color:     var(--primary-hover) !important;
-  color:            #fff !important;
-
-  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
-}
-
-/* ======================================================================= */
+/* Без «прыжка» при тапе */
+.btn-primary:active,
+.btn-outline:active{ transform: translateY(0); }
 
 
 
