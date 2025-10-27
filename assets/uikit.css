@@ -457,8 +457,8 @@ html, body { overflow-x: clip; }
 /* Contact: увеличить высоту textarea "Сообщение" */
 #contact .col-message .fld-message textarea,
 #contact .fld-message textarea.input{
-  min-height: 160px !important;
-  height: 160px !important;
+  min-height: 150px !important;
+  height: 150px !important;
   box-sizing: border-box;
   resize: vertical;
 }
