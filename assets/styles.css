@@ -1166,11 +1166,12 @@ select:focus{
 
 .section-hint,
 .section-hint--inline{
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   color: #6B7280;
   font-size: 14px;
+  line-height: 1.4;
   margin: 0;
 }
 .section-hint .dot,
@@ -1179,9 +1180,11 @@ select:focus{
   height: 6px;
   border-radius: 999px;
   background: #D1D5DB;
-  flex: 0 0 6px;
 }
 
+.section-hint.section-hint--inline{
+  margin: 0 0 var(--space-8, 32px);   /* 32px под строкой */
+}
 
 /* === Бейдж статуса слотов в шапке ========================================= */
 .avail-badge{
@@ -2554,6 +2557,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
