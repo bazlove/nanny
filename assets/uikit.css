@@ -483,11 +483,11 @@ html, body { overflow-x: clip; }
 /* ≤1440px (типичный 14–16") — держим H1 в 2 строки и даём зазор для CTA */
 @media (max-width: 1440px){
   #top .hero-copy h1{
-    font-size: clamp(30px, 2.6vw, 44px);
+    font-size: clamp(36px, 2.6vw, 50px);
     max-inline-size: 30ch;   /* шире колонка символов → реже распад в 3 строки */
     line-height: 1.06;
   }
-  #top .hero-copy .cta{ margin-top: clamp(14px, 2vh, 24px); }
+  #top .hero-copy .cta{ margin-top: clamp(16px, 2vh, 28px); }
   #top .hero-tags{ margin-bottom: 6px; }
 
   /* Симметрия правой колонки: фото немного «повыше» (3:2 вместо 4:3) */
@@ -501,7 +501,7 @@ html, body { overflow-x: clip; }
 @media (min-width: 1600px){
   #top .hero-copy h1{
     max-inline-size: 24ch;
-    font-size: clamp(34px, 3.2vw, 52px);
+    font-size: clamp(40px, 3.2vw, 56px);
   }
   #top .hero-copy .cta{ margin-top: clamp(16px, 2.5vh, 32px); }
 }
