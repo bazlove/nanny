@@ -48,7 +48,7 @@
   --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-9: 36px; --space-10: 40px;
   --space-12: 48px; --space-16: 64px;
 
-  --h2-gap: var(--space-9);/* ЕДИНЫЙ отступ под h2: 36px по умолчанию */
+  --h2-gap: var(--space-16);/* ЕДИНЫЙ отступ под h2: 36px по умолчанию */
 
   /* — Анимации */
   --trans-1: .12s ease;
