@@ -964,7 +964,7 @@ section{padding:64px 0}
 }
 
 /* чекбокс евро */
-#eurWrap{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+#eurWrap{ display:flex; align-items:center; gap:8px; margin-top:8px; margin: 12px 0 36px !important; }
 #eurWrap span{
   font-size:12px;
   font-weight: 400 !important;
@@ -2533,6 +2533,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
