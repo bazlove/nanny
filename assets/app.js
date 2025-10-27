@@ -268,17 +268,26 @@ window.updateBadge = function updateBadge(slots) {
       .sort((a,b) => a.date.localeCompare(b.date));
   };
 
-  const fmtDateRUshort = (ymd) => {
-    if (!ymd) return '';
-    const [y,m,d] = ymd.split('-').map(Number);
-    const dt = new Date(Date.UTC(y, m-1, d));
-    return dt.toLocaleDateString('ru-RU', { weekday:'short', day:'2-digit', month:'2-digit' });
-  };
+const SHOW_WEEKDAY = false;
+
+const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
+  if (!ymd) return '';
+  const [y, m, d] = ymd.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+
+  const opts = withWeekday
+    ? { weekday: 'short', day: 'numeric', month: 'long' } // "чт, 30 октября"
+    : { day: 'numeric', month: 'long' };                  // "30 октября"
+
+  // В ru-RU месяцы приходят в родительном и строчными — как раз то, что нужно.
+  return dt.toLocaleDateString('ru-RU', opts);
+};
+
 
   const makeTimesLine = (items) => items.map(s => `${safeStart(s)}–${safeEnd(s)}`).join(', ');
 
   const cardHTML = (date, items) => {
-    const dayLabel = (items[0] && items[0].dayLabel) ? items[0].dayLabel : fmtDateRUshort(date);
+    const dayLabel = items[0]?.dayLabel ?? fmtDateRU(date);
     const times    = makeTimesLine(items);
     return `
       <article class="slot-card">
@@ -1120,6 +1129,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
