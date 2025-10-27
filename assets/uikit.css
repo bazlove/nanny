@@ -615,6 +615,33 @@ html, body { overflow-x: clip; }
 
 
 
+/* === SERVICES: отступы ================================ */
+#services{
+  
+  --srv-title-hint: 12px;   
+  --srv-hint-cards: 32px;   
+}
+
+@media (min-width: 1024px){
+  #services{
+    --srv-title-hint: 14px;
+    --srv-hint-cards: 40px;
+  }
+}
+
+/* 1) Заголовок → строка описания */
+#services .section-head .section-title{
+  margin-bottom: var(--srv-title-hint) !important;
+}
+#services .section-head .section-hint{
+  margin-top: 0 !important; /* чтобы не суммировалось */
+}
+
+/* 2) Описание → карточки */
+#services .svc-grid{
+  margin-top: var(--srv-hint-cards) !important;
+}
+/* ============================================================= */
 
 
 
