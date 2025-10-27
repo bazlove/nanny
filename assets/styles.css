@@ -174,7 +174,7 @@ section{padding:64px 0}
 }
 #top .hero-copy .sub{ font-size:16px; color:#333; margin:8px 0 14px; }
 
-#top .hero-tags{ display:flex; flex-wrap:wrap; gap:0; column-gap: 4px; row-gap: 6px; margin:6px 0 0; margin-top: 16px !important; margin-bottom: 16px !important; padding:0; list-style:none;  }
+#top .hero-tags{ display:flex; flex-wrap:wrap; gap:0; column-gap: 8px; row-gap: 4px; margin:6px 0 0; margin-top: 16px !important; margin-bottom: 16px !important; padding:0; list-style:none;  }
 #top .hero-tags + .hero-tags{ margin-top: 8px !important; }
 #top .hero-tags li{
   display:inline-flex; align-items:center; height:30px; gap:8px;
@@ -2557,6 +2557,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
