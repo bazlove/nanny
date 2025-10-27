@@ -483,9 +483,9 @@ html, body { overflow-x: clip; }
 /* ≤1440px (типичный 14–16") — держим H1 в 2 строки и даём зазор для CTA */
 @media (max-width: 1440px){
   #top .hero-copy h1{
-    font-size: clamp(32px, 2.6vw, 54px);
+    font-size: clamp(36px, 2.6vw, 54px);
     max-inline-size: 30ch;   /* шире колонка символов → реже распад в 3 строки */
-    line-height: 1.06;
+    line-height: 1.1;
   }
   #top .hero-copy .cta{ margin-top: clamp(16px, 2vh, 28px); }
   #top .hero-tags{ margin-bottom: 6px; }
