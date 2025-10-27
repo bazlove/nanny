@@ -179,7 +179,7 @@ section{padding:64px 0}
 #top .hero-tags li{
   display:inline-flex; align-items:center; height:30px; gap:8px;
   padding:0 10px; border:1px solid #d9dee6; border-radius:999px; background:#fff;
-  font-weight:700; font-size:14px; color:#0f172a;
+  font-weight:400; font-size:14px; color:#0f172a;
 }
 #top .hero-tags li::before{ content:attr(data-emoji); line-height:1; }
 
@@ -2532,6 +2532,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
