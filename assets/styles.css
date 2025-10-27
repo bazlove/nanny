@@ -2417,7 +2417,61 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+/* === CALC VISUAL SWAP — чекбоксы прозрачные, поля-селекты с серым фоном === */
+#calc{
+  --field-bg: #F6F8FB;   /* мягкий серый фон полей */
+  --field-brd:#E6ECF3;   /* светлая рамка/бордер */
+}
 
+/* 1) Ряды с чекбоксами (доп.услуги, EUR) — без серой «капсулы» */
+#calc .subcheck,
+#calc #eurWrap{
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* убираем эффекты и при hover/checked */
+#calc .subcheck:hover,
+#calc #eurWrap:hover,
+#calc .subcheck:has(input:checked),
+#calc #eurWrap:has(input:checked){
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* на всякий случай: если фон сидит на label других чекбокс-строк */
+#calc input[type="checkbox"] + label,
+#calc .checkbox-row,
+#calc .extra-item,
+#calc .addon,
+#calc .form-check{
+  background: transparent !important;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* 2) Поля «Часы», «Дети», «День недели» — даём мягкий серый фон */
+#calc #hours,
+#calc #kids,
+#calc #dayType{
+  background-color: var(--field-bg) !important;
+  border: 1px solid var(--field-brd) !important;
+}
+
+/* если есть врапперы селектов — тоже подкрашиваем */
+#calc .select,
+#calc .select-wrap{
+  background-color: var(--field-bg);
+  border: 1px solid var(--field-brd);
+}
+
+/* чуть темнее рамка при hover (фокус оставляем тот, что уже задан выше в файле) */
+#calc #hours:hover, #calc #kids:hover, #calc #dayType:hover,
+#calc .select:hover, #calc .select-wrap:hover{
+  border-color:#DEE6F0 !important;
+}
 
 
 
@@ -2458,6 +2512,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
