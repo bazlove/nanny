@@ -625,33 +625,4 @@ html, body { overflow-x: clip; }
 
 
 
-/* ===== Services spacing tune ===================================== */
-#services{
-  /* можно подкрутить значения по вкусу */
-  --srv-gap-title-note: 20px;   /* h2 → описание (≈ в 2 раза больше, чем сейчас) */
-  --srv-gap-note-grid:  32px;   /* описание → карточки (≈ в 4 раза больше) */
-}
-
-/* на широких экранах чуть свободнее */
-@media (min-width: 1024px){
-  #services{
-    --srv-gap-title-note: 24px;
-    --srv-gap-note-grid:  40px;
-  }
-}
-
-/* 1) Заголовок → строка описания */
-#services :is(h2,.section-title) { margin-bottom: 0 !important; } /* чтобы не было двойного суммирования */
-#services :is(h2,.section-title) + :is(p,.section-note,.note,.lead){
-  margin-top: var(--srv-gap-title-note) !important;
-}
-
-/* 2) Строка описания → сетка карточек */
-#services :is(p,.section-note,.note,.lead){ margin-bottom: 0 !important; }
-#services :is(p,.section-note,.note,.lead) + :is(.services-grid,.srv-grid,.cards,.grid){
-  margin-top: var(--srv-gap-note-grid) !important;
-}
-/* ================================================================ */
-
-
 
