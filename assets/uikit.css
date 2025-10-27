@@ -515,3 +515,102 @@ html, body { overflow-x: clip; }
 
 
 
+
+
+
+
+/* ================ HERO — мобильный фикс (≤768px) ================== */
+@media (max-width: 768px){
+
+  /* 1) Сетка: одна колонка, фото строго после левой колонки/CTA */
+  #top.hero{ padding: 56px 0 28px; }
+  #top .container.hero-grid{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    align-items: start;
+  }
+  #top .hero-copy{  grid-column: 1; grid-row: 1; min-width: 0; }
+  #top .hero-visual{ grid-column: 1; grid-row: 2; min-width: 0; }
+  /* если есть отдельный блок отзывов/рейтинга — он третий */
+  #top .hero-reviews{ grid-column: 1; grid-row: 3; }
+
+  /* 2) Заголовок и подзаголовок: без вылета за экран, размер компактнее */
+  #top .hero-copy h1{
+    /* убираем ограничение 26ch и делаем адаптив меньше */
+    max-inline-size: none;
+    font-size: clamp(26px, 8vw, 34px);
+    line-height: 1.15;
+    /* страховка от длинных слов/переносов */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+  }
+  #top .hero-copy .sub{
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  /* 3) Чипы — не вылезают и удобно читаются */
+  #top .hero-tags{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  #top .hero-tags li{
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    justify-content: center;
+  }
+
+  /* 4) CTA-кнопки — на всю ширину, одна под другой */
+  #top .cta{
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  #top .cta .btn{
+    width: 100% !important;
+    justify-content: center;
+  }
+
+  /* 5) Фото: всегда видно и вписывается по ширине */
+  #top .hero-photo{
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  #top .hero-photo img{
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  /* 6) Рейтинг/цитата — не ломают строку */
+  #top .hero-visual .hero-social{
+    margin-top: 12px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  #top .hero-visual .hero-social .quote-wrap{
+    text-align: left;
+    margin-left: 0;
+    height: auto;
+    line-height: inherit;
+  }
+  #top .hero-visual .hero-social .quote-wrap .quote{
+    position: static; opacity: .9;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+}
+/* ================================================================== */
+
+
+
+
