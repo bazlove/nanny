@@ -453,23 +453,26 @@ html, body { overflow-x: clip; }
 
 
 
-
-/* Contact: увеличить высоту textarea "Сообщение" */
-#contact .col-message .fld-message textarea,
-#contact .fld-message textarea.input{
-  min-height: 150px !important;
-  height: 150px !important;
+/* CONTACT: поле "Сообщение" растягивается по вертикали вручную */
+#contact .fld-message textarea{
+  /* стартовая высота */
+  min-height: 150px;              /* без !important */
+  height: auto;                   /* не фиксируем */
+  max-height: 60vh;               /* чтобы не разъезжалось на полэкрана */
+  resize: vertical;               /* ручной ресайз только по вертикали */
+  overflow: auto;                 /* условие для сработки resize в некоторых браузерах */
   box-sizing: border-box;
-  resize: vertical;
 }
 
 @media (max-width: 720px){
-  #contact .col-message .fld-message textarea,
-  #contact .fld-message textarea.input{
-    min-height: 220px !important;
-    height: 220px !important;
-  }
+  #contact .fld-message textarea{ min-height: 220px; }
+  #contact textarea{ height: auto; }
 }
+
+
+
+
+
 /* ============================================================================ */
 
 
