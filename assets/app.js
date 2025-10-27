@@ -284,7 +284,7 @@ window.updateBadge = function updateBadge(slots) {
       <article class="slot-card">
         <div class="slot-date">${dayLabel}</div>
         <div class="slot-time">${times}</div>
-        <a class="slot-cta" href="#contact">Запросить</a>
+        <a class="btn btn-outline btn-lg slot-cta" href="#contact">Запросить</a>
       </article>
     `;
   };
@@ -1120,6 +1120,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
