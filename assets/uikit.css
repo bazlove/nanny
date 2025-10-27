@@ -501,7 +501,7 @@ html, body { overflow-x: clip; }
 @media (min-width: 1600px){
   #top .hero-copy h1{
     max-inline-size: 24ch;
-    font-size: clamp(36px, 3.2vw, 54px);
+    font-size: clamp(36px, 3.0vw, 54px);
   }
   #top .hero-copy .cta{ margin-top: clamp(16px, 2.5vh, 32px); }
 }
