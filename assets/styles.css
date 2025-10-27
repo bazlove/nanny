@@ -401,22 +401,7 @@ section{padding:64px 0}
   #services .svc-card .svc-text{ font-size: 13.5px; }
 }
 
-#services{
-  --srv-gap-title-note: 20px;
-  --srv-gap-note-grid:  32px;
-}
 
-/* 1) Заголовок → строка описания */
-#services :is(h2,.section-title) { margin-bottom: 0 !important; } /* чтобы не было двойного суммирования */
-#services :is(h2,.section-title) + :is(p,.section-note,.note,.lead){
-  margin-top: var(--srv-gap-title-note) !important;
-}
-
-/* 2) Строка описания → сетка карточек */
-#services :is(p,.section-note,.note,.lead){ margin-bottom: 0 !important; }
-#services :is(p,.section-note,.note,.lead) + :is(.services-grid,.srv-grid,.cards,.grid){
-  margin-top: var(--srv-gap-note-grid) !important;
-}
 
 /* (опционально) ограничить описание тремя строками — ровная сетка высот
 #services .svc-desc,
@@ -2550,6 +2535,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
