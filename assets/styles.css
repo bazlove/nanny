@@ -1502,7 +1502,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 .agree a{ color:#2b6e59; text-decoration:underline dotted; text-underline-offset:2px; }
 .agree a:hover{ color:#15803D; text-decoration-style:solid; }
 
-/* кнопка «Отправить запрос» — берём ваш первичный стиль */
+/* кнопка «Отправить запрос» — берём ваш первичный стиль
 .contact-form .btn.btn-primary{
   display:inline-flex; align-items:center; justify-content:center;
   padding:12px 16px; border-radius:10px; border:1px solid #9EC5E8;
@@ -2448,6 +2448,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
