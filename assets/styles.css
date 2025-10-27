@@ -174,8 +174,8 @@ section{padding:64px 0}
 }
 #top .hero-copy .sub{ font-size:16px; color:#333; margin:8px 0 14px; }
 
-#top .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; margin-top: 12px !important; margin-bottom: 12px !important; padding:0; list-style:none; }
-#top .hero-tags + .hero-tags{ margin-top:8px; }
+#top .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; margin-top: 12px !important; margin-bottom: 12px !important; padding:0; list-style:none; row-gap: 8px; }
+#top .hero-tags + .hero-tags{ margin-top: 8px !important; }
 #top .hero-tags li{
   display:inline-flex; align-items:center; height:30px; gap:8px;
   padding:0 10px; border:1px solid #d9dee6; border-radius:999px; background:#fff;
@@ -2557,6 +2557,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
