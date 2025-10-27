@@ -2417,42 +2417,55 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* === CALC VISUAL SWAP — чекбоксы прозрачные, поля-селекты с серым фоном === */
+/* === CALC — чекбоксы: прозрачная капсула с рамкой; поля: серый фон ====== */
 #calc{
-  --field-bg: #F6F8FB;   /* мягкий серый фон полей */
-  --field-brd:#E6ECF3;   /* светлая рамка/бордер */
+  /* Поля ввода/селекты */
+  --field-bg: #F6F8FB;
+  --field-brd: #E6ECF3;
+  --field-brd-hover: #DEE6F0;
+
+  /* Чекбоксы-капсулы */
+  --check-brd: #e6ebf3;
+  --check-brd-hover: #34d399;
+  --check-ring: rgba(16,185,129,.14);
+  --check-ring-checked: rgba(16,185,129,.10);
 }
 
-/* 1) Ряды с чекбоксами (доп.услуги, EUR) — без серой «капсулы» */
+/* 1) Ряды с чекбоксами (доп.услуги, EUR) — прозрачная «капсула» + рамка */
 #calc .subcheck,
 #calc #eurWrap{
   background: transparent !important;
-  border-color: transparent !important;
+  border-color: var(--check-brd) !important;
   box-shadow: none !important;
+  transition: box-shadow .18s, border-color .18s, background-color .18s, color .18s;
 }
 
-/* убираем эффекты и при hover/checked */
+/* hover: зелёный акцент */
 #calc .subcheck:hover,
-#calc #eurWrap:hover,
+#calc #eurWrap:hover{
+  background: transparent !important;
+  border-color: var(--check-brd-hover) !important;
+  box-shadow: 0 0 0 2px var(--check-ring) inset !important;
+}
+
+/* checked: мягкий внутренний подсвет */
 #calc .subcheck:has(input:checked),
 #calc #eurWrap:has(input:checked){
   background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  border-color: var(--check-brd) !important;
+  box-shadow: 0 0 0 2px var(--check-ring-checked) inset !important;
 }
 
-/* на всякий случай: если фон сидит на label других чекбокс-строк */
+/* На всякий случай — гасим возможные фоновые заливки на альтернативной разметке */
 #calc input[type="checkbox"] + label,
 #calc .checkbox-row,
 #calc .extra-item,
 #calc .addon,
 #calc .form-check{
   background: transparent !important;
-  border-color: transparent;
-  box-shadow: none;
 }
 
-/* 2) Поля «Часы», «Дети», «День недели» — даём мягкий серый фон */
+/* 2) Поля «Часы», «Дети», «День недели» — мягкий серый фон + светлая рамка */
 #calc #hours,
 #calc #kids,
 #calc #dayType{
@@ -2460,18 +2473,25 @@ section[id], #services, #calc, #faq, #contact, #main {
   border: 1px solid var(--field-brd) !important;
 }
 
-/* если есть врапперы селектов — тоже подкрашиваем */
+/* Если селекты во враппере-капсуле — красим и его */
 #calc .select,
 #calc .select-wrap{
   background-color: var(--field-bg);
   border: 1px solid var(--field-brd);
 }
 
-/* чуть темнее рамка при hover (фокус оставляем тот, что уже задан выше в файле) */
+/* hover: рамка чуть темнее (фон не меняем) */
 #calc #hours:hover, #calc #kids:hover, #calc #dayType:hover,
-#calc .select:hover, #calc .select-wrap:hover{
-  border-color:#DEE6F0 !important;
+#calc .select:hover,  #calc .select-wrap:hover{
+  border-color: var(--field-brd-hover) !important;
 }
+
+/* focus внутри враппера — деликатный фокус-ринг */
+#calc .select:focus-within, #calc .select-wrap:focus-within{
+  border-color: #CBD6E6;
+  box-shadow: 0 0 0 3px rgba(34,113,177,.08);
+}
+
 
 
 
@@ -2512,6 +2532,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
