@@ -1541,15 +1541,16 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* Contact: увеличиваем стартовую высоту поля Сообщение */
-#contact .contact-form textarea{
-  min-height: 200px;   /* было 124px */
+#contact .fld-message textarea{
+  min-height: 200px;
   height: 200px;       /* стартовая высота; пользователь может растягивать */
   box-sizing: border-box; /* на всякий случай, чтобы паддинги/бордеры входили в размер */
+  resize: vertical;
 }
 
 /* На очень узких экранах можно сделать ещё выше */
 @media (max-width: 720px){
-  #contact .contact-form textarea{
+  #contact .fld-message textarea{
     min-height: 220px;
     height: 220px;
   }
@@ -2457,6 +2458,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
