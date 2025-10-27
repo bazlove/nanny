@@ -456,7 +456,7 @@ html, body { overflow-x: clip; }
 /* CONTACT: поле "Сообщение" растягивается по вертикали вручную */
 #contact .fld-message textarea{
   /* стартовая высота */
-  min-height: 250px;              /* без !important */
+  min-height: 150px !important;              /* без !important */
   height: auto;                   /* не фиксируем */
   max-height: 60vh;               /* чтобы не разъезжалось на полэкрана */
   resize: vertical;               /* ручной ресайз только по вертикали */
