@@ -268,7 +268,7 @@ window.updateBadge = function updateBadge(slots) {
       .sort((a,b) => a.date.localeCompare(b.date));
   };
 
-const SHOW_WEEKDAY = false;
+const SHOW_WEEKDAY = true;
 
 const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   if (!ymd) return '';
@@ -1129,6 +1129,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
