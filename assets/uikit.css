@@ -48,7 +48,6 @@
   --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-9: 36px; --space-10: 40px;
   --space-12: 48px; --space-16: 64px;
 
-  --h2-gap: var(--space-16);/* ЕДИНЫЙ отступ под h2: 36px по умолчанию */
 
   /* — Анимации */
   --trans-1: .12s ease;
@@ -641,74 +640,6 @@ html, body { overflow-x: clip; }
   margin-top: var(--srv-hint-cards) !important;
 }
 /* ============================================================= */
-
-
-
-/* =========================================
-   UI-KIT OVERRIDES — H2 и подсказки
-   ========================================= */
-
-/* 0) Глобальный токен отступа под h2 (36px или 48px по вкусу) */
-:root{ --h2-gap: 36px; }
-
-/* 1) Единый отступ под всеми секционными h2 */
-.section .section-title,
-.section h2.section-title,
-.section h2{
-  margin-bottom: var(--h2-gap);
-}
-
-/* 2) Специфичные секции, где раньше сбрасывали margin — перебиваем их */
-#services .section-head .section-title,
-#why .section-title,
-#xp  .section-title{
-  margin-bottom: var(--h2-gap) !important;
-}
-
-/* 3) База для строки-подсказки (hint) */
-.section-hint{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #6B7280;
-  font-size: 14px;
-  line-height: 1.4;
-  margin: 0; /* базово без внешних отступов */
-}
-.section-hint .dot{
-  width: 6px; height: 6px; border-radius: 999px; background: #D1D5DB;
-}
-
-/* 4) Модификатор: подсказке нужен отступ СНИЗУ (как у «Доп. услуги…») */
-.section-hint.section-hint--inline{
-  margin: 0 0 var(--space-8, 32px) !important;
-}
-
-/* 5) В #services подсказка раньше принудительно имела margin:0 — перебьём id-спецификой */
-#services .section-head .section-hint.section-hint--inline{
-  margin: 0 0 var(--space-8, 32px) !important;
-}
-
-/* =========================================
-   SERVICES: расстояния управляем grid'ом
-   ========================================= */
-
-/* Раньше межстрочный зазор задавал grid-gap, а не margin у детей.
-   Делаем явный row-gap между «head/filters» и «cards». */
-#services .container{
-  row-gap: var(--srv-row-gap, 32px);  /* поставь 32/36/48 — что решишь */
-}
-
-/* На планшетах/мобилках тоже явно фиксируем row-gap, чтобы не «схлопывалось» */
-@media (max-width: 800px){
-  #services .container{ row-gap: var(--srv-row-gap, 32px); }
-}
-
-/* Страховка: уберём возможные локальные обнуления margin внутри head */
-#services .section-head{ margin: 0 !important; }
-/* И не даём .svc-grid собственных внешних отступов, чтобы не путаться с row-gap */
-#services .svc-grid{ margin: 0 !important; }
-
 
 
 
