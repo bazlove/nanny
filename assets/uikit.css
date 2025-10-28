@@ -602,77 +602,69 @@ html, body { overflow-x: clip; }
 
 
 
-/* === HERO chips — единый источник правды =============================== */
-/* Токены: можно менять в одном месте */
+/* === HERO tags — единые отступы и стабильная раскладка ===================== */
+/* Токены — можешь подкрутить при желании */
 :root{
-  --hero-tags-mt: 24px;              /* отступ блока чипов сверху */
-  --hero-tags-mb: 24px;              /* отступ блока чипов снизу  */
-  --hero-tags-col-gap: 8px;          /* расстояние между бейджами в строке */
-  --hero-tags-row-gap: 8px;          /* расстояние между строками бейджей */
-  --hero-chip-minh-mobile: 40px;     /* минимальная высота бейджа на мобилках */
+  --hero-tags-mt: 24px;     /* отступ сверху группы */
+  --hero-tags-mb: 24px;     /* отступ снизу группы */
+  --hero-tags-gap-x: 8px;   /* между бейджами в строке */
+  --hero-tags-gap-y: 8px;   /* между строками бейджей */
 }
 
-/* Блок чипов: общий каркас и внешние отступы */
+/* Базовый блок группы чипов */
 #top .hero-tags{
   margin-top: var(--hero-tags-mt) !important;
   margin-bottom: var(--hero-tags-mb) !important;
-  padding: 0;
-  list-style: none;
+  padding: 0; list-style: none;
 }
 
-/* Десктоп/лаптоп (≥769px): flex с раздельными gap’ами */
-@media (min-width: 769px){
+/* ====== ДЕСКТОП/ЛАПТОП (≥1025px): РОВНО 2 СТРОКИ, 4×4 через CSS Grid ====== */
+/* Grid даёт предсказуемое «4 в ряд», а элементы остаются «по содержимому» */
+@media (min-width: 1025px){
   #top .hero-tags{
-    display: flex !important;        /* перекрываем grid из uikit */
-    flex-wrap: wrap;
-    gap: 0 !important;               /* гасим возможный shorthand из uikit */
-    column-gap: var(--hero-tags-col-gap) !important;
-    row-gap: var(--hero-tags-row-gap) !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);  /* 4 колонки → 2 строки при 8 чипах */
+    column-gap: var(--hero-tags-gap-x);
+    row-gap: var(--hero-tags-gap-y);
+    justify-items: start;                    /* чип не растягивается на всю ячейку */
+    align-items: center;
+  }
+  #top .hero-tags > li{
+    width: auto;          /* чип «обнимает» контент */
+    justify-self: start;  /* пристыковать к левому краю ячейки */
   }
 }
 
-/* Мобилки (≤768px): сетка в 2 колонки с теми же интервалами */
-@media (max-width: 768px){
+/* ====== МОБИЛА/ТАБЛЕТ (≤1024.98px): 2 КОЛОНКИ, РАВНЫЕ ОТСТУПЫ ====== */
+@media (max-width: 1024.98px){
   #top .hero-tags{
-    display: grid !important;        /* двухколоночная сетка */
+    display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 !important;               /* раздельно задаём оба gap */
-    column-gap: var(--hero-tags-col-gap) !important;
-    row-gap: var(--hero-tags-row-gap) !important;
+    column-gap: var(--hero-tags-gap-x);
+    row-gap: var(--hero-tags-gap-y);
   }
   #top .hero-tags > li{
     width: 100%;
-    min-height: var(--hero-chip-minh-mobile);
+    min-height: 40px;
     padding: 8px 12px;
     justify-content: center;
   }
 
-/* Базовый вид бейджа (единый для всех брейкпоинтов) */
+/* Базовый стиль бейджа (сохраняем «капсулу») */
 #top .hero-tags li{
-  display: inline-flex;
-  align-items: center;
+  display: inline-flex; align-items: center; gap: 8px;
   height: 30px;
-  gap: 8px;
   padding: 0 10px;
   border: 1px solid #d9dee6;
   border-radius: 999px;
   background: #fff;
-  font-weight: 500;
-  font-size: 14px;
+  font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
   color: #0f172a;
 }
 
-/* HERO chips: на десктопе ровно 4 в ряд */
-@media (min-width: 1025px){
-  #top .hero-tags{
-    display: grid !important;                     /* перекрываем flex из прошлых правил */
-    grid-template-columns: repeat(4, max-content);/* 4 колонки по содержимому */
-    justify-content: start;                       /* прижать к левому краю */
-    column-gap: var(--hero-tags-col-gap, 8px);
-    row-gap: var(--hero-tags-row-gap, 8px);
-  }
-  #top .hero-tags > li{ justify-self: start; }   /* чтобы чипы не растягивались */
-}
+/* На всякий случай гасим перекрывающие правила, если они были раньше */
+#top .hero-tags{ gap: 0 !important; }                /* чтобы не перебивали column/row-gap */
+#top .hero-tags + .hero-tags{ margin-top: 0 !important; } /* у нас теперь один список */
 
 
 
