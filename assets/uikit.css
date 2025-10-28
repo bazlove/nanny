@@ -516,22 +516,6 @@ html, body { overflow-x: clip; }
     overflow-wrap: anywhere;
   }
 
-  /* 3) Чипы — не вылезают и удобно читаются
-  #top .hero-tags{
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 10px;
-  }
-  #top .hero-tags li{
-    width: 100%;
-    min-height: 40px;
-    height: auto;
-    padding: 8px 12px;
-    font-size: 15px;
-    font-weight: 500;
-    justify-content: center;
-  }
 
   /* 4) CTA-кнопки — на всю ширину, одна под другой */
   #top .cta{
@@ -606,71 +590,53 @@ html, body { overflow-x: clip; }
 
 
 
-
-
-/* === HERO chips: единые токены отступов =============================== */
+/* === HERO tags — единые отступы и сетка ===================== */
+/* 1) Токены: что именно хотим */
 :root{
-  /* воздух ВОКРУГ группы бейджей */
-  --hero-tags-mt: 16px;     /* сверху */
-  --hero-tags-mb: 16px;     /* снизу */
-
-  /* расстояние МЕЖДУ бейджами */
-  --hero-tags-col-gap: 8px; /* в строке */
-  --hero-tags-row-gap: 8px; /* между строками */
+  --hero-tags-mt: 24px;           /* сверху группы */
+  --hero-tags-mb: 24px;           /* снизу группы */
+  --hero-tags-col-gap: 8px;       /* расстояние между бейджами в строке */
+  --hero-tags-row-gap: 8px;       /* расстояние между строками бейджей */
 }
 
-/* Десктоп/лаптоп (по умолчанию): flex + раздельные gap’ы */
+/* 2) Десктоп/лаптоп: flex + раздельные gap’ы (НЕ используем shorthand gap) */
 #top .hero-tags{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0; /* не используем shorthand, чтобы не гасить по осям */
-  column-gap: var(--hero-tags-col-gap);
-  row-gap: var(--hero-tags-row-gap);
+  display:flex;
+  flex-wrap:wrap;
+  gap: 0 !important;              /* гасим старый gap */
+  column-gap: var(--hero-tags-col-gap) !important;
+  row-gap: var(--hero-tags-row-gap) !important;
 
-  margin-top: var(--hero-tags-mt);
-  margin-bottom: var(--hero-tags-mb);
-  padding: 0;
-  list-style: none;
+  margin-top: var(--hero-tags-mt) !important;
+  margin-bottom: var(--hero-tags-mb) !important;
+
+  padding:0; list-style:none;
 }
 
-/* Планшеты/мобилки: grid в две колонки — но все так же с токенами */
+/* 3) Мобилы/планшеты: сетка в 2 колонки с теми же интервалами */
 @media (max-width: 1024.98px){
   #top .hero-tags{
-    display: grid;
+    display:grid !important;
     grid-template-columns: repeat(2, minmax(0,1fr));
-    grid-auto-flow: dense;
+    grid-auto-flow:dense;
 
-    gap: 0; /* раздельные: */
-    column-gap: var(--hero-tags-col-gap);
-    row-gap: var(--hero-tags-row-gap);
+    gap: 0 !important;            /* чтобы не сбросить раздельные значения */
+    column-gap: var(--hero-tags-col-gap) !important;
+    row-gap: var(--hero-tags-row-gap) !important;
 
-    margin-top: var(--hero-tags-mt);
-    margin-bottom: var(--hero-tags-mb);
+    margin-top: var(--hero-tags-mt) !important;
+    margin-bottom: var(--hero-tags-mb) !important;
   }
-  /* длинный чип — на всю ширину */
+  /* длинный чип — на всю строку (оставь при необходимости) */
   #top .hero-tags li[data-emoji="📵"]{ grid-column: 1 / -1; }
 }
 
-/* Мобильный фикс ≤768: убираем жёсткие 10px/10px, оставляем токены */
-@media (max-width: 768px){
-  #top .hero-tags{
-    /* grid уже задан выше; просто сохраняем те же токены */
-    gap: 0;
-    column-gap: var(--hero-tags-col-gap);
-    row-gap: var(--hero-tags-row-gap);
-    margin-top: var(--hero-tags-mt);
-    margin-bottom: var(--hero-tags-mb);
-  }
+/* 4) На всякий случай гасим старое локальное правило с 12px */
+@media (min-width: 1025px){
+  #top .hero-tags{ margin: var(--hero-tags-mt) 0 var(--hero-tags-mb) !important; }
 }
 
-/* УБРАТЬ/ПРАВИТЬ это правило, чтобы не перезатирало mb токеном:
-@media (max-width: 1440px){
-  #top .hero-tags{ margin-bottom: 6px; }  <-- удалить
-}
-*/
-/* Вместо него, если нужен «шуруп» под 1440px — крутите токен:
-@media (max-width: 1440px){
-  :root{ --hero-tags-mb: 12px; }  /* пример */
-}
+
+
 
 
