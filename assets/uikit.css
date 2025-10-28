@@ -469,14 +469,14 @@ html, body { overflow-x: clip; }
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
     font-size: clamp(24px, 8.6vw, 40px);
-    line-height: 1.2;
+    line-height: 1.24;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
     word-break: normal;
     hyphens: auto;
   }
   #top .hero-copy .sub{
-    font-size: 16px;
+    font-size: 17px;
     overflow-wrap: anywhere;
   }
 
