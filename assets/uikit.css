@@ -468,7 +468,7 @@ html, body { overflow-x: clip; }
   #top .hero-copy h1{
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
-    font-size: clamp(26px, 8vw, 34px);
+    font-size: clamp(24px, 8vw, 34px);
     line-height: 1.15;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
@@ -558,7 +558,7 @@ html, body { overflow-x: clip; }
 
 /* 1) Ноутбуки ≤1440px: заголовок компактнее и шире по "символьной" колонке,
       чтобы держаться в 2 строки; добавляем фикс-зазор перед CTA */
-@media (min-width: 1280px) and (max-width: 1440px){
+@media (min-width: 1280px) and (max-width: 1600px){
   #top .hero-copy h1{
     /* меньше кегль + шире измеритель строки → чаще 2 строки */
     font-size: clamp(36px, 2.6vw, 54px);
@@ -570,7 +570,7 @@ html, body { overflow-x: clip; }
   }
 
 /* 2) Широкие десктопы ≥1600px: держим аккуратные 2 строки и не даём гигантского "провала" */
-@media (min-width: 1440.98px){
+@media (min-width: 1600.98px){
   #top .hero-copy h1{
     /* чуть уже колонка текста — заголовок чаще балансируется в 2 строки */
     max-inline-size: 24ch;
