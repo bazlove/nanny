@@ -618,23 +618,31 @@ html, body { overflow-x: clip; }
   padding: 0; list-style: none;
 }
 
-/* ====== ДЕСКТОП/ЛАПТОП (≥1025px): РОВНО 2 СТРОКИ, 4×4 через CSS Grid ====== */
-/* Grid даёт предсказуемое «4 в ряд», а элементы остаются «по содержимому» */
+
+  /* ===== ДЕСКТОП: 4 колонки по содержимому, ровно 2 строки ===== */
 @media (min-width: 1025px){
   #top .hero-tags{
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr);  /* 4 колонки → 2 строки при 8 чипах */
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, max-content); /* ключ к равномерности */
     column-gap: var(--hero-tags-gap-x);
     row-gap: var(--hero-tags-gap-y);
-    justify-items: start;                    /* чип не растягивается на всю ячейку */
+    justify-content: start;   /* группа чипов прижата влево */
     align-items: center;
   }
   #top .hero-tags > li{
-    width: auto;          /* чип «обнимает» контент */
-    justify-self: start;  /* пристыковать к левому краю ячейки */
+    /* сам «пилюлевидный» чип остаётся по контенту */
+    white-space: nowrap;      /* чтобы внутри не ломались строки */
   }
 }
 
+@media (min-width: 1025px) and (max-width: 1280px){
+  #top .hero-tags{ grid-template-columns: repeat(4, max-content); } /* оставляем 4 */
+  /* Если не влезает — поменяй на repeat(3, max-content); получишь 3+3+2 */
+}
+
+  
+  
 /* ====== МОБИЛА/ТАБЛЕТ (≤1024.98px): 2 КОЛОНКИ, РАВНЫЕ ОТСТУПЫ ====== */
 @media (max-width: 1024.98px){
   #top .hero-tags{
