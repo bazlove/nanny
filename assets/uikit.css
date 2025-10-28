@@ -469,7 +469,7 @@ html, body { overflow-x: clip; }
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
     font-size: clamp(24px, 8.6vw, 40px);
-    line-height: 1.26;
+    line-height: 1.12;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
     word-break: normal;
