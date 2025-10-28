@@ -614,14 +614,14 @@ section{padding:64px 0}
 
 /* XP (Мой опыт): заголовок → лента/сетка опыта
    На проде секция с id="xp", поэтому селектор #xp.section */
-#xp.section :is(h2,.section-title){
+#experience :is(h2,.section-title){
   margin-bottom: 0 !important;
 }
-#xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
+#experience :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
   margin-top: 48px !important;        /* десктоп */
 }
 @media (max-width: 768px){
-  #xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
+  #experience :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
     margin-top: 32px !important;      /* мобилки */
   }
 }
@@ -2590,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
