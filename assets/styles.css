@@ -598,6 +598,35 @@ section{padding:64px 0}
   hyphens: auto;
 }
 
+/* === WHY / XP: ритм "заголовок → контент" ===================== */
+/* WHY: заголовок → сетка преимуществ */
+#why.panel--list :is(h2,.section-title){ 
+  margin-bottom: 0 !important; 
+}
+#why.panel--list :is(h2,.section-title) + .why-grid{
+  margin-top: 28px !important;        /* десктоп */
+}
+@media (max-width: 768px){
+  #why.panel--list :is(h2,.section-title) + .why-grid{
+    margin-top: 20px !important;      /* мобилки */
+  }
+}
+
+/* XP (Мой опыт): заголовок → лента/сетка опыта
+   На проде секция с id="xp", поэтому селектор #xp.section */
+#xp.section :is(h2,.section-title){
+  margin-bottom: 0 !important;
+}
+#xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
+  margin-top: 28px !important;        /* десктоп */
+}
+@media (max-width: 768px){
+  #xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
+    margin-top: 20px !important;      /* мобилки */
+  }
+}
+
+
 
 
 
@@ -2561,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
