@@ -563,7 +563,7 @@ html, body { overflow-x: clip; }
     /* меньше кегль + шире измеритель строки → чаще 2 строки */
     font-size: clamp(36px, 2.8vw, 52px);
     max-inline-size: 30ch;
-    line-height: 1.04;
+    line-height: 1.2;
   }
   /* небольшой предзазор от бейджей, даже если margin-top:auto не сработал */
   #top .hero-copy .cta{ margin-top: clamp(14px, 2vh, 24px); }
