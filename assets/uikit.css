@@ -468,7 +468,7 @@ html, body { overflow-x: clip; }
   #top .hero-copy h1{
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
-    font-size: clamp(26px, 9vw, 44px);
+    font-size: clamp(26px, 8.8vw, 42px);
     line-height: 1.2;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
@@ -476,7 +476,7 @@ html, body { overflow-x: clip; }
     hyphens: auto;
   }
   #top .hero-copy .sub{
-    font-size: 15px;
+    font-size: 16px;
     overflow-wrap: anywhere;
   }
 
