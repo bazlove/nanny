@@ -678,23 +678,3 @@ html, body { overflow-x: clip; }
 
 
 
-
-
-
-
-
-
-@media (min-width: 1366px){
-  #top .container{ max-width: 1320px !important; }  /* или 1280/1340 — подбери */
-}
-
-@media (min-width: 1366px){
-  #top .container.hero-grid{
-    grid-template-columns: minmax(560px, 1fr) clamp(420px, 32vw, 520px) !important;
-    column-gap: clamp(24px, 3vw, 56px) !important;
-  }
-}
-
-
-
-
