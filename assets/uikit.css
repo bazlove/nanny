@@ -714,13 +714,13 @@ html, body { overflow-x: clip; }
 
 #faq{
   --gap-title-note: 12px;
-  --gap-note-block: 36px;
+  --gap-note-block: 48px;
 }
 /* Мобайл для FAQ */
 @media (max-width: 768px){
   #faq{
     --gap-title-note: 16px;
-    --gap-note-block: 32px;
+    --gap-note-block: 40px;
   }
 }
 
