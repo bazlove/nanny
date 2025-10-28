@@ -151,12 +151,6 @@ section{padding:64px 0}
   align-items: stretch;
 }
 
-@media (min-width: 1440px){
-  #top .container.hero-grid{
-    grid-template-columns: minmax(520px, 1fr) clamp(420px, 34vw, 540px) !important;
-  }
-}
-
 /* колонки */
 #top .hero-copy{
   grid-column:1; grid-row:1;
@@ -2563,6 +2557,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
