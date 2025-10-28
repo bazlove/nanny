@@ -618,11 +618,11 @@ section{padding:64px 0}
   margin-bottom: 0 !important;
 }
 #xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
-  margin-top: 36px !important;        /* десктоп */
+  margin-top: 48px !important;        /* десктоп */
 }
 @media (max-width: 768px){
   #xp.section :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
-    margin-top: 24px !important;      /* мобилки */
+    margin-top: 32px !important;      /* мобилки */
   }
 }
 
@@ -2590,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
