@@ -114,12 +114,6 @@ h3, .h3{
 p{ margin: 0 0 var(--space-4); }
 .small{ font-size: .875rem; color: var(--neutral-600); }
 
-@media (max-width: 1440px){
-  #top .hero-copy h1{ max-width: 21ch; font-size: clamp(36px, 4.2vw, 56px); }
-}
-@media (min-width: 1920px){
-  #top .hero-copy h1{ max-width: 23ch; }
-}
 
 /* ===================== Ссылки ===================== */
 a{
@@ -564,11 +558,11 @@ html, body { overflow-x: clip; }
 
 /* 1) Ноутбуки ≤1440px: заголовок компактнее и шире по "символьной" колонке,
       чтобы держаться в 2 строки; добавляем фикс-зазор перед CTA */
-@media (max-width: 1440px){
+@media (min-width: 1280px) and (max-width: 1440px){
   #top .hero-copy h1{
     /* меньше кегль + шире измеритель строки → чаще 2 строки */
-    font-size: clamp(30px, 2.6vw, 44px);
-    max-inline-size: 30ch;         /* было 26ch — сжимало и давало 3 строки */
+    font-size: clamp(36px, 2.6vw, 54px);
+    max-inline-size: 30ch;
     line-height: 1.06;
   }
   /* небольшой предзазор от бейджей, даже если margin-top:auto не сработал */
@@ -576,11 +570,11 @@ html, body { overflow-x: clip; }
   }
 
 /* 2) Широкие десктопы ≥1600px: держим аккуратные 2 строки и не даём гигантского "провала" */
-@media (min-width: 1600px){
+@media (min-width: 1440.98px){
   #top .hero-copy h1{
     /* чуть уже колонка текста — заголовок чаще балансируется в 2 строки */
     max-inline-size: 24ch;
-    font-size: clamp(34px, 3.2vw, 52px); /* верх ограничили прежними 52px */
+    font-size: clamp(36px, 3.2vw, 54px); /* верх ограничили прежними 52px */
   }
   /* авто-прижим к низу уже есть, но ограничим верхний зазор, чтобы не «проваливалось» */
   #top .hero-copy .cta{ margin-top: clamp(16px, 2.5vh, 32px); }
@@ -627,12 +621,14 @@ html, body { overflow-x: clip; }
     grid-template-columns: repeat(4, max-content); /* ключ к равномерности */
     column-gap: var(--hero-tags-gap-x);
     row-gap: var(--hero-tags-gap-y);
-    justify-content: start;   /* группа чипов прижата влево */
+    justify-content: center;   /* группа чипов прижата влево */
     align-items: center;
   }
   #top .hero-tags > li{
     /* сам «пилюлевидный» чип остаётся по контенту */
     white-space: nowrap;      /* чтобы внутри не ломались строки */
+    justify-content: center;    /* центр внутри самой «капсулы» */
+    text-align: center;
   }
 }
 
