@@ -444,37 +444,7 @@ html, body { overflow-x: clip; }
 
 
 
-/* ================== HERO TUNE — ноутбуки и десктопы ================== */
 
-/* ≤1440px (типичный 14–16") — держим H1 в 2 строки и даём зазор для CTA */
-@media (max-width: 1440px){
-  #top .hero-copy h1{
-    font-size: clamp(36px, 2.6vw, 54px);
-    max-inline-size: 30ch;   /* шире колонка символов → реже распад в 3 строки */
-    line-height: 1.1;
-  }
-  #top .hero-copy .cta{ margin-top: clamp(16px, 2vh, 28px); }
-
-  /* Симметрия правой колонки: фото немного «повыше» (3:2 вместо 4:3) */
-  #top .hero-photo{
-    aspect-ratio: 3 / 2 !important;  /* перекрываем базовый 4/3 */
-    height: auto;                     /* страховка от фикс-высоты */
-  }
-}
-
-/* ≥1600px — не расползаемся, держим аккуратные 2 строки и вменяемый зазор */
-@media (min-width: 1600px){
-  #top .hero-copy h1{
-    max-inline-size: 24ch;
-    font-size: clamp(32px, 3.0vw, 48px);
-  }
-  #top .hero-copy .cta{ margin-top: clamp(16px, 2.5vh, 32px); }
-}
-
-/* Низкие экраны по высоте: гарантируем место под бейджи + CTA */
-@media (max-height: 820px) and (min-width: 1025px){
-  #top .hero-copy{ min-height: 520px; } /* при необходимости подстрой: 480–560 */
-}
 
 
 
@@ -592,9 +562,6 @@ html, body { overflow-x: clip; }
 
 /* ================== HERO TUNE: 14–16" ноутбуки и десктопы ================== */
 
-/* Базовая мелочь: у бейджей делаем полужир → средний (было 700) */
-#top .hero-tags li{ font-weight: 500; }
-
 /* 1) Ноутбуки ≤1440px: заголовок компактнее и шире по "символьной" колонке,
       чтобы держаться в 2 строки; добавляем фикс-зазор перед CTA */
 @media (max-width: 1440px){
@@ -606,9 +573,7 @@ html, body { overflow-x: clip; }
   }
   /* небольшой предзазор от бейджей, даже если margin-top:auto не сработал */
   #top .hero-copy .cta{ margin-top: clamp(14px, 2vh, 24px); }
-  /* чтобы бейджи не липли к CTA визуально */
-  #top .hero-tags{ margin-bottom: 6px; }
-}
+  
 
 /* 2) Широкие десктопы ≥1600px: держим аккуратные 2 строки и не даём гигантского "провала" */
 @media (min-width: 1600px){
@@ -629,6 +594,96 @@ html, body { overflow-x: clip; }
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === HERO chips — единый источник правды =============================== */
+/* Токены: можно менять в одном месте */
+:root{
+  --hero-tags-mt: 24px;              /* отступ блока чипов сверху */
+  --hero-tags-mb: 24px;              /* отступ блока чипов снизу  */
+  --hero-tags-col-gap: 8px;          /* расстояние между бейджами в строке */
+  --hero-tags-row-gap: 8px;          /* расстояние между строками бейджей */
+  --hero-chip-minh-mobile: 40px;     /* минимальная высота бейджа на мобилках */
+}
+
+/* Блок чипов: общий каркас и внешние отступы */
+#top .hero-tags{
+  margin-top: var(--hero-tags-mt) !important;
+  margin-bottom: var(--hero-tags-mb) !important;
+  padding: 0;
+  list-style: none;
+}
+
+/* Десктоп/лаптоп (≥769px): flex с раздельными gap’ами */
+@media (min-width: 769px){
+  #top .hero-tags{
+    display: flex !important;        /* перекрываем grid из uikit */
+    flex-wrap: wrap;
+    gap: 0 !important;               /* гасим возможный shorthand из uikit */
+    column-gap: var(--hero-tags-col-gap) !important;
+    row-gap: var(--hero-tags-row-gap) !important;
+  }
+}
+
+/* Мобилки (≤768px): сетка в 2 колонки с теми же интервалами */
+@media (max-width: 768px){
+  #top .hero-tags{
+    display: grid !important;        /* двухколоночная сетка */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 !important;               /* раздельно задаём оба gap */
+    column-gap: var(--hero-tags-col-gap) !important;
+    row-gap: var(--hero-tags-row-gap) !important;
+  }
+  #top .hero-tags > li{
+    width: 100%;
+    min-height: var(--hero-chip-minh-mobile);
+    padding: 8px 12px;
+    justify-content: center;
+  }
+  /* Длинный чип — на всю строку (если нужен) */
+  #top .hero-tags > li[data-emoji="📵"]{ grid-column: 1 / -1; }
+}
+
+/* Базовый вид бейджа (единый для всех брейкпоинтов) */
+#top .hero-tags li{
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid #d9dee6;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+/* HERO chips: на десктопе ровно 4 в ряд */
+@media (min-width: 1025px){
+  #top .hero-tags{
+    display: grid !important;                     /* перекрываем flex из прошлых правил */
+    grid-template-columns: repeat(4, max-content);/* 4 колонки по содержимому */
+    justify-content: start;                       /* прижать к левому краю */
+    column-gap: var(--hero-tags-col-gap, 8px);
+    row-gap: var(--hero-tags-row-gap, 8px);
+  }
+  #top .hero-tags > li{ justify-self: start; }   /* чтобы чипы не растягивались */
+}
 
 
 
