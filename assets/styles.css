@@ -1426,7 +1426,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   flex-wrap:wrap;
 }
 
-.rv-title{ margin-bottom: 48px; }
+.rv-title{ margin: 0; }
 
 .rv-chips{
   display:flex; gap:8px; margin:0; padding:0; list-style:none;
@@ -2590,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
