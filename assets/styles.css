@@ -430,8 +430,12 @@ section{padding:64px 0}
   background:#fff;
   border:0;
   border-radius:0;
-  padding:32px var(--gutter, 20px);
+  padding-top: clamp(40px, 6vh, 88px);
   margin-inline: calc(-1 * var(--gutter, 20px)); /* растягиваем подложку на ширину контейнера */
+}
+
+@media (max-width: 768px){
+  #why.panel--list{ padding-top: clamp(28px, 5vh, 56px); }
 }
 
 /* Грид преимуществ */
@@ -2557,6 +2561,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
