@@ -468,7 +468,7 @@ html, body { overflow-x: clip; }
   #top .hero-copy h1{
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
-    font-size: clamp(24px, 8vw, 34px);
+    font-size: clamp(24px, 8vw, 36px);
     line-height: 1.15;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
@@ -561,7 +561,7 @@ html, body { overflow-x: clip; }
 @media (min-width: 1280px) and (max-width: 1600px){
   #top .hero-copy h1{
     /* меньше кегль + шире измеритель строки → чаще 2 строки */
-    font-size: clamp(36px, 2.6vw, 54px);
+    font-size: clamp(36px, 3.0vw, 52px);
     max-inline-size: 30ch;
     line-height: 1.06;
   }
@@ -574,7 +574,7 @@ html, body { overflow-x: clip; }
   #top .hero-copy h1{
     /* чуть уже колонка текста — заголовок чаще балансируется в 2 строки */
     max-inline-size: 24ch;
-    font-size: clamp(36px, 3.2vw, 54px); /* верх ограничили прежними 52px */
+    font-size: clamp(36px, 3.2vw, 52px); /* верх ограничили прежними 52px */
   }
   /* авто-прижим к низу уже есть, но ограничим верхний зазор, чтобы не «проваливалось» */
   #top .hero-copy .cta{ margin-top: clamp(16px, 2.5vh, 32px); }
