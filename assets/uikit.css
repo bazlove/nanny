@@ -596,56 +596,58 @@ html, body { overflow-x: clip; }
 
 
 
-/* === HERO tags — единые отступы и стабильная раскладка ===================== */
-/* Токены — можешь подкрутить при желании */
+/* === HERO chips — стабильные отступы и раскладка ======= */
 :root{
-  --hero-tags-mt: 24px;     /* отступ сверху группы */
-  --hero-tags-mb: 24px;     /* отступ снизу группы */
-  --hero-tags-gap-x: 8px;   /* между бейджами в строке */
-  --hero-tags-gap-y: 8px;   /* между строками бейджей */
+  --hero-tags-mt: 24px;      /* отступ сверху блока чипов */
+  --hero-tags-mb: 24px;      /* отступ снизу блока чипов  */
+  --hero-tags-gap-x: 8px;    /* горизонтальный зазор между чипами */
+  --hero-tags-gap-y: 8px;    /* вертикальный зазор между строками */
 }
 
-/* Базовый блок группы чипов */
+/* Общий блок списка чипов */
 #top .hero-tags{
-  margin-top: var(--hero-tags-mt) !important;
-  margin-bottom: var(--hero-tags-mb) !important;
-  padding: 0; list-style: none;
+  margin: var(--hero-tags-mt) 0 var(--hero-tags-mb) !important;
+  padding: 0;
+  list-style: none;
 }
 
+/* Базовый вид «капсул» */
+#top .hero-tags li{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid #d9dee6;
+  border-radius: 999px;
+  background: #fff;
+  font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+  color: #0f172a;
+  white-space: nowrap;       /* внутри чипа не переносим строки */
+  text-align: center;
+  justify-content: center;
+}
 
-  /* ===== ДЕСКТОП: 4 колонки по содержимому, ровно 2 строки ===== */
+/* ===== Desktop/Laptop (≥1025px): 4 колонки по контенту, ровно 2 строки ===== */
 @media (min-width: 1025px){
   #top .hero-tags{
     display: grid !important;
     grid-auto-flow: row;
-    grid-template-columns: repeat(4, max-content); /* ключ к равномерности */
-    column-gap: var(--hero-tags-gap-x);
-    row-gap: var(--hero-tags-gap-y);
-    justify-content: center;   /* группа чипов прижата влево */
+    grid-template-columns: repeat(4, max-content);
+    column-gap: var(--hero-tags-gap-x) !important;
+    row-gap: var(--hero-tags-gap-y) !important;
+    justify-content: start;   /* группа чипов прижата к левому краю */
     align-items: center;
   }
-  #top .hero-tags > li{
-    /* сам «пилюлевидный» чип остаётся по контенту */
-    white-space: nowrap;      /* чтобы внутри не ломались строки */
-    justify-content: center;    /* центр внутри самой «капсулы» */
-    text-align: center;
-  }
 }
 
-@media (min-width: 1025px) and (max-width: 1280px){
-  #top .hero-tags{ grid-template-columns: repeat(4, max-content); } /* оставляем 4 */
-  /* Если не влезает — поменяй на repeat(3, max-content); получишь 3+3+2 */
-}
-
-  
-  
-/* ====== МОБИЛА/ТАБЛЕТ (≤1024.98px): 2 КОЛОНКИ, РАВНЫЕ ОТСТУПЫ ====== */
+/* ===== Tablet/Mobile (≤1024.98px): 2 равные колонки, одинаковые зазоры ===== */
 @media (max-width: 1024.98px){
   #top .hero-tags{
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--hero-tags-gap-x);
-    row-gap: var(--hero-tags-gap-y);
+    column-gap: var(--hero-tags-gap-x) !important;
+    row-gap: var(--hero-tags-gap-y) !important;
   }
   #top .hero-tags > li{
     width: 100%;
@@ -655,21 +657,6 @@ html, body { overflow-x: clip; }
   }
 }
 
-/* Базовый стиль бейджа (сохраняем «капсулу») */
-#top .hero-tags li{
-  display: inline-flex; align-items: center; gap: 8px;
-  height: 30px;
-  padding: 0 10px;
-  border: 1px solid #d9dee6;
-  border-radius: 999px;
-  background: #fff;
-  font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-  color: #0f172a;
-}
-
-/* На всякий случай гасим перекрывающие правила, если они были раньше */
-#top .hero-tags{ gap: 0 !important; }                /* чтобы не перебивали column/row-gap */
-#top .hero-tags + .hero-tags{ margin-top: 0 !important; } /* у нас теперь один список */
 
 
 
