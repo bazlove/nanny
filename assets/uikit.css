@@ -573,7 +573,7 @@ html, body { overflow-x: clip; }
   }
   /* небольшой предзазор от бейджей, даже если margin-top:auto не сработал */
   #top .hero-copy .cta{ margin-top: clamp(14px, 2vh, 24px); }
-  
+  }
 
 /* 2) Широкие десктопы ≥1600px: держим аккуратные 2 строки и не даём гигантского "провала" */
 @media (min-width: 1600px){
@@ -657,6 +657,7 @@ html, body { overflow-x: clip; }
     padding: 8px 12px;
     justify-content: center;
   }
+}
 
 /* Базовый стиль бейджа (сохраняем «капсулу») */
 #top .hero-tags li{
