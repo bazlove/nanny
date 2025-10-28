@@ -2403,7 +2403,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 /* 3) Чипы «доп. занятия»: текст меньше + отступ перед ценой */
-#calc .subcheck{ font-size:14px; line-height:1.3; }
+#calc .subcheck{ font-size:14px; line-height:1.3; font-weight: 300; }
 #calc .subcheck .subnote{
   font-size:12px;
   margin-left:6px;                      /* зазор между текстом и «+300/+500 дин» */
@@ -2590,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
