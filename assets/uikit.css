@@ -732,6 +732,56 @@ html, body { overflow-x: clip; }
 
 
 
+/* === REVIEWS / SLOTS — ритм "заголовок → контент" (с учётом твоих классов) === */
+
+/* Токены (можно подстроить централизованно) */
+:root{
+  --gap-title-chips-d: 20px;   /* h2 → чипы в отзывах, десктоп */
+  --gap-head-content-d: 32px;  /* заголовок/хед → контент, десктоп */
+
+  --gap-title-chips-m: 14px;   /* h2 → чипы в отзывах, мобилка */
+  --gap-head-content-m: 24px;  /* заголовок/хед → контент, мобилка */
+}
+
+/* -------------------- Отзывы родителей -------------------- */
+#reviews.rv-reviews .rv-title{
+  margin-bottom: 0 !important;                 /* не даём суммироваться отступам */
+}
+
+/* h2 → список чипов */
+#reviews.rv-reviews .rv-title + .rv-chips{
+  margin-top: var(--gap-title-chips-d) !important;
+}
+
+/* хед (заголовок+чипы) → контент со списком отзывов (на случай разных классов) */
+#reviews.rv-reviews .rv-reviews__head + :is(.rv-list,.rv-grid,.rv-cards,.grid,.cards){
+  margin-top: var(--gap-head-content-d) !important;
+}
+
+/* -------------------- Свободные слоты -------------------- */
+#slots.slots .section-title{
+  margin-bottom: 0 !important;
+}
+
+/* h2 → сетка слотов */
+#slots.slots .section-title + .slots-grid{
+  margin-top: var(--gap-head-content-d) !important;
+}
+
+/* -------------------- Мобилки (≤768px): плотнее) -------------------- */
+@media (max-width: 768px){
+  #reviews.rv-reviews .rv-title + .rv-chips{
+    margin-top: var(--gap-title-chips-m) !important;
+  }
+  #reviews.rv-reviews .rv-reviews__head + :is(.rv-list,.rv-grid,.rv-cards,.grid,.cards){
+    margin-top: var(--gap-head-content-m) !important;
+  }
+  #slots.slots .section-title + .slots-grid{
+    margin-top: var(--gap-head-content-m) !important;
+  }
+}
+
+
 
 
 
