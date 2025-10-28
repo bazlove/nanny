@@ -661,63 +661,75 @@ html, body { overflow-x: clip; }
 
 
 
-/* ===== Section rhythm: h2 → hint → content (универсально) ===== */
+/* ================= SECTION RHYTHM — h2 → hint → content ================= */
+
+/* Базовые токены (мобайл по умолчанию) */
 :root{
-  /* Мобильные токены (по умолчанию) */
   --gap-title-note: 12px;   /* h2 → строка описания */
   --gap-note-block: 22px;   /* описание → контент/сетка */
 }
-
 /* Десктопные токены */
 @media (min-width: 769px){
   :root{
-    --gap-title-note: 14px;  /* 12–16 — берём середину */
-    --gap-note-block: 28px;  /* 24–32 — берём середину */
+    --gap-title-note: 14px;  /* 12–16: середина */
+    --gap-note-block: 28px;  /* 24–32: середина */
   }
 }
 
-/* Базовые связи внутри секционного заголовка и после него */
-:where(section, .section, [data-section]) :is(h2,.section-title){
-  margin-bottom: 0; /* сбрасываем, чтобы не суммировалось */
+/* Сбрасываем нижний margin у h2 внутри секций, чтобы не суммировался */
+:where(section, .section, [data-section], #services, #faq, #contact)
+  :is(h2,.section-title){
+  margin-bottom: 0;
 }
 
 /* h2 → строка описания (hint/lead/note) */
-:where(section, .section, [data-section]) 
+:where(section, .section, [data-section], #services, #faq, #contact)
   :is(h2,.section-title) + :is(p,.section-hint,.note,.lead){
   margin-top: var(--gap-title-note);
   margin-bottom: 0;
 }
 
-/* описание → блок с контентом (сетки, списки, карточки) */
-:where(section, .section, [data-section]) 
-  :is(p,.section-hint,.note,.lead) + :is(.grid,.cards,.svc-grid,.faq-list,.contact-grid,.content,.container){
+/* описание → контент (сетки/списки/карточки/гриды) */
+:where(section, .section, [data-section], #services, #faq, #contact)
+  :is(p,.section-hint,.note,.lead)
+  + :is(.grid,.cards,.svc-grid,.faq-list,.contact-grid,.content,.container,.services-grid,.srv-grid){
   margin-top: var(--gap-note-block);
 }
 
-/* ===== Точечные якоря под ваши ID: Услуги, FAQ, Контакты ===== */
-/* Работают, даже если общий селектор «не добрал» специфичности */
-#services :is(h2,.section-title) + :is(p,.section-hint,.note,.lead){ margin-top: var(--gap-title-note); }
-#services :is(p,.section-hint,.note,.lead) + :is(.svc-grid,.grid,.cards){ margin-top: var(--gap-note-block); }
-
-#faq :is(h2,.section-title) + :is(p,.section-hint,.note,.lead){ margin-top: var(--gap-title-note); }
-#faq :is(p,.section-hint,.note,.lead) + :is(.faq-list,.grid,.cards){ margin-top: var(--gap-note-block); }
-
-#contact :is(h2,.section-title) + :is(p,.section-hint,.note,.lead){ margin-top: var(--gap-title-note); }
-#contact :is(p,.section-hint,.note,.lead) + :is(.contact-grid,.grid,.cards,.content){ margin-top: var(--gap-note-block); }
-
-/* При конфликте с uikit можно поднять приоритет: */
+/* Повышаем специфичность для секций с .section-head (перебиваем UI Kit, если надо) */
 @media (min-width: 769px){
   #services .section-head .section-title + .section-hint,
-  #faq .section-head .section-title + .section-hint,
-  #contact .section-head .section-title + .section-hint{
+  #faq      .section-head .section-title + .section-hint,
+  #contact  .section-head .section-title + .section-hint{
     margin-top: var(--gap-title-note) !important;
   }
   #services .section-head + :is(.svc-grid,.grid,.cards),
-  #faq .section-head + :is(.faq-list,.grid,.cards),
-  #contact .section-head + :is(.contact-grid,.grid,.cards,.content){
+  #faq      .section-head + :is(.faq-list,.grid,.cards),
+  #contact  .section-head + :is(.contact-grid,.grid,.cards,.content){
     margin-top: var(--gap-note-block) !important;
   }
 }
+
+/* ================= FAQ: локальные токены и мелкий фикс ================== */
+
+/* В FAQ хотим крупнее зазоры: 24/32 на десктопе, 16/24 на мобайле */
+#faq{
+  --gap-title-note: 24px;
+  --gap-note-block: 32px;
+}
+/* Мобайл для FAQ */
+@media (max-width: 768px){
+  #faq{
+    --gap-title-note: 16px;
+    --gap-note-block: 24px;
+  }
+}
+
+/* На всякий — явно гасим нижний отступ у h2.faq-title */
+#faq .faq-title{ margin-bottom: 0 !important; }
+
+/* ======================================================================= */
+
 
 
 
