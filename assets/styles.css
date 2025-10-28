@@ -604,11 +604,11 @@ section{padding:64px 0}
   margin-bottom: 0 !important; 
 }
 #why.panel--list :is(h2,.section-title) + .why-grid{
-  margin-top: 36px !important;        /* десктоп */
+  margin-top: 48px !important;        /* десктоп */
 }
 @media (max-width: 768px){
   #why.panel--list :is(h2,.section-title) + .why-grid{
-    margin-top: 24px !important;      /* мобилки */
+    margin-top: 36px !important;      /* мобилки */
   }
 }
 
@@ -622,7 +622,7 @@ section{padding:64px 0}
 }
 @media (max-width: 768px){
   #experience :is(h2,.section-title) + :is(.xp-grid,.timeline,.grid,.cards){
-    margin-top: 32px !important;      /* мобилки */
+    margin-top: 36px !important;      /* мобилки */
   }
 }
 
@@ -2590,6 +2590,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
