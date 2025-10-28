@@ -666,7 +666,7 @@ html, body { overflow-x: clip; }
 /* Базовые токены (мобайл по умолчанию) */
 :root{
   --gap-title-note: 12px;   /* h2 → строка описания */
-  --gap-note-block: 22px;   /* описание → контент/сетка */
+  --gap-note-block: 24px;   /* описание → контент/сетка */
 }
 /* Десктопные токены */
 @media (min-width: 769px){
@@ -712,16 +712,15 @@ html, body { overflow-x: clip; }
 
 /* ================= FAQ: локальные токены и мелкий фикс ================== */
 
-/* В FAQ хотим крупнее зазоры: 24/32 на десктопе, 16/24 на мобайле */
 #faq{
-  --gap-title-note: 24px;
-  --gap-note-block: 32px;
+  --gap-title-note: 12px;
+  --gap-note-block: 36px;
 }
 /* Мобайл для FAQ */
 @media (max-width: 768px){
   #faq{
     --gap-title-note: 16px;
-    --gap-note-block: 24px;
+    --gap-note-block: 32px;
   }
 }
 
