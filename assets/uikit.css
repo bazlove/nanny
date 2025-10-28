@@ -468,8 +468,8 @@ html, body { overflow-x: clip; }
   #top .hero-copy h1{
     /* убираем ограничение 26ch и делаем адаптив меньше */
     max-inline-size: none;
-    font-size: clamp(24px, 8.6vw, 36px);
-    line-height: 1.2;
+    font-size: clamp(24px, 8vw, 42px);
+    line-height: 1.25;
     /* страховка от длинных слов/переносов */
     overflow-wrap: anywhere;
     word-break: normal;
