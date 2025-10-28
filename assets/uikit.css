@@ -611,12 +611,12 @@ html, body { overflow-x: clip; }
 /* === HERO chips: единые токены отступов =============================== */
 :root{
   /* воздух ВОКРУГ группы бейджей */
-  --hero-tags-mt: 18px;     /* сверху */
-  --hero-tags-mb: 18px;     /* снизу */
+  --hero-tags-mt: 16px;     /* сверху */
+  --hero-tags-mb: 16px;     /* снизу */
 
   /* расстояние МЕЖДУ бейджами */
-  --hero-tags-col-gap: 4px; /* в строке */
-  --hero-tags-row-gap: 6px; /* между строками */
+  --hero-tags-col-gap: 8px; /* в строке */
+  --hero-tags-row-gap: 8px; /* между строками */
 }
 
 /* Десктоп/лаптоп (по умолчанию): flex + раздельные gap’ы */
