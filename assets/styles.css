@@ -881,73 +881,96 @@ section{padding:64px 0}
 .eur{color:#888;font-weight:600;margin-left:8px;opacity:.85;font-size:12px}
 
 /* ===== COOKIE BANNER ===== */
+
 #cookie-banner {
   position: fixed;
   left: 0; right: 0; bottom: 0;
-  height: clamp(220px, 33vh, 480px); /* 1/3 экрана на всех девайсах */
+  height: clamp(180px, 25vh, 420px);     /* 1/4 экрана */
   z-index: 9999;
-  background: rgba(17, 24, 39, 0.92); /* полупрозрачная плашка */
+  background: rgba(17, 24, 39, 0.82);    /* был более плотный — сделали прозрачнее */
   color: #fff;
-  padding: 0; /* внутренние отступы делаем у .cookie-card */
+  padding: 0;                             /* отступы — у .cookie-card */
   backdrop-filter: blur(2px) saturate(120%);
 }
-
-/* скрытие через [hidden] — обязательно оставляем */
 #cookie-banner[hidden] { display: none !important; }
 
-/* Контент выравниваем по «контентной области» (как у контейнера) и центрируем по ней */
+/* Контент выравниваем по ширине основного контейнера и центрируем по плашке */
 #cookie-banner .cookie-card {
   height: 100%;
-  max-width: min(1120px, calc(100% - 32px)); /* как у основного контейнера: по центру и с боковыми полями */
+  max-width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
   display: grid;
   grid-template-rows: auto 1fr auto auto;
-  align-content: center;               /* вертикальный центр внутри плашки */
+  align-content: center;
   row-gap: 12px;
-  padding: 20px 0 14px;                /* вертикальные отступы у контента */
-  text-align: left;                    /* текст как обычно, не по центру */
+  padding: 16px 0 12px;
+  text-align: left;
+  font-size: 14px;                        /* уменьшили базовый шрифт */
+  line-height: 1.5;
 }
 
+/* Заголовок и текст */
 #cookie-banner .cookie-card h3 {
-  margin: 0 0 6px;
-  font-size: 1.1rem;
+  margin: 0 0 4px;
+  font-size: 1rem;                        /* компактнее */
   font-weight: 700;
 }
-
 #cookie-banner .cookie-card p {
   margin: 0;
-  line-height: 1.55;
 }
 
-#cookie-banner .cookie-card a {
-  color: #b3e5ff;
-  text-decoration: underline dashed;
+/* Ссылка «Политике конфиденциальности» — как в hero (link-dashed--inverse) */
+#cookie-banner .cookie-card p a {
+  color: #15803D;
+  text-decoration: none;
+  border-bottom: 1px dashed #15803D;
   text-underline-offset: 2px;
+  transition: color .15s, border-color .15s;
+}
+#cookie-banner .cookie-card p a:hover {
+  color: #6B7280;
+  border-bottom-color: transparent;
 }
 
+/* Кнопки действий */
 #cookie-banner .cookie-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 10px;
 }
-
 #cookie-banner .cookie-actions .btn {
-  padding: 10px 14px;
+  padding: 9px 14px;
   border-radius: 999px;
+  font-size: 14px;
 }
 
-/* подпись "можно изменить решение позже…" */
+/* «Настройки cookie» — как ссылки в футере (link-ghost уже есть в HTML) */
 #cookie-banner .cookie-card small {
   display: block;
   margin-top: 6px;
-  opacity: 0.82;
+  font-size: 12.5px;
+  line-height: 1.4;
+  opacity: 0.88;
+}
+#cookie-banner .cookie-card .link-ghost {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #2b6e59;
+  text-decoration: underline;             /* сплошная линия — как в футере */
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+#cookie-banner .cookie-card .link-ghost:hover {
+  color: #1e6a57;
 }
 
-/* Безопасная зона на iOS (нижняя кромка) */
+/* Безопасная зона у iOS */
 @supports (padding: env(safe-area-inset-bottom)) {
   #cookie-banner { padding-bottom: env(safe-area-inset-bottom); }
 }
+
 
 
 /* Кнопка-ссылка "Настройки cookie" */
@@ -2659,6 +2682,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
