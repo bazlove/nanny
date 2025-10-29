@@ -307,7 +307,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   };
 
   // ===== fetch + render =====
-  fetch(`${API_SLOTS_URL}?t=${Date.now()}`, { cache: 'no-store', mode: 'cors' })
+  fetch(API_SLOTS_URL + '?t=' + Date.now(), { cache:'no-store', mode:'cors' })
     .then(r => r.json())
     .then(data => {
       const raw = Array.isArray(data?.slots) ? data.slots
@@ -1151,6 +1151,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
