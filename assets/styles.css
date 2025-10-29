@@ -2566,16 +2566,16 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* Переключатель "Показать в евро" */
 .calc-eur{
   font-size: 14px;      /* базово ~16px */
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 /* Мобильные: уменьшаем текст */
 @media (max-width: 600px){
-  .calc-eur{ font-size: 12px; }   /* ≈14px */
+  .calc-eur{ font-size: 11px; }   /* ≈14px */
 }
 
 @media (max-width: 360px){
-  .calc-eur{ font-size: 11px; }  /* ≈13px для очень узких экранов */
+  .calc-eur{ font-size: 10px; }  /* ≈13px для очень узких экранов */
 }
 
 
@@ -2618,6 +2618,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
