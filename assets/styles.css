@@ -1422,13 +1422,13 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 .rv-reviews__head{
   display:flex; align-items:center; justify-content:space-between;
-  gap:16px; margin-bottom:24px;
+  gap:16px; margin-bottom:32px;
   flex-wrap:wrap;
 }
 
 .rv-title{
   flex: 0 0 100%;     /* перенос чипов на следующую строку */
-  margin-top: 8px;    /* «чуть опустить» заголовок в блоке */
+  margin-top: 16px;    /* «чуть опустить» заголовок в блоке */
          }
 
 .rv-chips{
@@ -2618,6 +2618,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
