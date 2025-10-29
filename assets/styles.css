@@ -1439,6 +1439,10 @@ section[id], #services, #calc, #faq, #contact, #main {
   cursor: pointer;
 }
 
+#reviews .rv-chip.is-active{
+  border-color:#B9E0D1; background:#F2FAF6; color:#146C43;
+}
+
 /* ===== Reviews: бесконечная маркиза (одна строка, бесшовная) ========== */
 .rv-marquee{
   --rv-speed: 45s;                    /* больше — медленнее */
@@ -2591,6 +2595,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
