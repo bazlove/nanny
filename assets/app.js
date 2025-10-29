@@ -255,18 +255,22 @@ window.updateBadge = function updateBadge(slots) {
   const getStartTs = s => s.startTs ?? Date.parse(s.startISO || 0);
 
   const groupByDate = (slots) => {
-    const m = new Map();
-    for (const s of slots) {
-      const key = s.date || (s.startISO || '').slice(0,10);
-      if (!key) continue;
-      if (!m.has(key)) m.set(key, []);
-      m.get(key).push(s);
+  const m = new Map();
+  for (const s of slots) {
+    let key = s.date;
+    if (!key) {
+      if (s.startTs) key = ymdLocal(new Date(s.startTs));
+      else if (s.startISO) key = ymdLocal(new Date(s.startISO));
     }
-    for (const arr of m.values()) arr.sort((a,b) => getStartTs(a) - getStartTs(b));
-    return Array.from(m.entries())
-      .map(([date, items]) => ({ date, items }))
-      .sort((a,b) => a.date.localeCompare(b.date));
-  };
+    if (!key) continue;
+    if (!m.has(key)) m.set(key, []);
+    m.get(key).push(s);
+  }
+  for (const arr of m.values()) arr.sort((a,b) => startTs(a) - startTs(b));
+  return [...m.entries()]
+    .map(([date, items]) => ({ date, items }))
+    .sort((a,b) => a.date.localeCompare(b.date));
+};
 
 const SHOW_WEEKDAY = true;
 
@@ -1143,6 +1147,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
