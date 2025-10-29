@@ -2658,6 +2658,39 @@ section[id], #services, #calc, #faq, #contact, #main {
 /* Мягко “страхуем” от микровылетов, чтобы не было горизонтального скролла */
 html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей */
 
+/* Центрированная «Наверх» между контактами и футером */
+.back-to-top{
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 20px;         /* подстроено под твою «песочную» подложку */
+}
+
+/* Наследуем ghost-линк из футера и слегка улучшаем */
+.back-top-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: underline;       /* как в футере */
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  color: #2b6e59;
+  padding: 2px 4px;
+  border-radius: 6px;
+}
+.back-top-link:hover{ color:#1e6a57; }
+.back-top-link:focus-visible{
+  outline: 2px solid #16a34a;       /* доступность */
+  outline-offset: 2px;
+}
+
+/* Иконка-стрелка вверх выровнена по базовой линии текста */
+.back-top-link .icon{
+  flex: 0 0 16px;
+  transform: translateY(-1px);
+}
+
 
 
 
@@ -2682,6 +2715,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
