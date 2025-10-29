@@ -1428,7 +1428,7 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 .rv-title{
   flex: 0 0 100%;     /* перенос чипов на следующую строку */
-  margin-top: 16px;    /* «чуть опустить» заголовок в блоке */
+  margin-top: 24px;    /* «чуть опустить» заголовок отзывы в блоке */
          }
 
 .rv-chips{
@@ -2618,6 +2618,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
