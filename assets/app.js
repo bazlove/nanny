@@ -74,49 +74,204 @@ document.addEventListener('copy', function (e) {
   b.addEventListener('click',()=>{ const open=head.classList.toggle('open'); b.setAttribute('aria-expanded', open?'true':'false'); mnav.hidden=!open; });
 })();
 
-// i18n (RU/SR)
+
+
+/* i18n RU/SR — drop-in */
+
 (function(){
+  const LOCALES = { ru: 'ru-RU', sr: 'sr-RS' };
+
   const I18N = {
     ru: {
-      nav_services:'Услуги', nav_reviews:'Отзывы', nav_price:'Цена', nav_faq:'FAQ', nav_contact: "Контакты",
+      /* NAV */
+      nav_services:'Услуги', nav_reviews:'Отзывы', nav_price:'Цена', nav_faq:'FAQ', nav_contact:'Контакты',
+      /* HERO */
       city:'Нови-Сад',
       hero_title:'Надёжная няня в Нови-Саде — спокойно работайте из дома',
       hero_sub:'CPR/First Aid, фото-отчёт после визита, развивающие занятия, моторика по договорённости.',
       trust_safe:'🛡️ Безопасность', trust_report:'📷 Фото-отчёт', trust_no_screens:'🎲 Развитие без экранов', trust_short_slots:'🕒 Слоты 2–4 часа',
       btn_slots:'Проверить свободные слоты',
-      hero_micro:'Опыт: воспитатель детсада и детский фитнес-тренер • 4.9★ по отзывам'
+      hero_micro:'Опыт: воспитатель детсада и детский фитнес-тренер • 4.9★ по отзывам',
+
+      /* SLOTS */
+      slots_title:'Свободные слоты на неделю',
+      slots_badge_next:'Ближайший слот: {date} | {t1}–{t2}',
+      slots_badge_none:'Свободно: по запросу',
+      slots_btn_request:'Запросить',
+
+      /* REVIEWS */
+      reviews_title:'Отзывы родителей',
+      reviews_filter_all:'Все',
+      reviews_filter_two:'Двое детей',
+      reviews_filter_toddlers:'Малыши 1–3 года',
+      reviews_filter_preschool:'Дошкольники 4–7 лет',
+      reviews_aria_tablist:'Категории отзывов',
+
+      /* SERVICES */
+      services_title:'Услуги',
+      services_filter_all:'Все',
+      services_filter_basic:'Базовые',
+      services_filter_addon:'Дополнительные',
+
+      /* PRICE (минимум для заголовков) */
+      price_title:'Цена',
+
+      /* CALC / EUR TOGGLE */
+      calc_eur_toggle:'Показать результат в евро (курс {rate} дин/€)',
+
+      /* CONTACT / FORM */
+      contact_title:'Свяжитесь со мной',
+      contact_hours_label:'Режим работы',
+      form_name_label:'Ваше имя',       form_name_ph:'Имя и фамилия',
+      form_phone_label:'Телефон',       form_phone_ph:'+381…',
+      form_msg_label:'Сообщение',       form_msg_ph:'Коротко опишите запрос',
+      form_btn_send:'Отправить',
+      form_consent:'Согласен(а) с обработкой персональных данных',
+      form_sending:'Отправляю…', form_sent:'Готово! Я свяжусь с вами.', form_failed:'Не удалось отправить. Напишите мне в мессенджер.',
+      form_err_required:'Заполните это поле', form_err_phone:'Проверьте номер телефона',
+
+      /* FAQ */
+      faq_title:'FAQ'
     },
+
     sr: {
-      nav_services:'Usluge', nav_reviews:'Utisci', nav_price:'Cena', nav_faq:'FAQ', nav_contact: "Kontakt",
+      /* NAV */
+      nav_services:'Usluge', nav_reviews:'Utisci', nav_price:'Cena', nav_faq:'FAQ', nav_contact:'Kontakt',
+      /* HERO */
       city:'Novi Sad',
       hero_title:'Pouzdana dadilja u Novom Sadu — radite od kuće bez stresa',
       hero_sub:'CPR/Prva pomoć, foto-izveštaj posle posete, razvojne aktivnosti, motorika po dogovoru.',
       trust_safe:'🛡️ Bezbednost', trust_report:'📷 Foto-izveštaj', trust_no_screens:'🎲 Razvoj bez ekrana', trust_short_slots:'🕒 Termini 2–4 sata',
       btn_slots:'Proverite slobodne termine',
-      hero_micro:'Iskustvo: vaspitač u vrtiću i dečiji fitnes trener • 4.9★ po ocenama'
+      hero_micro:'Iskustvo: vaspitač u vrtiću i dečiji fitnes trener • 4.9★ po ocenama',
+
+      /* SLOTS */
+      slots_title:'Slobodni termini za nedelju',
+      slots_badge_next:'Najbliži termin: {date} | {t1}–{t2}',
+      slots_badge_none:'Slobodno: na upit',
+      slots_btn_request:'Zatraži',
+
+      /* REVIEWS */
+      reviews_title:'Utisci roditelja',
+      reviews_filter_all:'Svi',
+      reviews_filter_two:'Dvoje dece',
+      reviews_filter_toddlers:'Mališani 1–3',
+      reviews_filter_preschool:'Predškolci 4–7',
+      reviews_aria_tablist:'Kategorije utisaka',
+
+      /* SERVICES */
+      services_title:'Usluge',
+      services_filter_all:'Sve',
+      services_filter_basic:'Osnovne',
+      services_filter_addon:'Dodatne',
+
+      /* PRICE */
+      price_title:'Cena',
+
+      /* CALC / EUR TOGGLE */
+      calc_eur_toggle:'Prikaz u evrima (kurs {rate} RSD/€)',
+
+      /* CONTACT / FORM */
+      contact_title:'Pišite mi',
+      contact_hours_label:'Radno vreme',
+      form_name_label:'Vaše ime',       form_name_ph:'Ime i prezime',
+      form_phone_label:'Telefon',        form_phone_ph:'+381…',
+      form_msg_label:'Poruka',           form_msg_ph:'Ukratko opišite zahtev',
+      form_btn_send:'Pošalji',
+      form_consent:'Slažem se sa obradom ličnih podataka',
+      form_sending:'Šaljem…', form_sent:'Hvala! Javiću vam se.', form_failed:'Slanje nije uspelo. Pišite mi u messenger.',
+      form_err_required:'Popunite ovo polje', form_err_phone:'Proverite broj telefona',
+
+      /* FAQ */
+      faq_title:'FAQ'
     }
   };
+
+  /* ---------- runtime ---------- */
+
+  // простая интерполяция: "Текст {x}" + {x: '…'}
+  function fmt(str, params){
+    if (!params) return str;
+    return str.replace(/\{(\w+)\}/g, (_,k)=> (params[k]??''));
+  }
+
+  // форматтеры дат/времени в текущей локали
+  function makeFormatters(lang){
+    const loc = LOCALES[lang] || LOCALES.ru;
+    return {
+      dayLabel: (ymd)=>{
+        if(!ymd) return '';
+        const [y,m,d] = ymd.split('-').map(Number);
+        const dt = new Date(y, m-1, d);
+        return new Intl.DateTimeFormat(loc, { weekday:'short', day:'numeric', month:'long' }).format(dt);
+      },
+      timeHM: (ts)=> new Intl.DateTimeFormat(loc, { hour:'2-digit', minute:'2-digit' }).format(new Date(ts))
+    };
+  }
+
   function applyLang(lang){
-    const d=I18N[lang]||I18N.ru;
+    const dict = I18N[lang] || I18N.ru;
+    const loc  = LOCALES[lang] || LOCALES.ru;
+
     document.documentElement.setAttribute('lang', lang==='sr'?'sr':'ru');
+
+    // Текстовые ноды: <span class="i18n" data-key="...">
     document.querySelectorAll('.i18n').forEach(el=>{
-      const k=el.getAttribute('data-key'); if(k && d[k]!=null) el.textContent=d[k];
+      const k = el.getAttribute('data-key');
+      if(!k) return;
+      const v = dict[k];
+      if(v!=null) el.textContent = v;
     });
+
+    // Атрибуты: <input class="i18n-attr" data-key="form_name_ph" data-attr="placeholder">
+    document.querySelectorAll('.i18n-attr').forEach(el=>{
+      const k = el.getAttribute('data-key');
+      const a = el.getAttribute('data-attr') || 'placeholder';
+      const v = dict[k];
+      if(v!=null) el.setAttribute(a, v);
+    });
+
+    // Кнопки выбора языка
     document.querySelectorAll('.lang-btn').forEach(b=>{
-      const on=b.getAttribute('data-lang')===lang; b.classList.toggle('active',on); b.setAttribute('aria-pressed', on?'true':'false');
+      const on = b.getAttribute('data-lang')===lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on?'true':'false');
     });
-    try{ localStorage.setItem('lang', lang);}catch(e){}
+
+    // экспорт текущих хелперов
+    window.i18n = {
+      lang, dict, locale: loc,
+      t: (key, params)=> fmt(dict[key] ?? key, params),
+      fmtDay: makeFormatters(lang).dayLabel,
+      fmtTime: makeFormatters(lang).timeHM
+    };
+
+    try{ localStorage.setItem('lang', lang); }catch(e){}
   }
+
   function init(){
-    const q=new URLSearchParams(location.search); const qp=(q.get('lang')||'').toLowerCase();
-    let stored; try{ stored=localStorage.getItem('lang'); }catch(e){}
-    const lang=(qp==='sr'||qp==='ru')?qp:(stored || ((navigator.language||'ru').toLowerCase().indexOf('sr')===0?'sr':'ru'));
+    const q = new URLSearchParams(location.search);
+    const qp = (q.get('lang')||'').toLowerCase();
+    let stored; try{ stored = localStorage.getItem('lang'); }catch(e){}
+    const sys = (navigator.language||'ru').toLowerCase().startsWith('sr') ? 'sr' : 'ru';
+    const lang = (qp==='sr'||qp==='ru') ? qp : (stored||sys);
     applyLang(lang);
-    document.addEventListener('click', e=>{ const btn=e.target.closest && e.target.closest('.lang-btn'); if(!btn) return; e.preventDefault(); applyLang(btn.getAttribute('data-lang')); });
-    window.i18nSetLang=applyLang;
+
+    document.addEventListener('click', e=>{
+      const btn = e.target.closest && e.target.closest('.lang-btn');
+      if(!btn) return;
+      e.preventDefault();
+      applyLang(btn.getAttribute('data-lang'));
+    });
+
+    // удобные алиасы
+    window.i18nSetLang = applyLang;
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+
 
 /* --- Бейдж в шапке: защитный слой, чтобы не падать на null --- */
 (function hardenBadge(){
@@ -1168,6 +1323,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
