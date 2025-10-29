@@ -312,7 +312,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   const makeTimesLine = (items) => items.map(s => `${safeStart(s)}–${safeEnd(s)}`).join(', ');
 
   const cardHTML = (date, items) => {
-    const dayLabel = items[0]?.dayLabel ?? fmtDateRU(date);
+    const dayLabel = fmtDateRU(date);
     const times    = makeTimesLine(items);
     return `
       <article class="slot-card">
@@ -942,7 +942,7 @@ if (badName || badCont) {
     const s = sorted[0];
     if (!s) return null;
 
-    const labelDay  = s.dayLabel || formatDayRU(new Date(getTs(s)));
+    const labelDay  = formatDayRU(new Date(getTs(s)));
     const startText = s.startLabel || (s.startISO ? new Date(s.startISO).toTimeString().slice(0,5) : '');
     const endText   = s.endLabel   || (s.endISO   ? new Date(s.endISO).toTimeString().slice(0,5)   : '');
     return `${labelDay} · ${startText}–${endText}`;
@@ -1168,6 +1168,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
