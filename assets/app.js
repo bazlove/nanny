@@ -75,89 +75,7 @@ document.addEventListener('copy', function (e) {
 })();
 
 
-  /* ---------- runtime ---------- */
-
-  // простая интерполяция: "Текст {x}" + {x: '…'}
-  function fmt(str, params){
-    if (!params) return str;
-    return str.replace(/\{(\w+)\}/g, (_,k)=> (params[k]??''));
-  }
-
-  // форматтеры дат/времени в текущей локали
-  function makeFormatters(lang){
-    const loc = LOCALES[lang] || LOCALES.ru;
-    return {
-      dayLabel: (ymd)=>{
-        if(!ymd) return '';
-        const [y,m,d] = ymd.split('-').map(Number);
-        const dt = new Date(y, m-1, d);
-        return new Intl.DateTimeFormat(loc, { weekday:'short', day:'numeric', month:'long' }).format(dt);
-      },
-      timeHM: (ts)=> new Intl.DateTimeFormat(loc, { hour:'2-digit', minute:'2-digit' }).format(new Date(ts))
-    };
-  }
-
-  function applyLang(lang){
-    const dict = I18N[lang] || I18N.ru;
-    const loc  = LOCALES[lang] || LOCALES.ru;
-
-    document.documentElement.setAttribute('lang', lang==='sr'?'sr':'ru');
-
-    // Текстовые ноды: <span class="i18n" data-key="...">
-    document.querySelectorAll('.i18n').forEach(el=>{
-      const k = el.getAttribute('data-key');
-      if(!k) return;
-      const v = dict[k];
-      if(v!=null) el.textContent = v;
-    });
-
-    // Атрибуты: <input class="i18n-attr" data-key="form_name_ph" data-attr="placeholder">
-    document.querySelectorAll('.i18n-attr').forEach(el=>{
-      const k = el.getAttribute('data-key');
-      const a = el.getAttribute('data-attr') || 'placeholder';
-      const v = dict[k];
-      if(v!=null) el.setAttribute(a, v);
-    });
-
-    // Кнопки выбора языка
-    document.querySelectorAll('.lang-btn').forEach(b=>{
-      const on = b.getAttribute('data-lang')===lang;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-pressed', on?'true':'false');
-    });
-
-    // экспорт текущих хелперов
-    window.i18n = {
-      lang, dict, locale: loc,
-      t: (key, params)=> fmt(dict[key] ?? key, params),
-      fmtDay: makeFormatters(lang).dayLabel,
-      fmtTime: makeFormatters(lang).timeHM
-    };
-
-    try{ localStorage.setItem('lang', lang); }catch(e){}
-  }
-
-  function init(){
-    const q = new URLSearchParams(location.search);
-    const qp = (q.get('lang')||'').toLowerCase();
-    let stored; try{ stored = localStorage.getItem('lang'); }catch(e){}
-    const sys = (navigator.language||'ru').toLowerCase().startsWith('sr') ? 'sr' : 'ru';
-    const lang = (qp==='sr'||qp==='ru') ? qp : (stored||sys);
-    applyLang(lang);
-
-    document.addEventListener('click', e=>{
-      const btn = e.target.closest && e.target.closest('.lang-btn');
-      if(!btn) return;
-      e.preventDefault();
-      applyLang(btn.getAttribute('data-lang'));
-    });
-
-    // удобные алиасы
-    window.i18nSetLang = applyLang;
-  }
-
-  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
-})();
+  
 
 
 
@@ -1213,7 +1131,10 @@ if (badName || badCont) {
 })();
 
 
-// i18n DICT (RU/SR) — актуально для index (10).html
+// i18n DICT (RU/SR)
+(function(){
+  const LOCALES = { ru: 'ru-RU', sr: 'sr-RS' };
+  
 const I18N = {
   ru: {
     /* NAV + HEADER */
@@ -1493,6 +1414,89 @@ const I18N = {
 };
 
 
+/* ---------- runtime ---------- */
+
+  // простая интерполяция: "Текст {x}" + {x: '…'}
+  function fmt(str, params){
+    if (!params) return str;
+    return str.replace(/\{(\w+)\}/g, (_,k)=> (params[k]??''));
+  }
+
+  // форматтеры дат/времени в текущей локали
+  function makeFormatters(lang){
+    const loc = LOCALES[lang] || LOCALES.ru;
+    return {
+      dayLabel: (ymd)=>{
+        if(!ymd) return '';
+        const [y,m,d] = ymd.split('-').map(Number);
+        const dt = new Date(y, m-1, d);
+        return new Intl.DateTimeFormat(loc, { weekday:'short', day:'numeric', month:'long' }).format(dt);
+      },
+      timeHM: (ts)=> new Intl.DateTimeFormat(loc, { hour:'2-digit', minute:'2-digit' }).format(new Date(ts))
+    };
+  }
+
+  function applyLang(lang){
+    const dict = I18N[lang] || I18N.ru;
+    const loc  = LOCALES[lang] || LOCALES.ru;
+
+    document.documentElement.setAttribute('lang', lang==='sr'?'sr':'ru');
+
+    // Текстовые ноды: <span class="i18n" data-key="...">
+    document.querySelectorAll('.i18n').forEach(el=>{
+      const k = el.getAttribute('data-key');
+      if(!k) return;
+      const v = dict[k];
+      if(v!=null) el.textContent = v;
+    });
+
+    // Атрибуты: <input class="i18n-attr" data-key="form_name_ph" data-attr="placeholder">
+    document.querySelectorAll('.i18n-attr').forEach(el=>{
+      const k = el.getAttribute('data-key');
+      const a = el.getAttribute('data-attr') || 'placeholder';
+      const v = dict[k];
+      if(v!=null) el.setAttribute(a, v);
+    });
+
+    // Кнопки выбора языка
+    document.querySelectorAll('.lang-btn').forEach(b=>{
+      const on = b.getAttribute('data-lang')===lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on?'true':'false');
+    });
+
+    // экспорт текущих хелперов
+    window.i18n = {
+      lang, dict, locale: loc,
+      t: (key, params)=> fmt(dict[key] ?? key, params),
+      fmtDay: makeFormatters(lang).dayLabel,
+      fmtTime: makeFormatters(lang).timeHM
+    };
+
+    try{ localStorage.setItem('lang', lang); }catch(e){}
+  }
+
+  function init(){
+    const q = new URLSearchParams(location.search);
+    const qp = (q.get('lang')||'').toLowerCase();
+    let stored; try{ stored = localStorage.getItem('lang'); }catch(e){}
+    const sys = (navigator.language||'ru').toLowerCase().startsWith('sr') ? 'sr' : 'ru';
+    const lang = (qp==='sr'||qp==='ru') ? qp : (stored||sys);
+    applyLang(lang);
+
+    document.addEventListener('click', e=>{
+      const btn = e.target.closest && e.target.closest('.lang-btn');
+      if(!btn) return;
+      e.preventDefault();
+      applyLang(btn.getAttribute('data-lang'));
+    });
+
+    // удобные алиасы
+    window.i18nSetLang = applyLang;
+  }
+
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
 
 
 
