@@ -340,11 +340,13 @@
       <h2 class="rv-title">Отзывы родителей</h2>
 
       <!-- Чипы статичные -->
-      <ul class="rv-chips" aria-label="Категории отзывов">
-        <li><button type="button" class="rv-chip" aria-pressed="false">Двое детей</button></li>
-        <li><button type="button" class="rv-chip" aria-pressed="false">Малыши 1-3 года</button></li>
-        <li><button type="button" class="rv-chip" aria-pressed="false">Дошкольники 4–7 лет</button></li>
-      </ul>
+      <ul class="rv-chips" role="tablist" aria-label="Категории отзывов">
+  <li><button type="button" class="rv-chip is-active" data-filter="all" role="tab" aria-selected="true">Все</button></li>
+  <li><button type="button" class="rv-chip" data-filter="two"        role="tab" aria-selected="false">Двое детей</button></li>
+  <li><button type="button" class="rv-chip" data-filter="toddlers"   role="tab" aria-selected="false">Малыши 1-3 года</button></li>
+  <li><button type="button" class="rv-chip" data-filter="preschool"  role="tab" aria-selected="false">Дошкольники 4-7 лет</button></li>
+</ul>
+		
     </div>
 
     <!-- Карусель-маркиза (плавный бесконечный скролл) -->
@@ -782,6 +784,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
