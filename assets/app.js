@@ -789,7 +789,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 
     // honeypot/time-trap
     if (form.website?.value) return;
-    if (Date.now() - t0 < 1200) return;
+    if (Date.now() - t0 < 2500) return;
 
     const badName = name.value.trim().length < 3;   // ← минимум 3 символа
     const badCont = !cont.value.trim();             // как было
@@ -1143,6 +1143,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
