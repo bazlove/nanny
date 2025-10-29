@@ -9,10 +9,11 @@ const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
 const safe = fn => { try { fn && fn(); } catch (e) { console.error(`${fn.name||'init'} failed:`, e); } };
 
 // запуск после готовности DOM — и каждая инициализация в try/catch
-window.addEventListener('DOMContentLoaded', () => {
-  safe(initSlots);           // загрузка слотов (может падать — нам нельзя ломаться)
-  safe(initAvailabilityBadge); // если есть отдельная функция для бейджа
+wwindow.addEventListener('DOMContentLoaded', () => {
+  safe(window.initSlots);
+  safe(window.initAvailabilityBadge);
 });
+
 
 // Бейдж: жёсткая защита, чтобы никто не уронил страницу
 (function hardenBadge(){
@@ -253,24 +254,27 @@ window.updateBadge = function updateBadge(slots) {
   const safeStart  = s => s.startLabel || timeFromISO(s.startISO);
   const safeEnd    = s => s.endLabel   || timeFromISO(s.endISO);
   const getStartTs = s => s.startTs ?? Date.parse(s.startISO || 0);
+  const ymdLocal = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 
+  
   const groupByDate = (slots) => {
   const m = new Map();
   for (const s of slots) {
     let key = s.date;
     if (!key) {
-      if (s.startTs) key = ymdLocal(new Date(s.startTs));
+      if (s.startTs)   key = ymdLocal(new Date(s.startTs));
       else if (s.startISO) key = ymdLocal(new Date(s.startISO));
     }
     if (!key) continue;
     if (!m.has(key)) m.set(key, []);
     m.get(key).push(s);
   }
-  for (const arr of m.values()) arr.sort((a,b) => startTs(a) - startTs(b));
+  for (const arr of m.values()) arr.sort((a,b) => getStartTs(a) - getStartTs(b));
   return [...m.entries()]
     .map(([date, items]) => ({ date, items }))
     .sort((a,b) => a.date.localeCompare(b.date));
 };
+
 
 const SHOW_WEEKDAY = true;
 
@@ -1147,6 +1151,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
