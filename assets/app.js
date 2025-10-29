@@ -216,7 +216,9 @@ window.updateBadge = function updateBadge(slots) {
 /* ===== Slots: fetch + render + header badge (final) ===== */
 (function initSlots(){
   const API_SLOTS_URL =
-    'https://script.google.com/macros/s/AKfycbw1sCLUCTPlaiHMFNsqPfgjTH6iCHp391m1lwYRX0g5AO7_Zme1uySp8jgQm9bsaR8EnQ/exec';
+    'https://script.google.com/macros/s/AKfycbx-IkXY39sBerBkSAjTtv-SRbzX7tkg4spCk_QB2eGzSFpz2999WuFtXt0QKWZy9x8C/exec';
+
+  
 
   // DOM
   const wrap   = document.querySelector('#slotsList');
@@ -1151,6 +1153,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
