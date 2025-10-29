@@ -1436,6 +1436,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   height:32px; padding:0 12px; border-radius:999px;
   border:1px solid #e2e6ea; background:#fff; color:#111;
   font-size:14px; cursor:default; /* чипы статичны */
+  cursor: pointer;
 }
 
 /* ===== Reviews: бесконечная маркиза (одна строка, бесшовная) ========== */
@@ -2590,6 +2591,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
