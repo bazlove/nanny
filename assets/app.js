@@ -339,7 +339,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 // Calculator
 
 (function(){
-  const EUR_RATE=117, BASE=900, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, OPT_FIT=500, MIN=2, HOURS_MAX=10;
+  const EUR_RATE=117, BASE=1000, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, OPT_FIT=500, MIN=2, HOURS_MAX=10;
   const $=id=>document.getElementById(id);
   const money=v=>{ try{return v.toLocaleString('ru-RS')}catch(_){return String(v)} };
 
@@ -659,59 +659,73 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   map.forEach((_, sec) => io.observe(sec));
 })();
 
-/* ===== Reviews: лёгкая бесшовная «маркиза» (CSS-анимация) =============== */
-(function initReviewsMarquee(){
-  const marquees = document.querySelectorAll('.rv-marquee');
-  if (!marquees.length) return;
+/* ===== Reviews: фильтр по чипам + пересборка дорожки ===== */
+(function initReviewsFilter(){
+  const sec   = document.getElementById('reviews');
+  const list  = sec?.querySelector('.rv-chips');
+  const mq    = sec?.querySelector('.rv-marquee');
+  const track = mq?.querySelector('.rv-track');
+  if (!sec || !list || !track) return;
 
-  const mrm = matchMedia('(prefers-reduced-motion: reduce)');
+  // 1) Сохраняем оригинальные карточки (до любых дублей маркизы)
+  //    Берём первые уникальные по src/img — этого достаточно, чтобы отсечь клоны.
+  const firstRun = [];
+  const seen = new Set();
+  track.querySelectorAll('.rv-item').forEach(card => {
+    const key = card.querySelector('img')?.getAttribute('src') || card.outerHTML;
+    if (seen.has(key)) return;
+    seen.add(key);
+    firstRun.push(card.cloneNode(true));
+  });
 
-  marquees.forEach(mq => {
-    const track = mq.querySelector('.rv-track');
-    if (!track || track.dataset.marqueeReady) return;
-
-    /* не даём карточкам переноситься во 2-ю строку даже при конфликтных стилях */
-    track.style.display   = 'flex';
-    track.style.flexWrap  = 'nowrap';
-    track.style.alignItems= 'stretch';
-
-    /* --- дублируем ТОЛЬКО содержимое дорожки (а не вторую .rv-track) --- */
-    const cloneChildrenOnce = () => {
-      const frag = document.createDocumentFragment();
-      Array.from(track.children).forEach(node => frag.appendChild(node.cloneNode(true)));
-      track.appendChild(frag);
-    };
-
-    if (!track.dataset.cloned) {
-      cloneChildrenOnce();            // получаем «оригинал + клон»
-      track.dataset.cloned = '1';
-    }
-
-    /* гарантируем, что ширины хватит минимум на 2× viewport (без бесконечного while) */
-    const needMinWidth = () => track.scrollWidth < mq.clientWidth * 2;
+  // 2) Сервис: собрать дорожку из базового набора + довести ширину (как в маркизе)
+  const cloneChildrenOnce = (t) => {
+    const frag = document.createDocumentFragment();
+    Array.from(t.children).forEach(n => frag.appendChild(n.cloneNode(true)));
+    t.appendChild(frag);
+  };
+  const fillToWidth = (mqEl, trackEl) => {
     let safety = 0;
-    while (needMinWidth() && safety < 3) { // максимум три до-дублирования
-      cloneChildrenOnce();
+    while (trackEl.scrollWidth < mqEl.clientWidth * 2 && safety < 3){
+      cloneChildrenOnce(trackEl);
       safety++;
     }
+  };
 
-    /* — Доступность — */
-    const pause = () => track.style.animationPlayState = 'paused';
-    const play  = () => track.style.animationPlayState = '';
+  // 3) Применить фильтр и пересобрать дорожку
+  function applyFilter(filter){
+    // База
+    const base = firstRun.filter(el => {
+      if (filter === 'all') return true;
+      const cats = (el.dataset.cat || '').split(/\s+/);
+      return cats.includes(filter);
+    });
+    const items = base.length ? base : firstRun;
 
-    mq.addEventListener('mouseenter', pause);
-    mq.addEventListener('mouseleave', play);
-    mq.addEventListener('focusin',   pause);
-    mq.addEventListener('focusout',  play);
+    // Пересборка дорожки
+    track.innerHTML = '';
+    items.forEach(el => track.appendChild(el.cloneNode(true)));
+    fillToWidth(mq, track);
+  }
 
-    /* Уважение к prefers-reduced-motion */
-    const applyReduced = () => { track.style.animation = mrm.matches ? 'none' : ''; };
-    applyReduced();
-    mrm.addEventListener?.('change', applyReduced);
+  // 4) Чипы: переключение состояний и вызов applyFilter
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.rv-chip[role="tab"]');
+    if (!btn) return;
+    const filter = btn.getAttribute('data-filter') || 'all';
 
-    track.dataset.marqueeReady = '1';
+    list.querySelectorAll('.rv-chip').forEach(c => {
+      c.classList.toggle('is-active', c === btn);
+      c.setAttribute('aria-selected', c === btn ? 'true' : 'false');
+    });
+
+    applyFilter(filter);
   });
+
+  // Инициализация
+  applyFilter('all');
 })();
+
 
 // ====== CONTACT ======
 (function contactInit(){
@@ -1129,6 +1143,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
