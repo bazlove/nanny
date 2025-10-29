@@ -257,7 +257,22 @@ window.updateBadge = function updateBadge(slots) {
   const safeEnd    = s => s.endLabel   || timeFromISO(s.endISO);
   const getStartTs = s => s.startTs ?? Date.parse(s.startISO || 0);
   const ymdLocal = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const LOCALE = 'ru-RU';
 
+// "YYYY-MM-DD"
+const fmtDayLabel = (ymd) => {
+  if (!ymd) return '';
+  const [y, m, d] = ymd.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  return new Intl.DateTimeFormat(LOCALE, {
+    weekday: 'short', day: 'numeric', month: 'long'
+  }).format(dt);
+};
+
+// Время из таймстампа → "14:00"
+const fmtTime = (ts) =>
+  new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit' })
+    .format(new Date(ts));
   
   const groupByDate = (slots) => {
   const m = new Map();
@@ -1153,6 +1168,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
