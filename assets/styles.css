@@ -880,34 +880,75 @@ section{padding:64px 0}
 .notice{margin-top:8px;color:#9b4d00;background:#FFF4E5;border:1px solid #FFE1BF;padding:10px 12px;border-radius:10px;display:none}
 .eur{color:#888;font-weight:600;margin-left:8px;opacity:.85;font-size:12px}
 
-/* === Cookie banner ====================================================== */
-.cookie-banner[hidden] { display: none !important; }
-
-.cookie-banner{
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.35);
-  display: grid; place-items: end center;   /* прилипает к низу */
-  padding: 16px;
-  z-index: 99999;                           /* поверх всего */
+/* ===== COOKIE BANNER ===== */
+#cookie-banner {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: clamp(220px, 33vh, 480px); /* 1/3 экрана на всех девайсах */
+  z-index: 9999;
+  background: rgba(17, 24, 39, 0.92); /* полупрозрачная плашка */
+  color: #fff;
+  padding: 0; /* внутренние отступы делаем у .cookie-card */
+  backdrop-filter: blur(2px) saturate(120%);
 }
 
-.cookie-card{
-  max-width: 680px; width: min(680px, 100%);
-  background:#fff; color:#111;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.18);
-  padding: 16px 18px;
-  pointer-events: auto;
+/* скрытие через [hidden] — обязательно оставляем */
+#cookie-banner[hidden] { display: none !important; }
+
+/* Контент выравниваем по «контентной области» (как у контейнера) и центрируем по ней */
+#cookie-banner .cookie-card {
+  height: 100%;
+  max-width: min(1120px, calc(100% - 32px)); /* как у основного контейнера: по центру и с боковыми полями */
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  align-content: center;               /* вертикальный центр внутри плашки */
+  row-gap: 12px;
+  padding: 20px 0 14px;                /* вертикальные отступы у контента */
+  text-align: left;                    /* текст как обычно, не по центру */
 }
 
-.cookie-card h3{ margin: 0 0 8px; }
-.cookie-card p { margin: 0 0 12px; }
-.cookie-card small { display:block; margin-top: 10px; color:#666; }
+#cookie-banner .cookie-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
 
-.cookie-actions{
-  display:flex; gap:10px; flex-wrap:wrap;
+#cookie-banner .cookie-card p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+#cookie-banner .cookie-card a {
+  color: #b3e5ff;
+  text-decoration: underline dashed;
+  text-underline-offset: 2px;
+}
+
+#cookie-banner .cookie-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+#cookie-banner .cookie-actions .btn {
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+
+/* подпись "можно изменить решение позже…" */
+#cookie-banner .cookie-card small {
+  display: block;
   margin-top: 6px;
+  opacity: 0.82;
 }
+
+/* Безопасная зона на iOS (нижняя кромка) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  #cookie-banner { padding-bottom: env(safe-area-inset-bottom); }
+}
+
 
 /* Кнопка-ссылка "Настройки cookie" */
 .link-ghost{
@@ -2618,6 +2659,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
