@@ -2556,6 +2556,22 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 
 
+/* Переключатель "Показать в евро" */
+.calc-eur{
+  font-size: 1rem;      /* базово ~16px */
+  line-height: 1.35;
+}
+
+/* Мобильные: уменьшаем текст */
+@media (max-width: 600px){
+  .calc-eur{ font-size: .875rem; }   /* ≈14px */
+}
+
+@media (max-width: 360px){
+  .calc-eur{ font-size: .8125rem; }  /* ≈13px для очень узких экранов */
+}
+
+
 
 
 /* =================== /CALCULATOR ===================== */
@@ -2595,6 +2611,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
