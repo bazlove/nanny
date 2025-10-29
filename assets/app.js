@@ -9,7 +9,7 @@ const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
 const safe = fn => { try { fn && fn(); } catch (e) { console.error(`${fn.name||'init'} failed:`, e); } };
 
 // запуск после готовности DOM — и каждая инициализация в try/catch
-wwindow.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   safe(window.initSlots);
   safe(window.initAvailabilityBadge);
 });
@@ -1151,6 +1151,7 @@ if (badName || badCont) {
     [visible, hidden] = [hidden, visible];
   }, 7000);
 })();
+
 
 
 
