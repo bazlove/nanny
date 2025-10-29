@@ -1422,14 +1422,17 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 .rv-reviews__head{
   display:flex; align-items:center; justify-content:space-between;
-  gap:16px; margin-bottom:16px;
+  gap:16px; margin-bottom:24px;
   flex-wrap:wrap;
 }
 
-.rv-title{ margin: 0; }
+.rv-title{
+  flex: 0 0 100%;     /* перенос чипов на следующую строку */
+  margin-top: 8px;    /* «чуть опустить» заголовок в блоке */
+         }
 
 .rv-chips{
-  display:flex; gap:8px; margin:0; padding:0; list-style:none;
+  display:flex; gap:8px; margin:0; padding:0; list-style:none; margin-left: auto;
 }
 .rv-chip{
   display:inline-flex; align-items:center; gap:6px;
@@ -1505,6 +1508,10 @@ section[id], #services, #calc, #faq, #contact, #main {
 @keyframes rv-scroll{
   from{ transform: translateX(0); }
   to  { transform: translateX(-50%); }
+}
+
+@media (max-width: 600px){
+  #reviews .rv-chips{ margin-left: 0; justify-content: flex-start; }
 }
 
 
@@ -2611,6 +2618,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
