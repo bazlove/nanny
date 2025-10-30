@@ -946,6 +946,50 @@ body.menu-open{ overflow:hidden; }
 
 
 
+/* WHY: мобильная анимация при появлении в вьюпорте */
+@media (max-width: 767px){
+  #why .why-card .why-icon,
+  #why .why-card .why-title,
+  #why .why-card .why-text{
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .35s ease, transform .35s ease;
+    will-change: opacity, transform;
+  }
+
+  /* лёгкая «ступенька» по времени: иконка -> заголовок -> текст */
+  #why .why-card .why-title{ transition-delay: .06s; }
+  #why .why-card .why-text { transition-delay: .12s; }
+
+  #why .why-card.play .why-icon,
+  #why .why-card.play .why-title,
+  #why .why-card.play .why-text{
+    opacity: 1;
+    transform: none;
+  }
+
+  /* поп-эффект для иконки при первом показе */
+  #why .why-card.play .why-icon{
+    animation: whyPop .55s ease-out;
+  }
+  @keyframes whyPop{
+    0%   { transform: scale(.9); opacity:.85; }
+    60%  { transform: scale(1.06); }
+    100% { transform: scale(1);   opacity:1; }
+  }
+}
+
+/* Уважение к настройке «уменьшить анимацию» */
+@media (prefers-reduced-motion: reduce){
+  #why .why-card .why-icon,
+  #why .why-card .why-title,
+  #why .why-card .why-text{
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  #why .why-card.play .why-icon{ animation: none !important; }
+}
 
 
 
