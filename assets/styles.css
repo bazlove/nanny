@@ -2691,6 +2691,39 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
   transform: translateY(-1px);
 }
 
+/* Hover-анимация для "Наверх" */
+.back-top-link{
+  transition: color .2s ease;
+}
+@media (hover:hover){
+  .back-top-link:hover{
+    color: #6B7280; /* серый при наведении */
+  }
+  .back-top-link:hover .icon{
+    animation: backTopArrow 800ms ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+
+/* при фокусе с клавиатуры — тоже серый, но без бесконечной анимации */
+.back-top-link:focus-visible{ color:#6B7280; }
+
+/* Базовое положение стрелки (если раньше было смещение — обнулим) */
+.back-top-link .icon{
+  transform: translateY(0);
+  transition: transform .2s ease;
+}
+
+/* Ключевые кадры: плавный ход снизу вверх */
+@keyframes backTopArrow{
+  from { transform: translateY(3px); }  /* старт чуть ниже */
+  to   { transform: translateY(-3px); } /* плавно вверх */
+}
+
+/* Уважение к настройке "уменьшить анимацию" */
+@media (prefers-reduced-motion: reduce){
+  .back-top-link:hover .icon{ animation: none; }
+}
 
 
 
@@ -2715,6 +2748,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
