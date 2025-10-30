@@ -5,7 +5,7 @@ window.initQuoteRotator = window.initQuoteRotator || function(){ /* no-op: ро�
 
 // helpers
 const $  = (sel, root=document) => root.querySelector(sel);
-const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 const safe = fn => { try { fn && fn(); } catch (e) { console.error(`${fn.name||'init'} failed:`, e); } };
 
 // запуск после готовности DOM — и каждая инициализация в try/catch
@@ -241,7 +241,7 @@ window.updateBadge = function updateBadge(slots) {
   // Статус загрузки
   if (badge) {
     window.__SLOTS_BADGE__ = 'slots';
-    setB('Проверяю свободные слоты…', ['is-live']);
+    setBadge('Проверяю свободные слоты…', ['is-live']);
   }
 
   // ===== helpers для карточек =====
@@ -335,9 +335,9 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       } else {
         if (raw.length) {
           const first = raw[0];
-          setB(`Ближайший слот ${safeStart(first)}–${safeEnd(first)}`, ['is-next']);
+          setBadge(`Ближайший слот ${safeStart(first)}–${safeEnd(first)}`, ['is-next']);
         } else {
-          setB('Свободно: по запросу', ['is-none']);
+          setBadge('Свободно: по запросу', ['is-none']);
         }
       }
 
@@ -355,7 +355,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       if (hasList) {
         wrap.innerHTML = '<p class="error">Слоты временно недоступны. Напишите мне.</p>';
       }
-      setB('Свободно: по запросу', ['is-none']);
+      setBadge('Свободно: по запросу', ['is-none']);
     });
 })();
 
@@ -659,7 +659,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 
 // Active menu on scroll
 (function(){
-  const links = [...document.querySelectorAll('.header-nav a[href^="#"]')];
+  const links = Array.from(document.querySelectorAll('.header-nav a[href^="#"]'));
   const map = new Map();
   links.forEach(a => {
     const id = a.getAttribute('href').slice(1);
@@ -1534,6 +1534,7 @@ const I18N = {
 
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
 
 
 
