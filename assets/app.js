@@ -50,29 +50,52 @@ document.addEventListener('copy', function (e) {
   }
 }, { capture: true });
 
+
 // Console banner
 (function(){try{console.log('%cLanding (split files)','background:#16324a;color:#fff;padding:2px 8px;border-radius:6px')}catch(e){}})();
 
-// Burger (mobile)
-(function(){
-  const b=document.querySelector('.burger'); const head=document.querySelector('.site-header'); const mnav=document.getElementById('mnav');
-  if(!b||!head||!mnav) return;
-  b.addEventListener('click',()=>{ const open=head.classList.toggle('open'); b.setAttribute('aria-expanded', open?'true':'false'); mnav.hidden=!open; });
+
+// ===== Mobile/Tablet menu: toggle + a11y =====
+
+(function setupMobileMenu(){
+  const burger = document.getElementById('burger');
+  const mnav   = document.getElementById('mnav');
+  if (!burger || !mnav) return;
+
+  const firstFocusable = () =>
+    mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+
+  function openMenu(){
+    mnav.hidden = false;
+    mnav.classList.add('is-open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const f = firstFocusable(); if (f) f.focus({ preventScroll: true });
+  }
+
+  function closeMenu(){
+    mnav.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    mnav.hidden = true;
+    burger.focus({ preventScroll: true });
+  }
+
+  function toggleMenu(){
+    (mnav.classList.contains('is-open') ? closeMenu() : openMenu());
+  }
+
+  burger.addEventListener('click', toggleMenu);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  // клик по фону оверлея — закрыть (не по панели)
+  mnav.addEventListener('click', e => { if (e.target === mnav) closeMenu(); });
+  // клик по ссылке — закрыть
+  const links = mnav.querySelector('.nav-links');
+  if (links) links.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
 })();
 
-const burger = document.querySelector('.burger');
-const mnav   = document.getElementById('mnav');
-
-if (burger && mnav){
-  burger.addEventListener('click', () => {
-    const open = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!open));
-    mnav.hidden = open;
-    burger.classList.toggle('is-open', !open);
-    burger.textContent = open ? '☰' : '✕';
-    burger.setAttribute('aria-label', open ? 'Открыть меню' : 'Закрыть меню');
-  });
-}
 
   
 /* --- mobile animation --- */
@@ -97,9 +120,6 @@ if (burger && mnav){
 })();
 
 
-
-
-
 // === Вспомогалки для форматов времени ===
 function safeStart(s) {
   if (s.startLabel) return s.startLabel;
@@ -113,7 +133,6 @@ function safeEnd(s) {
 }
 function getStartTs(s) { return s.startTs ?? Date.parse(s.startISO || 0); }
 function timeLabel(s)  { return `${safeStart(s)}–${safeEnd(s)}`; }
-
 
 
 // === Header badge: укорочение подписи на смартфонах ===
@@ -156,9 +175,6 @@ window.addEventListener('resize', () => {
 if (!window.hardenBadge) {
   window.hardenBadge = s => s;
 }
-
-
-
 
 
 
@@ -219,12 +235,12 @@ window.updateBadge = function updateBadge(slots) {
   setBadge('Свободно: по запросу', ['is-none']);
 };
 
+
+
 /* ===== Slots: fetch + render + header badge (final) ===== */
 (function initSlots(){
   const API_SLOTS_URL =
     'https://script.google.com/macros/s/AKfycbx-IkXY39sBerBkSAjTtv-SRbzX7tkg4spCk_QB2eGzSFpz2999WuFtXt0QKWZy9x8C/exec';
-
-  
 
   // DOM
   const wrap   = document.querySelector('#slotsList');
@@ -233,8 +249,6 @@ window.updateBadge = function updateBadge(slots) {
 
   const badge     = document.querySelector('#headerFreeBadge');
   const badgeText = badge ? badge.querySelector('.avail-text') : null;
-
-  
 
   // Статус загрузки
   if (badge) {
@@ -288,9 +302,7 @@ const fmtTime = (ts) =>
     .sort((a,b) => a.date.localeCompare(b.date));
 };
 
-
 const SHOW_WEEKDAY = true;
-
 const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   if (!ymd) return '';
   const [y, m, d] = ymd.split('-').map(Number);
@@ -304,9 +316,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   return dt.toLocaleDateString('ru-RU', opts);
 };
 
-
   const makeTimesLine = (items) => items.map(s => `${safeStart(s)}–${safeEnd(s)}`).join(', ');
-
   const cardHTML = (date, items) => {
     const dayLabel = fmtDateRU(date);
     const times    = makeTimesLine(items);
@@ -319,6 +329,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
     `;
   };
 
+  
   // ===== fetch + render =====
   fetch(API_SLOTS_URL + '?t=' + Date.now(), { cache:'no-store', mode:'cors' })
     .then(r => r.json())
@@ -356,6 +367,8 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       setBadge('Свободно: по запросу', ['is-none']);
     });
 })();
+
+
 
 // Calculator
 
@@ -479,6 +492,8 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       if(txt.includes('два ребёнка')||txt.includes('два ребенка')){ const k=$('kids'); if(k){ k.value='2'; recalc(); } return; }
     }, true);
 
+
+    
     // share
     const share=$('shareLink');
     if(share) share.addEventListener('click', async (e)=>{
@@ -502,7 +517,6 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{ bind(); fromQuery(); recalc(); });
   else { bind(); fromQuery(); recalc(); }
 })();
-
 
 
 
@@ -551,12 +565,13 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
+
 // Footer year
 
 (function(){var y=document.getElementById('yCopy'); if(y) y.textContent=new Date().getFullYear();})();
 
 
-/* ===== FAQ (финальная версия) ===== */
+/* ===== FAQ ===== */
 (function () {
   const list = document.querySelector('.faq-list');
   if (!list) return;
@@ -655,6 +670,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   openFromHash();
 })();
 
+
 // Active menu on scroll
 (function(){
   const links = Array.from(document.querySelectorAll('.header-nav a[href^="#"]'));
@@ -679,6 +695,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 
   map.forEach((_, sec) => io.observe(sec));
 })();
+
 
 /* ===== Reviews: фильтр по чипам + пересборка дорожки ===== */
 (function initReviewsFilter(){
@@ -746,6 +763,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
   // Инициализация
   applyFilter('all');
 })();
+
 
 
 // ====== CONTACT ======
@@ -871,6 +889,8 @@ if (badName || badCont) {
   // Любая кнопка/ссылка "Настройки cookie"
   manage?.addEventListener('click', () => show());
 })();
+
+
 
 /* === PHONE MASK & AUTOFILL NEAREST SLOT ============= */
 (function contactEnhance(){
@@ -1025,6 +1045,7 @@ if (badName || badCont) {
     }
   }); // ← без { passive:true }
 })();
+
 
 // === In-field error helper ===
 
@@ -1535,59 +1556,6 @@ const I18N = {
 
 
 
-// ===== Mobile menu: toggle + a11y =====
-(function mobileMenu(){
-  const burger = document.querySelector('.burger');
-  const panel  = document.getElementById('mnav');
-  if (!burger || !panel) return;
-
-  // создаём оверлей один раз
-  let back = document.getElementById('mnavBack');
-  if (!back) {
-    back = document.createElement('div');
-    back.id = 'mnavBack';
-    back.className = 'mnav-backdrop';
-    document.body.appendChild(back);
-  }
-
-  const firstFocusable = () => panel.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
-
-  const open = () => {
-    panel.hidden = false;
-    panel.classList.add('is-open');
-    burger.classList.add('is-open');
-    burger.setAttribute('aria-expanded','true');
-    document.body.classList.add('menu-open');
-    back.classList.add('is-open');
-    burger.textContent = '✕';
-    // фокус в меню
-    const f = firstFocusable(); if (f) f.focus({preventScroll:true});
-  };
-
-  const close = () => {
-    panel.classList.remove('is-open');
-    burger.classList.remove('is-open');
-    burger.setAttribute('aria-expanded','false');
-    document.body.classList.remove('menu-open');
-    back.classList.remove('is-open');
-    panel.hidden = true;
-    burger.textContent = '☰';
-    burger.focus({preventScroll:true});
-  };
-
-  const toggle = () => (panel.classList.contains('is-open') ? close() : open());
-
-  // события
-  burger.addEventListener('click', toggle);
-  back.addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  panel.addEventListener('click', e => { if (e.target.closest('a')) close(); });
-})();
-
-
-
-
-
 
 // === WHY: анимация карточек при скролле (смартфоны) ===
 (function whyAnimateMobile(){
@@ -1627,6 +1595,7 @@ const I18N = {
     cards.forEach(c => io.observe(c));
   });
 })();
+
 
 
 
