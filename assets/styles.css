@@ -2386,8 +2386,15 @@ section[id], #services, #calc, #faq, #contact, #main {
 }
 #calc .label-row .hint{ display:inline-flex; align-items:center; }
 #calc .label-row .hint .i{
-  width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center;
-  line-height:1; border:1px solid #E5E7EB; border-radius:999px; font-size:12px; color:#6B7280;
+  inline-size: var(--info-badge-size);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  padding: 0; border: 0;
+  background: var(--info-badge-bg);
+  color: var(--info-badge-fg);
+  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 #calc .label-row .hint .tip{ white-space:nowrap; }
 
@@ -2754,6 +2761,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
