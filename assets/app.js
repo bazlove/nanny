@@ -1537,6 +1537,55 @@ const I18N = {
 
 
 
+// ===== Mobile menu: toggle + a11y =====
+(function mobileMenu(){
+  const burger = document.querySelector('.burger');
+  const panel  = document.getElementById('mnav');
+  if (!burger || !panel) return;
+
+  // создаём оверлей один раз
+  let back = document.getElementById('mnavBack');
+  if (!back) {
+    back = document.createElement('div');
+    back.id = 'mnavBack';
+    back.className = 'mnav-backdrop';
+    document.body.appendChild(back);
+  }
+
+  const firstFocusable = () => panel.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+
+  const open = () => {
+    panel.hidden = false;
+    panel.classList.add('is-open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded','true');
+    document.body.classList.add('menu-open');
+    back.classList.add('is-open');
+    burger.textContent = '✕';
+    // фокус в меню
+    const f = firstFocusable(); if (f) f.focus({preventScroll:true});
+  };
+
+  const close = () => {
+    panel.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded','false');
+    document.body.classList.remove('menu-open');
+    back.classList.remove('is-open');
+    panel.hidden = true;
+    burger.textContent = '☰';
+    burger.focus({preventScroll:true});
+  };
+
+  const toggle = () => (panel.classList.contains('is-open') ? close() : open());
+
+  // события
+  burger.addEventListener('click', toggle);
+  back.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  panel.addEventListener('click', e => { if (e.target.closest('a')) close(); });
+})();
+
 
 
 
