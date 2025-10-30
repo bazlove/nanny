@@ -868,4 +868,48 @@ html, body { overflow-x: clip; }
 
 
 
+/* === FINAL OVERRIDE: unify "i" badges (Contacts + Calculator) === */
+:root{
+  --info-badge-size: 22px;
+  --info-badge-bg:   #ECEFF3;
+  --info-badge-fg:   #6B7280;
+}
+
+/* Контейнер подсказки — НЕ фиксируем размер 16×16 */
+.contact-meta .hint,
+#calc .label-row .hint{
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 6px; /* если нужен отступ от подписи */
+}
+
+/* Сам кружок "i" — жёсткий квадрат 22×22 во всех местах */
+.contact-meta .hint > .i,
+#calc .label-row .hint > .i{
+  width: var(--info-badge-size) !important;
+  height: var(--info-badge-size) !important;
+  min-width: var(--info-badge-size) !important;
+  min-height: var(--info-badge-size) !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  border: 0 !important;
+
+  background: var(--info-badge-bg) !important;
+  color: var(--info-badge-fg) !important;
+  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+  vertical-align: middle !important;
+  margin-left: 8px;
+}
+
+
+
+
 
