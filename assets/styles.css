@@ -1692,103 +1692,61 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 /* ===== Footer ===== */
-.site-footer{
-  margin-top:48px;
-  padding:22px 0 24px;
-  background:#f7f3ec;
-  border-top:1px solid rgba(0,0,0,.06);
-}
 
+/* Общая планка футера */
 .footer-bar{
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:16px;
-  flex-wrap:wrap;                 /* чтобы не ломалось на узких экранах */
+  padding-block:14px;
+  border-top:1px solid rgba(17,24,39,0.06);
 }
 
-/* колонки */
-.foot-left,
-.foot-center,
-.foot-nav{
-  flex:1 1 0%;
-}
-
+/* Левая часть */
 .foot-left{
-  display:flex; align-items:center; gap:8px;
-  color:#374151;
-}
-
-.foot-center{
-  text-align:center;
-  color:#6b7280;
-}
-
-.foot-nav{
-  display:flex; justify-content:flex-end; flex-wrap:wrap; gap:14px 18px;
-}
-
-/* ===== Ховер как у «Поделиться»: серый → зелёный + пунктир ===== */
-
-/* подгонка эмодзи, чтобы не подчеркивалась */
-.foot-left .emoji{ line-height:1; }
-
-/* Мобильная адаптация */
-@media (max-width: 720px){
-  .footer-bar{ align-items:flex-start; }
-  .foot-left, .foot-center, .foot-nav{
-    flex: 1 1 100%;
-  }
-  .foot-center{ order: 2; text-align:left; margin-top:4px; }
-  .foot-nav{ order: 3; justify-content:flex-start; margin-top:6px; }
-}
-
-/* --- держим футер в одну строку на десктопе --- */
-.site-footer .footer-bar{
-  flex-wrap: nowrap;                 /* было wrap → ломало строку */
-}
-
-/* правый блок со ссылками: не переносим, ужимаем зазоры */
-.site-footer .foot-nav{
   display:flex;
-  justify-content:flex-end;
-  gap:12px;                          /* можно 10–12, чтобы влезло */
-  flex-wrap: nowrap;                 /* запрет переносов внутри правой колонки */
-  white-space: nowrap;               /* запрет переносов внутри самих ссылок */
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-.site-footer .foot-nav a{
-  font-size:14px;
-  line-height:1;
-  white-space: nowrap;               /* подстраховка */
+/* Иконка локации через CSS mask, чтобы управлять цветом */
+:root{ --icon-brown:#5B4636; }           /* тёмно-коричневый из блока преимуществ (можно подстроить) */
+.foot-loc{
+  width:18px; height:18px;
+  background-color:var(--icon-brown);
+  -webkit-mask: url('../img/icons/location.svg') no-repeat center / contain;
+          mask: url('../img/icons/location.svg') no-repeat center / contain;
 }
 
-/* немного ужимаем, если не влезает */
-@media (max-width: 1280px){
-  .site-footer .foot-nav{ gap:10px; }
-  .site-footer .foot-nav a{ font-size:13.5px; }
+/* «Нови-Сад» — как ссылки навигации в футере */
+.foot-city{ color:#2b6e59; }             /* если link-dashed переопределяет цвет — можно убрать */
+.foot-city:hover{ color:#1e6a57; }
+.foot-left .sep{ opacity:.6; }
+
+/* Копирайт тем же кеглем, что и ссылки навигации */
+.foot-copy{
+  font-size:14px; line-height:1.4; color:#6B7280;
 }
-@media (max-width: 1140px){
-  .site-footer .foot-nav{ gap:8px; }
-  .site-footer .foot-nav a{ font-size:13px; }
-}
 
-/* --- на планшете/мобиле разрешаем перенос и центрируем --- */
-@media (max-width: 980px){
-  .site-footer .footer-bar{ flex-wrap: wrap; }   /* теперь можно переносить */
-
-  .site-footer .foot-left,
-  .site-footer .foot-center,
-  .site-footer .foot-nav{ flex:1 1 100%; }
-
-  .site-footer .foot-center{ order:2; text-align:center; margin-top:4px; }
-  .site-footer .foot-nav{
-    order:3;
+/* Правая навигация остаётся как есть; при узком экране — две строки по центру */
+@media (max-width: 640px){
+  .footer-bar{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:10px;
+  }
+  .foot-left,
+  .foot-nav{
     justify-content:center;
-    flex-wrap: wrap;                 /* разрешаем перенос */
-    white-space: normal;
-    gap:12px 18px;
   }
 }
+
+
+
+
 
 /* FAQ: увеличить размер шрифта у вопросов */
 .faq-q{ --faq-q-size: 1.125rem; }          /* ≈18px на десктопе */
@@ -2741,6 +2699,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
