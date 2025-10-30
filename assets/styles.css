@@ -2645,6 +2645,55 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
+/* === Единый стиль «i»-бейджа (контакты + калькулятор) === */
+
+/* Контакты: уже было .contact-meta .info — оставим как есть,
+   и ДОБАВИМ селектор для калькулятора */
+.contact-meta .info,
+#calc .label-row .hint .i{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  width:22px;
+  height:22px;
+  margin-left:8px;                 /* расстояние от подписи поля */
+  border-radius:9999px;
+
+  background:#ECEFF3;              /* серый фон кружка */
+  color:#6B7280;                   /* цвет буквы «i» */
+  font-size:12px;
+  line-height:1;
+  vertical-align:middle;
+  font-weight:600;                 /* чтобы «i» выглядела чётче */
+}
+
+/* Обёртка подсказки в калькуляторе — тоже в линию, чтобы всё было по центру */
+#calc .label-row .hint{
+  display:inline-flex;
+  align-items:center;
+  position:relative;               /* для позиционирования .tip, если нужно */
+  cursor:help;
+  margin-left:6px;                 /* лёгкий зазор от текста */
+}
+
+/* На всякий случай выровняем сам ряд метки (иконка, текст, hint) */
+#calc .label-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Если нужны одинаковые размеры иконок-часов/календаря в метке */
+#calc .label-row svg{
+  width:18px;
+  height:18px;
+  fill:currentColor;
+  flex:0 0 18px;
+}
+
+
+
 
 /* =================== /CALCULATOR ===================== */
 
@@ -2742,6 +2791,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
