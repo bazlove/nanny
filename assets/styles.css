@@ -2652,88 +2652,73 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* ====== БАЗОВОЕ: совпадение с отступами контейнера ====== */
-.container{ --page-pad: 20px; padding-inline: var(--page-pad); } /* уже 20px в текущем CSS */
+/* === Back-to-top === */
 
-/* Мягко “страхуем” от микровылетов, чтобы не было горизонтального скролла */
-html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей */
-
-/* Центрированная «Наверх» между контактами и футером */
+/* Контейнер ссылки между формой и футером */
 .back-to-top{
   display: flex;
   justify-content: center;
-  margin: 8px 0 20px;         /* подстроено под твою «песочную» подложку */
+  margin: 8px 0 20px;
 }
 
-/* Наследуем ghost-линк из футера и слегка улучшаем */
+/* Ссылка */
 .back-top-link{
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
   line-height: 1.4;
+  color: #15803D;                 /* фирменный зелёный */
   text-decoration: none !important;
-  text-underline-offset: 2px;
-  color: #15803D;  
   padding: 2px 4px;
   border-radius: 6px;
-  border-bottom: 1px dashed #15803D;
-  transition: color .2s ease, border-color .2s ease;
-}
-.back-top-link:hover{ color:#1e6a57; }
-.back-top-link:focus-visible{
-  outline: 2px solid #16a34a;       /* доступность */
-  outline-offset: 2px;
-}
-
-/* Иконка-стрелка вверх выровнена по базовой линии текста */
-.back-top-link .icon{
-  flex: 0 0 16px;
-  transform: translateY(-1px);
-}
-
-/* Hover-анимация для "Наверх" */
-.back-top-link{
   transition: color .2s ease;
 }
+
+/* Пунктир — ТОЛЬКО под текстом */
+.back-top-label{
+  display: inline-block;
+  line-height: 1.2;
+  border-bottom: 1px dashed currentColor;
+  transition: border-color .2s ease;
+}
+
+/* Иконка-стрелка */
+.back-top-link .icon{
+  flex: 0 0 16px;
+  color: currentColor;
+  transform: translateY(0);
+  transition: transform .2s ease;
+}
+
+/* Hover: серый текст, пунктир исчезает, стрелка «дышит» вверх-вниз */
 @media (hover:hover){
-  .back-top-link:hover{
-    color: #6B7280;
-    border-bottom-color: transparent;
-  }
+  .back-top-link:hover{ color:#6B7280; }
+  .back-top-link:hover .back-top-label{ border-bottom-color: transparent; }
   .back-top-link:hover .icon{
     animation: backTopArrow 800ms ease-in-out infinite alternate;
     will-change: transform;
   }
 }
 
-/* при фокусе с клавиатуры — тоже серый, но без бесконечной анимации */
-.back-top-link:focus-visible{ color:#6B7280; }
-
-/* Базовое положение стрелки (если раньше было смещение — обнулим) */
-.back-top-link .icon{
-  transform: translateY(0);
-  transition: transform .2s ease;
+/* Фокус с клавиатуры — заметно и аккуратно */
+.back-top-link:focus-visible{
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+  color:#6B7280;
 }
 
-/* Ключевые кадры: плавный ход снизу вверх */
+/* Ключевые кадры для стрелки */
 @keyframes backTopArrow{
-  from { transform: translateY(3px); }  /* старт чуть ниже */
-  to   { transform: translateY(-3px); } /* плавно вверх */
+  from { transform: translateY(3px); }   /* старт чуточку ниже */
+  to   { transform: translateY(-3px); }  /* плавно вверх */
 }
 
-/* Уважение к настройке "уменьшить анимацию" */
+/* Уважение к предпочтению «reduce motion» */
 @media (prefers-reduced-motion: reduce){
   .back-top-link:hover .icon{ animation: none; }
 }
 
-.back-top-link:focus-visible{
-  outline: 2px solid #16a34a;
-  outline-offset: 2px;
-}
-
-/* иконка остаётся синхронной по цвету */
-.back-top-link .icon{ color: currentColor; }
 
 
 
@@ -2756,6 +2741,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
