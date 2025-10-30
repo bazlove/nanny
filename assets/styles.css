@@ -2645,51 +2645,6 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* === Единый стиль i === */
-
-.contact-meta .info,
-#calc .label-row .hint .i{
-  display: inline-grid;            /* надёжное центрирование */
-  place-items: center;
-
-  inline-size: 22px;               /* ширина */
-  aspect-ratio: 1 / 1;             /* гарантированно квадрат */
-  border-radius: 50%;
-
-  box-sizing: border-box;          /* паддинги/бордер не раздувают размеры */
-  padding: 0 !important;           /* гасим старые паддинги */
-  border: 0 !important;            /* и бордеры, если были */
-
-  background: #ECEFF3;
-  color: #6B7280;
-  font-size: 12px;
-  line-height: 1;
-  font-weight: 600;
-  vertical-align: middle;
-  margin-left: 8px;                /* отступ от подписи */
-}
-
-/* сам контейнер-подсказка в калькуляторе — в одну линию с текстом */
-#calc .label-row .hint{
-  display: inline-flex;
-  align-items: center;
-  position: relative;              /* если у .tip абсолютное позиционирование */
-  cursor: help;
-  margin-left: 6px;
-}
-
-/* выравнивание иконок слева от текста метки */
-#calc .label-row{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#calc .label-row svg{
-  width: 18px; height: 18px; fill: currentColor; flex: 0 0 18px;
-}
-
-
-
 
 /* =================== /CALCULATOR ===================== */
 
@@ -2787,6 +2742,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
