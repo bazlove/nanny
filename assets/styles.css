@@ -1784,6 +1784,37 @@ section[id], #services, #calc, #faq, #contact, #main {
   }
 }
 
+/* === Footer: правки цвета и подчёркиваний === */
+
+:root{
+  --footer-icon-sand: #EADFCF; /* подкорректируй под свой токен sand */
+}
+.foot-loc{
+  background-color: var(--footer-icon-sand) !important;
+  opacity: .95; /* лёгкая «меловая» мягкость как у подложки */
+}
+
+.site-footer .foot-nav a,
+.site-footer .foot-city{
+  color: #6B7280;                  /* базовый серый футера */
+  text-decoration: none;           /* убираем нативное подчёркивание */
+  border-bottom: 1px dashed currentColor; /* пунктир вместо underline */
+  padding-bottom: 2px;             /* видимый отступ от текста */
+  transition: color .18s ease, border-color .18s ease;
+}
+
+.site-footer .foot-nav a:hover,
+.site-footer .foot-nav a:focus-visible,
+.site-footer .foot-city:hover,
+.site-footer .foot-city:focus-visible{
+  color: #1e6a57;                  /* зелёный акцент */
+  border-bottom-color: transparent;/* подчёркивание «пропадает», как в hero */
+  outline: none;
+}
+
+.foot-city{ color: inherit !important; }
+
+
 
 
 
@@ -2738,6 +2769,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
