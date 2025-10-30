@@ -140,6 +140,15 @@ section{padding:64px 0}
 
 
 
+/* ===== Unified dashed links ===== */
+
+.link-dashed { display:inline-flex; align-items:center; gap:6px; color:#6B7280; text-decoration:none; font-size:14px; }
+.link-dashed .txt { border-bottom: 1px dashed transparent; transition:color .15s ease, border-color .15s ease; }
+.link-dashed:hover .txt { color:#15803D; border-bottom: 1px dashed #15803D; padding-bottom: 2px; }
+.link-dashed--inverse { color:#15803D; border-bottom: 1px dashed #15803D; padding-bottom: 2px; }
+.link-dashed--inverse:hover { color:#6B7280; border-bottom-color:transparent; }
+
+
 
 /* === HERO: layout === */
 #top.hero{ padding:96px 0 56px; }
@@ -214,59 +223,6 @@ section{padding:64px 0}
 #top .rating-badge{ display:inline-flex; align-items:center; gap:6px; }
 #top .rating-badge .star{ width:18px; height:18px; fill:#F5B400; }
 #top .rating-score{ font-weight:700; color:#0b4870; }
-
-.link-dashed{ display:inline-flex; align-items:center; gap:6px; color:#6B7280; text-decoration:none; font-size:14px; }
-.link-dashed .txt{ border-bottom: 1px dashed transparent; transition:color .15s, border-color .15s; }
-.link-dashed:hover .txt{ color:#15803D; border-bottom: 1px dashed #15803D; padding-bottom: 1px;}
-.link-dashed--inverse { color:#15803D; border-bottom: 1px dashed #15803D; padding-bottom: 1px;}
-.link-dashed--inverse:hover { color:#6B7280; border-bottom-color:transparent; }
-
-
-/* ===== Unified dashed links ===== */
-
-/* общая механика и форматирование (для обоих режимов) */
-.link-dashed,
-.link-dashed--inverse{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  font-size: 14px;
-}
-.link-dashed .txt,
-.link-dashed--inverse .txt{
-  display: inline-block;
-  border-bottom: 1px dashed currentColor; /* пунктир берёт текущий цвет текста */
-  padding-bottom: 2px;                     /* «отступ» между текстом и линией */
-  transition: color .15s ease, border-color .15s ease;
-}
-
-/* режим 1: базовый серый → зелёный при наведении (футер и «Нови-Сад») */
-.link-dashed{ color:#6B7280; }
-.link-dashed:hover,
-.link-dashed:focus-visible{ color:#15803D; }
-.link-dashed:hover .txt,
-.link-dashed:focus-visible .txt{ border-bottom-color: transparent; }
-
-/* режим 2: инверсия — зелёный в статике → серый при наведении (hero и «Наверх») */
-.link-dashed--inverse{ color:#15803D; }                 /* перекрывает базовый, если оба класса на элементе */
-.link-dashed--inverse:hover,
-.link-dashed--inverse:focus-visible{ color:#6B7280; }
-.link-dashed--inverse:hover .txt,
-.link-dashed--inverse:focus-visible .txt{ border-bottom-color: transparent; }
-
-/* иконки внутри ссылок наследуют цвет */
-.link-dashed .icon,
-.link-dashed--inverse .icon{ color: currentColor; }
-
-/* --- точечная правка футера: город должен быть серым в статике --- */
-.site-footer .foot-city.link-dashed{ color:#6B7280; }
-
-
-
-
-
-
 
 #top .hero-visual .hero-social a{ white-space:nowrap; flex:0 0 auto; }
 
@@ -2786,6 +2742,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
