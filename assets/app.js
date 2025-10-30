@@ -1591,6 +1591,45 @@ const I18N = {
 
 
 
+// === WHY: анимация карточек при скролле (смартфоны) ===
+(function whyAnimateMobile(){
+  const ready = (fn) =>
+    (document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', fn)
+      : fn());
+
+  ready(function () {
+    // смартфон: небольшая ширина + есть «грубый» указатель (палец)
+    const isSmall = window.matchMedia('(max-width: 767px)').matches;
+    const isTouch = window.matchMedia('(any-pointer: coarse)').matches || ('ontouchstart' in window);
+    if (!(isSmall && isTouch)) return;
+
+    const cards = document.querySelectorAll('#why .why-card');
+    if (!cards.length) return;
+
+    // фолбэк для старых браузеров
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach(c => c.classList.add('play'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('play');
+          obs.unobserve(e.target); // анимируем один раз
+        }
+      });
+    }, {
+      threshold: 0.18,
+      root: null,
+      rootMargin: '0px 0px -10% 0px' // чуть раньше «включаем»
+    });
+
+    cards.forEach(c => io.observe(c));
+  });
+})();
+
 
 
 
