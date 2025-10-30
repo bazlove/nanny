@@ -2672,12 +2672,13 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
   gap: 8px;
   font-size: 14px;
   line-height: 1.4;
-  text-decoration: underline;       /* как в футере */
+  text-decoration: none !important;
   text-underline-offset: 2px;
-  text-decoration-thickness: 1px;
-  color: #2b6e59;
+  color: #15803D;  
   padding: 2px 4px;
   border-radius: 6px;
+  border-bottom: 1px dashed #15803D;
+  transition: color .2s ease, border-color .2s ease;
 }
 .back-top-link:hover{ color:#1e6a57; }
 .back-top-link:focus-visible{
@@ -2697,7 +2698,8 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
 }
 @media (hover:hover){
   .back-top-link:hover{
-    color: #6B7280; /* серый при наведении */
+    color: #6B7280;
+    border-bottom-color: transparent;
   }
   .back-top-link:hover .icon{
     animation: backTopArrow 800ms ease-in-out infinite alternate;
@@ -2725,7 +2727,13 @@ html{ overflow-x: clip; } /* clip лучше, чем hidden для якорей 
   .back-top-link:hover .icon{ animation: none; }
 }
 
+.back-top-link:focus-visible{
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+}
 
+/* иконка остаётся синхронной по цвету */
+.back-top-link .icon{ color: currentColor; }
 
 
 
@@ -2748,6 +2756,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
