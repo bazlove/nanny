@@ -89,6 +89,28 @@ if (burger && mnav){
 }
 
   
+/* --- mobile animation --- */
+
+(function advOnScrollMobileOnly(){
+  const mq = window.matchMedia('(max-width: 640px) and (pointer: coarse)');
+  if (!mq.matches) return; // только смартфоны
+
+  const targets = document.querySelectorAll('[data-anim="adv"]');
+  if (!targets.length) return;
+
+  const io = new IntersectionObserver((entries, obs) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('play');
+        obs.unobserve(e.target); // анимируем один раз
+      }
+    }
+  }, { threshold: 0.25 });
+
+  targets.forEach(t => io.observe(t));
+})();
+
+
 
 
 
@@ -1518,6 +1540,7 @@ const I18N = {
 
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
 
 
 
