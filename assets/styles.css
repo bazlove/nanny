@@ -2645,51 +2645,47 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 
 
-/* === Единый стиль «i»-бейджа (контакты + калькулятор) === */
+/* === Единый стиль i === */
 
-/* Контакты: уже было .contact-meta .info — оставим как есть,
-   и ДОБАВИМ селектор для калькулятора */
 .contact-meta .info,
 #calc .label-row .hint .i{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  display: inline-grid;            /* надёжное центрирование */
+  place-items: center;
 
-  width:22px;
-  height:22px;
-  margin-left:8px;                 /* расстояние от подписи поля */
-  border-radius:9999px;
+  inline-size: 22px;               /* ширина */
+  aspect-ratio: 1 / 1;             /* гарантированно квадрат */
+  border-radius: 50%;
 
-  background:#ECEFF3;              /* серый фон кружка */
-  color:#6B7280;                   /* цвет буквы «i» */
-  font-size:12px;
-  line-height:1;
-  vertical-align:middle;
-  font-weight:600;                 /* чтобы «i» выглядела чётче */
+  box-sizing: border-box;          /* паддинги/бордер не раздувают размеры */
+  padding: 0 !important;           /* гасим старые паддинги */
+  border: 0 !important;            /* и бордеры, если были */
+
+  background: #ECEFF3;
+  color: #6B7280;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  vertical-align: middle;
+  margin-left: 8px;                /* отступ от подписи */
 }
 
-/* Обёртка подсказки в калькуляторе — тоже в линию, чтобы всё было по центру */
+/* сам контейнер-подсказка в калькуляторе — в одну линию с текстом */
 #calc .label-row .hint{
-  display:inline-flex;
-  align-items:center;
-  position:relative;               /* для позиционирования .tip, если нужно */
-  cursor:help;
-  margin-left:6px;                 /* лёгкий зазор от текста */
+  display: inline-flex;
+  align-items: center;
+  position: relative;              /* если у .tip абсолютное позиционирование */
+  cursor: help;
+  margin-left: 6px;
 }
 
-/* На всякий случай выровняем сам ряд метки (иконка, текст, hint) */
+/* выравнивание иконок слева от текста метки */
 #calc .label-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-/* Если нужны одинаковые размеры иконок-часов/календаря в метке */
 #calc .label-row svg{
-  width:18px;
-  height:18px;
-  fill:currentColor;
-  flex:0 0 18px;
+  width: 18px; height: 18px; fill: currentColor; flex: 0 0 18px;
 }
 
 
@@ -2791,6 +2787,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
