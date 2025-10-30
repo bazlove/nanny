@@ -541,6 +541,11 @@ html, body { overflow-x: clip; }
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 }
+
+@media (max-width: 640px){
+  .hero-social .quote-wrap{ display:none; }
+}
+
 /* ================================================================== */
 
 
