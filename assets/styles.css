@@ -218,7 +218,7 @@ section{padding:64px 0}
 .link-dashed{ display:inline-flex; align-items:center; gap:6px; color:#6B7280; text-decoration:none; font-size:14px; }
 .link-dashed .txt{ border-bottom:1px dashed transparent; transition:color .15s, border-color .15s; }
 .link-dashed:hover .txt{ color:#15803D; border-bottom-color:#15803D; }
-.link-dashed--inverse .txt{ color:#15803D; border-bottom:1px dashed #15803D; }
+.link-dashed--inverse .txt{ color:#15803D; border-bottom:1px dashed #15803D; padding-bottom: 2px;}
 .link-dashed--inverse:hover .txt{ color:#6B7280; border-bottom-color:transparent; }
 
 #top .hero-visual .hero-social a{ white-space:nowrap; flex:0 0 auto; }
@@ -2739,6 +2739,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
