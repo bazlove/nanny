@@ -74,6 +74,19 @@ document.addEventListener('copy', function (e) {
   b.addEventListener('click',()=>{ const open=head.classList.toggle('open'); b.setAttribute('aria-expanded', open?'true':'false'); mnav.hidden=!open; });
 })();
 
+const burger = document.querySelector('.burger');
+const mnav   = document.getElementById('mnav');
+
+if (burger && mnav){
+  burger.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    mnav.hidden = open;
+    burger.classList.toggle('is-open', !open);
+    burger.textContent = open ? '☰' : '✕';
+    burger.setAttribute('aria-label', open ? 'Открыть меню' : 'Закрыть меню');
+  });
+}
 
   
 
@@ -1505,6 +1518,7 @@ const I18N = {
 
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
 
 
 
