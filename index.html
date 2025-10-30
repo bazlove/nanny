@@ -30,95 +30,95 @@
 
 		<link rel="stylesheet" href="assets/styles.css"/>
 			<link rel="stylesheet" href="assets/uikit.css"/>
-	
 	</head>
-<body>
+
+	
+	<body>
   
 	<a class="skip-link" href="#main">Пропустить меню и перейти к содержанию</a>
 	
 	<header class="site-header">
- 
-	<div class="container header-bar">
-    
-	  <div class="brand">
+  <div class="container header-bar">
+    <div class="brand">
       <a href="#top" class="logo" aria-label="На главную">👶</a>
       <div class="brand-meta">
-        <strong>[Имя няни]</strong>
+        <strong class="i18n" data-key="brand_name">Имя няни</strong>
         <small class="i18n" data-key="city">Нови-Сад</small>
       </div>
+
+      <!-- Бейдж слотов -->
       <span id="headerFreeBadge" class="avail-badge" role="status" aria-live="polite">
         <span class="dot" aria-hidden="true"></span>
-		  <span class="avail-text">Проверяю свободные слоты…</span>
+        <span class="avail-text">Проверяю свободные слоты…</span>
       </span>
-		<!-- тултип про часовой пояс -->
-		<span class="tz-tip info" aria-describedby="tz-tt">
-  <button type="button" class="i" aria-label="Время слотов">i</button>
-  <span id="tz-tt" class="tt">Время слотов по Белграду (UTC+1 зимой, UTC+2 летом)</span>
-</span>
-    </div>
-    <!-- навигация (desktop) -->
-    <nav class="header-nav" aria-label="Основная навигация">
-      <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
-      <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
-      <a href="#calc"     class="i18n" data-key="nav_price">Цена</a>
-      <a href="#faq"      class="i18n" data-key="nav_faq">FAQ</a>
-	  <a href="#contact"  class="i18n" data-key="nav_contact">Контакты</a>
-    </nav>
 
-    <div class="lang-switch" role="group" aria-label="Выбор языка">
-      <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-      <span class="sep">/</span>
-      <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
+      <!-- инфо по часовому поясу (кнопка «i» уже унифицирована) -->
+      <span class="tz-tip info" aria-describedby="tz-tt">
+        <button type="button" class="i" aria-label="Время слотов">i</button>
+        <span id="tz-tt" class="tt">Время слотов по Белграду (UTC+1 зимой, UTC+2 летом)</span>
+      </span>
     </div>
 
-<button
-  id="burger"
-  class="burger"
-  aria-controls="mnav"
-  aria-haspopup="dialog"
-  aria-expanded="false"
-  aria-label="Открыть меню"
->
-  <span class="ic-open" aria-hidden="true"></span>
-  <span class="ic-close" aria-hidden="true"></span>
-</button>
-
-		
-  </div>
-
- <!-- навигация (mobile) -->
-<div id="mnav" class="mobile-nav" hidden aria-hidden="true">
-  <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Меню">
-    <div class="mobile-top">
-      <div class="mobile-brand">
-        <span class="logo" aria-hidden="true">👶</span>
-        <div class="meta">
-          <strong class="i18n" data-key="brand_name">Имя няни</strong>
-          <small class="i18n" data-key="city">Нови-Сад</small>
-        </div>
-      </div>
-
-      <div class="lang-switch" role="group" aria-label="Выбор языка">
-        <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-        <span class="sep">/</span>
-        <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
-      </div>
-    </div>
-
-    <nav class="nav-links" aria-label="Нижняя навигация (моб)">
+    <!-- Десктоп-меню -->
+    <nav class="header-nav" aria-label="Навигация desktop">
       <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
       <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
       <a href="#calc"     class="i18n" data-key="nav_price">Цена</a>
       <a href="#faq"      class="i18n" data-key="nav_faq">FAQ</a>
       <a href="#contact" class="i18n" data-key="nav_contact">Контакты</a>
     </nav>
+
+    <!-- Десктоп свитчер языка -->
+    <div class="lang-switch" role="group" aria-label="Выбор языка">
+      <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
+      <span class="sep">/</span>
+      <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
+    </div>
+
+    <!-- Бургер (планшет/мобайл) -->
+    <button
+      id="burger"
+      class="burger"
+      aria-controls="mnav"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-label="Открыть меню">
+      <span class="ic-open" aria-hidden="true"></span>
+      <span class="ic-close" aria-hidden="true"></span>
+    </button>
   </div>
-</div>
 
+  <!-- Мобильное/планшетное меню (оверлей) -->
+  <div id="mnav" class="mobile-nav" hidden aria-hidden="true">
+    <div class="mobile-nav__panel" role="dialog" aria-modal="true" aria-label="Меню">
+      <div class="mobile-top">
+        <div class="mobile-brand">
+          <span class="logo" aria-hidden="true">👶</span>
+          <div class="meta">
+            <strong class="i18n" data-key="brand_name">Имя няни</strong>
+            <small class="i18n" data-key="city">Нови-Сад</small>
+          </div>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Выбор языка">
+          <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
+          <span class="sep">/</span>
+          <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
+        </div>
+      </div>
 
+      <nav class="nav-links" aria-label="Навигация mobile">
+        <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
+        <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
+        <a href="#calc"     class="i18n" data-key="nav_price">Цена</a>
+        <a href="#faq"      class="i18n" data-key="nav_faq">FAQ</a>
+        <a href="#contact" class="i18n" data-key="nav_contact">Контакты</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
-  <main>
+
+<main>
 	  
     <!-- HERO -->
 	
@@ -832,6 +832,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
