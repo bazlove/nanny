@@ -81,6 +81,20 @@ section{padding:64px 0}
 .mobile-nav{display:none;flex-direction:column;gap:8px;padding:12px 20px;border-top:1px solid rgba(0,0,0,.06);background:#fff}
 .mobile-nav a{padding:10px 12px;border-radius:10px;text-decoration:none;color:#1d2b38;background:#f7f7f5}
 
+/* ——— Mobile menu top row ——— */
+.mobile-top{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin-bottom:8px;
+}
+.mobile-brand{ display:flex; align-items:center; gap:8px; }
+.mobile-brand .logo{ font-size:26px; line-height:1; }
+.mobile-brand .meta strong{ font-weight:700; display:block; }
+.mobile-brand .meta small{ color:#6B7280; }
+
+/* Бургер в режиме «открыто» */
+.burger.is-open{ color:#111; }
+
+
 /* === Унифицируем высоту «пилюль» в хедере */
 :root{
   --hdr-pill-h: 28px;            /* такая же высота у avail-badge */
@@ -2761,6 +2775,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
