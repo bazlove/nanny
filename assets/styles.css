@@ -81,73 +81,7 @@ section{padding:64px 0}
 .mobile-nav{display:none;flex-direction:column;gap:8px;padding:12px 20px;border-top:1px solid rgba(0,0,0,.06);background:#fff}
 .mobile-nav a{padding:10px 12px;border-radius:10px;text-decoration:none;color:#1d2b38;background:#f7f7f5}
 
-/* ===== Mobile header/menu ===== */
 
-@media (max-width: 980px){
-  /* прячем десктоп-меню и языковой переключатель из шапки,
-     бургеры выводим */
-  .header-nav{ display:none !important; }
-  .site-header .lang-switch{ display:none !important; }
-
-  .burger{
-    display:inline-flex !important;
-    align-items:center; justify-content:center;
-    width:40px; height:40px; padding:0 10px;
-    border:1px solid #e5e3df; border-radius:10px;
-    background:#fff; line-height:1;
-  }
-}
-
-/* панель мобильного меню под шапкой */
-.mobile-nav{
-  position:absolute; left:0; right:0; top:100%;
-  display:none;                           /* базово скрыта */
-  flex-direction:column; gap:8px;
-  padding:14px 20px;
-  background:#fff;
-  border-top:1px solid rgba(17,24,39,.06);
-  box-shadow:0 12px 24px rgba(0,0,0,.08);
-  z-index:50;
-}
-.mobile-nav.is-open{ display:flex; }
-
-/* список ссылок в панели */
-.mobile-links a{
-  display:block;
-  padding:12px 10px;
-  border-radius:10px;
-  text-decoration:none;
-  color:#1d2b38;
-  background:#f7f7f5;
-}
-.mobile-links a:active{ transform:translateY(1px); }
-
-/* верхняя строчка панели */
-.mobile-top{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px; margin-bottom:8px;
-}
-.mobile-brand{ display:flex; align-items:center; gap:8px; }
-.mobile-brand .logo{ font-size:26px; line-height:1; }
-.mobile-brand .meta strong{ font-weight:700; display:block; }
-.mobile-brand .meta small{ color:#6B7280; }
-
-/* затемнение фона */
-.mnav-backdrop{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.28);
-  backdrop-filter:saturate(1.1) blur(2px);
-  opacity:0; pointer-events:none;
-  transition:opacity .2s ease;
-  z-index:40;
-}
-.mnav-backdrop.is-open{ opacity:1; pointer-events:auto; }
-
-/* блокировка скролла под меню */
-body.menu-open{ overflow:hidden; }
-
-/* визуальное состояние бургера «открыто» */
-.burger.is-open{ color:#111; }
 
 
 
@@ -2869,6 +2803,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
