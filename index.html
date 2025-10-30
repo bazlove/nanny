@@ -745,14 +745,17 @@
 <footer class="site-footer">
   <div class="container footer-bar">
     <div class="foot-left" aria-label="Локация и копирайт">
+      <!-- SVG-иконка локации (цвет задаётся в CSS через mask) -->
       <span class="foot-loc" aria-hidden="true"></span>
-		
+
       <a
         class="foot-city link-dashed"
         href="https://maps.app.goo.gl/joCXvsRE9F43ht3T7"
         target="_blank" rel="noopener"
-        aria-label="Открыть Нови-Сад в Google Maps"
-      ><span class="txt">Нови-Сад</span></a>
+        data-i18n="aria-label:foot_open_gmaps"
+      >
+        <span class="txt" data-i18n="text:city">Нови-Сад</span>
+      </a>
 
       <span class="sep">·</span>
 
@@ -760,14 +763,15 @@
     </div>
 
     <nav class="foot-nav" aria-label="Нижняя навигация">
-      <a href="#services" class="link-dashed"><span class="txt">Услуги</span></a> ·
-      <a href="#reviews"  class="link-dashed"><span class="txt">Отзывы</span></a> ·
-      <a href="#calc"     class="link-dashed"><span class="txt">Цена</span></a> ·
-      <a href="#faq"      class="link-dashed"><span class="txt">FAQ</span></a> ·
-      <a href="#privacy"  class="link-dashed"><span class="txt">Политика конфиденциальности</span></a>
+      <a href="#services" class="link-dashed"><span class="txt" data-i18n="text:nav_services">Услуги</span></a> ·
+      <a href="#reviews"  class="link-dashed"><span class="txt" data-i18n="text:nav_reviews">Отзывы</span></a> ·
+      <a href="#calc"     class="link-dashed"><span class="txt" data-i18n="text:nav_price">Цена</span></a> ·
+      <a href="#faq"      class="link-dashed"><span class="txt" data-i18n="text:nav_faq">FAQ</span></a> ·
+      <a href="#privacy"  class="link-dashed"><span class="txt" data-i18n="text:foot_privacy">Политика конфиденциальности</span></a>
     </nav>
   </div>
 </footer>
+
 
 
 	  
@@ -806,6 +810,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
