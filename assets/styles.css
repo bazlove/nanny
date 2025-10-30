@@ -1001,11 +1001,23 @@ section{padding:64px 0}
 }
 
 .label-row { position: relative; }
-.hint { position: relative; display:inline-block; width:16px; height:16px; margin-left:6px; }
-.hint .i{
-  display:grid; place-items:center; width:16px; height:16px;
-  border-radius:999px; background:#E9EDF7; color:#334; font-size:12px; font-weight:600;
+
+/* Базовый контейнер подсказки — больше не фиксируем размер тут */
+.hint{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
 }
+
+/* Никаких размеров здесь — размер кружка задаётся в едином правиле */
+.hint .i{
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+
 .hint:hover .i, .hint:focus-within .i{
   background:#E7F7EF; color:#146C43; box-shadow:0 0 0 3px rgba(34,197,94,.18);
 }
@@ -2742,6 +2754,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
