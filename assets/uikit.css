@@ -804,68 +804,6 @@ html, body { overflow-x: clip; }
 
 
 
-/* === Унифицированный стиль бейджа «i» (header/contacts/calc) === */
-:root{
-  --info-badge-size: 22px;
-  --info-badge-bg:   #ECEFF3;   /* светло-серый фон кружка */
-  --info-badge-fg:   #6B7280;   /* серый цвет буквы i */
-}
-
-/* Сам кружок с «i» — ТРИ источника вёрстки: .tz-tip, .contact-meta, .calc .label-row */
-.tz-tip > .i,
-.contact-meta .hint > .i,
-#calc .label-row .hint > .i{
-  display: inline-grid;           /* надёжное центрирование */
-  place-items: center;
-
-  inline-size: var(--info-badge-size);
-  aspect-ratio: 1 / 1;           /* не даём превратиться в овал */
-  border-radius: 50%;
-  box-sizing: border-box;
-
-  padding: 0 !important;         /* гасим наследованные паддинги */
-  border: 0 !important;          /* и бордеры */
-  background: var(--info-badge-bg);
-  color: var(--info-badge-fg);
-
-  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-  vertical-align: middle;
-  margin-left: 8px;              /* отступ от текста метки */
-}
-
-/* В шапке «i» — это <button>, уберём нативный вид и дадим курсор */
-.tz-tip > .i{
-  appearance: none;
-  cursor: help;
-}
-
-/* Контейнеры с подсказкой — в одну линию с текстом */
-.contact-meta .hint,
-#calc .label-row .hint{
-  display: inline-flex;
-  align-items: center;
-  position: relative;            /* если всплывашка .tip позиционируется */
-}
-
-/* Иконки слева от лейбла в калькуляторе (часы/дети/календарь) */
-#calc .label-row{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#calc .label-row svg{
-  width: 18px; height: 18px; flex: 0 0 18px; fill: currentColor;
-}
-
-/* Доступность: фокус для кнопки-бейджа в шапке (не трогаем span'ы) */
-.tz-tip > .i:focus-visible{
-  outline: 2px solid rgba(21,128,61,.3);  /* зелёный обводочный */
-  outline-offset: 2px;
-}
-
-
-
-
 
 
 /* === FINAL OVERRIDE: unify "i" badges (Contacts + Calculator) === */
@@ -875,7 +813,6 @@ html, body { overflow-x: clip; }
   --info-badge-fg:   #6B7280;
 }
 
-/* Контейнер подсказки — НЕ фиксируем размер 16×16 */
 .contact-meta .hint,
 #calc .label-row .hint{
   width: auto !important;
