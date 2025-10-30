@@ -408,6 +408,21 @@ html, body { overflow-x: clip; }
 }
 
 
+/* ——— Header badge ——— */
+@media (max-width: 480px){
+  .site-header .avail-badge{
+    font-size: clamp(11px, 3.3vw, 13px); /* меньше кегль */
+    padding: 6px 10px;                   /* компактнее внутренние отступы */
+    border-radius: 999px;                /* капсула даже в 2 строки */
+    white-space: nowrap;                 /* не переносить на 2 строки */
+  }
+  .site-header .avail-badge .dot{
+    inline-size: 8px; block-size: 8px;  /* стабильный круг */
+  }
+}
+@media (max-width: 360px){
+  .site-header .avail-badge{ font-size: 11px; padding: 6px 8px; }
+}
 
 
 
