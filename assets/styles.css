@@ -1709,7 +1709,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   /* без padding/border здесь — они уже на .site-footer */
 }
 
-/* ===== Левая колонка: иконка + «Нови-Сад» + копирайт ===== */
+/* ===== Левая колонка: иконка + город + копирайт ===== */
 .foot-left{
   display: flex;
   align-items: center;
@@ -1718,7 +1718,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   color: #374151;
 }
 
-:root{ --icon-brown:#5B4636; }     /* тёмно-коричневый из иконок преимуществ */
+:root{ --icon-brown: #C8A77C; }
 .foot-loc{
   width: 18px; height: 18px;
   background-color: var(--icon-brown);
@@ -1783,36 +1783,6 @@ section[id], #services, #calc, #faq, #contact, #main {
     gap: 12px 18px;
   }
 }
-
-/* === Footer: правки цвета и подчёркиваний === */
-
-:root{
-  --footer-icon-sand: #EADFCF; /* подкорректируй под свой токен sand */
-}
-.foot-loc{
-  background-color: var(--footer-icon-sand) !important;
-  opacity: .95; /* лёгкая «меловая» мягкость как у подложки */
-}
-
-.site-footer .foot-nav a,
-.site-footer .foot-city{
-  color: #6B7280;                  /* базовый серый футера */
-  text-decoration: none;           /* убираем нативное подчёркивание */
-  border-bottom: 1px dashed currentColor; /* пунктир вместо underline */
-  padding-bottom: 2px;             /* видимый отступ от текста */
-  transition: color .18s ease, border-color .18s ease;
-}
-
-.site-footer .foot-nav a:hover,
-.site-footer .foot-nav a:focus-visible,
-.site-footer .foot-city:hover,
-.site-footer .foot-city:focus-visible{
-  color: #1e6a57;                  /* зелёный акцент */
-  border-bottom-color: transparent;/* подчёркивание «пропадает», как в hero */
-  outline: none;
-}
-
-.foot-city{ color: inherit !important; }
 
 
 
@@ -2769,6 +2739,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
