@@ -15,19 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Бейдж: жёсткая защита, чтобы никто не уронил страницу
-(function hardenBadge(){
-  const badge = document.querySelector('#headerFreeBadge');
-  const badgeText = badge?.querySelector('.avail-text');
-  if (!badge || !badgeText) return;
-  window.setBadge = function setBadge(text, classes = []) {
-    ['is-today','is-tomorrow','is-next','is-none','is-live']
-      .forEach(c => badge.classList.remove(c));
-    classes.forEach(c => badge.classList.add(c));
-    badgeText.textContent = text;          // .dot не трогаем — пульс живёт
-    badge.style.display = 'inline-flex';
-  };
-})();
+
 
 
 function isWhitelistTarget(target) {
@@ -114,38 +102,6 @@ if (burger && mnav){
 
 
 
-/* --- Бейдж в шапке: защитный слой, чтобы не падать на null --- */
-(function hardenBadge(){
-  const badge = document.querySelector('#headerFreeBadge');
-  const badgeText = badge?.querySelector('.avail-text');
-  if (!badge || !badgeText) return;
-
-  // Унифицированный безопасный апдейтер (сохраняем .dot)
-  window.setBadge = function setBadge(text, classes = []) {
-    if (!badge || !badgeText) return;
-    ['is-today','is-tomorrow','is-next','is-none','is-live']
-      .forEach(c => badge.classList.remove(c));
-    classes.forEach(c => badge.classList.add(c));
-    badgeText.textContent = text;
-    badge.style.display = 'inline-flex';
-  };
-})();
-
-// === SetBadge: меняем только текст и классы ===
-window.setBadge = function setBadge(text, classes = []) {
-  const badge = document.querySelector('#headerFreeBadge');
-  const badgeText = badge ? badge.querySelector('.avail-text') : null;
-  if (!badge || !badgeText) return;
-
-  // сбрасываем только управляемые классы
-  ['is-today','is-tomorrow','is-next','is-none','is-live']
-    .forEach(c => badge.classList.remove(c));
-  classes.forEach(c => badge.classList.add(c));
-
-  badgeText.textContent = text;        // НЕ трогаем .dot → пульс сохраняется
-  badge.style.display = 'inline-flex';
-};
-
 // === Вспомогалки для форматов времени ===
 function safeStart(s) {
   if (s.startLabel) return s.startLabel;
@@ -159,6 +115,54 @@ function safeEnd(s) {
 }
 function getStartTs(s) { return s.startTs ?? Date.parse(s.startISO || 0); }
 function timeLabel(s)  { return `${safeStart(s)}–${safeEnd(s)}`; }
+
+
+
+// === Header badge: укорочение подписи на смартфонах ===
+const BADGE_SHORT_BP = '(max-width: 420px)'; // покрывает 390–412px ширины смартфонов
+
+function normalizeBadgeText(fullText) {
+  // Только на смартфонах меняем длинную подпись на короткую
+  if (!window.matchMedia(BADGE_SHORT_BP).matches) return fullText;
+
+  return String(fullText)
+    .replace(/^Ближайший слот:/, 'Слот:')
+    .replace(/^Najbliži termin:/, 'Termin:');
+}
+
+// ЕДИНАЯ функция отрисовки бейджа (используй её везде)
+window.setBadge = function setBadge(text, classes = []) {
+  const badge = document.querySelector('#headerFreeBadge');
+  const badgeText = badge?.querySelector('.avail-text');
+  if (!badge || !badgeText) return;
+
+  // сброс управляемых классов + установка новых
+  ['is-today','is-tomorrow','is-next','is-none','is-live']
+    .forEach(c => badge.classList.remove(c));
+  classes.forEach(c => badge.classList.add(c));
+
+  // сохраняем исходный текст и рендерим нормализованный
+  badgeText.dataset.full = text;
+  badgeText.textContent  = normalizeBadgeText(text);
+
+  badge.style.display = 'inline-flex';
+};
+
+// На ресайзе/смене ориентации перерисовываем укороченную версию
+window.addEventListener('resize', () => {
+  const t = document.querySelector('#headerFreeBadge .avail-text');
+  if (t?.dataset.full) t.textContent = normalizeBadgeText(t.dataset.full);
+});
+
+// (опционально) безопасная заглушка, если где-то остаётся вызов hardenBadge
+if (!window.hardenBadge) {
+  window.hardenBadge = s => s;
+}
+
+
+
+
+
 
 // === НОВАЯ ВЕРСИЯ updateBadge c сохранением .dot для пульса ===
 window.updateBadge = function updateBadge(slots) {
@@ -232,17 +236,7 @@ window.updateBadge = function updateBadge(slots) {
   const badge     = document.querySelector('#headerFreeBadge');
   const badgeText = badge ? badge.querySelector('.avail-text') : null;
 
-  // Безопасный setter бейджа (если нет твоего window.setBadge)
-  const setB = (typeof window.setBadge === 'function')
-    ? window.setBadge
-    : function (text, classes){
-        if (!badge || !badgeText) return;
-        ['is-today','is-tomorrow','is-next','is-none','is-live']
-          .forEach(c => badge.classList.remove(c));
-        (classes || []).forEach(c => badge.classList.add(c));
-        badgeText.textContent = text;              // .dot не трогаем
-        badge.style.display = 'inline-flex';
-      };
+  
 
   // Статус загрузки
   if (badge) {
@@ -1540,6 +1534,7 @@ const I18N = {
 
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
 
 
 
