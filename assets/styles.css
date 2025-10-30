@@ -221,6 +221,53 @@ section{padding:64px 0}
 .link-dashed--inverse { color:#15803D; border-bottom: 1px dashed #15803D; padding-bottom: 1px;}
 .link-dashed--inverse:hover { color:#6B7280; border-bottom-color:transparent; }
 
+
+/* ===== Unified dashed links ===== */
+
+/* общая механика и форматирование (для обоих режимов) */
+.link-dashed,
+.link-dashed--inverse{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+.link-dashed .txt,
+.link-dashed--inverse .txt{
+  display: inline-block;
+  border-bottom: 1px dashed currentColor; /* пунктир берёт текущий цвет текста */
+  padding-bottom: 2px;                     /* «отступ» между текстом и линией */
+  transition: color .15s ease, border-color .15s ease;
+}
+
+/* режим 1: базовый серый → зелёный при наведении (футер и «Нови-Сад») */
+.link-dashed{ color:#6B7280; }
+.link-dashed:hover,
+.link-dashed:focus-visible{ color:#15803D; }
+.link-dashed:hover .txt,
+.link-dashed:focus-visible .txt{ border-bottom-color: transparent; }
+
+/* режим 2: инверсия — зелёный в статике → серый при наведении (hero и «Наверх») */
+.link-dashed--inverse{ color:#15803D; }                 /* перекрывает базовый, если оба класса на элементе */
+.link-dashed--inverse:hover,
+.link-dashed--inverse:focus-visible{ color:#6B7280; }
+.link-dashed--inverse:hover .txt,
+.link-dashed--inverse:focus-visible .txt{ border-bottom-color: transparent; }
+
+/* иконки внутри ссылок наследуют цвет */
+.link-dashed .icon,
+.link-dashed--inverse .icon{ color: currentColor; }
+
+/* --- точечная правка футера: город должен быть серым в статике --- */
+.site-footer .foot-city.link-dashed{ color:#6B7280; }
+
+
+
+
+
+
+
 #top .hero-visual .hero-social a{ white-space:nowrap; flex:0 0 auto; }
 
 /* фиксируем геометрию цитаты с двухслойным кросс-фейдом */
@@ -2739,6 +2786,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
