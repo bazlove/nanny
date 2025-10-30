@@ -804,64 +804,65 @@ html, body { overflow-x: clip; }
 
 
 
-/* === Info Badge " i " (контакты + калькулятор) === */
-
+/* === Унифицированный стиль бейджа «i» (header/contacts/calc) === */
 :root{
-  --info-badge-size: 22px;   /* общий размер кружка */
-  --info-badge-bg:   #ECEFF3;/* фон кружка */
-  --info-badge-fg:   #6B7280;/* цвет буквы "i" */
+  --info-badge-size: 22px;
+  --info-badge-bg:   #ECEFF3;   /* светло-серый фон кружка */
+  --info-badge-fg:   #6B7280;   /* серый цвет буквы i */
 }
 
-/* Сам кружок "i" — одинаковый в обоих блоках */
-.contact-meta .info,
-#calc .label-row .hint .i{
-  display: inline-grid;          /* надёжное центрирование */
+/* Сам кружок с «i» — ТРИ источника вёрстки: .tz-tip, .contact-meta, .calc .label-row */
+.tz-tip > .i,
+.contact-meta .hint > .i,
+#calc .label-row .hint > .i{
+  display: inline-grid;           /* надёжное центрирование */
   place-items: center;
 
   inline-size: var(--info-badge-size);
-  aspect-ratio: 1 / 1;           /* гарантированный квадрат */
+  aspect-ratio: 1 / 1;           /* не даём превратиться в овал */
   border-radius: 50%;
-
   box-sizing: border-box;
-  padding: 0 !important;         /* гасим старые паддинги, чтобы не было овала */
-  border: 0 !important;
 
+  padding: 0 !important;         /* гасим наследованные паддинги */
+  border: 0 !important;          /* и бордеры */
   background: var(--info-badge-bg);
   color: var(--info-badge-fg);
 
-  font: 600 12px/1 inherit;      /* жирность, кегль и line-height=1 */
+  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
   vertical-align: middle;
-  margin-left: 8px;              /* отступ от подписи */
+  margin-left: 8px;              /* отступ от текста метки */
 }
 
-/* Контейнер подсказки в калькуляторе — в одну линию с меткой */
+/* В шапке «i» — это <button>, уберём нативный вид и дадим курсор */
+.tz-tip > .i{
+  appearance: none;
+  cursor: help;
+}
+
+/* Контейнеры с подсказкой — в одну линию с текстом */
+.contact-meta .hint,
 #calc .label-row .hint{
   display: inline-flex;
   align-items: center;
-  position: relative;            /* если .tip позиционируется абсолютно */
-  cursor: help;
-  margin-left: 6px;
+  position: relative;            /* если всплывашка .tip позиционируется */
 }
 
-/* Выровнять весь ряд метки (иконка, текст, hint) */
+/* Иконки слева от лейбла в калькуляторе (часы/дети/календарь) */
 #calc .label-row{
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
-/* Размер SVG-иконок слева от подписи */
 #calc .label-row svg{
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-  flex: 0 0 18px;
+  width: 18px; height: 18px; flex: 0 0 18px; fill: currentColor;
 }
 
-/* Небольшая адаптация для совсем узких экранов (опционально) */
-@media (max-width: 420px){
-  :root{ --info-badge-size: 20px; }
+/* Доступность: фокус для кнопки-бейджа в шапке (не трогаем span'ы) */
+.tz-tip > .i:focus-visible{
+  outline: 2px solid rgba(21,128,61,.3);  /* зелёный обводочный */
+  outline-offset: 2px;
 }
+
 
 
 
