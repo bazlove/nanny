@@ -803,48 +803,66 @@ html, body { overflow-x: clip; }
 
 
 
-/* === Единый стиль i в CALCULATOR=== */
 
-.contact-meta .info,
-#calc .label-row .hint .i{
-  display: inline-grid;            /* надёжное центрирование */
-  place-items: center;
+/* === Info Badge " i " (контакты + калькулятор) === */
 
-  inline-size: 22px;               /* ширина */
-  aspect-ratio: 1 / 1;             /* гарантированно квадрат */
-  border-radius: 50%;
-
-  box-sizing: border-box;          /* паддинги/бордер не раздувают размеры */
-  padding: 0 !important;           /* гасим старые паддинги */
-  border: 0 !important;            /* и бордеры, если были */
-
-  background: #ECEFF3;
-  color: #6B7280;
-  font-size: 12px;
-  line-height: 1;
-  font-weight: 600;
-  vertical-align: middle;
-  margin-left: 8px;                /* отступ от подписи */
+:root{
+  --info-badge-size: 22px;   /* общий размер кружка */
+  --info-badge-bg:   #ECEFF3;/* фон кружка */
+  --info-badge-fg:   #6B7280;/* цвет буквы "i" */
 }
 
-/* сам контейнер-подсказка в калькуляторе — в одну линию с текстом */
+/* Сам кружок "i" — одинаковый в обоих блоках */
+.contact-meta .info,
+#calc .label-row .hint .i{
+  display: inline-grid;          /* надёжное центрирование */
+  place-items: center;
+
+  inline-size: var(--info-badge-size);
+  aspect-ratio: 1 / 1;           /* гарантированный квадрат */
+  border-radius: 50%;
+
+  box-sizing: border-box;
+  padding: 0 !important;         /* гасим старые паддинги, чтобы не было овала */
+  border: 0 !important;
+
+  background: var(--info-badge-bg);
+  color: var(--info-badge-fg);
+
+  font: 600 12px/1 inherit;      /* жирность, кегль и line-height=1 */
+  vertical-align: middle;
+  margin-left: 8px;              /* отступ от подписи */
+}
+
+/* Контейнер подсказки в калькуляторе — в одну линию с меткой */
 #calc .label-row .hint{
   display: inline-flex;
   align-items: center;
-  position: relative;              /* если у .tip абсолютное позиционирование */
+  position: relative;            /* если .tip позиционируется абсолютно */
   cursor: help;
   margin-left: 6px;
 }
 
-/* выравнивание иконок слева от текста метки */
+/* Выровнять весь ряд метки (иконка, текст, hint) */
 #calc .label-row{
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
+/* Размер SVG-иконок слева от подписи */
 #calc .label-row svg{
-  width: 18px; height: 18px; fill: currentColor; flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex: 0 0 18px;
 }
+
+/* Небольшая адаптация для совсем узких экранов (опционально) */
+@media (max-width: 420px){
+  :root{ --info-badge-size: 20px; }
+}
+
 
 
 
