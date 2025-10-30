@@ -170,6 +170,14 @@ window.updateBadge = function updateBadge(slots) {
     return;
   }
 
+(function shortenBadgeLabel(){
+  const el = document.querySelector('.avail-badge .avail-text');
+  if (!el) return;
+  if (window.matchMedia('(max-width: 360px)').matches){
+    el.textContent = el.textContent.replace(/^Ближайший слот:/, 'Слот:');
+  }
+})();
+  
   // 4) Иначе — по запросу
   setBadge('Свободно: по запросу', ['is-none']);
 };
@@ -1497,6 +1505,7 @@ const I18N = {
 
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
 
 
 
