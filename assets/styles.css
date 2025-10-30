@@ -615,7 +615,45 @@ section{padding:64px 0}
   hyphens: auto;
 }
 
-/* === WHY / XP: ритм "заголовок → контент" ===================== */
+
+/* По умолчанию (десктоп/планшет) — без анимации, сразу видимы */
+[data-anim="adv"]{
+  opacity: 1;
+  transform: none;
+}
+
+/* Только смартфоны: маленький вьюпорт + тач */
+@media (max-width: 640px) and (pointer: coarse){
+  /* стартовое состояние */
+  [data-anim="adv"]{
+    opacity: 0;
+    transform: translateY(8px) scale(.96);
+    transition: transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s;
+    will-change: transform, opacity;
+  }
+  /* когда вошло в зону видимости */
+  [data-anim="adv"].play{
+    opacity: 1;
+    transform: none;
+  }
+  /* опциональная «искра» для внутренних элементов */
+  [data-anim="adv"].play .sparkle{
+    animation: advSpark 1.2s ease-out .2s 2;
+  }
+}
+
+@keyframes advSpark{
+  0%   { transform: scale(.8);  opacity:.4 }
+  60%  { transform: scale(1.08); opacity:1 }
+  100% { transform: scale(1);   opacity:1 }
+}
+
+
+
+
+
+/* === WHY / XP ===================== */
+
 /* WHY: заголовок → сетка преимуществ */
 #why.panel--list :is(h2,.section-title){ 
   margin-bottom: 0 !important; 
@@ -2775,6 +2813,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
