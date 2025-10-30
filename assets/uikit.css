@@ -997,6 +997,86 @@ body.menu-open{ overflow:hidden; }
 
 
 
+/* ===== MOBILE NAV OVERLAY ===== */
+.mobile-nav{
+  position: fixed; inset: 0;
+  display: grid; grid-template-rows: 1fr; /* панель прижмём к низу */
+  background: rgba(17,24,39,.55);
+  backdrop-filter: blur(2px);
+  z-index: 1200;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.mobile-nav__panel{
+  align-self: end;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  padding: 16px;
+  min-height: 60vh;
+  transform: translateY(12px);
+  transition: transform .22s ease;
+}
+.mobile-nav.is-open{ opacity: 1; pointer-events: auto; }
+.mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+body.nav-open{ overflow: hidden; }
+
+/* верхняя полоса: бренд слева, язык справа */
+.mobile-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.mobile-brand{ display:flex; align-items:center; gap:10px; }
+.mobile-brand .logo{ width:40px; height:40px; display:grid; place-items:center; border-radius:10px; background:#F0F3F7; }
+.mobile-brand .meta strong{ display:block; font-size:16px; line-height:1.1; }
+.mobile-brand .meta small{ display:block; color:#6B7280; font-size:13px; }
+
+/* свитчер языка внутри меню */
+.mobile-nav .lang-switch{ display:flex; align-items:center; gap:8px; }
+.mobile-nav .lang-btn{
+  padding:6px 10px; border-radius:12px;
+  border:1px solid #E5E7EB; background:#fff; font-weight:600;
+}
+.mobile-nav .lang-btn.active{
+  color:#15803D; background:#EEF8F2; border-color:#B9E0D1;
+}
+
+/* ссылки меню — «карточками» */
+.mobile-nav .nav-links{ display:grid; gap:10px; }
+.mobile-nav .nav-links a{
+  display:block; padding:12px 14px; border-radius:12px;
+  border:1px solid #E5E7EB; background:#fff; color:#111; font-size:16px;
+  text-decoration:none; transition:background .15s, transform .05s;
+}
+.mobile-nav .nav-links a:active{ transform: translateY(1px); }
+.mobile-nav .nav-links a:hover{ background:#F8FAFC; }
+
+/* ===== BURGER: показываем X при открытии ===== */
+.burger{ position:relative; width:44px; height:44px; border-radius:12px; border:1px solid #E5E7EB; background:#fff; display:grid; place-items:center; }
+.burger .ic-open, .burger .ic-close{ width:18px; height:2px; background:#111; position:relative; border-radius:2px; }
+.burger .ic-open::before, .burger .ic-open::after{ content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px; }
+.burger .ic-open::before{ transform: translateY(-6px); }
+.burger .ic-open::after { transform: translateY(6px); }
+.burger .ic-close{ display:none; }
+.burger.is-open .ic-open{ display:none; }
+.burger.is-open .ic-close{ display:block; transform: rotate(45deg); }
+.burger.is-open .ic-close::before,
+.burger.is-open .ic-close::after{
+  content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
+}
+.burger.is-open .ic-close::before{ transform: rotate(90deg); }
+
+/* ===== ШАПКА: скрываем эмодзи и даём место бейджу на мобиле ===== */
+@media (max-width: 767px){
+  .site-header .logo,
+  .site-header .brand .logo,
+  .site-header .hdr-logo{ display:none !important; } /* подставь точный селектор эмодзи, если он другой */
+
+  #headerFreeBadge .avail-text{
+    font-size: 15px; line-height: 1.15;
+  }
+}
+
+/* гарантируем, что меню перекрывает шапку */
+.site-header{ z-index: 1000; position: relative; }
+
+
+
 
 
 
