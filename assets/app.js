@@ -16,8 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
 function isWhitelistTarget(target) {
   return !!target.closest('input, textarea, [contenteditable="true"], .allow-select, .allow-copy');
 }
@@ -1629,6 +1627,7 @@ const I18N = {
     cards.forEach(c => io.observe(c));
   });
 })();
+
 
 
 
