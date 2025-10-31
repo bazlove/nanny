@@ -856,8 +856,7 @@ html, body { overflow-x: clip; }
 
 
 
-/* ===== MOBILE NAV OVERLAY ===== */
-
+/* ===== CANON: Header + Burger (3 режима) ===== */
 :root{
   --bp-mobile: 640px;
   --bp-tablet: 980px;
@@ -865,69 +864,78 @@ html, body { overflow-x: clip; }
   --z-mnav: 1200;
 }
 
-/* Шапка фиксирована и поверх контента */
-.site-header{ position: sticky; top:0; z-index: var(--z-header); }
-
-/* ===== Десктоп по умолчанию ===== */
-.burger{ display:none; }                       /* на десктопе бургер скрыт */
+/* Десктоп по умолчанию: бургер скрыт, десктоп-меню видно */
+.burger{ display:none; }
 .header-nav, .site-header .lang-switch{ display:flex; }
 
-/* ===== Планшет и мобайл (<= планшета) ===== */
+/* Tablet & Mobile: прячем десктоп-меню, показываем бургер */
 @media (max-width: var(--bp-tablet)){
-  .header-nav{ display:none !important; }      /* убираем десктоп-меню */
+  .header-nav{ display:none !important; }
   .site-header .lang-switch{ display:none !important; }
+
   .burger{
-    display:inline-grid; place-items:center;
-    width:44px; height:44px; border-radius:12px;
-    border:1px solid #E5E7EB; background:#fff;
+    display:inline-grid !important;
+    place-items:center;
+    width:44px; height:44px;
+    border:1px solid #E5E7EB; border-radius:12px;
+    background:#fff;
   }
+
+  /* Иконки бургер/крест через спаны */
+  .burger .ic-open, .burger .ic-close{
+    width:18px; height:2px; background:#111; position:relative; border-radius:2px;
+  }
+  .burger .ic-open::before, .burger .ic-open::after{
+    content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
+  }
+  .burger .ic-open::before{ transform: translateY(-6px); }
+  .burger .ic-open::after { transform: translateY( 6px); }
+  .burger .ic-close{ display:none; }
+  .burger.is-open .ic-open{ display:none; }
+  .burger.is-open .ic-close{ display:block; transform: rotate(45deg); }
+  .burger.is-open .ic-close::before,
+  .burger.is-open .ic-close::after{
+    content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
+  }
+  .burger.is-open .ic-close::before{ transform: rotate(90deg); }
 }
 
-/* ===== Мобайл (<=640px): освобождаем место бейджу ===== */
+/* Mobile: убираем эмодзи-лого в шапке, чтобы дать место бейджу */
 @media (max-width: var(--bp-mobile)){
-  .site-header .brand > .logo{ display:none !important; } /* лого в шапке скрыто, в меню — видно */
-  #headerFreeBadge{ padding:6px 10px; border-radius:12px; }
+  .site-header .brand > .logo{ display:none !important; }
   #headerFreeBadge .avail-text{ font-size:15px; line-height:1.15; }
 }
 
-/* ===== Иконки бургер/крест ===== */
-.burger .ic-open, .burger .ic-close{
-  width:18px; height:2px; background:#111; position:relative; border-radius:2px;
-}
-.burger .ic-open::before, .burger .ic-open::after{
-  content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
-}
-.burger .ic-open::before{ transform: translateY(-6px); }
-.burger .ic-open::after { transform: translateY( 6px); }
-.burger .ic-close{ display:none; }
-.burger.is-open .ic-open{ display:none; }
-.burger.is-open .ic-close{ display:block; transform: rotate(45deg); }
-.burger.is-open .ic-close::before,
-.burger.is-open .ic-close::after{
-  content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
-}
-.burger.is-open .ic-close::before{ transform: rotate(90deg); }
+/* Шапка поверх контента (не меняем твои стили, только гарантируем слой) */
+.site-header{ position: sticky; top:0; z-index: var(--z-header); }
 
-/* ===== Оверлей-меню ===== */
+/* ===== Оверлей меню (всегда в DOM). Не зависит от брейкпоинтов по display */
 .mobile-nav{
   position: fixed; inset: 0;
-  display: grid; grid-template-rows: 1fr;      /* панель прижата к низу */
+  display: grid !important;                /* перебиваем возможное старое display:none */
+  grid-template-rows: 1fr;                 /* панель прижмём к низу */
   background: rgba(17,24,39,.55);
   backdrop-filter: blur(2px);
   z-index: var(--z-mnav);
-  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
 }
 .mobile-nav__panel{
   align-self: end;
   background:#fff; border-radius:16px 16px 0 0;
   padding:16px; min-height:60vh;
-  transform: translateY(12px); transition: transform .22s ease;
+  transform: translateY(12px);
+  transition: transform .22s ease;
 }
+
+/* Меню открыто */
 .mobile-nav.is-open{ opacity:1; pointer-events:auto; }
 .mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+
+/* Блокируем скролл фона при открытом меню */
 body.nav-open{ overflow:hidden; }
 
-/* Верхняя строка панели */
+/* Верх оверлея: бренд слева, свитчер языка справа */
 .mobile-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
 .mobile-brand{ display:flex; align-items:center; gap:10px; }
 .mobile-brand .logo{
@@ -936,14 +944,18 @@ body.nav-open{ overflow:hidden; }
 }
 .mobile-brand .meta strong{ display:block; font-size:16px; line-height:1.1; color:#111827; }
 .mobile-brand .meta small{ display:block; font-size:13px; color:#6B7280; }
+
+/* Свитчер языка внутри меню (можно упростить — наследует твои базовые) */
 .mobile-nav .lang-switch{ display:flex; align-items:center; gap:8px; }
 .mobile-nav .lang-btn{
   padding:6px 10px; border-radius:12px;
   border:1px solid #E5E7EB; background:#fff; font-weight:600;
 }
-.mobile-nav .lang-btn.active{ color:#15803D; background:#EEF8F2; border-color:#B9E0D1; }
+.mobile-nav .lang-btn.active{
+  color:#15803D; background:#EEF8F2; border-color:#B9E0D1;
+}
 
-/* Ссылки в панели */
+/* Нав-ссылки карточками */
 .mobile-nav .nav-links{ display:grid; gap:10px; }
 .mobile-nav .nav-links a{
   display:block; padding:12px 14px; border-radius:12px;
@@ -952,6 +964,7 @@ body.nav-open{ overflow:hidden; }
 }
 .mobile-nav .nav-links a:hover{ background:#F8FAFC; }
 .mobile-nav .nav-links a:active{ transform: translateY(1px); }
+
 
 
 
