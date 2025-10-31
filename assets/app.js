@@ -55,46 +55,75 @@ document.addEventListener('copy', function (e) {
 (function(){try{console.log('%cLanding (split files)','background:#16324a;color:#fff;padding:2px 8px;border-radius:6px')}catch(e){}})();
 
 
-// ===== Mobile/Tablet menu: toggle + a11y =====
 
+
+/* ===== CANON: Mobile menu (single source of truth) ===== */
 (function setupMobileMenu(){
   const burger = document.getElementById('burger');
   const mnav   = document.getElementById('mnav');
   if (!burger || !mnav) return;
 
+  const TRANSITION_MS = 220;
   const firstFocusable = () =>
     mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
 
   function openMenu(){
+    // снимаем hidden заранее, чтобы анимация была видна
     mnav.hidden = false;
+    mnav.setAttribute('aria-hidden', 'false');
     mnav.classList.add('is-open');
+    document.body.classList.add('nav-open');
+
     burger.classList.add('is-open');
     burger.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('nav-open');
-    const f = firstFocusable(); if (f) f.focus({ preventScroll: true });
+
+    // фокус внутрь панели (если есть на что)
+    const f = firstFocusable();
+    if (f) { try { f.focus({ preventScroll: true }); } catch(_){} }
   }
 
   function closeMenu(){
     mnav.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+
     burger.classList.remove('is-open');
     burger.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
-    mnav.hidden = true;
-    burger.focus({ preventScroll: true });
+
+    // дождёмся окончания CSS-анимации и спрячем из потока
+    const tidy = () => {
+      mnav.hidden = true;
+      mnav.setAttribute('aria-hidden', 'true');
+      mnav.removeEventListener('transitionend', tidy);
+    };
+    mnav.addEventListener('transitionend', tidy);
+    // на случай отсутствия transitionend
+    setTimeout(tidy, TRANSITION_MS + 50);
   }
 
-  function toggleMenu(){
+  const toggleMenu = () =>
     (mnav.classList.contains('is-open') ? closeMenu() : openMenu());
-  }
 
+  // Кнопка бургер
   burger.addEventListener('click', toggleMenu);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
-  // клик по фону оверлея — закрыть (не по панели)
-  mnav.addEventListener('click', e => { if (e.target === mnav) closeMenu(); });
-  // клик по ссылке — закрыть
+
+  // ESC — закрыть
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mnav.classList.contains('is-open')) closeMenu();
+  });
+
+  // Клик по фону (вне панели) — закрыть
+  mnav.addEventListener('click', (e) => {
+    if (e.target === mnav) closeMenu();
+  });
+
+  // Клик по ссылке — закрыть
   const links = mnav.querySelector('.nav-links');
-  if (links) links.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
+  if (links) links.addEventListener('click', (e) => {
+    if (e.target.closest('a')) closeMenu();
+  });
 })();
+
+
 
 
   
@@ -1595,6 +1624,7 @@ const I18N = {
     cards.forEach(c => io.observe(c));
   });
 })();
+
 
 
 
