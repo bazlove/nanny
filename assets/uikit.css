@@ -856,58 +856,50 @@ html, body { overflow-x: clip; }
 
 
 
-/* ===== CANON vFinal: Header + Burger + Overlay (desktop/tablet/mobile) ===== */
+/* ===== CANON vFinal+ (header + burger + overlay + iOS-lang) ===== */
 :root{
   --bp-mobile: 640px;
   --bp-tablet: 980px;
-  --z-header: 1000;     /* шапка поверх оверлея */
-  --z-mnav: 900;        /* оверлей ниже шапки, чтобы шапку было видно */
+  --z-header: 1000;     /* шапка поверх */
+  --z-mnav: 900;        /* меню под шапкой */
+  --overlay-dim: rgba(17,24,39,.72); /* темнее фон под меню */
 }
 
-/* Шапка поверх контента */
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: var(--z-header);
-}
+/* Шапка */
+.site-header{ position: sticky; top: 0; z-index: var(--z-header); }
 
-/* По умолчанию на desktop: бургер скрыт, десктоп-меню и десктоп-язык видны */
+/* Desktop: бургер скрыт, десктоп-меню/язык видны */
 .burger{ display:none; }
 .header-bar > .lang-switch{ display:flex; }
 .header-nav{ display:flex; }
 
-/* Tablet/Mobile: прячем ТОЛЬКО десктоп-элементы в шапке, бургер показываем */
+/* Tablet/Mobile: скрываем десктопное меню и десктопный свитчер языка, показываем бургер */
 @media (max-width: 980px){
   .header-nav{ display:none !important; }
-  .header-bar > .lang-switch{ display:none !important; }   /* критично: только прямой потомок шапки */
+  .header-bar > .lang-switch{ display:none !important; }
 
   .burger{
     display:inline-grid !important;
     place-items:center;
     width:44px; height:44px;
     border:1px solid #E5E7EB; border-radius:12px;
-    background:#fff;
-    line-height:0; cursor:pointer;
-    transition: background .15s ease, border-color .15s ease, transform .05s ease;
+    background:#fff; line-height:0; cursor:pointer;
+    transition: background .15s, border-color .15s, transform .05s;
   }
   .burger:active{ transform: translateY(1px); }
 
-  /* Иконки бургера/креста — чистый CSS */
-  .burger .ic-open,
-  .burger .ic-close{
+  /* иконки бургер/крест */
+  .burger .ic-open, .burger .ic-close{
     width:18px; height:2px; background:#111; position:relative; border-radius:2px;
   }
-  .burger .ic-open::before,
-  .burger .ic-open::after{
+  .burger .ic-open::before, .burger .ic-open::after{
     content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
   }
   .burger .ic-open::before{ transform: translateY(-6px); }
   .burger .ic-open::after { transform: translateY( 6px); }
   .burger .ic-close{ display:none; }
   .burger.is-open .ic-open{ display:none; }
-  .burger.is-open .ic-close{
-    display:block; transform: rotate(45deg);
-  }
+  .burger.is-open .ic-close{ display:block; transform: rotate(45deg); }
   .burger.is-open .ic-close::before,
   .burger.is-open .ic-close::after{
     content:""; position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px;
@@ -915,51 +907,65 @@ html, body { overflow-x: clip; }
   .burger.is-open .ic-close::before{ transform: rotate(90deg); }
 }
 
-/* Mobile: в шапке скрываем бренд-блок и «i» — остаются бейдж и бургер */
+/* Mobile: в шапке прячем бренд-блок и «i», оставляем бейдж + бургер */
 @media (max-width: 640px){
-  .site-header .brand-meta{ display:none !important; }
-  .site-header .brand > .logo{ display:none !important; }
+  .site-header .brand-meta,
+  .site-header .brand > .logo,
   .site-header .tz-tip{ display:none !important; }
 
-  /* компактнее бейдж слотов */
   #headerFreeBadge{ white-space:nowrap; }
   #headerFreeBadge .avail-text{ font-size:15px; line-height:1.15; }
 }
 
-/* ===== Оверлей мобильного меню — снизу, НИЖЕ шапки ===== */
+/* ===== Оверлей меню: начинается строго под шапкой ===== */
 .mobile-nav{
   position: fixed;
-  /* ВАЖНО: top задаём динамически из JS как высоту шапки, чтобы меню «из-под шапки» */
   top: var(--hdr-h, 56px); left: 0; right: 0; bottom: 0;
-
-  display: grid;
-  grid-template-rows: 1fr;           /* панель прижмём к низу */
-  background: rgba(17,24,39,.55);    /* затемнение контента, но не шапки */
+  display: grid; grid-template-rows: 1fr;
+  background: var(--overlay-dim);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   z-index: var(--z-mnav);
-
   opacity: 0; pointer-events: none;
   transition: opacity .2s ease;
 }
 .mobile-nav__panel{
-  align-self: end;
   background:#fff;
-  border-radius:16px 16px 0 0;
-  padding:16px;
-  min-height:60vh;
-  transform: translateY(12px);
-  transition: transform .22s ease;
+  box-shadow: 0 -8px 30px rgba(0,0,0,.15);
+  transition: transform .26s ease;
 }
 
-/* Состояние «открыто» */
-.mobile-nav.is-open{ opacity:1; pointer-events:auto; }
-.mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+/* — Планшеты (641–980): панель снизу */
+@media (min-width: 641px) and (max-width: 980px){
+  .mobile-nav{ grid-template-rows: 1fr; }
+  .mobile-nav__panel{
+    align-self: end;
+    border-radius:16px 16px 0 0;
+    min-height: 56vh;
+    transform: translateY(28px);
+  }
+  .mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+}
 
-/* Содержимое панели */
+/* — Мобилки (≤640): панель из-под шапки */
+@media (max-width: 640px){
+  .mobile-nav{ grid-template-rows: auto 1fr; }
+  .mobile-nav__panel{
+    align-self: start;
+    border-radius:0 0 16px 16px;
+    min-height: 68vh;
+    transform: translateY(-22px);
+  }
+  .mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+}
+
+.mobile-nav.is-open{ opacity:1; pointer-events:auto; }
+body.nav-open{ overflow:hidden; }
+
+/* Контент панели */
 .mobile-top{
   display:flex; align-items:center; justify-content:space-between;
-  gap:12px; margin-bottom:12px;
+  gap:12px; padding:16px 16px 12px;
 }
 .mobile-brand{ display:flex; align-items:center; gap:10px; }
 .mobile-brand .logo{
@@ -969,18 +975,7 @@ html, body { overflow-x: clip; }
 .mobile-brand .meta strong{ display:block; font-size:16px; line-height:1.1; color:#111827; }
 .mobile-brand .meta small{ display:block; font-size:13px; color:#6B7280; }
 
-/* Переключатель языка ВНУТРИ меню — всегда показываем */
-.mobile-nav .lang-switch{ display:flex !important; align-items:center; gap:8px; }
-.mobile-nav .lang-btn{
-  padding:6px 10px; border-radius:12px;
-  border:1px solid #E5E7EB; background:#fff; font-weight:600;
-}
-.mobile-nav .lang-btn.active{
-  color:#15803D; background:#EEF8F2; border-color:#B9E0D1;
-}
-
-/* Нав-ссылки карточками */
-.mobile-nav .nav-links{ display:grid; gap:10px; }
+.mobile-nav .nav-links{ display:grid; gap:10px; padding:0 16px 16px; }
 .mobile-nav .nav-links a{
   display:block; padding:12px 14px; border-radius:12px;
   border:1px solid #E5E7EB; background:#fff; color:#111; font-size:16px;
@@ -989,10 +984,41 @@ html, body { overflow-x: clip; }
 .mobile-nav .nav-links a:hover{ background:#F8FAFC; }
 .mobile-nav .nav-links a:active{ transform: translateY(1px); }
 
-/* Без анимаций для reduce-motion */
+/* ===== iOS-переключатель языка (только внутри .mobile-nav) ===== */
+.ios-toggle{
+  display:inline-block; position:relative; user-select:none; cursor:pointer;
+}
+.ios-toggle input{ position:absolute; opacity:0; inset:0; }
+
+.ios-toggle .track{
+  display:inline-grid; grid-template-columns: 1fr 1fr;
+  align-items:center; position:relative;
+  width:76px; height:34px; padding:0 8px;
+  background:#E5E7EB; border-radius:999px; border:1px solid #D1D5DB;
+  transition: background .2s, border-color .2s;
+}
+.ios-toggle .lab{
+  font-size:12px; font-weight:700; line-height:1; color:#6B7280;
+  text-align:center; pointer-events:none;
+}
+.ios-toggle .thumb{
+  position:absolute; top:3px; left:3px; width:28px; height:28px;
+  border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2);
+  transition: transform .2s ease;
+}
+
+/* checked = SR справа */
+.ios-toggle input:checked + .track{ background:#DCFCE7; border-color:#B9E0D1; }
+.ios-toggle input:checked + .track .thumb{ transform: translateX(42px); }
+.ios-toggle input:checked + .track .lru{ color:#9CA3AF; }
+.ios-toggle input:checked + .track .lsr{ color:#14532d; }
+
+/* focus видимый */
+.ios-toggle input:focus-visible + .track{ outline:2px solid #86efac; outline-offset:2px; }
+
+/* reduce motion */
 @media (prefers-reduced-motion: reduce){
-  .mobile-nav{ transition: none; }
-  .mobile-nav__panel{ transition: none; }
+  .mobile-nav, .mobile-nav__panel, .ios-toggle .thumb{ transition:none !important; }
 }
 
 
