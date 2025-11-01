@@ -1565,8 +1565,7 @@ const I18N = {
 
 
 
-
-/* ===== CANON vFinal+: Mobile menu + iOS lang (fixed catch) ===== */
+/* ===== CANON vFinal: Mobile menu ===== */
 (function setupMobileMenu(){
   const burger = document.getElementById('burger');
   const mnav   = document.getElementById('mnav');
@@ -1574,30 +1573,36 @@ const I18N = {
   if (!burger || !mnav || !header) return;
 
   const TABLET_BP = 980;
-  const TRANSITION_MS = 260;
+  const TRANSITION_MS = 220;
 
-  // меню «из-под шапки»: прокидываем фактическую высоту хедера в CSS var
+  // Динамически задаём высоту шапки → меню начинается строго под шапкой
   function setHeaderHeightVar(){
     const h = header.getBoundingClientRect().height || 56;
     mnav.style.setProperty('--hdr-h', `${h}px`);
   }
   setHeaderHeightVar();
+
+  // Обновляем при ресайзе/скролле/ориентации, чтобы offset был всегда точный
   ['resize','scroll','orientationchange'].forEach(evt =>
     window.addEventListener(evt, setHeaderHeightVar, {passive:true})
   );
 
+  // Утилиты
+  const firstFocusable = () =>
+    mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
   const isOpen = () => mnav.classList.contains('is-open');
-  const firstFocusable = () => mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
 
   function openMenu(){
-    setHeaderHeightVar();
+    setHeaderHeightVar();              // на всякий случай перед открытием
     mnav.hidden = false;
     mnav.setAttribute('aria-hidden','false');
     mnav.classList.add('is-open');
     document.body.classList.add('nav-open');
     burger.classList.add('is-open');
     burger.setAttribute('aria-expanded','true');
-    const f = firstFocusable(); if (f) try{ f.focus({preventScroll:true}); }catch(_){}
+
+    const f = firstFocusable();
+    if (f) { try { f.focus({preventScroll:true}); } catch(_){} }
   }
 
   function closeMenu(){
@@ -1605,73 +1610,69 @@ const I18N = {
     document.body.classList.remove('nav-open');
     burger.classList.remove('is-open');
     burger.setAttribute('aria-expanded','false');
+
     const tidy = () => {
       mnav.hidden = true;
       mnav.setAttribute('aria-hidden','true');
       mnav.removeEventListener('transitionend', tidy);
     };
     mnav.addEventListener('transitionend', tidy);
-    setTimeout(tidy, TRANSITION_MS + 60); // fallback, если нет transitionend
+    setTimeout(tidy, TRANSITION_MS + 50); // fallback
   }
 
   const toggle = () => (isOpen() ? closeMenu() : openMenu());
 
-  // события
+  // Кнопка бургер
   burger.addEventListener('click', toggle);
-  mnav.addEventListener('click', e => { if (e.target === mnav) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) closeMenu(); });
 
+  // Закрыть по клику на фон (клик по самой .mobile-nav, а не по панели)
+  mnav.addEventListener('click', (e) => {
+    if (e.target === mnav) closeMenu();
+  });
+
+  // Закрыть по ссылке внутри панели
   const links = mnav.querySelector('.nav-links');
-  if (links) links.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
+  if (links) links.addEventListener('click', (e) => {
+    if (e.target.closest('a')) closeMenu();
+  });
 
-  // автозакрытие при возврате на десктоп
+  // ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) closeMenu();
+  });
+
+  // Автозакрытие при расширении экрана > tablet (возврат к десктоп-меню)
   let lastW = innerWidth;
   window.addEventListener('resize', () => {
     const w = innerWidth;
-    if (w !== lastW){ lastW = w; if (w > TABLET_BP && isOpen()) closeMenu(); setHeaderHeightVar(); }
+    if (w !== lastW){
+      lastW = w;
+      if (w > TABLET_BP && isOpen()) closeMenu();
+      setHeaderHeightVar();
+    }
   });
 
-  // ===== iOS lang toggle (если добавлен #langToggle в меню) =====
-  const iosToggle = mnav.querySelector('#langToggle');
-  function currentLang(){
-    const attr = document.documentElement.getAttribute('lang') || '';
-    if (attr.toLowerCase().startsWith('sr')) return 'sr';
-    if (attr.toLowerCase().startsWith('ru')) return 'ru';
-    try{ const s = localStorage.getItem('lang'); if (s) return s; }catch(_){}
-    return 'ru';
-  }
-  if (iosToggle){
-    const cl = currentLang();
-    iosToggle.checked = (cl === 'sr');
-    iosToggle.addEventListener('change', () => {
-      const lang = iosToggle.checked ? 'sr' : 'ru';
-      if (typeof window.i18nSetLang === 'function'){
-        try{ window.i18nSetLang(lang); }catch(_){}
-      }
-      document.querySelectorAll('.lang-btn').forEach(b => {
-        const on = b.getAttribute('data-lang') === lang;
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-    });
-  }
-
-  // делегирование для кнопок RU/SR (десктоп/меню)
+  // Делегирование переключателя языка (и в шапке, и в меню)
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.lang-btn');
     if (!btn) return;
     const lang = btn.getAttribute('data-lang');
     if (!lang) return;
-    if (typeof window.i18nSetLang === 'function'){
-      try{ window.i18nSetLang(lang); }catch(_){}
+
+    if (typeof window.i18nSetLang === 'function') {
+      try { window.i18nSetLang(lang); } catch(_) {}
     }
     document.querySelectorAll('.lang-btn').forEach(b => {
       const on = b.getAttribute('data-lang') === lang;
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', on ? 'true':'false');
     });
-    if (iosToggle) iosToggle.checked = (lang === 'sr');
   });
+
+  // Инициализация ARIA
+  burger.setAttribute('aria-expanded','false');
+  mnav.setAttribute('aria-hidden','true');
+  mnav.hidden = true;
 })();
 
 
