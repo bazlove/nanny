@@ -68,12 +68,15 @@
       <a href="#contact" class="i18n" data-key="nav_contact">Контакты</a>
     </nav>
 
-    <!-- Десктоп свитчер языка -->
-    <div class="lang-switch" role="group" aria-label="Выбор языка">
-      <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-      <span class="sep">/</span>
-      <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
-    </div>
+    <!-- iOS switch RU/SR (только в бургер-меню) -->
+<label class="ios-toggle" for="langToggle" aria-label="Язык: RU/SR">
+  <input id="langToggle" type="checkbox" />
+  <span class="track" aria-hidden="true">
+    <span class="thumb"></span>
+    <span class="lab lru">RU</span>
+    <span class="lab lsr">SR</span>
+  </span>
+</label>
 
     <!-- Бургер (планшет/мобайл) -->
     <button
@@ -832,6 +835,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
