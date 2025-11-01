@@ -1566,106 +1566,113 @@ const I18N = {
 
 
 
-/* ===== CANON: Mobile menu (single source of truth) ===== */
+/* ===== CANON vFinal: Mobile menu ===== */
 (function setupMobileMenu(){
   const burger = document.getElementById('burger');
   const mnav   = document.getElementById('mnav');
-  if (!burger || !mnav) return;
+  const header = document.querySelector('.site-header');
+  if (!burger || !mnav || !header) return;
 
-  const TABLET_BP = 980;      // синхронно с CSS
-  const TRANSITION_MS = 220;  // синхронно с CSS
+  const TABLET_BP = 980;
+  const TRANSITION_MS = 220;
 
+  // Динамически задаём высоту шапки → меню начинается строго под шапкой
+  function setHeaderHeightVar(){
+    const h = header.getBoundingClientRect().height || 56;
+    mnav.style.setProperty('--hdr-h', `${h}px`);
+  }
+  setHeaderHeightVar();
+
+  // Обновляем при ресайзе/скролле/ориентации, чтобы offset был всегда точный
+  ['resize','scroll','orientationchange'].forEach(evt =>
+    window.addEventListener(evt, setHeaderHeightVar, {passive:true})
+  );
+
+  // Утилиты
   const firstFocusable = () =>
     mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+  const isOpen = () => mnav.classList.contains('is-open');
 
   function openMenu(){
-    // показываем оверлей (убираем hidden — иначе UA stylesheet = display:none)
+    setHeaderHeightVar();              // на всякий случай перед открытием
     mnav.hidden = false;
-    mnav.setAttribute('aria-hidden', 'false');
-
-    // флаги «открыто»
+    mnav.setAttribute('aria-hidden','false');
     mnav.classList.add('is-open');
     document.body.classList.add('nav-open');
     burger.classList.add('is-open');
-    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-expanded','true');
 
-    // перенос фокуса внутрь панели
     const f = firstFocusable();
-    if (f) { try { f.focus({ preventScroll:true }); } catch(_){} }
+    if (f) { try { f.focus({preventScroll:true}); } catch(_){} }
   }
 
   function closeMenu(){
-    // анимация закрытия
     mnav.classList.remove('is-open');
     document.body.classList.remove('nav-open');
     burger.classList.remove('is-open');
-    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-expanded','false');
 
-    // дождаться transition, затем физически спрятать
     const tidy = () => {
       mnav.hidden = true;
-      mnav.setAttribute('aria-hidden', 'true');
+      mnav.setAttribute('aria-hidden','true');
       mnav.removeEventListener('transitionend', tidy);
     };
     mnav.addEventListener('transitionend', tidy);
     setTimeout(tidy, TRANSITION_MS + 50); // fallback
   }
 
-  const isOpen = () => mnav.classList.contains('is-open');
   const toggle = () => (isOpen() ? closeMenu() : openMenu());
 
-  // События
+  // Кнопка бургер
   burger.addEventListener('click', toggle);
 
-  // Закрыть по клику на фон оверлея (но не на панель)
+  // Закрыть по клику на фон (клик по самой .mobile-nav, а не по панели)
   mnav.addEventListener('click', (e) => {
     if (e.target === mnav) closeMenu();
   });
 
-  // Закрыть по клику на любую ссылку навигации в панели
+  // Закрыть по ссылке внутри панели
   const links = mnav.querySelector('.nav-links');
   if (links) links.addEventListener('click', (e) => {
     if (e.target.closest('a')) closeMenu();
   });
 
-  // ESC закрывает меню
+  // ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isOpen()) closeMenu();
   });
 
-  // Если во время открытого меню расширили экран > tablet — закрываем
-  let lastWidth = window.innerWidth;
+  // Автозакрытие при расширении экрана > tablet (возврат к десктоп-меню)
+  let lastW = innerWidth;
   window.addEventListener('resize', () => {
-    const w = window.innerWidth;
-    if (w !== lastWidth){
-      lastWidth = w;
+    const w = innerWidth;
+    if (w !== lastW){
+      lastW = w;
       if (w > TABLET_BP && isOpen()) closeMenu();
+      setHeaderHeightVar();
     }
   });
 
-  // Делегирование переключения языка (и в хедере, и в мобильной панели)
+  // Делегирование переключателя языка (и в шапке, и в меню)
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.lang-btn');
     if (!btn) return;
     const lang = btn.getAttribute('data-lang');
     if (!lang) return;
 
-    // Вызов твоего i18n-хендлера, если он есть
     if (typeof window.i18nSetLang === 'function') {
       try { window.i18nSetLang(lang); } catch(_) {}
     }
-
-    // Обновляем активные классы в обоих местах
     document.querySelectorAll('.lang-btn').forEach(b => {
-      const isActive = b.getAttribute('data-lang') === lang;
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      const on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true':'false');
     });
   });
 
-  // Инициализация корректных ARIA-атрибутов
-  burger.setAttribute('aria-expanded', 'false');
-  mnav.setAttribute('aria-hidden', 'true');
+  // Инициализация ARIA
+  burger.setAttribute('aria-expanded','false');
+  mnav.setAttribute('aria-hidden','true');
   mnav.hidden = true;
 })();
 
