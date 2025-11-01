@@ -1566,7 +1566,7 @@ const I18N = {
 
 
 
-/* ===== CANON vFinal+: Mobile menu + iOS lang ===== */
+/* ===== CANON vFinal+: Mobile menu + iOS lang (fixed catch) ===== */
 (function setupMobileMenu(){
   const burger = document.getElementById('burger');
   const mnav   = document.getElementById('mnav');
@@ -1576,7 +1576,7 @@ const I18N = {
   const TABLET_BP = 980;
   const TRANSITION_MS = 260;
 
-  // Подрезаем оверлей под фактическую высоту шапки (меню «из-под шапки»)
+  // меню «из-под шапки»: прокидываем фактическую высоту хедера в CSS var
   function setHeaderHeightVar(){
     const h = header.getBoundingClientRect().height || 56;
     mnav.style.setProperty('--hdr-h', `${h}px`);
@@ -1586,7 +1586,6 @@ const I18N = {
     window.addEventListener(evt, setHeaderHeightVar, {passive:true})
   );
 
-  // Helpers
   const isOpen = () => mnav.classList.contains('is-open');
   const firstFocusable = () => mnav.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
 
@@ -1600,18 +1599,24 @@ const I18N = {
     burger.setAttribute('aria-expanded','true');
     const f = firstFocusable(); if (f) try{ f.focus({preventScroll:true}); }catch(_){}
   }
+
   function closeMenu(){
     mnav.classList.remove('is-open');
     document.body.classList.remove('nav-open');
     burger.classList.remove('is-open');
     burger.setAttribute('aria-expanded','false');
-    const tidy = () => { mnav.hidden = true; mnav.setAttribute('aria-hidden','true'); mnav.removeEventListener('transitionend', tidy); };
+    const tidy = () => {
+      mnav.hidden = true;
+      mnav.setAttribute('aria-hidden','true');
+      mnav.removeEventListener('transitionend', tidy);
+    };
     mnav.addEventListener('transitionend', tidy);
-    setTimeout(tidy, TRANSITION_MS + 60);
+    setTimeout(tidy, TRANSITION_MS + 60); // fallback, если нет transitionend
   }
+
   const toggle = () => (isOpen() ? closeMenu() : openMenu());
 
-  // Events
+  // события
   burger.addEventListener('click', toggle);
   mnav.addEventListener('click', e => { if (e.target === mnav) closeMenu(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) closeMenu(); });
@@ -1619,14 +1624,14 @@ const I18N = {
   const links = mnav.querySelector('.nav-links');
   if (links) links.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
 
-  // Автозакрытие при возврате на десктоп
+  // автозакрытие при возврате на десктоп
   let lastW = innerWidth;
   window.addEventListener('resize', () => {
     const w = innerWidth;
     if (w !== lastW){ lastW = w; if (w > TABLET_BP && isOpen()) closeMenu(); setHeaderHeightVar(); }
   });
 
-  // ===== iOS lang toggle (внутри бургер-меню) =====
+  // ===== iOS lang toggle (если добавлен #langToggle в меню) =====
   const iosToggle = mnav.querySelector('#langToggle');
   function currentLang(){
     const attr = document.documentElement.getAttribute('lang') || '';
@@ -1635,7 +1640,6 @@ const I18N = {
     try{ const s = localStorage.getItem('lang'); if (s) return s; }catch(_){}
     return 'ru';
   }
-  // инициализация положения тумблера
   if (iosToggle){
     const cl = currentLang();
     iosToggle.checked = (cl === 'sr');
@@ -1644,7 +1648,6 @@ const I18N = {
       if (typeof window.i18nSetLang === 'function'){
         try{ window.i18nSetLang(lang); }catch(_){}
       }
-      // подсветка существующих .lang-btn (десктоп-версии)
       document.querySelectorAll('.lang-btn').forEach(b => {
         const on = b.getAttribute('data-lang') === lang;
         b.classList.toggle('active', on);
@@ -1653,22 +1656,25 @@ const I18N = {
     });
   }
 
-  // Делегирование клика по .lang-btn (десктоп)
+  // делегирование для кнопок RU/SR (десктоп/меню)
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.lang-btn');
     if (!btn) return;
     const lang = btn.getAttribute('data-lang');
     if (!lang) return;
-    if (typeof window.i18nSetLang === 'function'){ try{ window.i18nSetLang(lang); }catch(_{}) }
+    if (typeof window.i18nSetLang === 'function'){
+      try{ window.i18nSetLang(lang); }catch(_){}
+    }
     document.querySelectorAll('.lang-btn').forEach(b => {
       const on = b.getAttribute('data-lang') === lang;
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', on ? 'true':'false');
     });
-    // синхронизируем тумблер
     if (iosToggle) iosToggle.checked = (lang === 'sr');
   });
 })();
+
+
 
 
 
