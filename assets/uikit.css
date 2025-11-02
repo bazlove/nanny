@@ -933,12 +933,12 @@ html, body { overflow-x: clip; }
   top: var(--hdr-h, 56px); left: 0; right: 0; bottom: 0;
   display: grid;
   grid-template-rows: 1fr;           /* панель прижмём к низу */
-  background: rgba(17,24,39,.70);    /* затемнение контента, но не шапки */
+  background: rgba(17,24,39,.72);    /* затемнение контента, но не шапки */
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   z-index: var(--z-mnav);
   opacity: 0; pointer-events: none;
-  transition: opacity .2s ease;
+  transition: opacity .22s ease;
 }
 .mobile-nav__panel{
   align-self: start;
@@ -946,8 +946,9 @@ html, body { overflow-x: clip; }
   border-radius: 0 0 16px 16px;
   padding:16px;
   min-height:60vh;
-  transform: translateY(-12px);
-  transition: transform .22s ease;
+  transform: translateY(-16px);
+  will-change: transform;
+  transition: transform .24s ease;
   border-bottom: 1px solid rgba(17,24,39,.18);
 }
 
@@ -987,6 +988,18 @@ html, body { overflow-x: clip; }
 }
 .mobile-nav .nav-links a:hover{ background:#F8FAFC; }
 .mobile-nav .nav-links a:active{ transform: translateY(1px); }
+
+/* Контент панели появляется после начала движения */
+  .mobile-nav__panel > *{
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .mobile-nav.is-open .mobile-nav__panel > *{
+    opacity: 1;
+    transform: none;
+    transition-delay: .12s; /* запаздывание контента относительно панели */
+  }
 
 /* Без анимаций для reduce-motion */
 @media (prefers-reduced-motion: reduce){
