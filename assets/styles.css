@@ -193,7 +193,7 @@ section{padding:64px 0}
 
 @media (max-width: 640px){
   #top .cta-quote{
-    margin-bottom: 16px;             /* одинаковый эффект */
+    margin-bottom: 24px;             /* одинаковый эффект */
   }
 }
 
@@ -2800,6 +2800,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
