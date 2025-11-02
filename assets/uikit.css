@@ -949,11 +949,12 @@ html, body { overflow-x: clip; }
 .mobile-nav__panel{
   align-self: start;
   background:#f8f9fb;
-  border-radius:16px 16px 0 0;
+  border-radius: 0 0 16px 16px;
   padding:16px;
   min-height:60vh;
   transform: translateY(-12px);
   transition: transform .22s ease;
+  border-bottom: 1px solid rgba(17,24,39,.18);
 }
 
 /* Состояние «открыто» */
