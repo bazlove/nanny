@@ -975,69 +975,65 @@ html, body { overflow-x: clip; }
 /* Переключатель языка iOS-style RU/SR toggle === */
 
 :root{
-  --ios-toggle-h: 28px;          /* высота трека */
-  --ios-toggle-w: 64px;          /* ширина трека */
-  --ios-knob:     24px;          /* диаметр «круга» */
-  --ios-on:       #33be4b;       /* зелёный iOS-on */
-  --ios-on-soft:  #4cd964;       /* мягкий градиент/тень */
-  --ios-off:      #e9e9e9;       /* серый фон off */
-  --ios-text-on:  #166534;       /* наш зелёный текст */
-  --ios-text-off: #374151;       /* наш серый текст */
-  --ios-font:     12px;          /* кегль RU/SR внутри круга */
+  /* подгони под высоту бренда; 40px = как квадратное эмодзи-лого */
+  --ios-h:        40px;   /* высота трека */
+  --ios-w:        72px;   /* ширина трека */
+  --ios-knob:     36px;   /* диаметр круглой ручки (обычно h - 4px) */
+  --ios-on:       #33be4b;
+  --ios-on-soft:  #4cd964;
+  --ios-off:      #e5e7eb;
+  --ios-text-on:  #166534;
+  --ios-text-off: #374151;
+  --ios-font:     13px;
 }
 
-.ios7-switch{
-  display:inline-block; position:relative; cursor:pointer;
-  -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;
-  line-height:0; margin-left:auto; /* прижимаем вправо в .mobile-top */
+/* выравниваем тумблер вправо в .mobile-top */
+#langIosWrap{
+  margin-left:auto;
+  display:inline-block; position:relative;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  line-height:0;
 }
 
-/* скрытый input */
-.ios7-switch input{
-  position:absolute; inset:0; opacity:0;
-}
+/* прячем input, но оставляем доступность */
+#langIosWrap input{ position:absolute; inset:0; opacity:0; }
 
 /* трек */
-.ios7-switch input + span{
+#langIosWrap input + span{
   position:relative; display:inline-block;
-  inline-size:var(--ios-toggle-w);
-  block-size: var(--ios-toggle-h);
-  background:#fff;
-  border-radius: calc(var(--ios-toggle-h) / 2);
+  inline-size:var(--ios-w); block-size:var(--ios-h);
+  background:#fff; border-radius:calc(var(--ios-h)/2);
   box-shadow: inset 0 0 0 2px var(--ios-off);
   transition: box-shadow .25s cubic-bezier(.17,.67,.43,.98), background .25s;
 }
 
-/* нажатие — сереет (ios-эффект) */
-.ios7-switch:active input + span,
-.ios7-switch input + span:active{
-  box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) var(--ios-off);
+/* эффект «нажатия» */
+#langIosWrap:active input + span,
+#langIosWrap input + span:active{
+  box-shadow: inset 0 0 0 calc(var(--ios-h)*0.45) var(--ios-off);
 }
 
-/* «круг» (ручка) + текст RU/SR внутри */
-.ios7-switch input + span::after{
-  content: "RU";
-  position:absolute; top: 50%; left: 2px;
-  inline-size: var(--ios-knob); block-size: var(--ios-knob);
-  transform: translateY(-50%);
-  border-radius: 50%;
-  background:#fff;
-  display:grid; place-items:center;
-  color: var(--ios-text-off);
-  font-weight:700; font-size: var(--ios-font); letter-spacing:.2px;
+/* ручка + текст RU/SR внутри */
+#langIosWrap input + span::after{
+  content:"RU";
+  position:absolute; top:50%; left:2px; transform:translateY(-50%);
+  inline-size:var(--ios-knob); block-size:var(--ios-knob);
+  border-radius:50%; background:#fff; display:grid; place-items:center;
+  font-weight:700; font-size:var(--ios-font); color:var(--ios-text-off);
   box-shadow:
-    inset 0 0 0 0.5px rgba(0,0,0,.1),
-    0 .5px .5px rgba(0,0,0,.05),
-    0 2px 4px rgba(0,0,0,.20);
-  transition: left .25s ease, color .15s ease, box-shadow .25s ease, background .25s ease;
+    inset 0 0 0 .6px rgba(0,0,0,.10),
+    0 .5px .5px rgba(0,0,0,.06),
+    0 2px 6px rgba(0,0,0,.18);
+  transition: left .25s ease, inline-size .18s ease, color .2s ease, box-shadow .25s ease;
 }
+#langIosWrap:active input + span::after{ inline-size:calc(var(--ios-knob) + 6px); }
 
-/* включено (SR) — зелёный трек и перетаскивание кругляша вправо */
-.ios7-switch input:checked + span{
-  box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) var(--ios-on-soft);
+/* включено (SR) */
+#langIosWrap input:checked + span{
+  box-shadow: inset 0 0 0 calc(var(--ios-h)*0.45) var(--ios-on-soft);
 }
-.ios7-switch input:checked + span::after{
-  content: "SR";
+#langIosWrap input:checked + span::after{
+  content:"SR";
   left: calc(100% - var(--ios-knob) - 2px);
   color: var(--ios-text-on);
   box-shadow:
@@ -1046,28 +1042,19 @@ html, body { overflow-x: clip; }
     0 1px 0 rgba(0,0,0,.04);
 }
 
-/* «пружинка» при тапе — лёгкое расширение ручки */
-.ios7-switch:active input + span::after,
-.ios7-switch input + span:active::after{
-  inline-size: calc(var(--ios-knob) + 6px);
-}
-.ios7-switch:active input:checked + span::after{
-  left: calc(100% - var(--ios-knob) - 8px);
+/* фокус */
+#langIosWrap input:focus + span{ box-shadow: inset 0 0 0 2px #d1d5db; }
+#langIosWrap input:focus:checked + span{
+  box-shadow: inset 0 0 0 calc(var(--ios-h)*0.45) var(--ios-on);
 }
 
-/* доступность */
-.ios7-switch input:focus + span{ box-shadow: inset 0 0 0 2px #dadada; }
-.ios7-switch input:focus:checked + span{ box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) #33be4b; }
-
-/* чуть крупнее на очень узких телефонах */
-@media (pointer:coarse) and (max-width: 380px){
-  :root{
-    --ios-toggle-h: 30px;
-    --ios-toggle-w: 68px;
-    --ios-knob:     26px;
-    --ios-font:     13px;
-  }
+/* компактнее на очень узких экранах */
+@media (max-width:360px) and (pointer:coarse){
+  :root{ --ios-h:36px; --ios-w:68px; --ios-knob:32px; --ios-font:12px; }
 }
+
+
+
 
 
 /* Нав-ссылки карточками */
