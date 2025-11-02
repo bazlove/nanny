@@ -945,7 +945,7 @@ html, body { overflow-x: clip; }
   background:#f8f9fb;
   border-radius: 0 0 16px 16px;
   padding:16px;
-  height: 55dvh;
+  height: 60dvh;
   max-height: calc(100dvh - var(--hdr-h,56px));
   overflow: auto;  
   transform: translateY(-16px);
