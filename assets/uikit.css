@@ -989,7 +989,7 @@ html, body { overflow-x: clip; }
 .mobile-nav .nav-links a:hover{ background:#F8FAFC; }
 .mobile-nav .nav-links a:active{ transform: translateY(1px); }
 
-/* Контент панели появляется после начала движения */
+/* Контент панели появляется после начала движения 
   .mobile-nav__panel > *{
     opacity: 0;
     transform: translateY(6px);
