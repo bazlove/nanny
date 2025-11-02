@@ -1123,10 +1123,10 @@ html, body { overflow-x: clip; }
     color:#15803D;
   }
 
-  .header-nav a:active{ transform: translateY(1px); color:#15803D; }
+  .header-nav a:active{ transform: translateY(1px); color:#B42318; }
 }
 
-.header-nav a.is-active{ color:#B42318; font-weight:400; }
+.header-nav a.is-active{ font-weight:500; }
 
 
 
