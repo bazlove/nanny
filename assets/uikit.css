@@ -973,110 +973,101 @@ html, body { overflow-x: clip; }
 
 
 /* Переключатель языка iOS-style RU/SR toggle === */
+
 :root{
-  /* Геометрия — подогнать под твой вкус */
-  --lang-size: 44px;       /* диаметр круглой кнопки (48px на тач — ниже) */
-  --lang-gap:  6px;        /* зазор между кругами */
-  --lang-pad:  4px;        /* внутренний отступ капсулы — влияет на «влезание» */
-
-  /* Цвета и тени */
-  --lang-off-bg:    #F3F4F6;
-  --lang-off-fg:    #374151;
-  --lang-off-bd:    #E5E7EB;
-
-  --lang-on-bg:     #EAF7F0;
-  --lang-on-fg:     #166534;
-  --lang-on-bd:     #B9E0D1;
+  --ios-toggle-h: 28px;          /* высота трека */
+  --ios-toggle-w: 64px;          /* ширина трека */
+  --ios-knob:     24px;          /* диаметр «круга» */
+  --ios-on:       #33be4b;       /* зелёный iOS-on */
+  --ios-on-soft:  #4cd964;       /* мягкий градиент/тень */
+  --ios-off:      #e9e9e9;       /* серый фон off */
+  --ios-text-on:  #166534;       /* наш зелёный текст */
+  --ios-text-off: #374151;       /* наш серый текст */
+  --ios-font:     12px;          /* кегль RU/SR внутри круга */
 }
 
-/* Капсула-подложка: shrink-wrap, чтобы не «тянулась» */
-.mobile-nav .lang-switch{
-  display: inline-flex;
-  align-items: center;
-  gap: var(--lang-gap);
-  padding: var(--lang-pad);
-  border: 1px solid #E5E7EB;
-  border-radius: 999px;
-  background: #fff;
-  width: auto;
-  max-width: max-content;
-  line-height: 0;                 /* убираем базовую линию (лишние пиксели) */
+.ios7-switch{
+  display:inline-block; position:relative; cursor:pointer;
+  -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;
+  line-height:0; margin-left:auto; /* прижимаем вправо в .mobile-top */
 }
 
-/* Круглые кнопки RU / SR — чётко в подложку */
-.mobile-nav .lang-btn{
-  box-sizing: border-box;         /* бордер входит в диаметр! Критично */
-  inline-size: var(--lang-size);
-  block-size:  var(--lang-size);
-  padding: 0;
+/* скрытый input */
+.ios7-switch input{
+  position:absolute; inset:0; opacity:0;
+}
+
+/* трек */
+.ios7-switch input + span{
+  position:relative; display:inline-block;
+  inline-size:var(--ios-toggle-w);
+  block-size: var(--ios-toggle-h);
+  background:#fff;
+  border-radius: calc(var(--ios-toggle-h) / 2);
+  box-shadow: inset 0 0 0 2px var(--ios-off);
+  transition: box-shadow .25s cubic-bezier(.17,.67,.43,.98), background .25s;
+}
+
+/* нажатие — сереет (ios-эффект) */
+.ios7-switch:active input + span,
+.ios7-switch input + span:active{
+  box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) var(--ios-off);
+}
+
+/* «круг» (ручка) + текст RU/SR внутри */
+.ios7-switch input + span::after{
+  content: "RU";
+  position:absolute; top: 50%; left: 2px;
+  inline-size: var(--ios-knob); block-size: var(--ios-knob);
+  transform: translateY(-50%);
   border-radius: 50%;
-  border: 1px solid var(--lang-off-bd);
-  background: var(--lang-off-bg);
-  color: var(--lang-off-fg);
-
-  display: inline-grid;
-  place-items: center;
-
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: .2px;
-  line-height: 1;
-
-  cursor: pointer;
-  transition:
-    background .15s ease,
-    border-color .15s ease,
-    color .15s ease,
-    box-shadow .15s ease,
-    transform .06s ease;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  background:#fff;
+  display:grid; place-items:center;
+  color: var(--ios-text-off);
+  font-weight:700; font-size: var(--ios-font); letter-spacing:.2px;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0,0,0,.1),
+    0 .5px .5px rgba(0,0,0,.05),
+    0 2px 4px rgba(0,0,0,.20);
+  transition: left .25s ease, color .15s ease, box-shadow .25s ease, background .25s ease;
 }
 
-.mobile-nav .lang-btn:hover{ filter: brightness(.985); }
-.mobile-nav .lang-btn:active{ transform: translateY(1px); }
-
-.mobile-nav .lang-btn.active{
-  background: var(--lang-on-bg);
-  color: var(--lang-on-fg);
-  border-color: var(--lang-on-bd);
-  /* лёгкая «вдавленность» как в iOS */
+/* включено (SR) — зелёный трек и перетаскивание кругляша вправо */
+.ios7-switch input:checked + span{
+  box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) var(--ios-on-soft);
+}
+.ios7-switch input:checked + span::after{
+  content: "SR";
+  left: calc(100% - var(--ios-knob) - 2px);
+  color: var(--ios-text-on);
   box-shadow:
     inset 0 2px 6px rgba(22,101,52,.12),
     inset 0 -1px 0 rgba(255,255,255,.65),
     0 1px 0 rgba(0,0,0,.04);
 }
 
-/* Акцент фокуса (клавиатура/скринридер) */
-.mobile-nav .lang-btn:focus-visible{
-  outline: 2px solid rgba(21,128,61,.35);
-  outline-offset: 2px;
+/* «пружинка» при тапе — лёгкое расширение ручки */
+.ios7-switch:active input + span::after,
+.ios7-switch input + span:active::after{
+  inline-size: calc(var(--ios-knob) + 6px);
+}
+.ios7-switch:active input:checked + span::after{
+  left: calc(100% - var(--ios-knob) - 8px);
 }
 
-/* Разделитель в моб. свитчере не нужен */
-.mobile-nav .lang-switch .sep{ display: none; }
+/* доступность */
+.ios7-switch input:focus + span{ box-shadow: inset 0 0 0 2px #dadada; }
+.ios7-switch input:focus:checked + span{ box-shadow: inset 0 0 0 calc(var(--ios-toggle-h)*0.45) #33be4b; }
 
-/* Выравнивание свитчера вправо в шапке панели */
-.mobile-top .lang-switch{ margin-left: auto; }
-
-/* Крупнее на узких тач-экранах (и «капсула» расширяется автоматически) */
-@media (pointer: coarse) and (max-width: 480px){
+/* чуть крупнее на очень узких телефонах */
+@media (pointer:coarse) and (max-width: 380px){
   :root{
-    --lang-size: 48px;
-    --lang-gap:  8px;
-    --lang-pad:  5px;
-  }
-  .mobile-nav .lang-btn{ font-size: 14px; }
-}
-
-/* Очень узкие — немного компактнее */
-@media (max-width: 340px){
-  :root{
-    --lang-size: 40px;
-    --lang-gap:  4px;
-    --lang-pad:  3px;
+    --ios-toggle-h: 30px;
+    --ios-toggle-w: 68px;
+    --ios-knob:     26px;
+    --ios-font:     13px;
   }
 }
-
 
 
 /* Нав-ссылки карточками */
