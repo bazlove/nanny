@@ -630,6 +630,9 @@ html, body { overflow-x: clip; }
   }
 }
 
+/* Hero: разрешаем <br> в описании на любых ширинах */
+.hero .lead br,
+#hero .lead br { display:inline; }  /* подгони селектор под свой блок */
 
 
 
