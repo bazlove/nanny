@@ -1659,7 +1659,7 @@ section[id], #services, #calc, #faq, #contact, #main {
   gap:8px;
 }
 
-/* Капсула RU/SRB */
+/* Капсула RU/SRB
 #contact .contact-meta .meta-lang{
   display:inline-block;
   padding:6px 10px;
@@ -2866,6 +2866,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
