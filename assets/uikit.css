@@ -876,7 +876,7 @@ html, body { overflow-x: clip; }
 .header-nav{ display:flex; }
 
 /* Tablet/Mobile: прячем ТОЛЬКО десктоп-элементы в шапке, бургер показываем */
-@media (max-width: 980px){
+@media (min-width:641px) and (max-width:980px){
   .header-nav{ display:none !important; }
   .header-bar > .lang-switch{ display:none !important; }   /* критично: только прямой потомок шапки */
 
