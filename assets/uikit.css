@@ -1091,5 +1091,41 @@ html, body { overflow-x: clip; }
 
 
 
+/* === Desktop header nav (restore) === */
+@media (min-width: 981px){
+  .header-nav{
+    display:flex;                   /* горизонтальное меню */
+    gap:12px;                       /* расстояние между пунктами */
+  }
+
+  .header-nav a{
+    display:inline-flex;            /* кликабельная «пилюля» */
+    align-items:center;
+    padding:8px 10px;               /* внутренние отступы */
+    border-radius:10px;             /* скругление как было */
+    text-decoration:none;           /* убрать подчёркивание */
+    color:#1d2b38;                  /* тёмный текст */
+    line-height:1;
+    transition:
+      background .15s ease,
+      color .15s ease,
+      box-shadow .15s ease;
+  }
+
+  .header-nav a:hover{
+    background:#f2f6fb;            /* лёгкий hover-фон */
+  }
+
+  .header-nav a:focus-visible{
+    outline:2px solid #78c6a7;      /* доступный фокус как раньше */
+    outline-offset:2px;
+  }
+
+  /* (необязательно) лёгкий «клик»-эффект */
+  .header-nav a:active{ transform: translateY(1px); }
+}
+
+
+
 
 
