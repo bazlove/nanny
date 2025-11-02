@@ -108,12 +108,11 @@
             <small class="i18n" data-key="city">Нови-Сад</small>
           </div>
         </div>
-        <div class="lang-switch" role="group" aria-label="Выбор языка">
-          <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
-          <span class="sep">/</span>
-          <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
-        </div>
-      </div>
+		  
+        <label class="ios7-switch" id="langIosWrap" aria-label="Переключить язык (RU/SR)">
+  <input id="langIos" type="checkbox" role="switch" aria-checked="false">
+  <span aria-hidden="true"></span>
+			</label>
 
       <nav class="nav-links" aria-label="Навигация (моб)">
         <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
@@ -841,6 +840,7 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
