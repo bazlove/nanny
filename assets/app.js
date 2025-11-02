@@ -1677,60 +1677,53 @@ const I18N = {
 
 
 
-
-/* === iOS RU/SR lang toggle wiring === */
-(function iosLangToggle(){
+/* === iOS RU/SR lang toggle: синхронизация с i18n и десктоп-кнопками === */
+(function(){
   const sw = document.getElementById('langIos');
-  if(!sw) return;
+  if (!sw) return;
 
-  function getCurrentLang(){
-    const htmlLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-    if (htmlLang.startsWith('sr')) return 'sr';
-    if (htmlLang.startsWith('ru')) return 'ru';
+  const getLang = () => {
+    const l = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    if (l.startsWith('sr')) return 'sr';
+    if (l.startsWith('ru')) return 'ru';
     try { const s = localStorage.getItem('lang'); if (s) return s; } catch(_) {}
     return 'ru';
-  }
-  function setBtnsActive(lang){
-    document.querySelectorAll('.lang-btn').forEach(b=>{
+  };
+
+  const setDesktopBtns = (lang) => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
       const on = b.getAttribute('data-lang') === lang;
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-  }
-  function applyLang(lang){
+  };
+
+  const applyLang = (lang) => {
     if (typeof window.i18nSetLang === 'function') {
       try { window.i18nSetLang(lang); } catch(_) {}
     } else {
       document.documentElement.setAttribute('lang', lang);
       try { localStorage.setItem('lang', lang); } catch(_) {}
     }
-    setBtnsActive(lang);
-  }
-
-  /* init from current language */
-  const initLang = getCurrentLang();
-  sw.checked = (initLang === 'sr');
-  sw.setAttribute('aria-checked', sw.checked ? 'true' : 'false');
-
-  /* react on change */
-  sw.addEventListener('change', ()=>{
-    const lang = sw.checked ? 'sr' : 'ru';
-    sw.setAttribute('aria-checked', sw.checked ? 'true' : 'false');
-    applyLang(lang);
-  });
-
-  /* sync when user clicks .lang-btn anywhere (desktop header etc.) */
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.lang-btn');
-    if(!btn) return;
-    const lang = btn.getAttribute('data-lang');
-    if (!lang) return;
-    applyLang(lang);
+    setDesktopBtns(lang);
     sw.checked = (lang === 'sr');
     sw.setAttribute('aria-checked', sw.checked ? 'true' : 'false');
+  };
+
+  /* init */
+  applyLang(getLang());
+
+  /* переключение тумблера */
+  sw.addEventListener('change', () => applyLang(sw.checked ? 'sr' : 'ru'));
+
+  /* клики по десктопным .lang-btn — синхронизируем тумблер */
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.lang-btn');
+    if (!btn) return;
+    const lang = btn.getAttribute('data-lang');
+    if (lang) applyLang(lang);
   });
 })();
-
 
 
 
