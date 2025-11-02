@@ -822,38 +822,8 @@ if (badName || badCont) {
   });
 })();
 
-(function(){
-  // Ключ в localStorage: версия меняется, если поменяешь политику
-  const KEY = 'cookieConsent.v1';
+// [removed duplicate cookie banner module]
 
-  const banner  = document.getElementById('cookie-banner');
-  const accept  = document.getElementById('cookie-accept');
-  const decline = document.getElementById('cookie-decline');
-  const manage  = document.getElementById('cookie-manage');
-
-  // защитные функции — не упадут, если gtag нет
-  function gaConsent(state){
-    // Рекомендуемый способ GA4 объявить/обновить согласие
-    window.gtag?.('consent', 'update', { analytics_storage: state });
-  }
-
-  function show(){ banner.hidden = false; }
-  function hide(){ banner.hidden = true; }
-
-  function save(state){
-    localStorage.setItem(KEY, state);
-    gaConsent(state === 'granted' ? 'granted' : 'denied');
-  }
-
-  // Показ при первом визите
-  const saved = localStorage.getItem(KEY);
-  if (!saved){ show(); } else { gaConsent(saved === 'granted' ? 'granted' : 'denied'); }
-
-  accept?.addEventListener('click', () => { save('granted'); hide(); });
-  decline?.addEventListener('click', () => { save('denied');  hide(); });
-  // Любая кнопка/ссылка "Настройки cookie"
-  manage?.addEventListener('click', () => show());
-})();
 
 
 
