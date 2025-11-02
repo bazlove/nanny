@@ -972,16 +972,26 @@ html, body { overflow-x: clip; }
 .mobile-brand .meta small{ display:block; font-size:13px; color:#6B7280; }
 
 
-/* Переключатель языка ВНУТРИ меню */
+/* Переключатель языка iOS-style RU/SR toggle === */
 :root{
-  --lang-badge-size: 42px;   /* диаметр круглой кнопки */
-  --lang-gap:        12px;    /* интервал между кругами */
-  --lang-pad:        2px;    /* внутренний отступ «подложки» */
+  /* Геометрия — подогнать под твой вкус */
+  --lang-size: 44px;       /* диаметр круглой кнопки (48px на тач — ниже) */
+  --lang-gap:  6px;        /* зазор между кругами */
+  --lang-pad:  4px;        /* внутренний отступ капсулы — влияет на «влезание» */
+
+  /* Цвета и тени */
+  --lang-off-bg:    #F3F4F6;
+  --lang-off-fg:    #374151;
+  --lang-off-bd:    #E5E7EB;
+
+  --lang-on-bg:     #EAF7F0;
+  --lang-on-fg:     #166534;
+  --lang-on-bd:     #B9E0D1;
 }
 
-/* Подложка-капсула: ширина по содержимому, без растяжения */
+/* Капсула-подложка: shrink-wrap, чтобы не «тянулась» */
 .mobile-nav .lang-switch{
-  display: inline-flex;              /* shrink-wrap по содержимому */
+  display: inline-flex;
   align-items: center;
   gap: var(--lang-gap);
   padding: var(--lang-pad);
@@ -990,50 +1000,81 @@ html, body { overflow-x: clip; }
   background: #fff;
   width: auto;
   max-width: max-content;
+  line-height: 0;                 /* убираем базовую линию (лишние пиксели) */
 }
 
-/* Круглые кнопки RU / SR */
+/* Круглые кнопки RU / SR — чётко в подложку */
 .mobile-nav .lang-btn{
-  inline-size: var(--lang-badge-size);
-  block-size:  var(--lang-badge-size);
+  box-sizing: border-box;         /* бордер входит в диаметр! Критично */
+  inline-size: var(--lang-size);
+  block-size:  var(--lang-size);
   padding: 0;
   border-radius: 50%;
-  border: 1px solid #E5E7EB;
-  background: #fff;
-  color: #111827;
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 1;
+  border: 1px solid var(--lang-off-bd);
+  background: var(--lang-off-bg);
+  color: var(--lang-off-fg);
+
   display: inline-grid;
   place-items: center;
+
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .2px;
+  line-height: 1;
+
   cursor: pointer;
-  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .05s ease;
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    color .15s ease,
+    box-shadow .15s ease,
+    transform .06s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 }
-.mobile-nav .lang-btn:hover{ background:#F8FAFC; }
+
+.mobile-nav .lang-btn:hover{ filter: brightness(.985); }
 .mobile-nav .lang-btn:active{ transform: translateY(1px); }
 
-/* Активная — зелёная, как в бренде */
 .mobile-nav .lang-btn.active{
-  color:#15803D;
-  background:#EEF8F2;
-  border-color:#B9E0D1;
+  background: var(--lang-on-bg);
+  color: var(--lang-on-fg);
+  border-color: var(--lang-on-bd);
+  /* лёгкая «вдавленность» как в iOS */
+  box-shadow:
+    inset 0 2px 6px rgba(22,101,52,.12),
+    inset 0 -1px 0 rgba(255,255,255,.65),
+    0 1px 0 rgba(0,0,0,.04);
 }
 
-/* Доступность */
+/* Акцент фокуса (клавиатура/скринридер) */
 .mobile-nav .lang-btn:focus-visible{
   outline: 2px solid rgba(21,128,61,.35);
   outline-offset: 2px;
 }
 
-/* Слэш в мобильном свитчере не нужен */
-.mobile-nav .lang-switch .sep{ display:none; }
+/* Разделитель в моб. свитчере не нужен */
+.mobile-nav .lang-switch .sep{ display: none; }
 
-/* Выравнивание свитчера вправо в строке .mobile-top */
+/* Выравнивание свитчера вправо в шапке панели */
 .mobile-top .lang-switch{ margin-left: auto; }
 
-/* (опционально) компактнее на очень узких экранах */
-@media (max-width: 360px){
-  :root{ --lang-badge-size: 34px; --lang-gap: 4px; --lang-pad: 2px; }
+/* Крупнее на узких тач-экранах (и «капсула» расширяется автоматически) */
+@media (pointer: coarse) and (max-width: 480px){
+  :root{
+    --lang-size: 48px;
+    --lang-gap:  8px;
+    --lang-pad:  5px;
+  }
+  .mobile-nav .lang-btn{ font-size: 14px; }
+}
+
+/* Очень узкие — немного компактнее */
+@media (max-width: 340px){
+  :root{
+    --lang-size: 40px;
+    --lang-gap:  4px;
+    --lang-pad:  3px;
+  }
 }
 
 
