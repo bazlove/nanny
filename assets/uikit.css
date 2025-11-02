@@ -1145,16 +1145,16 @@ html, body { overflow-x: clip; }
   /* Фильтры: Услуги + Отзывы */
   #services .svc-chip,
   .rv-chip{
-    font-size: 12px;
+    font-size: 13px;
   }
-  #services .svc-chip{ padding: 6px 10px; }
-  .rv-chip{ padding: 0 10px; }  /* высоту не трогаем, чтобы не прыгала линия */
+  #services .svc-chip{ padding: 8px 16px; }
+  .rv-chip{ padding: 8px 16px; }  /* высоту не трогаем, чтобы не прыгала линия */
 }
 
 @media (max-width: 360px){
   #services .svc-chip,
   .rv-chip{
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
