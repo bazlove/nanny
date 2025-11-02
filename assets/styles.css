@@ -191,6 +191,12 @@ section{padding:64px 0}
 #top .cta{ display:flex; gap:12px; margin:16px 0 12px; flex-wrap:wrap; }
 #top .cta-quote{ font-weight:700; }
 
+@media (max-width: 640px){
+  #top .cta-quote{
+    margin-bottom: 16px;             /* одинаковый эффект */
+  }
+}
+
 /* === Фото: строго по ширине колонки, без absolute === */
 #top .hero-photo{
   display:block;
@@ -2794,6 +2800,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
