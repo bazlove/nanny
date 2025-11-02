@@ -966,7 +966,7 @@ html, body { overflow-x: clip; }
 .mobile-brand{ display:flex; align-items:center; gap:10px; }
 .mobile-brand .logo{
   width:40px; height:40px; display:grid; place-items:center;
-  border-radius:10px; background:#F0F3F7;
+  border-radius:10px; background:#eaf7f0;
 }
 .mobile-brand .meta strong{ display:block; font-size:16px; line-height:1.1; color:#111827; }
 .mobile-brand .meta small{ display:block; font-size:13px; color:#6B7280; }
@@ -978,7 +978,7 @@ html, body { overflow-x: clip; }
   display:flex !important;
   align-items:center;
   gap:10px;
-  height:44px;                     /* выше и удобнее для тача */
+  height:44px;                     
 }
 
 /* Скрываем слеш в оверлее (HTML трогать не нужно) */
