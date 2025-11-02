@@ -914,6 +914,13 @@ html, body { overflow-x: clip; }
   .burger.is-open .ic-close::before{ transform: rotate(90deg); }
 }
 
+.mobile-nav__panel{
+    align-self: end;
+    transform: translateY(12px);
+  }
+  .mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
+}
+
 /* Mobile: в шапке скрываем бренд-блок и «i» — остаются бейдж и бургер */
 @media (max-width: 640px){
   .site-header .brand-meta{ display:none !important; }
@@ -940,12 +947,12 @@ html, body { overflow-x: clip; }
   transition: opacity .2s ease;
 }
 .mobile-nav__panel{
-  align-self: end;
+  align-self: start;
   background:#f8f9fb;
   border-radius:16px 16px 0 0;
   padding:16px;
   min-height:60vh;
-  transform: translateY(12px);
+  transform: translateY(-12px);
   transition: transform .22s ease;
 }
 
