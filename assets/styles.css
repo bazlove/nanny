@@ -1636,9 +1636,73 @@ section[id], #services, #calc, #faq, #contact, #main {
 
 /* ===== Contact ===== */
 
+#contact .contact-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;   /* текст слева, капсула справа */
+  gap:10px;
+  margin:0 0 32px !important;
+  color:#6b7280;
+}
+
+/* Левая часть: "Режим работы…" */
+#contact .contact-meta .meta-left{
+  flex:1 1 auto;
+  min-width:0;                     /* не выпирает при узких ширинах */
+}
+
+/* Правая часть: капсула RU/SRB и иконка i */
+#contact .contact-meta .meta-right{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Капсула RU/SRB */
+#contact .contact-meta .meta-lang{
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid #e5e7eb;
+  background:#eef2f6;
+  border-radius:999px;
+  font-weight:600;
+  color:#374151;
+  line-height:1;
+  white-space:nowrap;
+}
+
+/* Кружок "i" (если есть свои стили .hint — это не мешает) */
+#contact .contact-meta .hint .i{
+  display:inline-grid;
+  place-items:center;
+  width:20px; height:20px;
+  border-radius:50%;
+  background:#eef2f6;
+  color:#374151;
+  border:1px solid #e5e7eb;
+  font-weight:700;
+  font-size:12px;
+}
+
+/* Мобилки: правая часть уходит на строку под режимом работы */
+@media (max-width:640px){
+  #contact .contact-meta{
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  #contact .contact-meta .meta-left{
+    width:100%;
+  }
+  #contact .contact-meta .meta-right{
+    width:100%;
+    justify-content:flex-start;    /* прижать влево под текстом */
+    margin-top:2px;
+  }
+}
+
 .contact.card{ padding:20px; border-radius:16px; background:#fff; box-shadow:0 12px 36px rgba(0,0,0,.06); }
 .contact-head h2{ margin:0 0 6px; }
-.contact-meta{ margin:0 0 32px !important; color:#6b7280; }
 
 /* две колонки: слева кнопки, справа поля */
 .contact-grid{
@@ -1743,6 +1807,8 @@ section[id], #services, #calc, #faq, #contact, #main {
     height: 220px;
   }
 }
+
+
 
 
 /* ===== Footer ===== */
@@ -2800,6 +2866,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
