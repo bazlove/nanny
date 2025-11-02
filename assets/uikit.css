@@ -1114,15 +1114,17 @@ html, body { overflow-x: clip; }
 
   .header-nav a:hover{
     background:#f2f6fb;            /* лёгкий hover-фон */
+    color:#15803D;
   }
 
   .header-nav a:focus-visible{
     outline:2px solid #78c6a7;      /* доступный фокус как раньше */
     outline-offset:2px;
+    color:#15803D;
   }
 
   /* (необязательно) лёгкий «клик»-эффект */
-  .header-nav a:active{ transform: translateY(1px); }
+  .header-nav a:active{ transform: translateY(1px); color:#15803D; font-weight:600; }
 }
 
 
