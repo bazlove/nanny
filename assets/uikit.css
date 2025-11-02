@@ -1133,3 +1133,30 @@ html, body { overflow-x: clip; }
 
 
 
+
+
+
+
+
+
+
+/* Chips: mobile sizing override */
+@media (max-width: 640px){
+  /* Фильтры: Услуги + Отзывы */
+  #services .svc-chip,
+  .rv-chip{
+    font-size: 12px;
+  }
+  #services .svc-chip{ padding: 6px 10px; }
+  .rv-chip{ padding: 0 10px; }  /* высоту не трогаем, чтобы не прыгала линия */
+}
+
+@media (max-width: 360px){
+  #services .svc-chip,
+  .rv-chip{
+    font-size: 10px;
+  }
+}
+
+
+
