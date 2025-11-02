@@ -971,15 +971,56 @@ html, body { overflow-x: clip; }
 .mobile-brand .meta strong{ display:block; font-size:16px; line-height:1.1; color:#111827; }
 .mobile-brand .meta small{ display:block; font-size:13px; color:#6B7280; }
 
-/* Переключатель языка ВНУТРИ меню — всегда показываем */
-.mobile-nav .lang-switch{ display:flex !important; align-items:center; gap:8px; }
+
+/* Переключатель языка ВНУТРИ меню */
+
+.mobile-nav .lang-switch{
+  display:flex !important;
+  align-items:center;
+  gap:10px;
+  height:44px;                     /* выше и удобнее для тача */
+}
+
+/* Скрываем слеш в оверлее (HTML трогать не нужно) */
+.mobile-nav .lang-switch .sep{ display:none; }
+
+/* Кнопки как круглые «пилюли» с буквами внутри */
 .mobile-nav .lang-btn{
-  padding:6px 10px; border-radius:12px;
-  border:1px solid #E5E7EB; background:#fff; font-weight:600;
+  display:inline-grid;
+  place-items:center;
+  inline-size:38px;                /* диаметр круга */
+  block-size:38px;                 /* диаметр круга */
+  padding:0;                       /* текст центрируется без паддингов */
+  border-radius:50%;
+  border:1px solid #E5E7EB;
+  background:#fff;
+  color:#374151;
+  font-weight:700;
+  font-size:13px;
+  line-height:1;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    color .15s ease,
+    box-shadow .15s ease,
+    transform .02s ease;
 }
+.mobile-nav .lang-btn:hover{ background:#F9FAFB; }
+.mobile-nav .lang-btn:active{ transform: translateY(1px); }
+
 .mobile-nav .lang-btn.active{
-  color:#15803D; background:#EEF8F2; border-color:#B9E0D1;
+  background:#15803D;
+  border-color:#15803D;
+  color:#fff;
+  box-shadow:0 4px 16px rgba(21,128,61,.25);
 }
+
+.mobile-nav .lang-btn:focus-visible{
+  outline:2px solid #16A34A;
+  outline-offset:2px;
+}
+
 
 /* Нав-ссылки карточками */
 .mobile-nav .nav-links{ display:grid; gap:10px; }
