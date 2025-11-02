@@ -914,12 +914,6 @@ html, body { overflow-x: clip; }
   .burger.is-open .ic-close::before{ transform: rotate(90deg); }
 }
 
-.mobile-nav__panel{
-    align-self: end;
-    transform: translateY(12px);
-  }
-  .mobile-nav.is-open .mobile-nav__panel{ transform: translateY(0); }
-}
 
 /* Mobile: в шапке скрываем бренд-блок и «i» — остаются бейдж и бургер */
 @media (max-width: 640px){
