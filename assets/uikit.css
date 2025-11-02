@@ -945,7 +945,7 @@ html, body { overflow-x: clip; }
   background:#f8f9fb;
   border-radius: 0 0 16px 16px;
   padding:16px;
-  height: 60dvh;
+  height: 58dvh;
   max-height: calc(100dvh - var(--hdr-h,56px));
   overflow: auto;  
   transform: translateY(-16px);
@@ -973,53 +973,69 @@ html, body { overflow-x: clip; }
 
 
 /* Переключатель языка ВНУТРИ меню */
+:root{
+  --lang-badge-size: 38px;   /* диаметр круглой кнопки */
+  --lang-gap:        6px;    /* интервал между кругами */
+  --lang-pad:        3px;    /* внутренний отступ «подложки» */
+}
 
+/* Подложка-капсула: ширина по содержимому, без растяжения */
 .mobile-nav .lang-switch{
-  display:flex !important;
-  align-items:center;
-  gap:10px;
-  height:44px;                     
+  display: inline-flex;              /* shrink-wrap по содержимому */
+  align-items: center;
+  gap: var(--lang-gap);
+  padding: var(--lang-pad);
+  border: 1px solid #E5E7EB;
+  border-radius: 999px;
+  background: #fff;
+  width: auto;
+  max-width: max-content;
 }
 
-/* Скрываем слеш в оверлее (HTML трогать не нужно) */
-.mobile-nav .lang-switch .sep{ display:none; }
-
-/* Кнопки как круглые «пилюли» с буквами внутри */
+/* Круглые кнопки RU / SR */
 .mobile-nav .lang-btn{
-  display:inline-grid;
-  place-items:center;
-  inline-size:38px;                /* диаметр круга */
-  block-size:38px;                 /* диаметр круга */
-  padding:0;                       /* текст центрируется без паддингов */
-  border-radius:50%;
-  border:1px solid #E5E7EB;
-  background:#fff;
-  color:#374151;
-  font-weight:700;
-  font-size:13px;
-  line-height:1;
-  box-shadow:0 1px 0 rgba(0,0,0,.03);
-  transition:
-    background .15s ease,
-    border-color .15s ease,
-    color .15s ease,
-    box-shadow .15s ease,
-    transform .02s ease;
+  inline-size: var(--lang-badge-size);
+  block-size:  var(--lang-badge-size);
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  color: #111827;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .05s ease;
 }
-.mobile-nav .lang-btn:hover{ background:#F9FAFB; }
+.mobile-nav .lang-btn:hover{ background:#F8FAFC; }
 .mobile-nav .lang-btn:active{ transform: translateY(1px); }
 
+/* Активная — зелёная, как в бренде */
 .mobile-nav .lang-btn.active{
-  background:#15803D;
-  border-color:#15803D;
-  color:#fff;
-  box-shadow:0 4px 16px rgba(21,128,61,.25);
+  color:#15803D;
+  background:#EEF8F2;
+  border-color:#B9E0D1;
 }
 
+/* Доступность */
 .mobile-nav .lang-btn:focus-visible{
-  outline:2px solid #16A34A;
-  outline-offset:2px;
+  outline: 2px solid rgba(21,128,61,.35);
+  outline-offset: 2px;
 }
+
+/* Слэш в мобильном свитчере не нужен */
+.mobile-nav .lang-switch .sep{ display:none; }
+
+/* Выравнивание свитчера вправо в строке .mobile-top */
+.mobile-top .lang-switch{ margin-left: auto; }
+
+/* (опционально) компактнее на очень узких экранах */
+@media (max-width: 360px){
+  :root{ --lang-badge-size: 34px; --lang-gap: 4px; --lang-pad: 2px; }
+}
+
 
 
 /* Нав-ссылки карточками */
