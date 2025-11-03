@@ -771,7 +771,8 @@ html, body { overflow-x: clip; }
 }
 
 .contact-meta .hint,
-#calc .label-row .hint{
+#calc .label-row .hint,
+.site-header .tz-tip.info{
   width: auto !important;
   height: auto !important;
   display: inline-flex !important;
@@ -781,7 +782,8 @@ html, body { overflow-x: clip; }
 
 /* Сам кружок "i" — жёсткий квадрат 22×22 во всех местах */
 .contact-meta .hint > .i,
-#calc .label-row .hint > .i{
+#calc .label-row .hint > .i,
+.site-header .tz-tip.info .i{
   width: var(--info-badge-size) !important;
   height: var(--info-badge-size) !important;
   min-width: var(--info-badge-size) !important;
