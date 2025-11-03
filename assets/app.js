@@ -1801,13 +1801,12 @@ const I18N = {
 
 
 
-/* ===== Cookie Banner logic ===== */
+/* ===== Cookie Banner logic (Consent Mode v2 ready) ===== */
 (function(){
-  const LS_KEY = 'cookieConsent:v1';      // увеличь версию при изменениях
+  const LS_KEY = 'cookieConsent:v1';
   const TTL_DAYS = 180;
 
   const $ = s => document.querySelector(s);
-
   const els = {
     banner: $('#ck-banner'),
     modal:  $('#ck-modal'),
@@ -1820,10 +1819,9 @@ const I18N = {
     btnSaveAll:   $('#ck-save-all'),
     btnSaveNec:   $('#ck-save-necessary'),
     ana: $('#ck-ana'),
-    mkt: $('#ck-mkt'),
+    mkt: $('#ck-mkt')
   };
 
-  // --- state helpers
   const now = () => Date.now();
   const inDays = d => d*24*60*60*1000;
 
@@ -1832,63 +1830,71 @@ const I18N = {
       const raw = localStorage.getItem(LS_KEY);
       if(!raw) return null;
       const obj = JSON.parse(raw);
-      // TTL
-      if (!obj.ts || (now() - obj.ts) > inDays(TTL_DAYS)) return null;
+      if(!obj.ts || (now()-obj.ts)>inDays(TTL_DAYS)) return null;
       return obj;
     }catch(_){ return null; }
   }
-  function write(val){
-    const obj = { ...val, ts: now() };
-    localStorage.setItem(LS_KEY, JSON.stringify(obj));
-    apply(obj);
-    document.dispatchEvent(new CustomEvent('cookie:change', { detail: obj }));
-  }
 
-  function apply(consent){
-    // Проставим дата-атрибуты на body (удобно для стилевого/скриптового ветвления)
-    document.documentElement.setAttribute('data-consent-ana', consent.analytics ? '1':'0');
-    document.documentElement.setAttribute('data-consent-mkt', consent.marketing ? '1':'0');
+  function applyConsent(c){
+    // дата-атрибуты для стилей/скриптов
+    document.documentElement.setAttribute('data-consent-ana', c.analytics ? '1':'0');
+    document.documentElement.setAttribute('data-consent-mkt', c.marketing ? '1':'0');
 
-    // Доисполнение «отложенных» скриптов
-    if (consent.analytics || consent.marketing){
+    // доисполнение отложенных скриптов (не GA)
+    if (c.analytics || c.marketing){
       document.querySelectorAll('script[type="text/plain"][data-consent]').forEach(scr=>{
-        const need = scr.dataset.consent.split(',').map(s=>s.trim());
-        if ((consent.analytics && need.includes('analytics')) || (consent.marketing && need.includes('marketing'))){
+        const need = (scr.dataset.consent||'').split(',').map(s=>s.trim());
+        if ((c.analytics && need.includes('analytics')) || (c.marketing && need.includes('marketing'))){
           const run = document.createElement('script');
-          if (scr.src) { run.src = scr.src; run.async = scr.async; }
+          if (scr.src){ run.src = scr.src; run.async = scr.async; }
           run.text = scr.text || scr.innerHTML;
           scr.replaceWith(run);
         }
       });
     }
+
+    // синхронизация с Google Consent Mode v2
+    if (typeof window.gtag === 'function'){
+      window.gtag('consent','update',{
+        analytics_storage:  c.analytics ? 'granted' : 'denied',
+        ad_storage:         c.marketing ? 'granted' : 'denied',
+        ad_user_data:       c.marketing ? 'granted' : 'denied',
+        ad_personalization: c.marketing ? 'granted' : 'denied'
+      });
+    }
   }
 
+  function write(c){
+    const val = { ...c, ts: now() };
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(val)); }catch(_){}
+    applyConsent(val);
+    document.dispatchEvent(new CustomEvent('cookie:change', { detail: val }));
+  }
+
+  // UI control
   function openModal(){
     els.modal.hidden = false;
     els.banner.hidden = true;
-    if (els.ana) els.ana.checked = !!(read()?.analytics);
-    if (els.mkt) els.mkt.checked = !!(read()?.marketing);
+    const saved = read()||{};
+    if (els.ana) els.ana.checked = !!saved.analytics;
+    if (els.mkt) els.mkt.checked = !!saved.marketing;
   }
   function closeModal(){ els.modal.hidden = true; }
 
   function acceptAll(){
-    write({ necessary: true, analytics: true, marketing: true });
-    els.banner.hidden = true;
-    els.manage.hidden = false;
+    write({ necessary:true, analytics:true, marketing:true });
+    els.banner.hidden = true; els.manage.hidden = false;
   }
   function onlyNecessary(){
-    write({ necessary: true, analytics: false, marketing: false });
-    els.banner.hidden = true;
-    els.manage.hidden = false;
+    write({ necessary:true, analytics:false, marketing:false });
+    els.banner.hidden = true; els.manage.hidden = false;
   }
   function saveSelection(){
-    write({ necessary: true, analytics: !!els.ana?.checked, marketing: !!els.mkt?.checked });
-    closeModal();
-    els.banner.hidden = true;
-    els.manage.hidden = false;
+    write({ necessary:true, analytics: !!els.ana?.checked, marketing: !!els.mkt?.checked });
+    closeModal(); els.banner.hidden = true; els.manage.hidden = false;
   }
 
-  // bindings
+  // Events
   els.btnSettings?.addEventListener('click', openModal);
   els.btnNecessary?.addEventListener('click', onlyNecessary);
   els.btnAccept?.addEventListener('click', acceptAll);
@@ -1897,22 +1903,23 @@ const I18N = {
   els.btnSave?.addEventListener('click', saveSelection);
   els.btnSaveAll?.addEventListener('click', acceptAll);
   els.btnSaveNec?.addEventListener('click', onlyNecessary);
-
   els.manage?.addEventListener('click', openModal);
 
-  // показывать баннер?
-  const saved = read();
-  if (saved){ apply(saved); els.banner.hidden = true; els.manage.hidden = false; }
-  else { els.banner.hidden = false; }
+  // Закрытие кликом по фону и по Esc
+  els.modal?.addEventListener('click', (e)=>{
+    if (e.target === els.modal) closeModal();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && !els.modal.hidden) closeModal();
+  });
 
-  // публичный API (по надобности)
-  window.cookieConsent = {
-    get: () => read() || { necessary:true, analytics:false, marketing:false },
-    setAll: acceptAll,
-    setNecessary: onlyNecessary,
-    open: openModal
-  };
+  // Первичная инициализация UI
+  const saved = read();
+  if (saved){ applyConsent(saved); els.banner.hidden = true; els.manage.hidden = false; }
+  else { els.banner.hidden = false; }
 })();
+
+
 
 
 
