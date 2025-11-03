@@ -928,9 +928,10 @@ section{padding:64px 0}
 
 
 /* ===== Cookie Banner — tokens (final) ===== */
+
 :root{
   --ck-z: 9999;
-  --ck-bg: rgba(15,23,42,.88);   /* чуть прозрачнее */
+  --ck-bg: rgba(15,23,42,.88);  /* слегка прозрачный */
   --ck-fg: #E5E7EB;
 
   --ck-panel-bg:#fff;
@@ -940,15 +941,15 @@ section{padding:64px 0}
   --ck-primary:#15803D;
   --ck-primary-ink:#fff;
 
-  /* «как в футере»: серые в статике, зелёные и подчёркнутые при hover */
-  --ck-link-base:#6B7280;        /* gray-600 */
-  --ck-link-hover:#15803D;       /* accent green */
+  /* стили ссылок «как в футере»: серые в статике, зелёные и подчёркнутые при hover */
+  --ck-link-base:#6B7280;    /* gray-600 */
+  --ck-link-hover:#15803D;   /* зелёный акцент */
 }
 
 /* уважать hidden */
 .ck-banner[hidden], .ck-modal[hidden]{ display:none !important; }
 
-/* ===== Banner: две колонки — текст слева, кнопки справа ===== */
+/* ===== Banner: текст слева, кнопки справа, ссылки под текстом ===== */
 .ck-banner{
   position: fixed; inset: auto 0 0 0;
   background: var(--ck-bg); color: var(--ck-fg);
@@ -971,74 +972,62 @@ section{padding:64px 0}
 .ck-text strong{
   display:block;
   font-weight:700; font-size:16px; line-height:1.25;
-  margin:0 0 32px;                     /* от заголовка до описания — 32px */
+  margin:0 0 32px;          /* от заголовка до описания — 32px */
 }
 .ck-text p{
   margin:0; line-height:1.55; font-size:14px;
 }
 .ck-text p + p{ margin-top:10px; }
 
-/* ссылки следующим «абзацем» под текстом */
-.ck-text .ck-link{
-  display:inline-block;
-  margin:10px 16px 0 0;                /* отступ сверху как новый абзац */
-  font-size:13px;
-  color: var(--ck-link-base);
+/* блок ссылок — строго под текстом; десктоп: в строку, мобайл: 2 колонки */
+.ck-links{
+  grid-area: links;
+  display:flex; flex-wrap:wrap; gap: 0 16px;
+}
+.ck-footlink{
+  display:inline-block; margin-top:10px;   /* как новый абзац */
+  font-size:13px; color: var(--ck-link-base);
   text-decoration: none;
 }
-.ck-text .ck-link:hover{
+.ck-footlink:hover{
   color: var(--ck-link-hover);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-/* Кнопка «Настроить cookie» ведёт себя как ссылка и стоит под текстом */
-#ck-settings{
-  grid-area: links;
-  justify-self: start; align-self: start;
-  background: transparent; border: 0; padding: 0;
-  font-size:13px; font-weight:600;
-  color: var(--ck-link-base);
-  text-decoration: none; cursor: pointer;
-}
-#ck-settings:hover{
-  color: var(--ck-link-hover);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* правая колонка с кнопками (без «разрыва в высоту текста») */
+/* правая колонка с кнопками (порядок «Принять» затем «Только необходимые») */
 .ck-actions{
   grid-area: actions;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;                           /* компактный зазор между кнопками */
+  display:flex; flex-direction: column;
+  gap: 10px;                    /* компактный зазор между кнопками */
   align-self: start;
 }
 
-/* большая зелёная */
-#ck-accept{
+/* кнопки */
+.ck-btn{
   appearance:none; border:0; border-radius:12px;
-  padding:14px 16px; font-weight:700; font-size:15px;
-  background: var(--ck-primary); color: var(--ck-primary-ink);
-  cursor:pointer;
+  padding:14px 16px; font-size:15px; cursor:pointer;
 }
 
-/* «Только необходимые»: бледная, без заливки */
-#ck-necessary{
-  appearance:none; border-radius:12px;
-  padding:14px 16px; font-weight:700; font-size:15px;
-  background: transparent;
-  color:#CBD5E1;                        /* серый текст */
-  border: 2px solid rgba(229,231,235,.55);
-  box-shadow:none; cursor:pointer;
+/* большая зелёная */
+.ck-primary{
+  background: var(--ck-primary); color: var(--ck-primary-ink);
+  font-weight:700;
 }
-#ck-necessary:hover{
+
+/* «Только необходимые»: бледная, без заливки, без жирного */
+.ck-ghost{
+  background: transparent;
+  color:#CBD5E1;                      /* светло-серый текст */
+  border: 2px solid rgba(229,231,235,.55);
+  font-weight:400;                    /* НЕ жирная */
+}
+.ck-ghost:hover{
   border-color: rgba(229,231,235,.85);
   color:#E5E7EB;
 }
 
-/* ===== Mobile (≤640): кнопки сверху, тексты ниже ===== */
+/* ===== Mobile (≤640): кнопки сверху, тексты ниже, ссылки — 2 колонки ===== */
 @media (max-width:640px){
   .ck-banner{ border-top-left-radius:16px; border-top-right-radius:16px; }
   .ck-inner{
@@ -1051,14 +1040,20 @@ section{padding:64px 0}
     padding: 14px 16px;
   }
   .ck-actions{ gap: 8px; }
-  #ck-accept, #ck-necessary{ font-size:14px; padding:12px 14px; }
+  .ck-btn{ font-size:14px; padding:12px 14px; }
 
   .ck-text strong{ font-size:13px; margin-bottom:12px; }
   .ck-text p{ font-size:11px; }
-  .ck-text .ck-link, #ck-settings{ font-size:10px; margin-top:8px; }
+
+  .ck-links{
+    display:grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap:16px; row-gap:8px;
+  }
+  .ck-footlink{ font-size:10px; margin-top:8px; }
 }
 
-/* ===== Modal (как было) ===== */
+/* ===== Modal (стили настроек) ===== */
 .ck-modal{
   position: fixed; inset: 0; background: rgba(0,0,0,.45);
   z-index: calc(var(--ck-z) + 1);
@@ -1074,8 +1069,28 @@ section{padding:64px 0}
   .ck-modal{ place-items:center; }
   .ck-panel{ border-radius:16px; padding:20px 22px; max-height:80dvh; }
 }
+.ck-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.ck-x{
+  appearance:none; border:0; width:36px; height:36px; border-radius:10px;
+  background:#F3F4F6; color:#111827; font-size:20px; line-height:1; cursor:pointer;
+}
+.ck-desc{ margin: 10px 0 14px; color:#4B5563; }
 
-/* переключатели */
+.ck-groups{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+.ck-group{ border:1px solid var(--ck-border); border-radius:12px; padding:12px; }
+.ck-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.ck-name{ font-weight:700; }
+.ck-state{ font-weight:600; color:#047857; }
+.ck-note{ margin:8px 0 0; color:#6B7280; line-height:1.5; }
+
+.ck-foot{ display:flex; gap:10px; justify-content:flex-end; margin-top:14px; flex-wrap:wrap; }
+.ck-foot .ck-btn{ min-width:180px; }
+@media (max-width:640px){
+  .ck-foot{ flex-direction:column-reverse; }
+  .ck-foot .ck-btn{ width:100%; min-width:0; }
+}
+
+/* свитчер в модалке */
 .ck-switch{ position:relative; width:44px; height:26px; display:inline-block; }
 .ck-switch input{ position:absolute; inset:0; opacity:0; }
 .ck-slider{
@@ -1090,7 +1105,7 @@ section{padding:64px 0}
 .ck-switch input:checked + .ck-slider{ background:#A7F3D0; box-shadow: inset 0 0 0 1px #6EE7B7; }
 .ck-switch input:checked + .ck-slider::after{ transform: translateX(18px); }
 
-/* опционально — скрыть плавающую кнопку управления */
+/* опционально: скрыть плавающую кнопку управления */
 #ck-manage{ display:none !important; }
 
 /* reduce motion */
@@ -2981,6 +2996,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
