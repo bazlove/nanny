@@ -1730,58 +1730,78 @@ const I18N = {
 
 
 
-/* === HERO: tablet quote rotator (fade, single node) === */
-(function tabletQuoteRotator() {
+/* === HERO: tablet quote rotator v2 (single node, interval, IO pause) === */
+(function tabletQuoteRotatorV2() {
   const host = document.querySelector('#top .hero-visual .hero-social #quoteRotator');
-  if (!host || host.dataset.fixed === '1') return;
-  const mq = window.matchMedia('(min-width: 641px) and (max-width: 1024px)');
+  if (!host || host.dataset.fixed === '2') return;
 
-  // Сбор фраз: сперва из детей #quoteRotator, затем — из дубля под строкой (если есть)
+  const mq = window.matchMedia('(min-width: 641px) and (max-width: 1024px)');
+  const INTERVAL = 3500; // целевой интервал переключения
+
+  // собрать фразы
   function collectPhrases() {
-    let texts = Array.from(host.querySelectorAll('.quote, [data-quote]'))
+    let list = Array.from(host.querySelectorAll('.quote,[data-quote]'))
       .map(el => el.textContent.trim())
       .filter(Boolean);
-    if (texts.length <= 1) {
+    if (list.length <= 1) {
       const backup = document.querySelectorAll('#top .hero-visual .hero-usp em, #top .hero-visual .hero-usp i');
-      texts = Array.from(backup).map(el => el.textContent.trim()).filter(Boolean);
+      list = Array.from(backup).map(el => el.textContent.trim()).filter(Boolean);
     }
-    // уникализируем
-    return Array.from(new Set(texts));
+    return Array.from(new Set(list));
   }
 
   const phrases = collectPhrases();
-  if (phrases.length <= 1) return; // крутить нечего
+  if (phrases.length <= 1) { host.dataset.fixed = '2'; return; }
 
-  // Перестраиваем контейнер под один слой
-  host.innerHTML = '<span class="quote"></span>';
-  const node = host.firstElementChild;
-  node.style.display = 'inline-block';
-  node.style.transition = 'opacity 240ms ease';
+  // один слой вместо «стека» и без наследованных анимаций
+  host.textContent = '';
+  const node = document.createElement('span');
+  node.className = 'quote';
+  host.appendChild(node);
+  Object.assign(node.style, {
+    display: 'inline-block',
+    opacity: '0',
+    transition: 'opacity 240ms ease 0s',
+    animation: 'none' // срезаем любые унаследованные keyframes
+  });
 
-  let idx = 0, timer;
+  let idx = 0, iv = null;
+
   function render(i) {
-    node.style.opacity = 0;
-    // форсируем рефлоу перед сменой текста
-    void node.offsetWidth;
+    node.style.opacity = '0';
+    void node.offsetWidth;           // форсим рефлоу
     node.textContent = phrases[i];
-    node.style.opacity = 1;
+    node.style.opacity = '1';
   }
 
-  function play() {
-    clearTimeout(timer);
-    if (!mq.matches) return;       // работаем только на планшетах
+  function start() {
+    if (iv || !mq.matches) return;
     render(idx);
-    timer = setTimeout(function tick() {
+    iv = setInterval(() => {
       idx = (idx + 1) % phrases.length;
       render(idx);
-      timer = setTimeout(tick, 3500);
-    }, 3500);
+    }, INTERVAL);
   }
 
-  play();
-  mq.addEventListener('change', play);
-  host.dataset.fixed = '1';
+  function stop() {
+    if (iv) { clearInterval(iv); iv = null; }
+  }
+
+  // Пауза, если блок вне вьюпорта — меньше шансов на троттлинг
+  const io = new IntersectionObserver(es => {
+    const vis = es[0] && es[0].isIntersecting;
+    vis ? start() : stop();
+  }, { threshold: 0.01 });
+  io.observe(host);
+
+  mq.addEventListener('change', () => { stop(); start(); });
+
+  // На всякий случай — убираем переносы внутри цитат
+  host.innerHTML = host.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
+  host.dataset.fixed = '2';
 })();
+
+
 
 
 
