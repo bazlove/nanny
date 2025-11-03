@@ -516,50 +516,7 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 
 
 
-// Cookie banner + GA4 loader
-(function() {
-  const LS_KEY='consent_analytics';
-  const banner=document.getElementById('cookie-banner');
-  const btnAccept=document.getElementById('cookie-accept');
-  const btnDecline=document.getElementById('cookie-decline');
-  const linkSettings=document.getElementById('cookie-settings');
-  const GA_ID=window.__GA_MEASUREMENT_ID__;
 
-  function mountGA(){
-    if(!GA_ID || /X{6,}/.test(GA_ID)) return;
-    const s=document.createElement('script');
-    s.async = true;
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
-  }
-
-  function consent(state){
-    if(typeof gtag==='function'){
-      gtag('consent','update', { analytics_storage: state ? 'granted' : 'denied' });
-    }
-    try{ localStorage.setItem(LS_KEY, state?'granted':'denied'); }catch(e){}
-    if(state) mountGA();
-  }
-
-  function showBanner(v=true){ banner.hidden = !v; }
-
-  function init(){
-    let saved=null; try{ saved=localStorage.getItem(LS_KEY); }catch(e){}
-    if(saved==='granted'){ consent(true); }
-    else if(saved==='denied'){ consent(false); }
-    else { showBanner(true); }
-    if(btnAccept) btnAccept.addEventListener('click', ()=>{ consent(true); showBanner(false); });
-    if(btnDecline) btnDecline.addEventListener('click', ()=>{ consent(false); showBanner(false); });
-    if(linkSettings) linkSettings.addEventListener('click', (e)=>{ e.preventDefault(); showBanner(true); });
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
-})();
 
 
 // Footer year
@@ -1839,6 +1796,122 @@ const I18N = {
 
   // Нормализуем случайные <br> внутри цитат
   host.innerHTML = host.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
+})();
+
+
+
+
+/* ===== Cookie Banner logic ===== */
+(function(){
+  const LS_KEY = 'cookieConsent:v1';      // увеличь версию при изменениях
+  const TTL_DAYS = 180;
+
+  const $ = s => document.querySelector(s);
+
+  const els = {
+    banner: $('#ck-banner'),
+    modal:  $('#ck-modal'),
+    manage: $('#ck-manage'),
+    btnSettings:  $('#ck-settings'),
+    btnNecessary: $('#ck-necessary'),
+    btnAccept:    $('#ck-accept'),
+    btnClose:     $('#ck-close'),
+    btnSave:      $('#ck-save'),
+    btnSaveAll:   $('#ck-save-all'),
+    btnSaveNec:   $('#ck-save-necessary'),
+    ana: $('#ck-ana'),
+    mkt: $('#ck-mkt'),
+  };
+
+  // --- state helpers
+  const now = () => Date.now();
+  const inDays = d => d*24*60*60*1000;
+
+  function read(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw) return null;
+      const obj = JSON.parse(raw);
+      // TTL
+      if (!obj.ts || (now() - obj.ts) > inDays(TTL_DAYS)) return null;
+      return obj;
+    }catch(_){ return null; }
+  }
+  function write(val){
+    const obj = { ...val, ts: now() };
+    localStorage.setItem(LS_KEY, JSON.stringify(obj));
+    apply(obj);
+    document.dispatchEvent(new CustomEvent('cookie:change', { detail: obj }));
+  }
+
+  function apply(consent){
+    // Проставим дата-атрибуты на body (удобно для стилевого/скриптового ветвления)
+    document.documentElement.setAttribute('data-consent-ana', consent.analytics ? '1':'0');
+    document.documentElement.setAttribute('data-consent-mkt', consent.marketing ? '1':'0');
+
+    // Доисполнение «отложенных» скриптов
+    if (consent.analytics || consent.marketing){
+      document.querySelectorAll('script[type="text/plain"][data-consent]').forEach(scr=>{
+        const need = scr.dataset.consent.split(',').map(s=>s.trim());
+        if ((consent.analytics && need.includes('analytics')) || (consent.marketing && need.includes('marketing'))){
+          const run = document.createElement('script');
+          if (scr.src) { run.src = scr.src; run.async = scr.async; }
+          run.text = scr.text || scr.innerHTML;
+          scr.replaceWith(run);
+        }
+      });
+    }
+  }
+
+  function openModal(){
+    els.modal.hidden = false;
+    els.banner.hidden = true;
+    if (els.ana) els.ana.checked = !!(read()?.analytics);
+    if (els.mkt) els.mkt.checked = !!(read()?.marketing);
+  }
+  function closeModal(){ els.modal.hidden = true; }
+
+  function acceptAll(){
+    write({ necessary: true, analytics: true, marketing: true });
+    els.banner.hidden = true;
+    els.manage.hidden = false;
+  }
+  function onlyNecessary(){
+    write({ necessary: true, analytics: false, marketing: false });
+    els.banner.hidden = true;
+    els.manage.hidden = false;
+  }
+  function saveSelection(){
+    write({ necessary: true, analytics: !!els.ana?.checked, marketing: !!els.mkt?.checked });
+    closeModal();
+    els.banner.hidden = true;
+    els.manage.hidden = false;
+  }
+
+  // bindings
+  els.btnSettings?.addEventListener('click', openModal);
+  els.btnNecessary?.addEventListener('click', onlyNecessary);
+  els.btnAccept?.addEventListener('click', acceptAll);
+
+  els.btnClose?.addEventListener('click', closeModal);
+  els.btnSave?.addEventListener('click', saveSelection);
+  els.btnSaveAll?.addEventListener('click', acceptAll);
+  els.btnSaveNec?.addEventListener('click', onlyNecessary);
+
+  els.manage?.addEventListener('click', openModal);
+
+  // показывать баннер?
+  const saved = read();
+  if (saved){ apply(saved); els.banner.hidden = true; els.manage.hidden = false; }
+  else { els.banner.hidden = false; }
+
+  // публичный API (по надобности)
+  window.cookieConsent = {
+    get: () => read() || { necessary:true, analytics:false, marketing:false },
+    setAll: acceptAll,
+    setNecessary: onlyNecessary,
+    open: openModal
+  };
 })();
 
 
