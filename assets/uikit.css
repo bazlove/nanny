@@ -371,11 +371,12 @@ html, body { overflow-x: clip; }
   box-sizing: border-box;
 }
 
-@media (max-width: 720px){
-  #contact .fld-message textarea{ min-height: 220px; }
-  #contact textarea{ height: auto; }
+@media (min-width: 980px) {
+  #contact .fld-message textarea {
+    height: 160px !important;
+    min-height: 0;
+  }
 }
-
 
 /* ============================================================================ */
 
