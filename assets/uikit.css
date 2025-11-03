@@ -373,7 +373,7 @@ html, body { overflow-x: clip; }
 
 @media (min-width: 980px) {
   #contact .fld-message textarea {
-    height: 160px !important;
+    height: 150px !important;
     min-height: 0;
   }
 }
