@@ -335,26 +335,25 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
 
 
 
-// Calculator
+// Calculator — clean URL + hash sharing
 
 (function(){
   const EUR_RATE=117, BASE=1000, WEEKEND=1.25, TWO=1.25, INFANT=1.5, OPT=300, OPT_FIT=500, MIN=2, HOURS_MAX=10;
   const $=id=>document.getElementById(id);
   const money=v=>{ try{return v.toLocaleString('ru-RS')}catch(_){return String(v)} };
 
+  // ---- helpers ----
   function normalizeHours(commit){
     const h=$('hours'), err=$('hoursErr');
     let v=parseInt(h?.value, 10);
-    
+
     const emptyOrNaN = !Number.isFinite(v) || (h?.value==='');
     if (emptyOrNaN) v = MIN;
 
-    // диапазон 2..10
-    v = Math.max(MIN, Math.min(HOURS_MAX, v));
+    v = Math.max(MIN, Math.min(HOURS_MAX, v)); // 2..10
 
     if (commit && h) { h.value = String(v); }
 
-    // подсветка ошибки и текст показываем только если < MIN
     if (h)   { h.classList.toggle('error', v < MIN); }
     if (err) { err.style.display = (v < MIN) ? 'block' : 'none'; }
 
@@ -369,17 +368,44 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
     return Math.round(r/10)*10;
   }
 
+  // собрать текущее состояние калькулятора в объект URLSearchParams
+  function collectParams(){
+    const sp = new URLSearchParams();
+    sp.set('h',   $('hours')?.value || '');
+    sp.set('k',   $('kids')?.value  || '');
+    sp.set('d',   $('dayType')?.value || '');
+    sp.set('a',   $('optA')?.checked ? '1' : '0');
+    sp.set('b',   $('optB')?.checked ? '1' : '0');
+    sp.set('c',   $('optC')?.checked ? '1' : '0');
+    sp.set('eur', $('eurToggle')?.checked ? '1' : '0');
+    return sp;
+  }
+
+  // применить параметры к элементам формы
+  function applyParams(sp){
+    try{
+      if (sp.has('h')   && $('hours'))   $('hours').value   = sp.get('h');
+      if (sp.has('k')   && $('kids'))    $('kids').value    = sp.get('k');
+      if (sp.has('d')   && $('dayType')) $('dayType').value = sp.get('d');
+      [['a','optA'],['b','optB'],['c','optC'],['eur','eurToggle']].forEach(([k,id])=>{
+        if (sp.has(k)){ const el=$(id); if(el) el.checked = (sp.get(k)==='1' || sp.get(k)==='true'); }
+      });
+    }catch(_){}
+  }
+
+  // ---- render/animate ----
   let last=0;
   const render = (sum) => {
-  const eur = $('eurToggle')?.checked;
-  let s = `Итог: ${money(sum)} дин`;
-  if (eur) {
-    const eurVal = Math.round(sum / EUR_RATE);
-    s += ` <span class="eur">(≈ €${eurVal})</span>`;
-  }
-  const el = $('result');
-  if (el) el.innerHTML = s;
+    const eur = $('eurToggle')?.checked;
+    let s = `Итог: ${money(sum)} дин`;
+    if (eur) {
+      const eurVal = Math.round(sum / EUR_RATE);
+      s += ` <span class="eur">(≈ €${eurVal})</span>`;
+    }
+    const el = $('result');
+    if (el) el.innerHTML = s;
   };
+
   const animate=(to)=>{
     const from=last; if(from===to){ render(to); return; }
     const start=performance.now(), dur=180, diff=to-from;
@@ -387,13 +413,15 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
     requestAnimationFrame(step);
   };
 
+  // ---- core calc ----
   function recalc(commit = true){
     const h = normalizeHours(commit);
     const rate=hourlyRate();
     const add=( $('optA')?.checked?OPT:0 )+( $('optB')?.checked?OPT:0 )+( $('optC')?.checked?OPT_FIT:0 );
     const total=rate*h+add; animate(total);
 
-    const br=$('breakdown'); if(br) br.textContent=`Ставка: ${rate} дин/ч × ${h} ч${add?` | Дополнительно: +${add} дин`:''}`;
+    const br=$('breakdown');
+    if(br) br.textContent=`Ставка: ${rate} дин/ч × ${h} ч${add?` | Дополнительно: +${add} дин`:''}`;
 
     const badges=$('badges');
     if(badges){
@@ -406,47 +434,48 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       badges.innerHTML=b.map(t=>`<span class="badge">${t}</span>`).join('');
     }
 
-    const q=new URLSearchParams({
-      h:$('hours')?.value||'',
-      k:$('kids')?.value||'',
-      d:$('dayType')?.value||'',
-      a:$('optA')?.checked?1:0,
-      b:$('optB')?.checked?1:0,
-      c:$('optC')?.checked?1:0,
-      eur:$('eurToggle')?.checked?1:0
-    });
-    try{ history.replaceState(null,'', location.pathname+'?'+q.toString()); }catch(_){}
+    // ВНИМАНИЕ: адресную строку НЕ трогаем (никаких ?query),
+    // чтобы URL оставался чистым. Шэрим ссылку отдельной функцией.
   }
 
+  // сделать share-ссылку в #hash и скопировать/поделиться
+  async function shareCalcState(){
+    const url = new URL(location.href);
+    url.search = "";                       // без query
+    url.hash   = collectParams().toString(); // состояние в hash
+    const link = url.toString();
+    try{
+      if (navigator.share) { await navigator.share({ url: link }); return; }
+    }catch(_){}
+    try{
+      await navigator.clipboard.writeText(link);
+      $('shareLink')?.classList.add('copied');
+      setTimeout(()=>$('shareLink')?.classList.remove('copied'),1200);
+    }catch(_){}
+  }
+
+  // ---- bindings ----
   function bind(){
-  const hoursEl = $('hours');
-  if (hoursEl) {
-    hoursEl.addEventListener('input', () => {
-      normalizeHours(false);  // ← НЕ коммитим во время набора
-      recalc(false);          // ← пересчёт без подстановки в инпут
+    const hoursEl = $('hours');
+    if (hoursEl) {
+      hoursEl.addEventListener('input', () => { normalizeHours(false); recalc(false); });
+      ['change','blur'].forEach(ev => hoursEl.addEventListener(ev, () => { normalizeHours(true); recalc(true); }));
+    }
+
+    ['kids','dayType','optA','optB','optC','eurToggle'].forEach(id=>{
+      const el=$(id); if(!el) return;
+      ['input','change'].forEach(e=> el.addEventListener(e,recalc));
     });
-    ['change','blur'].forEach(ev =>
-      hoursEl.addEventListener(ev, () => {
-        normalizeHours(true); // ← коммитим на выходе из поля
-        recalc(true);
-      })
-    );
-  }
 
-  ['kids','dayType','optA','optB','optC','eurToggle'].forEach(id=>{
-    const el=$(id); if(!el) return;
-    ['input','change'].forEach(e=> el.addEventListener(e,recalc));
-  });
+    const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(true); }};
+    [['p2h',2],['p3h',3],['p4h',4],['p5h',5]].forEach(([id,val])=>{
+      const b=$(id); if(b) b.addEventListener('click',()=>setH(val));
+    });
+    $('pWeekday')?.addEventListener('click', ()=>{ const d=$('dayType'); if(d){ d.value='weekday'; recalc(); }});
+    $('pWeekend')?.addEventListener('click',()=>{ const d=$('dayType'); if(d){ d.value='weekend'; recalc(); }});
+    $('pKids2')?.addEventListener('click',()=>{ const k=$('kids'); if(k){ k.value='2'; recalc(); }});
 
-  const setH=n=>{ const h=$('hours'); if(h){ h.value=String(n); h.focus(); recalc(true); }};
-  [['p2h',2],['p3h',3],['p4h',4],['p5h',5]].forEach(([id,val])=>{
-    const b=$(id); if(b) b.addEventListener('click',()=>setH(val));
-  });
-  $('pWeekday')?.addEventListener('click', ()=>{ const d=$('dayType'); if(d){ d.value='weekday'; recalc(); }});
-  $('pWeekend')?.addEventListener('click',()=>{ const d=$('dayType'); if(d){ d.value='weekend'; recalc(); }});
-  $('pKids2')?.addEventListener('click',()=>{ const k=$('kids'); if(k){ k.value='2'; recalc(); }});
-
-    // делегирование на случай будущих изменений
+    // делегирование на будущие чипы
     document.addEventListener('click',(ev)=>{
       const chip=ev.target.closest?.('.tag'); if(!chip) return;
       const txt=(chip.textContent||'').toLowerCase();
@@ -457,31 +486,33 @@ const fmtDateRU = (ymd, withWeekday = SHOW_WEEKDAY) => {
       if(txt.includes('два ребёнка')||txt.includes('два ребенка')){ const k=$('kids'); if(k){ k.value='2'; recalc(); } return; }
     }, true);
 
-
-    
     // share
-    const share=$('shareLink');
-    if(share) share.addEventListener('click', async (e)=>{
-      e.preventDefault();
-      try{ await navigator.clipboard.writeText(location.href);
-           share.classList.add('copied'); setTimeout(()=>share.classList.remove('copied'),1200);
-      }catch(_){}
-    });
+    $('shareLink')?.addEventListener('click', (e)=>{ e.preventDefault(); shareCalcState(); });
+
+    // экспортируем ручной пересчёт, если нужно дёргать снаружи
+    window.calcRecompute = () => recalc(true);
   }
 
-  function fromQuery(){ try{
-    const q=new URLSearchParams(location.search);
-    if(q.has('h')) $('hours').value=q.get('h');
-    if(q.has('k')) $('kids').value=q.get('k');
-    if(q.has('d')) $('dayType').value=q.get('d');
-    [['a','optA'],['b','optB'],['c','optC'],['eur','eurToggle']].forEach(([k,id])=>{
-      if(q.has(k)){ const el=$(id); if(el) el.checked=(q.get(k)==='1'); }
-    });
-  }catch(_){} }
+  // ---- URL state on load: prefer #hash, fallback to ?query; then clean query ----
+  function initCalcURLState(){
+    const raw = location.hash.startsWith('#')
+      ? location.hash.slice(1)
+      : (location.search.startsWith('?') ? location.search.slice(1) : '');
+    const sp = new URLSearchParams(raw);
+    if (sp.size > 0) applyParams(sp);
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{ bind(); fromQuery(); recalc(); });
-  else { bind(); fromQuery(); recalc(); }
+    // убираем ?query из адресной строки (hash оставляем, если был)
+    if (location.search) {
+      try{ history.replaceState(null, "", location.pathname + location.hash); }catch(_){}
+    }
+  }
+
+  // ---- boot ----
+  const boot = ()=>{ bind(); initCalcURLState(); recalc(true); };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
+
 
 
 
@@ -1809,6 +1840,7 @@ const I18N = {
   // Нормализуем случайные <br> внутри цитат
   host.innerHTML = host.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
 })();
+
 
 
 
