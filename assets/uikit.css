@@ -807,6 +807,11 @@ html, body { overflow-x: clip; }
   margin-left: 0 !important;
 }
 
+@media (max-width: 640px){
+  .site-header .tz-tip.info{ display: none !important; }
+}
+
+
 
 
 
