@@ -1917,8 +1917,8 @@ const I18N = {
   const saved = read();
   if (saved){ applyConsent(saved); els.banner.hidden = true; els.manage.hidden = false; }
   else { els.banner.hidden = false; }
-})();
 
+  // --- Публичный API: можно вызвать из любого места
   window.cookieConsent = {
     open: openModal,
     setAll: acceptAll,
@@ -1934,7 +1934,9 @@ const I18N = {
     e.preventDefault();
     openModal();
   });
-})();
+})();    
+
+
 
 
 
