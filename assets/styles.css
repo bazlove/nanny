@@ -1809,6 +1809,22 @@ section[id], #services, #calc, #faq, #contact, #main {
   }
 }
 
+/* Единый отступ между частями строки */
+.meta-right{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;                 /* одинаковый зазор слева и справа от точки */
+  white-space: nowrap;      /* чтобы всё не рвалось на 2 строки */
+}
+
+/* Внешний вид точки */
+.meta-right .sep{
+  line-height: 1;
+  opacity: .55;
+  user-select: none;
+  pointer-events: none;
+}
+
 
 
 
@@ -2871,6 +2887,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
