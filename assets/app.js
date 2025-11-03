@@ -1811,7 +1811,7 @@ const I18N = {
     banner: $('#ck-banner'),
     modal:  $('#ck-modal'),
     manage: $('#ck-manage'),
-    btnSettings:  $('#ck-settings'),
+    btnSettings:  $('#ck-settings-link'),
     btnNecessary: $('#ck-necessary'),
     btnAccept:    $('#ck-accept'),
     btnClose:     $('#ck-close'),
@@ -1895,7 +1895,7 @@ const I18N = {
   }
 
   // Events
-  els.btnSettings?.addEventListener('click', openModal);
+  els.btnSettings?.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
   els.btnNecessary?.addEventListener('click', onlyNecessary);
   els.btnAccept?.addEventListener('click', acceptAll);
 
@@ -1918,6 +1918,7 @@ const I18N = {
   if (saved){ applyConsent(saved); els.banner.hidden = true; els.manage.hidden = false; }
   else { els.banner.hidden = false; }
 })();
+
 
 
 
