@@ -90,8 +90,7 @@ h1, .h1{
   max-width: 22ch;   
   font-weight: 700;
   color: var(--neutral-900);
-  font-size: clamp(28px, 3.6vw, 40px);
-  letter-spacing: -0.015em; 
+    letter-spacing: -0.015em; 
   line-height: 1.08;
   margin: 0 0 var(--space-8);
   font-size: clamp(40px, 4.4vw, 64px);
@@ -295,8 +294,6 @@ input[type="checkbox"], input[type="radio"]{
 
 
 
-/* ================= Buttons — SWAP hover (final single source of truth) =============== */
-
 /* Плавность смены цвета текста тоже анимируем */
 .btn{
   transition:
@@ -366,7 +363,7 @@ html, body { overflow-x: clip; }
 
 #contact .fld-message textarea{
   /* стартовая высота */
-  min-height: 150px !important;              /* без !important */
+  min-height: 150px;              /* без !important */
   height: auto;                   /* не фиксируем */
   max-height: 60vh;               /* чтобы не разъезжалось на полэкрана */
   resize: vertical;               /* ручной ресайз только по вертикали */
@@ -378,27 +375,6 @@ html, body { overflow-x: clip; }
   #contact .fld-message textarea{ min-height: 220px; }
   #contact textarea{ height: auto; }
 }
-
-
-/* «i» в сером кружке рядом с режимом работы */
-.contact-meta .i {
-  display: inline-flex;              /* центрирование по обеим осям */
-  align-items: center;
-  justify-content: center;
-
-  width: 22px;
-  height: 22px;
-  margin-left: 8px;                  /* расстояние от текста */
-  border-radius: 9999px;
-
-  background: #ECEFF3;               /* твой серый фон чипа */
-  color: #6B7280;
-
-  font-size: 12px;                   /* чтобы «i» визуально помещалась */
-  line-height: 1;                    /* без растяжения по высоте строки */
-  vertical-align: middle;            /* ровно по базовой линии текста */
-}
-
 
 
 /* ============================================================================ */
