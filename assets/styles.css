@@ -197,6 +197,11 @@ section{padding:64px 0}
   }
 }
 
+@media (min-width: 641px) and (max-width: 834px){
+  #top .container.hero-grid{ gap: 24px !important; } /* было 16px */
+  #top .hero-visual .hero-social{ margin-top: 18px; } /* было 14px */
+}
+
 /* === Фото: строго по ширине колонки, без absolute === */
 #top .hero-photo{
   display:block;
@@ -2866,6 +2871,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
