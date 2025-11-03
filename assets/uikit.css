@@ -1227,33 +1227,35 @@ html, body { overflow-x: clip; }
 
 
 
-/* === EXPERIENCE: mobile overhaul (≤640px) === */
+/* === EXPERIENCE: mobile (≤640px) === */
 @media (max-width: 640px){
-  /* токены помельче */
+  /* компактные токены */
   #experience{ --xp-pin-sz: 8px; }
 
-  /* сетка списка */
+  /* список */
   #experience .xp-grid{
-    grid-template-columns: 1fr;
-    gap: 14px;                 /* было var(--space-5) */
     position: relative;
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 
-  /* вертикальная рельса слева на всю высоту */
+  /* вертикальная рельса на всю высоту и под пинами */
   #experience .xp-grid::before{
     top: 0; bottom: 0;
     left: 12px; right: auto;
     width: var(--xp-rail-h);
     height: 100%;
+    z-index: 0;
+    pointer-events: none;
   }
 
-  /* элемент-строка: слева колонка 24px под рельсу/пин, справа контент */
+  /* строка таймлайна: слева рельса/пин (24px), справа контент */
   #experience .xp-item{
     display: grid;
     grid-template-columns: 24px minmax(0,1fr);
     column-gap: 10px;
     align-items: start;
-    padding: 0;                /* убираем прежний верхний отступ */
+    padding: 0;
   }
 
   /* пин на рельсе */
@@ -1261,51 +1263,54 @@ html, body { overflow-x: clip; }
     grid-column: 1;
     grid-row: 1;
     position: relative;
-    left: auto; top: auto;
-    transform: none;
-    margin-top: 18px;          /* примерно к базовой линии бейджа */
+    margin-top: 18px;           /* к базовой линии года */
     width: var(--xp-pin-sz);
     height: var(--xp-pin-sz);
+    transform: none;
+    left: auto; top: auto;
     justify-self: center;
+    z-index: 2;                  /* поверх рельсы */
   }
 
-  /* год как бейдж над карточкой, без absolute */
+  /* год — без капсулы, потоковый элемент над карточкой */
   #experience .xp-chip{
     grid-column: 2;
     position: static;
     transform: none;
     margin: 0 0 6px 0;
 
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    border-radius: 999px;
+    display: inline;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    text-shadow: none;
 
-    background: #F3F4F6;          /* нейтральная капсула */
-    box-shadow: inset 0 0 0 1px #E5E7EB;
     color: #374151;
     font-weight: 600;
     font-size: 12px;
     letter-spacing: .2px;
-    text-shadow: none;
   }
 
   /* карточка — компактнее */
   #experience .xp-card{
     grid-column: 2;
     margin-top: 0;
-    padding: 12px 12px 12px 12px;   /* было var(--space-4) */
+    padding: 12px;
     border-radius: 12px;
   }
   #experience .xp-card h3{
-    font-size: 15px;
     margin: 0 0 6px;
+    font-size: 15px;
   }
   #experience .xp-card p{
+    margin: 0;
     font-size: 13px;
     line-height: 1.5;
   }
 }
+
 
 
 
