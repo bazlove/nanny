@@ -1730,76 +1730,86 @@ const I18N = {
 
 
 
-/* === HERO: tablet quote rotator v2 (single node, interval, IO pause) === */
-(function tabletQuoteRotatorV2() {
+/* === HERO: tablet quote rotator v3 (rAF clock, precise 3.5s) === */
+(function tabletQuoteRotatorV3() {
   const host = document.querySelector('#top .hero-visual .hero-social #quoteRotator');
-  if (!host || host.dataset.fixed === '2') return;
+  if (!host) return;
 
   const mq = window.matchMedia('(min-width: 641px) and (max-width: 1024px)');
-  const INTERVAL = 3500; // целевой интервал переключения
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const INTERVAL = REDUCED ? 7000 : 3500; // целевой интервал
 
-  // собрать фразы
-  function collectPhrases() {
+  // 1) Собираем фразы
+  function collect() {
     let list = Array.from(host.querySelectorAll('.quote,[data-quote]'))
-      .map(el => el.textContent.trim())
-      .filter(Boolean);
+      .map(el => el.textContent.trim()).filter(Boolean);
     if (list.length <= 1) {
       const backup = document.querySelectorAll('#top .hero-visual .hero-usp em, #top .hero-visual .hero-usp i');
       list = Array.from(backup).map(el => el.textContent.trim()).filter(Boolean);
     }
     return Array.from(new Set(list));
   }
+  const phrases = collect();
+  if (phrases.length <= 1) return;
 
-  const phrases = collectPhrases();
-  if (phrases.length <= 1) { host.dataset.fixed = '2'; return; }
-
-  // один слой вместо «стека» и без наследованных анимаций
+  // 2) Перестраиваем контейнер под один слой
   host.textContent = '';
   const node = document.createElement('span');
   node.className = 'quote';
   host.appendChild(node);
+
+  // срезаем любые унаследованные анимации
+  host.style.animation = 'none';
+  node.style.animation = 'none';
   Object.assign(node.style, {
     display: 'inline-block',
     opacity: '0',
-    transition: 'opacity 240ms ease 0s',
-    animation: 'none' // срезаем любые унаследованные keyframes
+    transition: 'opacity 240ms ease 0s'
   });
 
-  let idx = 0, iv = null;
+  // 3) Тик на rAF
+  let idx = 0, raf = null, running = false, nextAt = 0;
 
   function render(i) {
     node.style.opacity = '0';
-    void node.offsetWidth;           // форсим рефлоу
+    void node.offsetWidth;              // рефлоу
     node.textContent = phrases[i];
     node.style.opacity = '1';
   }
 
-  function start() {
-    if (iv || !mq.matches) return;
-    render(idx);
-    iv = setInterval(() => {
+  function tick(now) {
+    if (!running) return;
+    if (now >= nextAt) {
       idx = (idx + 1) % phrases.length;
       render(idx);
-    }, INTERVAL);
+      nextAt += INTERVAL;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (running || !mq.matches) return;
+    running = true;
+    render(idx);
+    nextAt = performance.now() + INTERVAL;
+    raf = requestAnimationFrame(tick);
   }
 
   function stop() {
-    if (iv) { clearInterval(iv); iv = null; }
+    running = false;
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
   }
 
-  // Пауза, если блок вне вьюпорта — меньше шансов на троттлинг
-  const io = new IntersectionObserver(es => {
-    const vis = es[0] && es[0].isIntersecting;
-    vis ? start() : stop();
-  }, { threshold: 0.01 });
+  // Пауза вне экрана / при смене брейкпоинта / при скрытии вкладки
+  const io = new IntersectionObserver(es => (es[0]?.isIntersecting ? start() : stop()), {threshold: 0.01});
   io.observe(host);
-
+  document.addEventListener('visibilitychange', () => (document.visibilityState === 'visible' ? start() : stop()));
   mq.addEventListener('change', () => { stop(); start(); });
 
-  // На всякий случай — убираем переносы внутри цитат
+  // Нормализуем случайные <br> внутри цитат
   host.innerHTML = host.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
-  host.dataset.fixed = '2';
 })();
+
 
 
 
