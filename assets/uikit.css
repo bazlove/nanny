@@ -753,6 +753,7 @@ html, body { overflow-x: clip; }
 .site-header .tz-tip.info{
   display: inline-flex !important;
   align-items: center !important;
+  position: relative;
 }
 
 /* В шапке нужен небольшой отступ от текста слева */
@@ -785,6 +786,24 @@ html, body { overflow-x: clip; }
 }
 
 .contact-meta .hint:hover > .i, #calc .label-row .hint:hover > .i, .site-header .tz-tip.info:hover .i { color:#15803D !important; }
+
+/* Центрирование тултипа "tip" по горизонтали относительно иконки "i" */
+.contact-meta .hint .tip,
+#calc .label-row .hint .tip,
+.site-header .tz-tip.info .tip{
+  left: 50% !important;
+  transform: translateX(-50%) !important;  /* ровно по центру */
+  text-align: center;                      /* текст по центру, если нужно */
+  white-space: nowrap; 
+}
+
+/* Стрелочка тултипа по центру */
+.contact-meta .hint .tip::after,
+#calc .label-row .hint .tip::after,
+.site-header .tz-tip.info .tip::after{
+  left: 50% !important;
+  transform: translateX(-50%) rotate(45deg) !important;
+}
 
 @media (max-width: 640px){
   .site-header .tz-tip.info{ display: none !important; }
