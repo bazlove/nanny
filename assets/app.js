@@ -1138,7 +1138,7 @@ const I18N = {
 
     /* HERO */
     hero_title:'Няня в Нови-Саде — забота, безопасность и бережное развитие',
-    hero_sub:'Освободите время для личных дел, спокойно работайте из дома или проведите вечер в тишине — без тревоги, отвлечения и стресса.',
+    hero_sub:'Освободите время для личных дел, спокойно работайте из дома[br] или проведите вечер в тишине — без тревоги, отвлечения и стресса.',
     hero_tag_age:'31 год', hero_tag_teacher:'Воспитатель', hero_tag_mom:'Мама', hero_tag_coach:'Детский тренер',
     hero_tag_ontime:'Вовремя', hero_tag_report:'Заметки/фото', hero_tag_slots:'Слоты 2–4ч', hero_tag_no_screens:'Без гаджетов',
     btn_slots:'Проверить свободные слоты',
@@ -1276,7 +1276,7 @@ const I18N = {
 
     /* HERO */
     hero_title:'Dadilja u Novom Sadu — briga, bezbednost i pažljiv razvoj',
-    hero_sub:'Oslobodite vreme za lične stvari, radite od kuće mirno ili provedite veče u tišini — bez brige, ometanja i stresa.',
+    hero_sub:'Oslobodite vreme za lične stvari, radite od kuće mirno[br] ili provedite veče u tišini — bez brige, ometanja i stresa.',
     hero_tag_age:'31 godina', hero_tag_teacher:'Vaspitač', hero_tag_mom:'Mama', hero_tag_coach:'Dečiji trener',
     hero_tag_ontime:'Tačno na vreme', hero_tag_report:'Beleške/foto', hero_tag_slots:'Termini 2–4h', hero_tag_no_screens:'Bez ekrana',
     btn_slots:'Proverite slobodne termine',
@@ -1434,12 +1434,20 @@ const I18N = {
     document.documentElement.setAttribute('lang', lang==='sr'?'sr':'ru');
 
     // Текстовые ноды: <span class="i18n" data-key="...">
-    document.querySelectorAll('.i18n').forEach(el=>{
-      const k = el.getAttribute('data-key');
-      if(!k) return;
-      const v = dict[k];
-      if(v!=null) el.textContent = v;
-    });
+  document.querySelectorAll('.i18n').forEach(el => {
+    const k = el.getAttribute('data-key');
+    if (!k) return;
+    let v = dict[k];
+    if (v == null) return;
+
+  // Если узел разрешает HTML, поддерживаем маркер [br] => <br>
+  if (el.hasAttribute('data-i18n-html')) {
+    el.innerHTML = String(v).replace(/\[br\]/g, '<br>');
+  } else {
+    el.textContent = v;
+  }
+});
+
 
     // Атрибуты: <input class="i18n-attr" data-key="form_name_ph" data-attr="placeholder">
     document.querySelectorAll('.i18n-attr').forEach(el=>{
@@ -1694,6 +1702,7 @@ const I18N = {
     if (lang) applyLang(lang);
   });
 })();
+
 
 
 
