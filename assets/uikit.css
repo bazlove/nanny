@@ -807,6 +807,8 @@ html, body { overflow-x: clip; }
   margin-left: 0 !important;
 }
 
+.contact-meta .hint:hover > .i, #calc .label-row .hint:hover > .i, .site-header .tz-tip.info:hover .i { color:#15803D !important; }
+
 @media (max-width: 640px){
   .site-header .tz-tip.info{ display: none !important; }
 }
