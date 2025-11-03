@@ -763,31 +763,31 @@ html, body { overflow-x: clip; }
 
 
 
-/* === FINAL OVERRIDE: unify "i" badges (Contacts + Calculator) === */
+/* === Unify "i" badges (Header + Contacts + Calculator) === */
 :root{
   --info-badge-size: 22px;
   --info-badge-bg:   #ECEFF3;
   --info-badge-fg:   #6B7280;
 }
 
+/* Контейнеры подсказок — без жёстких размеров */
 .contact-meta .hint,
 #calc .label-row .hint,
 .site-header .tz-tip.info{
-  width: auto !important;
-  height: auto !important;
   display: inline-flex !important;
   align-items: center !important;
-  margin-left: 6px; /* если нужен отступ от подписи */
 }
 
-/* Сам кружок "i" — жёсткий квадрат 22×22 во всех местах */
+/* В шапке нужен небольшой отступ от текста слева */
+.site-header .tz-tip.info{ margin-left: 6px; }
+
+/* Сам кружок "i" — единый квадрат 22×22 */
 .contact-meta .hint > .i,
 #calc .label-row .hint > .i,
 .site-header .tz-tip.info .i{
   width: var(--info-badge-size) !important;
   height: var(--info-badge-size) !important;
-  min-width: var(--info-badge-size) !important;
-  min-height: var(--info-badge-size) !important;
+  flex: 0 0 var(--info-badge-size) !important; /* не даём сплющиться во flex */
 
   display: inline-flex !important;
   align-items: center !important;
@@ -802,7 +802,9 @@ html, body { overflow-x: clip; }
   color: var(--info-badge-fg) !important;
   font: 600 12px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
   vertical-align: middle !important;
-  margin-left: 8px;
+
+  /* УБИРАЕМ отступ внутри кружка, чтобы не было двойного зазора */
+  margin-left: 0 !important;
 }
 
 
