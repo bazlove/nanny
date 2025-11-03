@@ -1209,11 +1209,18 @@ html, body { overflow-x: clip; }
     text-overflow: ellipsis;        /* обрезка с троеточием */
   }
 
+  #top .hero-visual .hero-social #quoteRotator .quote{
+    animation: none !important;           /* на всякий случай */
+    transition: opacity 240ms ease 0s !important;
+  }
+  
   /* 5) Если под строкой есть дублирующий параграф — спрячем (дать ему класс .hero-usp) */
   #top .hero-visual .hero-social + .hero-usp{
     display: none !important;
   }
 }
+
+
 
 
 
