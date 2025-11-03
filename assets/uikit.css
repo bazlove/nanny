@@ -1160,3 +1160,21 @@ html, body { overflow-x: clip; }
 
 
 
+
+
+/* Когда цитата скрыта на мобилках — убираем лишний сепаратор */
+@media (max-width: 640px){
+  #top .hero-visual .hero-social .sep{ display:none; }
+}
+
+/* На планшетах держим ряд в одну линию и даём месту цитате */
+@media (min-width: 641px) and (max-width: 1024px){
+  #top .hero-visual .hero-social{
+    display:flex; align-items:center; gap:10px; flex-wrap:nowrap;
+  }
+  #top .hero-visual .hero-social .quote-wrap{
+    flex:1 1 auto; min-width:0; text-align:right;
+  }
+}
+
+
