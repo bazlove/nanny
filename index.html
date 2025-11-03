@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="ru">
-	
 <head>
-		
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="robots" content="noindex, nofollow"/>
@@ -10,6 +8,7 @@
   <meta name="description" content="Надёжная няня: CPR/First Aid, фото-отчёт, развивающие занятия. Свободные слоты и удобный калькулятор."/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="canonical" href="https://example.com/nanny/">
   <link rel="alternate" hreflang="ru" href="https://bazlove.github.io/nanny/">
   <link rel="alternate" hreflang="sr" href="https://bazlove.github.io/nanny/?lang=sr">
@@ -27,7 +26,6 @@
     functionality_storage: 'granted',
     security_storage: 'granted'
   });
-
   try {
     var raw = localStorage.getItem('cookieConsent:v1');
     if (raw){
@@ -50,14 +48,11 @@
   gtag('config','G-XXXXXXX',{ anonymize_ip:true });
 </script>
 
-
 		<link rel="stylesheet" href="assets/styles.css"/>
 			<link rel="stylesheet" href="assets/uikit.css"/>
 		
 	</head>
 
-
-	
 	<body>
   
 	<a class="skip-link" href="#main">Пропустить меню и перейти к содержанию</a>
@@ -98,16 +93,6 @@
   <span class="sep">/</span>
   <button class="lang-btn" data-lang="sr" aria-pressed="false">SR</button>
 </div>
-	  
-    <!-- iOS switch RU/SR (только в бургер-меню)
-<label class="ios-toggle" for="langToggle" aria-label="Язык: RU/SR">
-  <input id="langToggle" type="checkbox" />
-  <span class="track" aria-hidden="true">
-    <span class="thumb"></span>
-    <span class="lab lru">RU</span>
-    <span class="lab lsr">SR</span>
-  </span>
-</label>
 
     <!-- Бургер (планшет/мобайл) -->
     <button
@@ -133,13 +118,11 @@
             <small class="i18n" data-key="city">Нови-Сад</small>
           </div>
         </div>
-		  
         <label class="ios7-switch" id="langIosWrap" aria-label="Переключить язык (RU/SR)">
   <input id="langIos" type="checkbox" role="switch" aria-checked="false">
   <span aria-hidden="true"></span>
 			</label>
 		   </div>
-
       <nav class="nav-links" aria-label="Навигация (моб)">
         <a href="#services" class="i18n" data-key="nav_services">Услуги</a>
         <a href="#reviews"  class="i18n" data-key="nav_reviews">Отзывы</a>
@@ -151,8 +134,7 @@
   </div>
 </header>
 
-
-<main>
+<main id="main">
 	  
     <!-- HERO -->
 	
@@ -192,7 +174,8 @@
           src="img/hero.jpg"
           width="720" height="540"
           loading="eager" decoding="async"
-          alt="Няня играет с ребёнком дома"
+		  fetchpriority="high"
+          alt="Няня с ребёнком на прогулке"
         >
       </figure>
 
@@ -583,17 +566,18 @@
 
       <!-- 3 -->
       <li class="faq-item" id="faq-documents">
-        <button class="faq-q" id="q-documents" aria-expanded="false" aria-controls="a-cancel">
+        <button class="faq-q" id="q-documents" aria-expanded="false" aria-controls="a-documents">
           <span class="faq-q__text">Какие документы вы предоставляете?</span>
           <span class="faq-q__actions">
             <span class="faq-q__copy" title="Скопировать ссылку на вопрос" aria-hidden="true"></span>
             <span class="faq-q__chev" aria-hidden="true"></span>
           </span>
         </button>
-        <div class="faq-a" id="a-cancel" role="region" aria-labelledby="q-cancel">
+        <div class="faq-a" id="a-documents" role="region" aria-labelledby="q-documents">
           <div class="faq-a__inner">
-            <ul> По запросу на первой встрече показываю оригиналы:
-					<li>Паспорт/личная карта (ID)</li>
+            <p>По запросу на первой встрече показываю оригиналы:</p>
+				<ul> 	
+				<li>Паспорт/личная карта (ID)</li>
 					<li>Справка об отсутствии судимости</li>
 					<li>Электронные сертификаты или диплом об образовании</li>
 					<li>Разрешение на проживание/работу (если требуется)</li>
@@ -735,7 +719,7 @@
   
 	<!-- список кнопок контактов -->
   <div class="c-list">
-    <a class="c-btn c-btn--tg"   href="https://t.me/username"   target="_blank" rel="noopener">
+    <a class="c-btn c-btn--tg"   href="https://t.me/username"   target="_blank" rel="noopener noreferrer">
       <span class="dot" aria-hidden="true"></span><span class="txt">Telegram</span>
     </a>
     <a class="c-btn c-btn--vb"   href="viber://chat?number=%2B381XXXXXXXXX">
@@ -759,7 +743,7 @@
 
           <div class="fld">
             <label class="lbl" for="ccontact">Телефон/мессенджер<span class="req" aria-hidden="true">*</span></label>
-            <input class="input" id="ccontact" name="contact" type="text" required />
+            <input class="input" id="ccontact" name="contact" type="tel" autocomplete="tel" required />
             <small class="err" id="err-contact" hidden>Пожалуйста, укажите телефон или username.</small>
           </div>
 
@@ -781,7 +765,7 @@
 
           <label class="agree" id="agreeWrap">
 			  <input type="checkbox" id="cagree" name="agree" required>
-            <span>Даю согласие на обработку данных согласно <a href="#privacy">политике</a>.</span>
+            <span>Даю согласие на обработку данных согласно <a href="/privacy">политике</a>.</span>
           </label>
 
           <button type="submit" class="btn btn-primary btn-lg">Отправить запрос</button>
@@ -815,7 +799,7 @@
       <a
         class="link-dashed"
         href="https://maps.app.goo.gl/joCXvsRE9F43ht3T7"
-        target="_blank" rel="noopener"
+        target="_blank" rel="noopener noreferrer"
       ><span class="txt" data-i18n="text:city">Нови-Сад</span></a>
 
       <span>·</span>
@@ -863,7 +847,7 @@
 
     <!-- ОБЕ ссылки строго под текстом -->
     <div class="ck-links">
-      <a class="ck-footlink" href="/privacy" target="_blank" rel="noopener">Политика конфиденциальности</a>
+      <a class="ck-footlink" href="/privacy" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a>
       <a class="ck-footlink" id="ck-settings-link" href="#">Настроить cookie</a>
     </div>
   </div>
@@ -924,168 +908,7 @@
 
 <button id="ck-manage" class="ck-manage" hidden>Настройки cookie</button>
 
- 
- 
-
-
   <script src="assets/app.js" defer></script>
 
 	</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
