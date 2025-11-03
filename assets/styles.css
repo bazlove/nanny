@@ -977,7 +977,7 @@ section{padding:64px 0}
 .ck-text p{
   margin:0; line-height:1.55; font-size:14px;
 }
-.ck-text p + p{ margin-top:6px; }
+.ck-text p + p{ margin-top: 4px !important; }
 
 /* блок ссылок — строго под текстом; десктоп: в строку, мобайл: 2 колонки */
 .ck-links{
@@ -2998,6 +2998,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
