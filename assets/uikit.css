@@ -795,7 +795,7 @@ html, body { overflow-x: clip; }
   transform: translateX(-50%) !important;  /* ровно по центру */
   text-align: center;                      /* текст по центру, если нужно */
   white-space: nowrap;
-  bottom: calc(100% + 2px) !important;
+  bottom: calc(100% + 10px) !important;
 }
 
 /* Стрелочка тултипа по центру */
