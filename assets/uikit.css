@@ -1166,59 +1166,55 @@ html, body { overflow-x: clip; }
 
 
 
-/* --- HERO social row: планшеты — один ряд, без переносов и «двухэтажности» --- */
+/* === HERO: планшеты, фикс карусели и однострочного ряда === */
 @media (min-width: 641px) and (max-width: 1024px){
-  /* весь ряд в две колонки: слева рейтинг+ссылка, справа цитата */
+  /* 1) Строка не переносится */
   #top .hero-visual .hero-social{
-    display: grid !important;
-    grid-template-columns: auto 1fr;
+    display: flex !important;
     align-items: center;
-    column-gap: 10px;
+    gap: 10px;
+    flex-wrap: nowrap !important;      /* перекрываем wrap */
+    min-width: 0;                       /* чтобы правая колонка сжималась */
   }
 
-  /* слева не переносим ничего */
+  /* 2) Слева (звезда, рейтинг, ссылка, разделитель) — без переносов */
   #top .hero-visual .hero-social .rating,
   #top .hero-visual .hero-social .reviews-link,
   #top .hero-visual .hero-social .sep{
     white-space: nowrap;
   }
 
-  /* справа цитата должна уметь сжиматься */
+  /* 3) Справа — контейнер цитаты занимает остаток строки */
   #top .hero-visual .hero-social .quote-wrap{
-    min-width: 0;           /* критично для iPad/Safari */
-    justify-self: end;
-  }
-
-  /* одна строка и троеточие при нехватке места */
-  #top .hero-visual .hero-social .quote{
-    display: block;
-    white-space: nowrap;
+    flex: 1 1 auto;
+    min-width: 0;              /* критично для Safari/iPad */
+    text-align: right;
+    height: 1.4em;             /* высота в одну строку */
+    line-height: 1.4;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  /* ротатор иногда держит 2 слайда — укладываем в один «слой» */
+  /* 4) Сам ротатор — два слоя поверх друг друга, а не в потоке */
   #top .hero-visual .hero-social #quoteRotator{
     position: relative;
     display: block;
-    height: 1.4em;          /* высота ровно одной строки */
+    height: 1.4em;             /* фиксируем «этаж» */
     overflow: hidden;
   }
-  #top .hero-visual .hero-social #quoteRotator > span,
-  #top .hero-visual .hero-social #quoteRotator > div,
-  #top .hero-visual .hero-social #quoteRotator > p{
-    position: absolute;     /* слои друг на друге, не раздвигают высоту */
+  #top .hero-visual .hero-social #quoteRotator > *{
+    position: absolute !important;  /* перекрываем position:static */
     inset: 0;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;        /* обрезка с троеточием */
   }
 
-  /* если под строкой есть дублирующий текстовый блок — прячем его на планшетах */
-  #top .hero-visual .hero-social + .hero-usp{   /* добавь класс .hero-usp этому параграфу */
+  /* 5) Если под строкой есть дублирующий параграф — спрячем (дать ему класс .hero-usp) */
+  #top .hero-visual .hero-social + .hero-usp{
     display: none !important;
   }
 }
+
 
 
 
