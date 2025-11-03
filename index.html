@@ -15,18 +15,47 @@
   <link rel="alternate" hreflang="sr" href="https://bazlove.github.io/nanny/?lang=sr">
   <link rel="alternate" hreflang="x-default" href="https://bazlove.github.io/nanny/">
 
-  <script type="text/plain" data-consent="analytics" src="https://www.googletagmanager.com/gtag/js?id=GA-XXXX"></script>
-  <script type="text/plain" data-consent="analytics">
-  	window.dataLayer = window.dataLayer || [];
-  	function gtag(){ dataLayer.push(arguments); }
-  	gtag('js', new Date());
-  	gtag('config', 'GA-XXXX', { anonymize_ip: true });
-		</script>
+<script>
+  // gtag stub + default denied
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent','default',{
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted'
+  });
+
+  try {
+    var raw = localStorage.getItem('cookieConsent:v1');
+    if (raw){
+      var c = JSON.parse(raw)||{};
+      var ana = !!c.analytics, mkt = !!c.marketing;
+      gtag('consent','update',{
+        analytics_storage:  ana ? 'granted' : 'denied',
+        ad_storage:         mkt ? 'granted' : 'denied',
+        ad_user_data:       mkt ? 'granted' : 'denied',
+        ad_personalization: mkt ? 'granted' : 'denied',
+        wait_for_update: 500
+      });
+    }
+  } catch(e){}
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config','G-XXXXXXX',{ anonymize_ip:true });
+</script>
+
 
 		<link rel="stylesheet" href="assets/styles.css"/>
 			<link rel="stylesheet" href="assets/uikit.css"/>
 		
 	</head>
+
 
 	
 	<body>
@@ -887,6 +916,7 @@
 
 	</body>
 </html>
+
 
 
 
