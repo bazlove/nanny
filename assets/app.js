@@ -1121,6 +1121,18 @@ if (badName || badCont) {
   }, 7000);
 })();
 
+(function fixHeroSocialSep(){
+  const social = document.querySelector('#top .hero-visual .hero-social');
+  if (!social) return;
+  const wrap = social.querySelector('.quote-wrap');
+  const sep  = social.querySelector('.sep');
+  if (!sep) return;
+  const hidden = !wrap || getComputedStyle(wrap).display === 'none';
+  if (hidden) sep.style.display = 'none';
+})();
+
+
+
 
 // i18n DICT (RU/SR)
 (function(){
@@ -1702,6 +1714,7 @@ const I18N = {
     if (lang) applyLang(lang);
   });
 })();
+
 
 
 
