@@ -1080,6 +1080,13 @@ if (badName || badCont) {
 
 
 // ===== Hero: ротатор без рефлоу (двухслойный кросс-фейд) =====
+
+(function normalizeHeroQuote(){
+  const r = document.getElementById('quoteRotator');
+  if (!r) return;
+  r.innerHTML = r.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
+})();
+
 (function initQuoteRotator(){
   const el = document.getElementById('quoteRotator');
   if (!el) return;
@@ -1131,11 +1138,7 @@ if (badName || badCont) {
   if (hidden) sep.style.display = 'none';
 })();
 
-(function normalizeHeroQuote(){
-  const r = document.getElementById('quoteRotator');
-  if (!r) return;
-  r.innerHTML = r.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
-})();
+
 
 
 
@@ -1726,6 +1729,59 @@ const I18N = {
 
 
 
+
+/* === HERO: tablet quote rotator (fade, single node) === */
+(function tabletQuoteRotator() {
+  const host = document.querySelector('#top .hero-visual .hero-social #quoteRotator');
+  if (!host || host.dataset.fixed === '1') return;
+  const mq = window.matchMedia('(min-width: 641px) and (max-width: 1024px)');
+
+  // Сбор фраз: сперва из детей #quoteRotator, затем — из дубля под строкой (если есть)
+  function collectPhrases() {
+    let texts = Array.from(host.querySelectorAll('.quote, [data-quote]'))
+      .map(el => el.textContent.trim())
+      .filter(Boolean);
+    if (texts.length <= 1) {
+      const backup = document.querySelectorAll('#top .hero-visual .hero-usp em, #top .hero-visual .hero-usp i');
+      texts = Array.from(backup).map(el => el.textContent.trim()).filter(Boolean);
+    }
+    // уникализируем
+    return Array.from(new Set(texts));
+  }
+
+  const phrases = collectPhrases();
+  if (phrases.length <= 1) return; // крутить нечего
+
+  // Перестраиваем контейнер под один слой
+  host.innerHTML = '<span class="quote"></span>';
+  const node = host.firstElementChild;
+  node.style.display = 'inline-block';
+  node.style.transition = 'opacity 240ms ease';
+
+  let idx = 0, timer;
+  function render(i) {
+    node.style.opacity = 0;
+    // форсируем рефлоу перед сменой текста
+    void node.offsetWidth;
+    node.textContent = phrases[i];
+    node.style.opacity = 1;
+  }
+
+  function play() {
+    clearTimeout(timer);
+    if (!mq.matches) return;       // работаем только на планшетах
+    render(idx);
+    timer = setTimeout(function tick() {
+      idx = (idx + 1) % phrases.length;
+      render(idx);
+      timer = setTimeout(tick, 3500);
+    }, 3500);
+  }
+
+  play();
+  mq.addEventListener('change', play);
+  host.dataset.fixed = '1';
+})();
 
 
 
