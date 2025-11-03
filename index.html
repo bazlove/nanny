@@ -809,37 +809,90 @@
   </div>
 </footer>
 
+	
 
- 
-  <!-- Cookie banner -->
-<div id="cookie-banner"
-     class="cookie-banner"
-     role="dialog"
-     aria-labelledby="cookie-title"
-     aria-describedby="cookie-desc"
-     aria-modal="true"
-     hidden>
-  <div class="cookie-card" role="document">
-    <h3 id="cookie-title">Файлы cookie</h3>
-    <p id="cookie-desc">
-      Мы используем <strong>строго необходимые cookie</strong> для работы сайта и
-      по вашему согласию — <strong>аналитические cookie (Google Analytics 4)</strong> для оценки посещаемости.
-      Рекламных cookie нет. Согласие можно отозвать в любой момент в «Настройки cookie».
-      Подробнее — в <a href="/privacy.html">Политике конфиденциальности</a>.
-    </p>
-    <div class="cookie-actions">
-      <button id="cookie-decline" type="button" class="btn btn-outline">Отклонить</button>
-      <button id="cookie-accept"  type="button" class="btn btn-primary">Принять аналитику</button>
+<!-- Cookie Banner -->
+<div id="ck-banner" class="ck-banner" role="dialog" aria-live="polite" aria-label="Настройки файлов cookie" hidden>
+  <div class="ck-inner">
+    <div class="ck-text">
+      <strong>Мы используем файлы cookie</strong>
+      <p>
+        Они помогают работать сайту, анализировать трафик и показывать релевантный контент.
+        Нажимая «Принять все», вы соглашаетесь на использование аналитических и маркетинговых cookie.
+        Подробнее — <a class="ck-link" href="/privacy" target="_blank" rel="noopener">Политика конфиденциальности</a>.
+      </p>
     </div>
-    <small>
-      Можно изменить решение позже: <button id="cookie-manage" type="button" class="link-ghost">Настройки cookie</button>
-    </small>
+    <div class="ck-actions">
+      <button class="ck-btn ck-outline" id="ck-settings">Настроить</button>
+      <button class="ck-btn ck-ghost"   id="ck-necessary">Только необходимые</button>
+      <button class="ck-btn ck-primary" id="ck-accept">Принять все</button>
+    </div>
   </div>
 </div>
 
+<!-- Cookie Settings Modal -->
+<div id="ck-modal" class="ck-modal" role="dialog" aria-modal="true" aria-labelledby="ck-title" hidden>
+  <div class="ck-panel" role="document">
+    <header class="ck-head">
+      <h3 id="ck-title">Настройки cookie</h3>
+      <button class="ck-x" id="ck-close" aria-label="Закрыть">×</button>
+    </header>
+
+    <p class="ck-desc">
+      Мы используем категории cookie ниже. Необходимые включены всегда — они обеспечивают работу сайта.
+    </p>
+
+    <ul class="ck-groups">
+      <li class="ck-group">
+        <div class="ck-row">
+          <span class="ck-name">Необходимые</span>
+          <span class="ck-state">Всегда активно</span>
+        </div>
+        <p class="ck-note">Без них не работают безопасность, выбор языка, формы и сессии.</p>
+      </li>
+
+      <li class="ck-group">
+        <div class="ck-row">
+          <span class="ck-name">Аналитика</span>
+          <label class="ck-switch">
+            <input id="ck-ana" type="checkbox" />
+            <span class="ck-slider" aria-hidden="true"></span>
+          </label>
+        </div>
+        <p class="ck-note">Помогают измерять посещаемость и улучшать интерфейс.</p>
+      </li>
+
+      <li class="ck-group">
+        <div class="ck-row">
+          <span class="ck-name">Маркетинг</span>
+          <label class="ck-switch">
+            <input id="ck-mkt" type="checkbox" />
+            <span class="ck-slider" aria-hidden="true"></span>
+          </label>
+        </div>
+        <p class="ck-note">Релевантные предложения и реклама (например, Google Ads / Meta / TikTok).</p>
+      </li>
+    </ul>
+
+    <div class="ck-foot">
+      <button class="ck-btn ck-ghost"   id="ck-save-necessary">Только необходимые</button>
+      <button class="ck-btn ck-outline" id="ck-save-all">Принять все</button>
+      <button class="ck-btn ck-primary" id="ck-save">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Доп. кнопка для повторного открытия настроек (можно разместить в футере) -->
+<button id="ck-manage" class="ck-manage" hidden>Настройки cookie</button>
+ 
+ 
+
+
   <script src="assets/app.js" defer></script>
-</body>
+
+	</body>
 </html>
+
 
 
 
