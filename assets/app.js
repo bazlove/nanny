@@ -1131,6 +1131,14 @@ if (badName || badCont) {
   if (hidden) sep.style.display = 'none';
 })();
 
+(function normalizeHeroQuote(){
+  const r = document.getElementById('quoteRotator');
+  if (!r) return;
+  r.innerHTML = r.innerHTML.replace(/\s*<br\s*\/?>\s*/gi, ' ');
+})();
+
+
+
 
 
 
@@ -1714,6 +1722,7 @@ const I18N = {
     if (lang) applyLang(lang);
   });
 })();
+
 
 
 
