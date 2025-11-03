@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ru">
-	<head>
+	
+<head>
 		
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -14,23 +15,17 @@
   <link rel="alternate" hreflang="sr" href="https://bazlove.github.io/nanny/?lang=sr">
   <link rel="alternate" hreflang="x-default" href="https://bazlove.github.io/nanny/">
 
-  <!-- Consent Mode default (denied) BEFORE gtag load -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'functionality_storage': 'granted',
-      'security_storage': 'granted'
-    });
-    window.__GA_MEASUREMENT_ID__ = 'G-XXXXXXXXXX'; /* ← подставьте свой GA4 ID */
-  		</script>
+  <script type="text/plain" data-consent="analytics" src="https://www.googletagmanager.com/gtag/js?id=GA-XXXX"></script>
+  <script type="text/plain" data-consent="analytics">
+  	window.dataLayer = window.dataLayer || [];
+  	function gtag(){ dataLayer.push(arguments); }
+  	gtag('js', new Date());
+  	gtag('config', 'GA-XXXX', { anonymize_ip: true });
+		</script>
 
 		<link rel="stylesheet" href="assets/styles.css"/>
 			<link rel="stylesheet" href="assets/uikit.css"/>
+		
 	</head>
 
 	
@@ -892,6 +887,7 @@
 
 	</body>
 </html>
+
 
 
 
