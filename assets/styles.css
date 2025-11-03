@@ -191,16 +191,12 @@ section{padding:64px 0}
 #top .cta{ display:flex; gap:12px; margin:16px 0 12px; flex-wrap:wrap; }
 #top .cta-quote{ font-weight:700; }
 
-@media (max-width: 640px){
+@media (max-width: 980px){
   #top .cta-quote{
     margin-bottom: 24px;             /* одинаковый эффект */
   }
 }
 
-@media (min-width: 641px) and (max-width: 834px){
-  #top .container.hero-grid{ gap: 24px !important; } /* было 16px */
-  #top .hero-visual .hero-social{ margin-top: 18px; } /* было 14px */
-}
 
 /* === Фото: строго по ширине колонки, без absolute === */
 #top .hero-photo{
@@ -2871,6 +2867,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
