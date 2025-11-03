@@ -1162,19 +1162,58 @@ html, body { overflow-x: clip; }
 
 
 
-/* Когда цитата скрыта на мобилках — убираем лишний сепаратор */
-@media (max-width: 640px){
-  #top .hero-visual .hero-social .sep{ display:none; }
-}
-
-/* На планшетах держим ряд в одну линию и даём месту цитате */
+/* HERO social row — планшеты: одна строка, без переносов */
 @media (min-width: 641px) and (max-width: 1024px){
   #top .hero-visual .hero-social{
-    display:flex; align-items:center; gap:10px; flex-wrap:nowrap;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;      /* не переносим на вторую строку */
   }
+
+  /* слева: звезда, рейтинг и ссылка — тоже без переносов */
+  #top .hero-visual .hero-social .rating,
+  #top .hero-visual .hero-social .reviews-link,
+  #top .hero-visual .hero-social .sep{
+    white-space: nowrap;
+  }
+
+  /* справа: контейнер для цитаты занимает остаток строки */
   #top .hero-visual .hero-social .quote-wrap{
-    flex:1 1 auto; min-width:0; text-align:right;
+    flex: 1 1 auto;
+    min-width: 0;           /* важно для ellipsis */
+    text-align: right;
+  }
+
+  /* сама цитата — ровно одна строка с троеточием */
+  #top .hero-visual .hero-social .quote{
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
+  /* если ротатор рисует два слайда для кроссфейда — не даём им раздвигать высоту */
+  #top .hero-visual .hero-social #quoteRotator{
+    position: relative;
+    display: block;
+    height: 1.4em;          /* высота одной строки */
+    overflow: hidden;
+  }
+  #top .hero-visual .hero-social #quoteRotator > *{
+    position: absolute;     /* «слои» друг над другом, а не в потоке */
+    inset: 0;
   }
 }
+
+/* Прячем дублирующий параграф сразу под .hero-social (только планшеты) */
+@media (min-width: 641px) and (max-width: 1024px){
+  #top .hero-visual .hero-social + p{
+    display: none !important;
+  }
+}
+
 
 
