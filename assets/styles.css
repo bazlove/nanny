@@ -1809,20 +1809,35 @@ section[id], #services, #calc, #faq, #contact, #main {
   }
 }
 
-/* Единый отступ между частями строки */
+/* Ровная симметрия вокруг точки-разделителя */
 .meta-right{
   display: inline-flex;
   align-items: center;
-  gap: 8px;                 /* одинаковый зазор слева и справа от точки */
-  white-space: nowrap;      /* чтобы всё не рвалось на 2 строки */
+  gap: 10px;                 /* общий зазор между блоками */
+  white-space: nowrap;
 }
 
-/* Внешний вид точки */
 .meta-right .sep{
-  line-height: 1;
+  /* фиксированный бокс под разделитель */
+  --sep-box: 12px;           /* при желании 10–14px */
+  width: var(--sep-box);
+  height: var(--sep-box);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* скрываем текстовый символ внутри (чтобы не влиял метриками) */
+  font-size: 0;
+  line-height: 0;
+}
+
+.meta-right .sep::before{
+  content: "";
+  width: 4px;                /* сама «точка» */
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
   opacity: .55;
-  user-select: none;
-  pointer-events: none;
 }
 
 
@@ -2887,6 +2902,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
