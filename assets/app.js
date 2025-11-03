@@ -1919,6 +1919,23 @@ const I18N = {
   else { els.banner.hidden = false; }
 })();
 
+  window.cookieConsent = {
+    open: openModal,
+    setAll: acceptAll,
+    setNecessary: onlyNecessary,
+    get: () => read() || { necessary: true, analytics: false, marketing: false }
+  };
+
+  // --- Делегированный клик по ссылкам "Настройки cookie"
+  // Работает и для <a class="js-cookie-open">...</a>, и для href="#cookie"
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('.js-cookie-open, a[href="#cookie"]');
+    if (!a) return;
+    e.preventDefault();
+    openModal();
+  });
+})();
+
 
 
 
