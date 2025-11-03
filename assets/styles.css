@@ -957,7 +957,7 @@ section{padding:64px 0}
   box-shadow: 0 -6px 24px rgba(0,0,0,.25);
 }
 .ck-inner{
-  max-width: 1200px; margin: 0 auto; padding: 16px 20px;
+  max-width: 1200px; margin: 0 auto; padding: 24px 20px 16px;
   display: grid;
   grid-template-columns: 1fr 240px;
   grid-template-areas:
@@ -977,7 +977,7 @@ section{padding:64px 0}
 .ck-text p{
   margin:0; line-height:1.55; font-size:14px;
 }
-.ck-text p + p{ margin-top:10px; }
+.ck-text p + p{ margin-top:6px; }
 
 /* блок ссылок — строго под текстом; десктоп: в строку, мобайл: 2 колонки */
 .ck-links{
@@ -988,11 +988,12 @@ section{padding:64px 0}
   display:inline-block; margin-top:10px;   /* как новый абзац */
   font-size:13px; color: var(--ck-link-base);
   text-decoration: none;
+  border-bottom: 1px solid transparent;
 }
 .ck-footlink:hover{
   color: var(--ck-link-hover);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
 }
 
 /* правая колонка с кнопками (порядок «Принять» затем «Только необходимые») */
@@ -1000,7 +1001,8 @@ section{padding:64px 0}
   grid-area: actions;
   display:flex; flex-direction: column;
   gap: 10px;                    /* компактный зазор между кнопками */
-  align-self: start;
+  align-self: center;
+  justify-content:center;
 }
 
 /* кнопки */
@@ -1036,10 +1038,10 @@ section{padding:64px 0}
       "actions"
       "text"
       "links";
-    row-gap: 10px;
-    padding: 14px 16px;
+    row-gap: 12px;
+    padding: 20px 16px 18px;
   }
-  .ck-actions{ gap: 8px; }
+  .ck-actions{ gap: 10px; }
   .ck-btn{ font-size:14px; padding:12px 14px; }
 
   .ck-text strong{ font-size:13px; margin-bottom:12px; }
@@ -2996,6 +2998,7 @@ img {
   -khtml-user-drag: none;
   user-drag: none;
 }
+
 
 
 
