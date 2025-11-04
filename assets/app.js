@@ -1141,14 +1141,14 @@ const I18N = {
   ru: {
     /* NAV + HEADER */
     nav_services:'Услуги', nav_reviews:'Отзывы', nav_price:'Цена', nav_faq:'FAQ', nav_contact:'Контакты',
-    city:'Нови-Сад',
+    city:'Белград',
     hdr_skip_link:'Пропустить меню и перейти к содержанию',
     hdr_badge_checking:'Проверяю свободные слоты…',
     tz_btn_aria:'Время слотов',
     tz_tip:'Время слотов по Белграду (UTC+1 зимой, UTC+2 летом)',
 
     /* HERO */
-    hero_title:'Няня в Нови-Саде — забота, безопасность и бережное развитие',
+    hero_title:'Няня в Белграде — забота, безопасность и бережное развитие',
     hero_sub:'Освободите время для личных дел, спокойно работайте из дома[br] или проведите вечер в тишине — без тревоги, отвлечения и стресса.',
     hero_tag_age:'31 год', hero_tag_teacher:'Воспитатель', hero_tag_mom:'Мама', hero_tag_coach:'Детский тренер',
     hero_tag_ontime:'Вовремя', hero_tag_report:'Заметки/фото', hero_tag_slots:'Слоты 2–4ч', hero_tag_no_screens:'Без гаджетов',
@@ -1202,7 +1202,7 @@ const I18N = {
     slots_btn_request:'Запросить',
 
     /* CALC */
-    calc_title:'Калькулятор стоимости (Нови-Сад)',
+    calc_title:'Калькулятор стоимости (Белград)',
     calc_hours_label:'Часы (кол-во за визит)',   calc_hours_hint:'Минимум от 2-х часов', calc_hours_err:'Минимум 2 часа за визит',
     calc_optA:'Сделать лёгкий перекус для ребёнка', calc_optA_add:'+300',
     calc_kids_label:'Дети', calc_kids_hint:'2 детей: +25% • если один < 2 лет: +50%',
@@ -1226,7 +1226,7 @@ const I18N = {
     faq_a_meet_2:'По возможности делаем совместную встречу-знакомство на 30–40 минут.',
     faq_a_meet_3:'Дополнительно обсуждаем ваш режим, договорённости, особенности ребёнка, цели и нюансы.',
     faq_q_price:'Сколько стоит услуга?',
-    faq_a_price_1:'Базовая ставка в Нови-Саде: от 1\'000 дин/час днём. Не работаю поздно вечером и ночью.',
+    faq_a_price_1:'Базовая ставка в Белграде: от 1\'000 дин/час днём. Не работаю поздно вечером и ночью.',
     faq_a_price_2:'Если двое детей: +25–50% к ставке в зависимости от их возраста.',
     faq_a_price_3:'В выходные/праздники и при срочных вызовах действует повышающий коэффициент — условия обсуждаем индивидуально.',
     faq_q_docs:'Какие документы вы предоставляете?',
@@ -1279,14 +1279,14 @@ const I18N = {
   sr: {
     /* NAV + HEADER */
     nav_services:'Usluge', nav_reviews:'Utisci', nav_price:'Cena', nav_faq:'FAQ', nav_contact:'Kontakt',
-    city:'Novi Sad',
+    city:'Beograd',
     hdr_skip_link:'Preskoči meni i pređi na sadržaj',
     hdr_badge_checking:'Proveravam slobodne termine…',
     tz_btn_aria:'Vreme termina',
     tz_tip:'Vreme termina po Beogradu (UTC+1 zimi, UTC+2 leti)',
 
     /* HERO */
-    hero_title:'Dadilja u Novom Sadu — briga, bezbednost i pažljiv razvoj',
+    hero_title:'Dadilja u Beograd — briga, bezbednost i pažljiv razvoj',
     hero_sub:'Oslobodite vreme za lične stvari, radite od kuće mirno[br] ili provedite veče u tišini — bez brige, ometanja i stresa.',
     hero_tag_age:'31 godina', hero_tag_teacher:'Vaspitač', hero_tag_mom:'Mama', hero_tag_coach:'Dečiji trener',
     hero_tag_ontime:'Tačno na vreme', hero_tag_report:'Beleške/foto', hero_tag_slots:'Termini 2–4h', hero_tag_no_screens:'Bez ekrana',
@@ -1340,7 +1340,7 @@ const I18N = {
     slots_btn_request:'Zatraži',
 
     /* CALC */
-    calc_title:'Kalkulator cene (Novi Sad)',
+    calc_title:'Kalkulator cene (Beograd)',
     calc_hours_label:'Sati (po poseti)',   calc_hours_hint:'Minimum 2 sata', calc_hours_err:'Minimum 2 sata po poseti',
     calc_optA:'Pripremiti laganu užinu za dete', calc_optA_add:'+300',
     calc_kids_label:'Deca', calc_kids_hint:'2 dece: +25% • ako je jedno < 2 god: +50%',
@@ -1364,7 +1364,7 @@ const I18N = {
     faq_a_meet_2:'Po mogućnosti zajednički susret-upoznavanje 30–40 minuta.',
     faq_a_meet_3:'Dodatno prolazimo vašu rutinu, dogovore, osobine deteta, ciljeve i nijanse.',
     faq_q_price:'Koliko košta usluga?',
-    faq_a_price_1:'Osnovna cena u Novom Sadu: od 1.000 RSD/sat preko dana. Ne radim kasno uveče i noću.',
+    faq_a_price_1:'Osnovna cena u Beograd: od 1.000 RSD/sat preko dana. Ne radim kasno uveče i noću.',
     faq_a_price_2:'Ako su dvoje dece: +25–50% u zavisnosti od uzrasta.',
     faq_a_price_3:'Vikendom/praznikom i kod hitnih poziva primenjuje se koeficijent — uslove dogovaramo.',
     faq_q_docs:'Koja dokumenta pružate?',
@@ -1935,6 +1935,7 @@ const I18N = {
     openModal();
   });
 })();    
+
 
 
 
